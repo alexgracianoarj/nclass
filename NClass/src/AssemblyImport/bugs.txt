@@ -1,0 +1,4 @@
+anonymous delegates
+Void is invalid type
+override helyett virtual lesz
+Field-re nem jó a new modifier

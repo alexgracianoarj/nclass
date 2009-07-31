@@ -1,0 +1,21 @@
+<?xml version="1.0" ?>
+<project name="AssemblyImport" default="compile">
+	<target name="compile">
+		<csc target="library" output="${build.dir}/Plugins/AssemblyImport.dll" optimize="true" noconfig="true">
+			<sources>
+				<include name="**/*.cs" />
+			</sources>
+			<references>
+				<include name="System.dll" />
+				<include name="System.Xml.dll" />
+				<include name="System.Data.dll" />
+				<include name="System.Drawing.dll" />
+				<include name="System.Windows.Forms.dll" />
+				<include name="${build.dir}/NClass.Core.dll" />
+				<include name="${build.dir}/NClass.CSharp.dll" />
+				<include name="${build.dir}/NClass.DiagramEditor.dll" />
+				<include name="${build.dir}/NClass.exe" />
+			</references>
+		</csc>
+	</target>
+</project>
