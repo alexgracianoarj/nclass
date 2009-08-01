@@ -806,9 +806,6 @@
   <data name="BetaVersion" xml:space="preserve">
     <value>Beta version</value>
   </data>
-  <data name="VisibleMembers" xml:space="preserve">
-    <value>Видимые члены:</value>
-  </data>
   <data name="VisitHomepage" xml:space="preserve">
     <value>Сайт программы...</value>
   </data>

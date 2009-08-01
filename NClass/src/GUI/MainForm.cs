@@ -151,6 +151,7 @@ namespace NClass.GUI
 				foreach (Plugin plugin in plugins)
 				{
 					mnuPlugins.DropDownItems.Add(plugin.MenuItem);
+					plugin.MenuItem.Tag = plugin;
 				}
 			}
 		}
@@ -811,6 +812,19 @@ namespace NClass.GUI
 		{
 			if (docManager.HasDocument)
 				docManager.ActiveDocument.Redraw();
+		}
+
+		#endregion
+
+		#region Plugins menu event handlers
+
+		private void mnuPlugins_DropDownOpening(object sender, EventArgs e)
+		{
+			foreach (ToolStripItem menuItem in mnuPlugins.DropDownItems)
+			{
+				Plugin plugin = menuItem.Tag as Plugin;
+				menuItem.Enabled = plugin.IsAvailable;
+			}
 		}
 
 		#endregion

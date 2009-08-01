@@ -643,9 +643,6 @@ Não é possível definir o acesso modificador explícito em execução.</value>
   <data name="ErrorsReason" xml:space="preserve">
     <value>Morivo</value>
   </data>
-  <data name="VisibleMembers" xml:space="preserve">
-    <value>Membros visíveis: </value>
-  </data>
   <data name="OverrideMembers" xml:space="preserve">
     <value>Membros Reescritos</value>
     <comment>The name of the Override Members dialog</comment>

@@ -431,10 +431,17 @@ namespace NClass.DiagramEditor.ClassDiagram.Shapes
 			}
 		}
 
-		protected internal sealed override void TrySelect(RectangleF frame)
+		protected internal sealed override bool TrySelect(RectangleF frame)
 		{
 			if (frame.IntersectsWith(BorderRectangle))
+			{
 				IsSelected = true;
+				return true;
+			}
+			else
+			{
+				return false;
+			}
 		}
 
 		protected internal sealed override void Offset(Size offset)

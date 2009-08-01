@@ -30,6 +30,14 @@ namespace NClass.AssemblyImport
 			get { return "&Import assembly..."; }
 		}
 
+		public override bool IsAvailable
+		{
+			get
+			{
+				return Workspace.HasActiveProject;
+			}
+		}
+
 		protected override void Launch()
 		{
 			if (Workspace.HasActiveProject)

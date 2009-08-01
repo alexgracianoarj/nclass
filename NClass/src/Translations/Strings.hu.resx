@@ -940,9 +940,6 @@ A hibát leíró fájl és a megnyitott projektek az Application Data könyvtár
   <data name="BetaVersion" xml:space="preserve">
     <value>Béta verzió</value>
   </data>
-  <data name="VisibleMembers" xml:space="preserve">
-    <value>Látható tagok:</value>
-  </data>
   <data name="VisitHomepage" xml:space="preserve">
     <value>A program honlapja</value>
   </data>

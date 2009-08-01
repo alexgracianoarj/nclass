@@ -23,7 +23,7 @@ namespace NClass.DiagramEditor.ClassDiagram
 	{
 		public IEnumerable<T> GetSelectedElements()
 		{
-			foreach (T element in this)
+			foreach (T element in GetModifiableList())
 			{
 				if (element.IsSelected)
 					yield return element;
@@ -32,7 +32,7 @@ namespace NClass.DiagramEditor.ClassDiagram
 
 		public IEnumerable<T> GetUnselectedElements()
 		{
-			foreach (T element in this)
+			foreach (T element in GetModifiableList())
 			{
 				if (!element.IsSelected)
 					yield return element;
@@ -41,23 +41,19 @@ namespace NClass.DiagramEditor.ClassDiagram
 
 		public IEnumerable<T> GetSelectedElementsReversed()
 		{
-			LinkedListNode<T> current = this.Last;
-			while (current != null)
+			foreach (T element in GetReversedList())
 			{
-				if (current.Value.IsSelected)
-					yield return current.Value;
-				current = current.Previous;
+				if (element.IsSelected)
+					yield return element;
 			}
 		}
 
 		public IEnumerable<T> GetUnselectedElementsReversed()
 		{
-			LinkedListNode<T> current = this.Last;
-			while (current != null)
+			foreach (T element in GetReversedList())
 			{
-				if (!current.Value.IsSelected)
-					yield return current.Value;
-				current = current.Previous;
+				if (!element.IsSelected)
+					yield return element;
 			}
 		}
 	}

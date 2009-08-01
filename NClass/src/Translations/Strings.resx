@@ -642,9 +642,6 @@
   <data name="ErrorsReason" xml:space="preserve">
     <value>Reason</value>
   </data>
-  <data name="VisibleMembers" xml:space="preserve">
-    <value>Visible members:</value>
-  </data>
   <data name="OverrideMembers" xml:space="preserve">
     <value>Override Members</value>
     <comment>The name of the Override Members dialog</comment>

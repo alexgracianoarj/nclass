@@ -754,6 +754,7 @@ namespace NClass.GUI
 			this.mnuPlugins.Size = new System.Drawing.Size(52, 20);
 			this.mnuPlugins.Text = "&Plugins";
 			this.mnuPlugins.Visible = false;
+			this.mnuPlugins.DropDownOpening += new System.EventHandler(this.mnuPlugins_DropDownOpening);
 			// 
 			// mnuHelp
 			// 
@@ -820,7 +821,7 @@ namespace NClass.GUI
             this.toolAutoZoom});
 			this.standardToolStrip.Location = new System.Drawing.Point(3, 24);
 			this.standardToolStrip.Name = "standardToolStrip";
-			this.standardToolStrip.Size = new System.Drawing.Size(479, 25);
+			this.standardToolStrip.Size = new System.Drawing.Size(396, 25);
 			this.standardToolStrip.TabIndex = 1;
 			// 
 			// toolNew

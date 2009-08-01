@@ -2892,15 +2892,6 @@ namespace NClass.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Visible members:.
-        /// </summary>
-        public static string VisibleMembers {
-            get {
-                return ResourceManager.GetString("VisibleMembers", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Visit program&apos;s homepage.
         /// </summary>
         public static string VisitHomepage {

@@ -49,6 +49,11 @@ namespace NClass.GUI
 			get { return environment.DocumentManager; }
 		}
 
+		public abstract bool IsAvailable
+		{
+			get;
+		}
+
 		public abstract ToolStripItem MenuItem
 		{
 			get;

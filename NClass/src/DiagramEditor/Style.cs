@@ -38,7 +38,7 @@ namespace NClass.DiagramEditor
 
 	[Serializable]
 	[DefaultProperty("AttributeColor")]
-	public sealed class Style : ICloneable, IDisposable
+	public sealed class Style : IDisposable
 	{
 		static Style currentStyle;
 		static SortedList<string, Style> styles = new SortedList<string, Style>();
@@ -1400,7 +1400,7 @@ namespace NClass.DiagramEditor
 
 		#endregion
 
-		public object Clone()
+		public Style Clone()
 		{
 			Style newStyle = (Style) this.MemberwiseClone();
 

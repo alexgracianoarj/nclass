@@ -55,6 +55,7 @@ namespace NClass.DiagramEditor.ClassDiagram
 		Size size = MinSize;
 
 		State state = State.Normal;
+		bool selectioning = false;
 		RectangleF selectionFrame = RectangleF.Empty;
 		bool redrawSuspended = false;
 		int selectedShapeCount = 0;
@@ -307,10 +308,13 @@ namespace NClass.DiagramEditor.ClassDiagram
 		{
 			foreach (Connection connection in connections.GetSelectedElements())
 				yield return connection;
+			
 			foreach (Shape shape in shapes.GetSelectedElements())
 				yield return shape;
+			
 			foreach (Connection connection in connections.GetUnselectedElements())
 				yield return connection;
+			
 			foreach (Shape shape in shapes.GetUnselectedElements())
 				yield return shape;
 		}
@@ -319,10 +323,13 @@ namespace NClass.DiagramEditor.ClassDiagram
 		{
 			foreach (Shape shape in shapes.GetUnselectedElementsReversed())
 				yield return shape;
+			
 			foreach (Connection connection in connections.GetUnselectedElementsReversed())
 				yield return connection;
+			
 			foreach (Shape shape in shapes.GetSelectedElementsReversed())
 				yield return shape;
+			
 			foreach (Connection connection in connections.GetSelectedElementsReversed())
 				yield return connection;
 		}
@@ -760,6 +767,7 @@ namespace NClass.DiagramEditor.ClassDiagram
 		public void SelectAll()
 		{
 			RedrawSuspended = true;
+			selectioning = true;
 
 			foreach (Shape shape in shapes)
 			{
@@ -770,6 +778,14 @@ namespace NClass.DiagramEditor.ClassDiagram
 				connection.IsSelected = true;
 			}
 
+			selectedShapeCount = shapes.Count;
+			selectedConnectionCount = connections.Count;
+
+			OnSelectionChanged(EventArgs.Empty);
+			OnClipboardAvailabilityChanged(EventArgs.Empty);
+			OnSatusChanged(EventArgs.Empty);
+
+			selectioning = false;
 			RedrawSuspended = false;
 		}
 
@@ -793,24 +809,18 @@ namespace NClass.DiagramEditor.ClassDiagram
 			{
 				if (selectedShapeCount > 0)
 				{
-					LinkedListNode<Shape> shape = shapes.First;
-					while (shape != null)
+					foreach (Shape shape in shapes.GetModifiableList())
 					{
-						LinkedListNode<Shape> next = shape.Next;
-						if (shape.Value.IsSelected)
-							RemoveEntity(shape.Value.Entity);
-						shape = next;
+						if (shape.IsSelected)
+							RemoveEntity(shape.Entity);
 					}
 				}
 				if (selectedConnectionCount > 0)
 				{
-					LinkedListNode<Connection> connection = connections.First;
-					while (connection != null)
+					foreach (Connection connection in connections.GetModifiableList())
 					{
-						LinkedListNode<Connection> next = connection.Next;
-						if (connection.Value.IsSelected)
-							RemoveRelationship(connection.Value.Relationship);
-						connection = next;
+						if (connection.IsSelected)
+							RemoveRelationship(connection.Relationship);
 					}
 				}
 				Redraw();
@@ -975,20 +985,9 @@ namespace NClass.DiagramEditor.ClassDiagram
 				}
 			}
 
-			if (firstElement != null)
+			if (firstElement != null && !multiSelection)
 			{
-				//TOOD: ezt nem lehetne szebben?
-				Shape firstShape = firstElement as Shape;
-				if (firstShape != null)
-					shapes.ShiftToFirstPlace(firstShape);
-				OnSatusChanged(EventArgs.Empty); //TODO: ez sem kell ide
-
-				Connection firstConnection = firstElement as Connection;
-				if (firstConnection != null)
-					connections.ShiftToFirstPlace(firstConnection);
-
-				if (!multiSelection)
-					DeselectAllOthers(firstElement);
+				DeselectAllOthers(firstElement);
 			}
 
 			if (!e.Handled)
@@ -1045,22 +1044,8 @@ namespace NClass.DiagramEditor.ClassDiagram
 
 			if (state == State.Multiselecting)
 			{
-				selectionFrame = RectangleF.FromLTRB(
-					Math.Min(selectionFrame.Left, selectionFrame.Right),
-					Math.Min(selectionFrame.Top, selectionFrame.Bottom),
-					Math.Max(selectionFrame.Left, selectionFrame.Right),
-					Math.Max(selectionFrame.Top, selectionFrame.Bottom));
-
-				foreach (Shape shape in shapes)
-				{
-					shape.TrySelect(selectionFrame);
-				}
-				foreach (Connection connection in connections)
-				{
-					connection.TrySelect(selectionFrame);
-				}
+				TrySelectElements();
 				state = State.Normal;
-				Redraw();
 			}
 			else
 			{
@@ -1075,6 +1060,34 @@ namespace NClass.DiagramEditor.ClassDiagram
 			}
 
 			RedrawSuspended = false;
+		}
+
+		private void TrySelectElements()
+		{
+			selectionFrame = RectangleF.FromLTRB(
+				Math.Min(selectionFrame.Left, selectionFrame.Right),
+				Math.Min(selectionFrame.Top, selectionFrame.Bottom),
+				Math.Max(selectionFrame.Left, selectionFrame.Right),
+				Math.Max(selectionFrame.Top, selectionFrame.Bottom));
+			selectioning = true;
+
+			foreach (Shape shape in shapes)
+			{
+				if (shape.TrySelect(selectionFrame))
+					selectedShapeCount++;
+			}
+			foreach (Connection connection in connections)
+			{
+				if (connection.TrySelect(selectionFrame))
+					selectedConnectionCount++;
+			}
+
+			OnSelectionChanged(EventArgs.Empty);
+			OnClipboardAvailabilityChanged(EventArgs.Empty);
+			OnSatusChanged(EventArgs.Empty);
+			Redraw();
+
+			selectioning = false;
 		}
 
 		public void DoubleClick(AbsoluteMouseEventArgs e)
@@ -1419,32 +1432,46 @@ namespace NClass.DiagramEditor.ClassDiagram
 
 		private void shape_SelectionChanged(object sender, EventArgs e)
 		{
-			if (((Shape) sender).IsSelected)
+			if (!selectioning)
 			{
-				selectedShapeCount++;
+				Shape shape = (Shape) sender;
+
+				if (shape.IsSelected)
+				{
+					selectedShapeCount++;
+					shapes.ShiftToFirstPlace(shape);
+				}
+				else
+				{
+					selectedShapeCount--;
+				}
+
+				OnSelectionChanged(EventArgs.Empty);
+				OnClipboardAvailabilityChanged(EventArgs.Empty);
+				OnSatusChanged(EventArgs.Empty);
 			}
-			else
-			{
-				selectedShapeCount--;
-			}
-			OnSelectionChanged(EventArgs.Empty);
-			OnClipboardAvailabilityChanged(EventArgs.Empty);
-			OnSatusChanged(EventArgs.Empty);
 		}
 
 		private void connection_SelectionChanged(object sender, EventArgs e)
 		{
-			if (((Connection) sender).IsSelected)
+			if (!selectioning)
 			{
-				selectedConnectionCount++;
+				Connection connection = (Connection) sender;
+
+				if (connection.IsSelected)
+				{
+					selectedConnectionCount++;
+					connections.ShiftToFirstPlace(connection);
+				}
+				else
+				{
+					selectedConnectionCount--;
+				}
+
+				OnSelectionChanged(EventArgs.Empty);
+				OnClipboardAvailabilityChanged(EventArgs.Empty);
+				OnSatusChanged(EventArgs.Empty);
 			}
-			else
-			{
-				selectedConnectionCount--;
-			}
-			OnSelectionChanged(EventArgs.Empty);
-			OnClipboardAvailabilityChanged(EventArgs.Empty);
-			OnSatusChanged(EventArgs.Empty);
 		}
 
 		private void connection_RouteChanged(object sender, EventArgs e)

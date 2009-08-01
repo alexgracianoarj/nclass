@@ -70,6 +70,17 @@ namespace NClass.DiagramEditor
 			this.AddLast(value);
 		}
 
+		public IEnumerable<T> GetModifiableList()
+		{
+			LinkedListNode<T> current = this.First;
+			while (current != null)
+			{
+				LinkedListNode<T> next = current.Next;
+				yield return current.Value;
+				current = next;
+			}
+		}
+
 		public IEnumerable<T> GetReversedList()
 		{
 			LinkedListNode<T> current = this.Last;

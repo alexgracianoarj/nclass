@@ -29,7 +29,8 @@ namespace NClass.DiagramEditor.ClassDiagram.Dialogs
 		int rows = 1;
 		int columns = 1;
 		bool selectedOnly = false;
-		Style printingStyle = Style.CurrentStyle;
+		Style selectedStyle = Style.CurrentStyle;
+		Style printingStyle = null;
 
 		/// <exception cref="ArgumentNullException">
 		/// <paramref name="document"/> is null.
@@ -130,9 +131,26 @@ namespace NClass.DiagramEditor.ClassDiagram.Dialogs
 			}
 		}
 
+		private static Style ConvertStyle(Style selectedStyle)
+		{
+			Style converted = selectedStyle.Clone();
+			converted.ShadowColor = DisableTransparency(converted.ShadowColor);
+			return converted;
+		}
+
+		private static Color DisableTransparency(Color color)
+		{
+			int red = color.R * color.A / 255 + (255 - color.A);
+			int green = color.G * color.A / 255 + (255 - color.A);
+			int blue = color.B * color.A / 255 + (255 - color.A);
+
+			return Color.FromArgb(red, green, blue);
+		}
+
 		private void printDocument_BeginPrint(object sender, PrintEventArgs e)
 		{
 			pageIndex = 0;
+			printingStyle = ConvertStyle(selectedStyle);
 		}
 
 		private void printDocument_PrintPage(object sender, PrintPageEventArgs e)
@@ -177,6 +195,11 @@ namespace NClass.DiagramEditor.ClassDiagram.Dialogs
 			// Printing
 			document.Print(e.Graphics, selectedOnly, printingStyle);
 			e.HasMorePages = (++pageIndex < PageCount);
+		}
+
+		private void printDocument_EndPrint(object sender, PrintEventArgs e)
+		{
+			printingStyle.Dispose();
 		}
 
 		private void printPreview_Click(object sender, EventArgs e)
@@ -231,7 +254,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Dialogs
 			Style style = cboStyle.SelectedItem as Style;
 			if (style != null)
 			{
-				printingStyle = style;
+				selectedStyle = style;
 				printPreview.InvalidatePreview();
 			}
 		}

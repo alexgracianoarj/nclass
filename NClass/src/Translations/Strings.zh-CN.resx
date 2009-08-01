@@ -621,9 +621,6 @@
   <data name="ErrorsReason" xml:space="preserve">
     <value>原因</value>
   </data>
-  <data name="VisibleMembers" xml:space="preserve">
-    <value>可见成员:</value>
-  </data>
   <data name="OverrideMembers" xml:space="preserve">
     <value>覆盖成员</value>
   </data>

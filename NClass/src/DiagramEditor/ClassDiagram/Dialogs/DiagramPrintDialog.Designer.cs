@@ -54,6 +54,7 @@
 			// printDocument
 			// 
 			this.printDocument.PrintPage += new System.Drawing.Printing.PrintPageEventHandler(this.printDocument_PrintPage);
+			this.printDocument.EndPrint += new System.Drawing.Printing.PrintEventHandler(this.printDocument_EndPrint);
 			this.printDocument.BeginPrint += new System.Drawing.Printing.PrintEventHandler(this.printDocument_BeginPrint);
 			// 
 			// chkSelectedOnly
@@ -217,7 +218,7 @@
 			this.printPreview.Zoom = 0.40718562874251496;
 			this.printPreview.Click += new System.EventHandler(this.printPreview_Click);
 			// 
-			// PrintDialog
+			// DiagramPrintDialog
 			// 
 			this.AcceptButton = this.btnPrint;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -236,7 +237,7 @@
 			this.Controls.Add(this.numRows);
 			this.Controls.Add(this.btnPageSetup);
 			this.Controls.Add(this.printPreview);
-			this.Name = "PrintDialog";
+			this.Name = "DiagramPrintDialog";
 			this.ShowIcon = false;
 			this.ShowInTaskbar = false;
 			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;

@@ -826,9 +826,6 @@
     <value>version Beta</value>
     <comment>{0} version</comment>
   </data>
-  <data name="VisibleMembers" xml:space="preserve">
-    <value>Miembros visibles:</value>
-  </data>
   <data name="VisitHomepage" xml:space="preserve">
     <value>Visitar la pagina del programa</value>
     <comment>Visit program's homepage</comment>

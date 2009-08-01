@@ -198,7 +198,7 @@ namespace NClass.DiagramEditor.ClassDiagram
 
 		protected internal abstract void DrawSelectionLines(Graphics g, float zoom, Point offset);
 
-		protected internal abstract void TrySelect(RectangleF frame);
+		protected internal abstract bool TrySelect(RectangleF frame);
 
 		protected internal abstract void Offset(Size offset);
 
