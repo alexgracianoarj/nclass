@@ -79,7 +79,7 @@ namespace NClass.CodeGenerator
 		private void WriteCompositeType(CompositeType type)
 		{
 			// Writing type declaration
-			WriteLine(type.GetDeclarationLine());
+			WriteLine(type.GetDeclaration());
 			WriteLine("{");
 			IndentLevel++;
 
@@ -117,7 +117,7 @@ namespace NClass.CodeGenerator
 		private void WriteEnum(EnumType _enum)
 		{
 			// Writing type declaration
-			WriteLine(_enum.GetDeclarationLine());
+			WriteLine(_enum.GetDeclaration());
 			WriteLine("{");
 			IndentLevel++;
 
@@ -125,9 +125,9 @@ namespace NClass.CodeGenerator
 			foreach (EnumValue value in _enum.Values)
 			{
 				if (--valuesRemained > 0)
-					WriteLine(value.GetDeclarationLine() + ",");
+					WriteLine(value.GetDeclaration() + ",");
 				else
-					WriteLine(value.GetDeclarationLine());
+					WriteLine(value.GetDeclaration());
 			}
 
 			// Writing closing bracket of the type block
@@ -137,17 +137,17 @@ namespace NClass.CodeGenerator
 
 		private void WriteDelegate(DelegateType _delegate)
 		{
-			WriteLine(_delegate.GetDeclarationLine());
+			WriteLine(_delegate.GetDeclaration());
 		}
 
 		private void WriteField(Field field)
 		{
-			WriteLine(field.GetDeclarationLine());
+			WriteLine(field.GetDeclaration());
 		}
 
 		private void WriteOperation(Operation operation)
 		{
-			WriteLine(operation.GetDeclarationLine());
+			WriteLine(operation.GetDeclaration());
 
 			if (operation is Property)
 			{

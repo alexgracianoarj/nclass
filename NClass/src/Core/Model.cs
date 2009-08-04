@@ -23,8 +23,8 @@ namespace NClass.Core
 		public event EventHandler Closing;
 		public event EntityEventHandler EntityAdded;
 		public event EntityEventHandler EntityRemoved;
-		public event RelationEventHandler RelationAdded;
-		public event RelationEventHandler RelationRemoved;
+		public event RelationshipEventHandler RelationAdded;
+		public event RelationshipEventHandler RelationRemoved;
 		public event SerializeEventHandler Serializing;
 		public event SerializeEventHandler Deserializing;
 
@@ -312,7 +312,7 @@ namespace NClass.Core
 		{
 			relationships.Add(relationship);
 			relationship.Modified += new EventHandler(ElementChanged);
-			OnRelationAdded(new RelationEventArgs(relationship));
+			OnRelationAdded(new RelationshipEventArgs(relationship));
 		}
 
 		/// <exception cref="ArgumentNullException">
@@ -551,7 +551,7 @@ namespace NClass.Core
 					relationship.Detach();
 					relationship.Modified -= new EventHandler(ElementChanged);
 					relationships.RemoveAt(i--);
-					OnRelationRemoved(new RelationEventArgs(relationship));
+					OnRelationRemoved(new RelationshipEventArgs(relationship));
 				}
 			}
 		}
@@ -563,7 +563,7 @@ namespace NClass.Core
 				relationship.Detach();
 				relationship.Modified -= new EventHandler(ElementChanged);
 				relationships.Remove(relationship);
-				OnRelationRemoved(new RelationEventArgs(relationship));
+				OnRelationRemoved(new RelationshipEventArgs(relationship));
 			}
 		}
 
@@ -849,14 +849,14 @@ namespace NClass.Core
 			OnModified(EventArgs.Empty);
 		}
 
-		protected virtual void OnRelationAdded(RelationEventArgs e)
+		protected virtual void OnRelationAdded(RelationshipEventArgs e)
 		{
 			if (RelationAdded != null)
 				RelationAdded(this, e);
 			OnModified(EventArgs.Empty);
 		}
 
-		protected virtual void OnRelationRemoved(RelationEventArgs e)
+		protected virtual void OnRelationRemoved(RelationshipEventArgs e)
 		{
 			if (RelationRemoved != null)
 				RelationRemoved(this, e);

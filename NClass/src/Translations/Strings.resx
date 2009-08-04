@@ -389,9 +389,6 @@
   <data name="CodeGeneration" xml:space="preserve">
     <value>Code Generation</value>
   </data>
-  <data name="MenuNewFile" xml:space="preserve">
-    <value>&amp;New File...</value>
-  </data>
   <data name="MenuRealization" xml:space="preserve">
     <value>&amp;Realization</value>
   </data>
@@ -424,7 +421,7 @@
     <value>Interface members cannot be static.</value>
   </data>
   <data name="MenuDependency" xml:space="preserve">
-    <value>&amp;Dependency</value>
+    <value>De&amp;pendency</value>
   </data>
   <data name="ButtonCancel" xml:space="preserve">
     <value>Cancel</value>
@@ -542,7 +539,7 @@
     <value>Delete</value>
   </data>
   <data name="MenuComment" xml:space="preserve">
-    <value>Comme&amp;nt</value>
+    <value>Commen&amp;t</value>
   </data>
   <data name="AddNewItem" xml:space="preserve">
     <value>Add new item:</value>
@@ -597,7 +594,7 @@
     <value>Browse...</value>
   </data>
   <data name="MenuGeneralization" xml:space="preserve">
-    <value>Genera&amp;lizaion</value>
+    <value>Genera&amp;lization</value>
   </data>
   <data name="MenuCSharpDiagram" xml:space="preserve">
     <value>&amp;C# diagram</value>
@@ -1133,5 +1130,8 @@ Do you want to download the framework now?</value>
   <data name="Paste" xml:space="preserve">
     <value>Paste</value>
     <comment>Clipboard Paste</comment>
+  </data>
+  <data name="MenuOpenFile" xml:space="preserve">
+    <value>&amp;File...</value>
   </data>
 </root>

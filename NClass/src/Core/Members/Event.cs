@@ -39,7 +39,7 @@ namespace NClass.Core
 			get { return MemberType.Event; }
 		}
 
-		public sealed override string GetCaption(bool getType, bool getParameters,
+		public sealed override string GetUmlDescription(bool getType, bool getParameters,
 			bool getParameterNames, bool getInitValue)
 		{
 			if (getType)

@@ -57,7 +57,7 @@ namespace NClass.Core
 
 		public override string ToString()
 		{
-			return GetDeclarationLine();
+			return GetDeclaration();
 		}
 	}
 }

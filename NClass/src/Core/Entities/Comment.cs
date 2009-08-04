@@ -45,7 +45,7 @@ namespace NClass.Core
 			get { return Strings.Comment; }
 		}
 
-		public String Text
+		public string Text
 		{
 			get
 			{

@@ -59,9 +59,9 @@
     <Compile Include="BadSyntaxException.cs" />
     <Compile Include="Entities\EntityType.cs" />
     <Compile Include="Members\MemberType.cs" />
+    <Compile Include="RelationshipEventArgs.cs" />
     <Compile Include="Relationships\AssociationType.cs" />
     <Compile Include="Relationships\RelationshipType.cs" />
-    <Compile Include="RelationshipType.cs" />
     <Compile Include="LangaugeManager.cs" />
     <Compile Include="ProjectItemEventArgs.cs" />
     <Compile Include="Element.cs" />
@@ -77,7 +77,6 @@
     <Compile Include="Members\FieldModifier.cs" />
     <Compile Include="Entities\IInterfaceImplementer.cs" />
     <Compile Include="DotNetLanguage.cs" />
-    <Compile Include="RelationEventArgs.cs" />
     <Compile Include="EntityEventArgs.cs" />
     <Compile Include="Members\EnumValue.cs" />
     <Compile Include="Parameters\ArgumentList.cs" />

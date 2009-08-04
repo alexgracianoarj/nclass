@@ -54,7 +54,7 @@ namespace NClass.CSharp
 			get { return CSharpLanguage.Instance; }
 		}
 
-		public override string GetDeclarationLine()
+		public override string GetDeclaration()
 		{
 			if (Modifier == ParameterModifier.In) {
 				return Type + " " + Name;

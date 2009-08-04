@@ -619,9 +619,6 @@
   <data name="MenuNew" xml:space="preserve">
     <value>&amp;Новый</value>
   </data>
-  <data name="MenuNewFile" xml:space="preserve">
-    <value>&amp;Новый файл...</value>
-  </data>
   <data name="MenuOpen" xml:space="preserve">
     <value>&amp;Открыть</value>
   </data>

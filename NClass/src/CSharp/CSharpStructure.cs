@@ -187,7 +187,7 @@ namespace NClass.CSharp
 			base.AddInterface(interfaceType);
 		}
 
-		public override string GetDeclarationLine()
+		public override string GetDeclaration()
 		{
 			StringBuilder builder = new StringBuilder();
 

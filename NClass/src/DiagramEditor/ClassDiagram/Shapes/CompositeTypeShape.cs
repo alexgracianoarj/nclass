@@ -317,7 +317,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Shapes
 
 		private static string GetMemberString(Member member)
 		{
-			return member.GetCaption(
+			return member.GetUmlDescription(
 				Settings.Default.ShowType,
 				Settings.Default.ShowParameters,
 				Settings.Default.ShowParameterNames,

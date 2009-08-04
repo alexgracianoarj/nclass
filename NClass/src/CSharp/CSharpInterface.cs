@@ -133,7 +133,7 @@ namespace NClass.CSharp
 			return newEvent;
 		}
 
-		public override string GetDeclarationLine()
+		public override string GetDeclaration()
 		{
 			StringBuilder builder = new StringBuilder(30);
 

@@ -140,7 +140,7 @@ namespace NClass.Java
 			throw new InvalidOperationException("Java language does not support events.");
 		}
 
-		public override string GetDeclarationLine()
+		public override string GetDeclaration()
 		{
 			StringBuilder builder = new StringBuilder(30);
 

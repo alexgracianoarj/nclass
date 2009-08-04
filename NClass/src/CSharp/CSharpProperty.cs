@@ -170,11 +170,11 @@ namespace NClass.CSharp
 			}
 		}
 
-		public override bool CanSetAccess
+		public override bool IsAccessModifiable
 		{
 			get
 			{
-				return (base.CanSetAccess &&
+				return (base.IsAccessModifiable &&
 					!(Parent is InterfaceType) && !IsExplicitImplementation);
 			}
 		}
@@ -286,7 +286,7 @@ namespace NClass.CSharp
 			}
 		}
 
-		public override string GetCaption(bool getType, bool getParameters,
+		public override string GetUmlDescription(bool getType, bool getParameters,
 			bool getParameterNames, bool getInitValue)
 		{
 			StringBuilder builder = new StringBuilder(50);
@@ -316,7 +316,7 @@ namespace NClass.CSharp
 			return builder.ToString();
 		}
 
-		public override string GetDeclarationLine()
+		public override string GetDeclaration()
 		{
 			return GetDeclarationLine(false);
 		}

@@ -528,9 +528,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
 					try
 					{
 						// Clear other modifiers
-						field.IsReadonly &= ((modifier & FieldModifier.Readonly) != 0);
-						field.IsConstant &= ((modifier & FieldModifier.Constant) != 0);
-						field.IsVolatile &= ((modifier & FieldModifier.Volatile) != 0);
+						field.ClearModifiers();
 
 						// Set new values
 						field.IsReadonly = ((modifier & FieldModifier.Readonly) != 0);
@@ -573,10 +571,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
 					try
 					{
 						// Clear other modifiers
-						operation.IsAbstract &= ((modifier & OperationModifier.Abstract) != 0);
-						operation.IsVirtual &= ((modifier & OperationModifier.Virtual) != 0);
-						operation.IsOverride &= ((modifier & OperationModifier.Override) != 0);
-						operation.IsSealed &= ((modifier & OperationModifier.Sealed) != 0);
+						operation.ClearModifiers();
 
 						// Set new values
 						operation.IsAbstract = ((modifier & OperationModifier.Abstract) != 0);

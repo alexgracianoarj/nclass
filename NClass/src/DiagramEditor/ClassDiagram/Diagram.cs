@@ -1673,7 +1673,7 @@ namespace NClass.DiagramEditor.ClassDiagram
 			base.OnEntityRemoved(e);
 		}
 
-		protected override void OnRelationRemoved(RelationEventArgs e)
+		protected override void OnRelationRemoved(RelationshipEventArgs e)
 		{
 			Connection connection = GetConnection(e.Relationship);
 			RemoveConnection(connection);

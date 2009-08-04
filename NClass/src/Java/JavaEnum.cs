@@ -113,7 +113,7 @@ namespace NClass.Java
 				return value;
 		}
 		
-		public override string GetDeclarationLine()
+		public override string GetDeclaration()
 		{
 			StringBuilder builder = new StringBuilder();
 

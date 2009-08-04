@@ -72,7 +72,7 @@ namespace NClass.CSharp
 			}
 		}
 
-		public override bool CanSetAccess
+		public override bool IsAccessModifiable
 		{
 			get { return false; }
 		}
@@ -135,7 +135,7 @@ namespace NClass.CSharp
 			ValidName = "~" + Parent.Name;
 		}
 
-		public override string GetDeclarationLine()
+		public override string GetDeclaration()
 		{
 			return Name + "()";
 		}

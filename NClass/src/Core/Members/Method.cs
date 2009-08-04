@@ -43,7 +43,7 @@ namespace NClass.Core
 			get;
 		}
 
-		public sealed override string GetCaption(bool getType, bool getParameters,
+		public sealed override string GetUmlDescription(bool getType, bool getParameters,
 			bool getParameterNames, bool getInitValue)
 		{
 			StringBuilder builder = new StringBuilder(100);
@@ -52,7 +52,7 @@ namespace NClass.Core
 
 			if (getParameters) {
 				for (int i = 0; i < ArgumentList.Count; i++) {
-					builder.Append(ArgumentList[i].GetCaption(getParameterNames));
+					builder.Append(ArgumentList[i].GetUmlDescription(getParameterNames));
 					if (i < ArgumentList.Count - 1)
 						builder.Append(", ");
 				}

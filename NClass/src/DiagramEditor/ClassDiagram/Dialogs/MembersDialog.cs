@@ -300,7 +300,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Dialogs
 			txtSyntax.ReadOnly = (member is Destructor);
 			txtName.ReadOnly = (member == null || member.IsNameReadonly);
 			cboType.Enabled = (member != null && !member.IsTypeReadonly);
-			cboAccess.Enabled = (member != null && member.CanSetAccess);
+			cboAccess.Enabled = (member != null && member.IsAccessModifiable);
 			txtInitialValue.Enabled = (member is Field);
 			toolSortByKind.Enabled = true;
 			toolSortByAccess.Enabled = true;

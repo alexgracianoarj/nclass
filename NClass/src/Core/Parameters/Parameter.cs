@@ -117,7 +117,7 @@ namespace NClass.Core
 			}
 		}
 
-		public string GetCaption(bool getName)
+		public string GetUmlDescription(bool getName)
 		{
 			if (getName) {
 				if (Modifier == ParameterModifier.In)
@@ -134,7 +134,7 @@ namespace NClass.Core
 
 		public override string ToString()
 		{
-			return GetDeclarationLine();
+			return GetDeclaration();
 		}
 	}
 }

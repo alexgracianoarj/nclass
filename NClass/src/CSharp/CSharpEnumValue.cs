@@ -74,7 +74,7 @@ namespace NClass.CSharp
 			}
 		}
 
-		public override string GetDeclarationLine()
+		public override string GetDeclaration()
 		{
 			if (InitValue == EmptyValue)
 				return Name.ToString();
@@ -84,7 +84,7 @@ namespace NClass.CSharp
 
 		protected override EnumValue Clone()
 		{
-			return new CSharpEnumValue(GetDeclarationLine());
+			return new CSharpEnumValue(GetDeclaration());
 		}
 	}
 }

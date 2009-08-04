@@ -188,7 +188,7 @@ namespace NClass.Core
 			}
 		}
 
-		public virtual bool CanSetAccess
+		public virtual bool IsAccessModifiable
 		{
 			get { return true; }
 		}
@@ -221,27 +221,17 @@ namespace NClass.Core
 			get;
 		}
 
-		public string GetCaption()
+		public string GetUmlDescription()
 		{
-			return GetCaption(true, true, true, true);
+			return GetUmlDescription(true, true, true, true);
 		}
 
-		public string GetCaption(bool getType)
+		public string GetUmlDescription(bool getType, bool getParameters, bool getParameterNames)
 		{
-			return GetCaption(getType, false, false, getType);
+			return GetUmlDescription(getType, getParameters, getParameterNames, getType);
 		}
 
-		public string GetCaption(bool getType, bool getParameters)
-		{
-			return GetCaption(getType, getParameters, true, getType);
-		}
-
-		public string GetCaption(bool getType, bool getParameters, bool getParameterNames)
-		{
-			return GetCaption(getType, getParameters, getParameterNames, getType);
-		}
-
-		public abstract string GetCaption(bool getType, bool getParameters,
+		public abstract string GetUmlDescription(bool getType, bool getParameters,
 			bool getParameterNames, bool getInitValue);
 
 		/// <exception cref="BadSyntaxException">

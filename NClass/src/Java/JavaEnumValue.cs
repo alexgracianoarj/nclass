@@ -36,7 +36,7 @@ namespace NClass.Java
 			Name = JavaLanguage.Instance.GetValidName(declaration, false);
 		}
 
-		public override string GetDeclarationLine()
+		public override string GetDeclaration()
 		{
 			return Name.ToString();
 		}

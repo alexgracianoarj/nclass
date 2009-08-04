@@ -19,11 +19,11 @@ namespace NClass.Core
 {
 	public abstract class LanguageElement : Element
 	{
-		public abstract string GetDeclarationLine();
+		public abstract string GetDeclaration();
 
 		public override string ToString()
 		{
-			return GetDeclarationLine();
+			return GetDeclaration();
 		}
 
 		[Obsolete] //TODO: ezt a metódust meg kell szüntetni

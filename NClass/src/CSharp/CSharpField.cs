@@ -155,7 +155,7 @@ namespace NClass.CSharp
 			}
 		}
 
-		public override string GetDeclarationLine()
+		public override string GetDeclaration()
 		{
 			return GetDeclarationLine(true);
 		}

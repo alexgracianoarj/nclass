@@ -114,7 +114,7 @@ namespace NClass.CSharp
 				return value;
 		}
 		
-		public override string GetDeclarationLine()
+		public override string GetDeclaration()
 		{
 			StringBuilder builder = new StringBuilder();
 

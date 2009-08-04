@@ -17,15 +17,20 @@ using System;
 
 namespace NClass.Core
 {
-	/*public enum RelationshipType
+	public delegate void RelationshipEventHandler(object sender, RelationshipEventArgs e);
+
+	public class RelationshipEventArgs : EventArgs
 	{
-		Association,
-		Composition,
-		Aggregation,
-		Comment,
-		Dependency,
-		Generalization,
-		Nesting,
-		Realization
-	}*/
+		Relationship relationship;
+
+		public RelationshipEventArgs(Relationship relationship)
+		{
+			this.relationship = relationship;
+		}
+
+		public Relationship Relationship
+		{
+			get { return relationship; }
+		}
+	}
 }

@@ -45,7 +45,7 @@ namespace NClass.GUI.ModelExplorer
 		{
 			mnuNewProject.Text = Strings.MenuNewProject;
 			mnuOpen.Text = Strings.MenuOpen;
-			mnuOpenFile.Text = Strings.MenuNewFile;
+			mnuOpenFile.Text = Strings.MenuOpenFile;
 			mnuSaveAll.Text = Strings.MenuSaveAllProjects;
 			mnuCloseAll.Text = Strings.MenuCloseAllProjects;
 

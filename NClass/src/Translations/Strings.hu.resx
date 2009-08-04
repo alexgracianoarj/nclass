@@ -699,9 +699,6 @@ Biztos, hogy folytatni akarja?</value>
   <data name="MenuNew" xml:space="preserve">
     <value>Ú&amp;j</value>
   </data>
-  <data name="MenuNewFile" xml:space="preserve">
-    <value>Ú&amp;j fájl...</value>
-  </data>
   <data name="MenuOpen" xml:space="preserve">
     <value>Meg&amp;nyitás</value>
   </data>
@@ -1085,5 +1082,8 @@ Szeretné most letölteni a szükséges keretrendszert a Microsoft honlapjáról
   </data>
   <data name="Paste" xml:space="preserve">
     <value>Beillesztés</value>
+  </data>
+  <data name="MenuOpenFile" xml:space="preserve">
+    <value>&amp;Fájl...</value>
   </data>
 </root>

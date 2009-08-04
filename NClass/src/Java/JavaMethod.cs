@@ -177,7 +177,7 @@ namespace NClass.Java
 			}
 		}
 
-		public override string GetDeclarationLine()
+		public override string GetDeclaration()
 		{
 			return GetDeclarationLine(true);
 		}

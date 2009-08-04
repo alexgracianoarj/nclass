@@ -288,7 +288,7 @@ namespace NClass.Core
 			}
 		}
 
-		public sealed override string GetCaption(bool getType, bool getParameters,
+		public sealed override string GetUmlDescription(bool getType, bool getParameters,
 			bool getParameterNames, bool getInitValue)
 		{
 			StringBuilder builder = new StringBuilder(50);

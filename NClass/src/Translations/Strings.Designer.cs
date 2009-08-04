@@ -1638,7 +1638,7 @@ namespace NClass.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Comme&amp;nt.
+        ///   Looks up a localized string similar to Commen&amp;t.
         /// </summary>
         public static string MenuComment {
             get {
@@ -1737,7 +1737,7 @@ namespace NClass.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &amp;Dependency.
+        ///   Looks up a localized string similar to De&amp;pendency.
         /// </summary>
         public static string MenuDependency {
             get {
@@ -1881,7 +1881,7 @@ namespace NClass.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Genera&amp;lizaion.
+        ///   Looks up a localized string similar to Genera&amp;lization.
         /// </summary>
         public static string MenuGeneralization {
             get {
@@ -1989,15 +1989,6 @@ namespace NClass.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &amp;New File....
-        /// </summary>
-        public static string MenuNewFile {
-            get {
-                return ResourceManager.GetString("MenuNewFile", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to &amp;New Project.
         /// </summary>
         public static string MenuNewProject {
@@ -2012,6 +2003,15 @@ namespace NClass.Translations {
         public static string MenuOpen {
             get {
                 return ResourceManager.GetString("MenuOpen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &amp;File....
+        /// </summary>
+        public static string MenuOpenFile {
+            get {
+                return ResourceManager.GetString("MenuOpenFile", resourceCulture);
             }
         }
         

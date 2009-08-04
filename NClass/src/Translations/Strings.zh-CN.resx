@@ -375,9 +375,6 @@
   <data name="CodeGeneration" xml:space="preserve">
     <value>代码生成</value>
   </data>
-  <data name="MenuNewFile" xml:space="preserve">
-    <value>新建文件(&amp;N)...</value>
-  </data>
   <data name="MenuRealization" xml:space="preserve">
     <value>实现(&amp;R)</value>
   </data>

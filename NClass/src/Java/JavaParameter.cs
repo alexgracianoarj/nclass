@@ -53,7 +53,7 @@ namespace NClass.Java
 			get { return JavaLanguage.Instance; }
 		}
 
-		public override string GetDeclarationLine()
+		public override string GetDeclaration()
 		{
 			return Type + " " + Name;
 		}

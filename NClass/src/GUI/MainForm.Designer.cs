@@ -379,19 +379,19 @@ namespace NClass.GUI
 			// 
 			this.mnuOpenFile.Name = "mnuOpenFile";
 			this.mnuOpenFile.ShortcutKeys = ((System.Windows.Forms.Keys) ((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-			this.mnuOpenFile.Size = new System.Drawing.Size(177, 22);
-			this.mnuOpenFile.Text = "&New File...";
+			this.mnuOpenFile.Size = new System.Drawing.Size(153, 22);
+			this.mnuOpenFile.Text = "&File...";
 			this.mnuOpenFile.Click += new System.EventHandler(this.mnuOpenFile_Click);
 			// 
 			// sepOpenFile
 			// 
 			this.sepOpenFile.Name = "sepOpenFile";
-			this.sepOpenFile.Size = new System.Drawing.Size(174, 6);
+			this.sepOpenFile.Size = new System.Drawing.Size(150, 6);
 			// 
 			// mnuRecentFile1
 			// 
 			this.mnuRecentFile1.Name = "mnuRecentFile1";
-			this.mnuRecentFile1.Size = new System.Drawing.Size(177, 22);
+			this.mnuRecentFile1.Size = new System.Drawing.Size(153, 22);
 			this.mnuRecentFile1.Tag = 0;
 			this.mnuRecentFile1.Text = "Recent File 1";
 			this.mnuRecentFile1.Click += new System.EventHandler(this.OpenRecentFile_Click);
@@ -399,7 +399,7 @@ namespace NClass.GUI
 			// mnuRecentFile2
 			// 
 			this.mnuRecentFile2.Name = "mnuRecentFile2";
-			this.mnuRecentFile2.Size = new System.Drawing.Size(177, 22);
+			this.mnuRecentFile2.Size = new System.Drawing.Size(153, 22);
 			this.mnuRecentFile2.Tag = 1;
 			this.mnuRecentFile2.Text = "Recent File 2";
 			this.mnuRecentFile2.Click += new System.EventHandler(this.OpenRecentFile_Click);
@@ -407,7 +407,7 @@ namespace NClass.GUI
 			// mnuRecentFile3
 			// 
 			this.mnuRecentFile3.Name = "mnuRecentFile3";
-			this.mnuRecentFile3.Size = new System.Drawing.Size(177, 22);
+			this.mnuRecentFile3.Size = new System.Drawing.Size(153, 22);
 			this.mnuRecentFile3.Tag = 2;
 			this.mnuRecentFile3.Text = "Recent File 3";
 			this.mnuRecentFile3.Click += new System.EventHandler(this.OpenRecentFile_Click);
@@ -415,7 +415,7 @@ namespace NClass.GUI
 			// mnuRecentFile4
 			// 
 			this.mnuRecentFile4.Name = "mnuRecentFile4";
-			this.mnuRecentFile4.Size = new System.Drawing.Size(177, 22);
+			this.mnuRecentFile4.Size = new System.Drawing.Size(153, 22);
 			this.mnuRecentFile4.Tag = 3;
 			this.mnuRecentFile4.Text = "Recent File 4";
 			this.mnuRecentFile4.Click += new System.EventHandler(this.OpenRecentFile_Click);
@@ -423,7 +423,7 @@ namespace NClass.GUI
 			// mnuRecentFile5
 			// 
 			this.mnuRecentFile5.Name = "mnuRecentFile5";
-			this.mnuRecentFile5.Size = new System.Drawing.Size(177, 22);
+			this.mnuRecentFile5.Size = new System.Drawing.Size(153, 22);
 			this.mnuRecentFile5.Tag = 4;
 			this.mnuRecentFile5.Text = "Recent File 5";
 			this.mnuRecentFile5.Click += new System.EventHandler(this.OpenRecentFile_Click);

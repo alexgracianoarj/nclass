@@ -17,7 +17,7 @@ Version 2.0 (30-Jul-2009)
 * Updated clipboard functions
 * New Vista-like slider button for the Zoom control
 * Application settings are saved in the Application Data directory (Vista compatibility)
-* Bendpoints snap to each other to other bendpoints within all selected relationships
+* Relationship bend points now snap to all bend points of selected relationships
 * Sharp arrows are visualized with beveled line joins
 * Supports high resolution icons for Vista
 - Diagram styles from previous versions are incompatible with this version

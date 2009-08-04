@@ -128,7 +128,7 @@ namespace NClass.Java
 			}
 		}
 
-		public override string GetDeclarationLine()
+		public override string GetDeclaration()
 		{
 			StringBuilder builder = new StringBuilder(50);
 

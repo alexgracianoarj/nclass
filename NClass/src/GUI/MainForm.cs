@@ -47,8 +47,8 @@ namespace NClass.GUI
 			tabbedWindow.Canvas.ZoomChanged += new EventHandler(canvas_ZoomChanged);
 			tabbedWindow.DocumentManager = docManager;
 
-			Workspace.Default.ActiveProjectChanged += delegate { UpdateHeaderText(); };
-			Workspace.Default.ActiveProjectStateChanged += delegate { UpdateHeaderText(); };
+			Workspace.Default.ActiveProjectChanged += delegate { UpdateTitleBar(); };
+			Workspace.Default.ActiveProjectStateChanged += delegate { UpdateTitleBar(); };
 			Workspace.Default.ProjectAdded += delegate { ShowModelExplorer = true; };
 			docManager.ActiveDocumentChanged += docManager_ActiveDocumentChanged;
 			modelExplorer.Workspace = Workspace.Default;
@@ -243,7 +243,7 @@ namespace NClass.GUI
 			mnuNewCSharpDiagram.Text = Strings.MenuCSharpDiagram;
 			mnuNewJavaDiagram.Text = Strings.MenuJavaDiagram;
 			mnuOpen.Text = Strings.MenuOpen;
-			mnuOpenFile.Text = Strings.MenuNewFile;
+			mnuOpenFile.Text = Strings.MenuOpenFile;
 			mnuSave.Text = Strings.MenuSave;
 			mnuSaveAs.Text = Strings.MenuSaveAs;
 			mnuSaveAll.Text = Strings.MenuSaveAllProjects;
@@ -293,16 +293,16 @@ namespace NClass.GUI
 			toolAutoZoom.Text = Strings.AutoZoom;
 		}
 
-		private void UpdateHeaderText()
+		private void UpdateTitleBar()
 		{
 			if (Workspace.Default.HasActiveProject)
 			{
 				string projectName = Workspace.Default.ActiveProject.Name;
 
 				if (Workspace.Default.ActiveProject.IsDirty)
-					this.Text = "NClass - " + projectName + "*";
+					this.Text = projectName + "* - NClass";
 				else
-					this.Text = "NClass - " + projectName;
+					this.Text = projectName + " - NClass";
 			}
 			else
 			{

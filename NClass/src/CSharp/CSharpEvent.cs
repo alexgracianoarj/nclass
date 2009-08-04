@@ -117,11 +117,11 @@ namespace NClass.CSharp
 			}
 		}
 
-		public override bool CanSetAccess
+		public override bool IsAccessModifiable
 		{
 			get
 			{
-				return (base.CanSetAccess && !IsExplicitImplementation);
+				return (base.IsAccessModifiable && !IsExplicitImplementation);
 			}
 		}
 
@@ -213,7 +213,7 @@ namespace NClass.CSharp
 			}
 		}
 
-		public override string GetDeclarationLine()
+		public override string GetDeclaration()
 		{
 			bool needsSemicolon = !IsExplicitImplementation;
 			return GetDeclarationLine(needsSemicolon);

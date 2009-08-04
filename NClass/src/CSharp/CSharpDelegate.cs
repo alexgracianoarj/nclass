@@ -67,7 +67,7 @@ namespace NClass.CSharp
 			get { return CSharpLanguage.Instance; }
 		}
 
-		public override string GetDeclarationLine()
+		public override string GetDeclaration()
 		{
 			StringBuilder builder = new StringBuilder();
 

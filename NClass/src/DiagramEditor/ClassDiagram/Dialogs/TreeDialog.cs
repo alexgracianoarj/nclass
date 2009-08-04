@@ -61,7 +61,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Dialogs
 			if (operation == null)
 				throw new ArgumentNullException("operation");
 
-			TreeNode child = parentNode.Nodes.Add(operation.GetCaption());
+			TreeNode child = parentNode.Nodes.Add(operation.GetUmlDescription());
 			int imageIndex = Icons.GetImageIndex(operation);
 
 			child.Tag = operation;

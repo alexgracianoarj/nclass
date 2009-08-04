@@ -179,12 +179,12 @@ namespace NClass.CSharp
 			}
 		}
 
-		public override bool CanSetAccess
+		public override bool IsAccessModifiable
 		{
 			get
 			{
 				return (
-					base.CanSetAccess && !(Parent is InterfaceType) &&
+					base.IsAccessModifiable && !(Parent is InterfaceType) &&
 					!IsOperator && !IsExplicitImplementation
 				);
 			}
@@ -341,7 +341,7 @@ namespace NClass.CSharp
 			}
 		}
 
-		public override string GetDeclarationLine()
+		public override string GetDeclaration()
 		{
 			return GetDeclarationLine(true);
 		}

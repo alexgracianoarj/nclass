@@ -389,9 +389,6 @@
   <data name="CodeGeneration" xml:space="preserve">
     <value>Geração de Código</value>
   </data>
-  <data name="MenuNewFile" xml:space="preserve">
-    <value>&amp;Novo Arquivo ....</value>
-  </data>
   <data name="MenuRealization" xml:space="preserve">
     <value>&amp;Realização</value>
   </data>
