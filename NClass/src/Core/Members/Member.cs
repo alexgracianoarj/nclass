@@ -242,7 +242,7 @@ namespace NClass.Core
 		protected virtual void CopyFrom(Member member)
 		{
 			name = member.name;
-			type = member.name;
+			type = member.type;
 			access = member.access;
 		}
 	}
