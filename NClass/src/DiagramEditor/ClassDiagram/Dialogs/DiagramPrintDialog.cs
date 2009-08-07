@@ -24,7 +24,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Dialogs
 {
 	public partial class DiagramPrintDialog : Form
 	{
-		IPrintable document;
+		IDocument document;
 		int pageIndex = 0;
 		int rows = 1;
 		int columns = 1;
@@ -35,7 +35,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Dialogs
 		/// <exception cref="ArgumentNullException">
 		/// <paramref name="document"/> is null.
 		/// </exception>
-		public DiagramPrintDialog(IPrintable document)
+		public DiagramPrintDialog(IDocument document)
 		{
 			if (document == null)
 				throw new ArgumentNullException("document");
@@ -45,6 +45,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Dialogs
 			InitializeComponent();
 			printPreview.AutoZoom = true;
 			printDocument.DefaultPageSettings.Margins = new Margins(40, 40, 40, 40);
+			printDocument.DocumentName = document.Name;
 		}
 
 		private int PageCount
@@ -155,6 +156,9 @@ namespace NClass.DiagramEditor.ClassDiagram.Dialogs
 
 		private void printDocument_PrintPage(object sender, PrintPageEventArgs e)
 		{
+			e.Graphics.PageUnit = GraphicsUnit.Inch;
+			e.Graphics.PageScale = 1 / DiagramElement.Graphics.DpiX;
+
 			int column = pageIndex % columns;
 			int row = pageIndex / columns;
 

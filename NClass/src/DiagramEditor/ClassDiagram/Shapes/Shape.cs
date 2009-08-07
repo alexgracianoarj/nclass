@@ -474,8 +474,8 @@ namespace NClass.DiagramEditor.ClassDiagram.Shapes
 
 		internal void AutoWidth()
 		{
-			if (graphics != null)
-				this.Width = (int) GetRequiredWidth(graphics, Style.CurrentStyle) + 1;
+			if (Graphics != null)
+				this.Width = (int) GetRequiredWidth(Graphics, Style.CurrentStyle) + 1;
 		}
 
 		protected virtual float GetRequiredWidth(Graphics g, Style style)

@@ -26,8 +26,7 @@ namespace NClass.DiagramEditor.ClassDiagram
 	public abstract class DiagramElement : IModifiable
 	{
 		protected const float UndreadableZoom = 0.25F;
-		//TODO: ne használjuk mindig, mivel nyomtatásnál másképp méri a szöveget
-		internal static Graphics graphics = null; // Graphics object for text measuring
+		internal static Graphics Graphics = null; // Graphics object for text measuring
 
 		Diagram diagram;
 		bool isSelected = false;

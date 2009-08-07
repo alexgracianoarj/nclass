@@ -58,8 +58,10 @@ namespace NClass.DiagramEditor
 			this.SetStyle(ControlStyles.UserPaint, true);
 			this.DoubleBuffered = true;
 
-			if (DiagramElement.graphics == null)
-				DiagramElement.graphics = this.CreateGraphics();
+			if (DiagramElement.Graphics == null)
+			{
+				DiagramElement.Graphics = this.CreateGraphics();
+			}
 		}
 
 		[Browsable(false)]

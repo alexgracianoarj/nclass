@@ -236,8 +236,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Connections
 			bool horizontal;
 			PointF center = GetLineCenter(out horizontal);
 
-			//TODO: ez a graphics nem lesz jó a nyomtatásnál
-			SizeF size = graphics.MeasureString(Relationship.Label,
+			SizeF size = Graphics.MeasureString(Relationship.Label,
 				style.RelationshipTextFont, PointF.Empty, stringFormat);
 
 			if (horizontal)

@@ -336,7 +336,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Connections
 		{
 			float angle = GetAngle(firstPoint, secondPoint);
 
-			SizeF textSize = graphics.MeasureString(text, style.RelationshipTextFont,
+			SizeF textSize = Graphics.MeasureString(text, style.RelationshipTextFont,
 				PointF.Empty, stringFormat);
 			RectangleF area = new RectangleF(firstPoint, textSize);
 
@@ -382,7 +382,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Connections
 		{
 			float angle = GetAngle(firstPoint, secondPoint);
 
-			SizeF textSize = graphics.MeasureString(text, style.RelationshipTextFont,
+			SizeF textSize = Graphics.MeasureString(text, style.RelationshipTextFont,
 				PointF.Empty, stringFormat);
 			RectangleF area = new RectangleF(firstPoint, textSize);
 
