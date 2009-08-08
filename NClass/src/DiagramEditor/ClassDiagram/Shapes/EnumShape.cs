@@ -99,6 +99,20 @@ namespace NClass.DiagramEditor.ClassDiagram.Shapes
 				return valueEditor;
 		}
 
+		protected internal override bool DeleteSelectedMember(bool showConfirmation)
+		{
+			if (IsActive && ActiveValue != null)
+			{
+				if (!showConfirmation || ConfirmMemberDelete())
+					DeleteActiveValue();
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+
 		protected override bool CloneEntity(Diagram diagram)
 		{
 			return diagram.InsertEnum(EnumType.Clone());
@@ -187,15 +201,23 @@ namespace NClass.DiagramEditor.ClassDiagram.Shapes
 			}
 		}
 
-		internal void RemoveActiveValue()
+		internal void DeleteActiveValue()
 		{
 			if (ActiveMemberIndex >= 0)
 			{
-				int index = ActiveMemberIndex;
-				bool lastValue = (index == EnumType.ValueCount - 1);
+				int newIndex;
+				if (ActiveMemberIndex == EnumType.ValueCount - 1) // Last value
+				{
+					newIndex = ActiveMemberIndex - 1;
+				}
+				else
+				{
+					newIndex = ActiveMemberIndex;
+				}
+				
 				EnumType.RemoveValue(ActiveValue);
-
-				ActiveMemberIndex = index;
+				ActiveMemberIndex = newIndex;
+				OnActiveMemberChanged(EventArgs.Empty);
 			}
 		}
 

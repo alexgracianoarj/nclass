@@ -250,9 +250,6 @@
   <data name="Delete" xml:space="preserve">
     <value>Eliminar</value>
   </data>
-  <data name="DeleteConfirmation" xml:space="preserve">
-    <value>¿Esta seguro de que desea eliminar los elementos seleccionados?</value>
-  </data>
   <data name="DeleteSelectedItems" xml:space="preserve">
     <value>Eliminar los elementos seleccionados</value>
   </data>

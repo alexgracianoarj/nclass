@@ -57,11 +57,13 @@ namespace NClass.DiagramEditor.ClassDiagram
 		State state = State.Normal;
 		bool selectioning = false;
 		RectangleF selectionFrame = RectangleF.Empty;
+		PointF mouseLocation = PointF.Empty;
 		bool redrawSuspended = false;
 		int selectedShapeCount = 0;
 		int selectedConnectionCount = 0;
 		Rectangle shapeOutline = Rectangle.Empty;
 		EntityType shapeType;
+		EntityType newShapeType = EntityType.Class;
 		ConnectionCreator connectionCreator = null;
 
 		public event EventHandler OffsetChanged;
@@ -703,6 +705,17 @@ namespace NClass.DiagramEditor.ClassDiagram
 			}
 		}
 
+		public void AutoSizeOfSelectedShapes()
+		{
+			RedrawSuspended = true;
+			foreach (Shape shape in shapes.GetSelectedElements())
+			{
+				shape.AutoWidth();
+				shape.AutoHeight();
+			}
+			RedrawSuspended = false;
+		}
+
 		public void AutoWidthOfSelectedShapes()
 		{
 			RedrawSuspended = true;
@@ -710,19 +723,16 @@ namespace NClass.DiagramEditor.ClassDiagram
 			{
 				shape.AutoWidth();
 			}
-
 			RedrawSuspended = false;
 		}
 
 		public void AutoHeightOfSelectedShapes()
 		{
 			RedrawSuspended = true;
-
 			foreach (Shape shape in shapes.GetSelectedElements())
 			{
 				shape.AutoHeight();
 			}
-
 			RedrawSuspended = false;
 		}
 
@@ -792,7 +802,7 @@ namespace NClass.DiagramEditor.ClassDiagram
 		private bool ConfirmDelete()
 		{
 			DialogResult result = MessageBox.Show(
-				Strings.DeleteConfirmation, Strings.Confirmation,
+				Strings.DeleteElementsConfirmation, Strings.Confirmation,
 				MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
 			return (result == DialogResult.Yes);
@@ -1024,6 +1034,7 @@ namespace NClass.DiagramEditor.ClassDiagram
 		{
 			RedrawSuspended = true;
 
+			mouseLocation = e.Location;
 			if (state == State.Multiselecting)
 			{
 				selectionFrame = RectangleF.FromLTRB(
@@ -1108,62 +1119,65 @@ namespace NClass.DiagramEditor.ClassDiagram
 
 		public void KeyDown(KeyEventArgs e)
 		{
+			//TODO: ActiveElement.KeyDown() - de nem minden esetben (pl. törlésnél nem)
 			RedrawSuspended = true;
 			
-			//TODO: ActiveElement.KeyDown()
-			switch (e.KeyCode)
+			// Delete
+			if (e.KeyCode == Keys.Delete)
 			{
-				case Keys.Delete:
+				if (SelectedElementCount >= 2 || ActiveElement == null ||
+					!ActiveElement.DeleteSelectedMember())
+				{
 					DeleteSelectedElements();
-					break;
-
-				case Keys.Escape:
-					state = State.Normal;
-					DeselectAll();
-					Redraw();
-					break;
-
-				case Keys.Enter:
-					if (ActiveElement != null)
-						ActiveElement.ShowEditor();
-					break;
-
-				case Keys.Up:
-					if (ActiveElement != null)
-					{
-						if (e.Shift || e.Control)
-							ActiveElement.MoveUp();
-						else
-							ActiveElement.SelectPrevious();
-						e.Handled = true;
-					}
-					break;
-
-				case Keys.Down:
-					if (ActiveElement != null)
-					{
-						if (e.Shift || e.Control)
-							ActiveElement.MoveDown();
-						else
-							ActiveElement.SelectNext();
-						e.Handled = true;
-					}
-					break;
-
-				case Keys.X:
-					if (e.Modifiers == Keys.Control)
-						Cut();
-					break;
-
-				case Keys.C:
-					if (e.Modifiers == Keys.Control)
-						Copy();
-					break;
-
-				case Keys.V:
-					if (e.Modifiers == Keys.Control)
-						Paste();
-					break;
+				}
+			}
+			// Escape
+			else if (e.KeyCode == Keys.Escape)
+			{
+				state = State.Normal;
+				DeselectAll();
+				Redraw();
+			}
+			// Enter
+			else if (e.KeyCode == Keys.Enter && ActiveElement != null)
+			{
+				ActiveElement.ShowEditor();
+			}
+			// Up
+			else if (e.KeyCode == Keys.Up && ActiveElement != null)
+			{
+				if (e.Shift || e.Control)
+					ActiveElement.MoveUp();
+				else
+					ActiveElement.SelectPrevious();
+			}
+			// Down
+			else if (e.KeyCode == Keys.Down && ActiveElement != null)
+			{
+				if (e.Shift || e.Control)
+					ActiveElement.MoveDown();
+				else
+					ActiveElement.SelectNext();				
+			}
+			// Ctrl + X
+			else if (e.KeyCode == Keys.X && e.Modifiers == Keys.Control)
+			{
+				Cut();
+			}
+			// Ctrl + C
+			else if (e.KeyCode == Keys.C && e.Modifiers == Keys.Control)
+			{
+				Copy();
+			}
+			// Ctrl + V
+			else if (e.KeyCode == Keys.V && e.Modifiers == Keys.Control)
+			{
+				Paste();
+			}
+			// Ctrl + Shift + A
+			else if (e.KeyCode == Keys.A && e.Modifiers == (Keys.Control | Keys.Shift))
+			{
+				CreateShape();
 			}
 			RedrawSuspended = false;
 		}
@@ -1526,10 +1540,16 @@ namespace NClass.DiagramEditor.ClassDiagram
 			}
 		}
 
+		public void CreateShape()
+		{
+			CreateShape(newShapeType);
+		}
+
 		public void CreateShape(EntityType type)
 		{
 			state = State.CreatingShape;
 			shapeType = type;
+			newShapeType = type;
 
 			switch (type)
 			{
@@ -1545,6 +1565,8 @@ namespace NClass.DiagramEditor.ClassDiagram
 					shapeOutline = CommentShape.GetOutline(Style.CurrentStyle);
 					break;
 			}
+			shapeOutline.Location = new Point((int) mouseLocation.X, (int) mouseLocation.Y);
+			Redraw();
 		}
 
 		public Shape AddShape(EntityType type)

@@ -429,14 +429,16 @@
 			// 
 			// txtDeclaration
 			// 
+			this.txtDeclaration.AcceptsTab = true;
 			this.txtDeclaration.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
 						| System.Windows.Forms.AnchorStyles.Right)));
 			this.txtDeclaration.Location = new System.Drawing.Point(4, 28);
 			this.txtDeclaration.Name = "txtDeclaration";
 			this.txtDeclaration.Padding = new System.Windows.Forms.Padding(1);
+			this.txtDeclaration.ReadOnly = false;
+			this.txtDeclaration.SelectionStart = 0;
 			this.txtDeclaration.Size = new System.Drawing.Size(322, 20);
 			this.txtDeclaration.TabIndex = 4;
-			this.txtDeclaration.AcceptsTab = true;
 			this.txtDeclaration.TextChanged += new System.EventHandler(this.txtDeclaration_TextChanged);
 			this.txtDeclaration.Validating += new System.ComponentModel.CancelEventHandler(this.txtDeclaration_Validating);
 			this.txtDeclaration.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtDeclaration_KeyDown);

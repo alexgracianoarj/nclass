@@ -401,9 +401,6 @@
   <data name="ImplementExplicitly" xml:space="preserve">
     <value>Implemente explicitamente.</value>
   </data>
-  <data name="DeleteConfirmation" xml:space="preserve">
-    <value>Tem certeza que deseja excluir os itens selecionado (s) ?</value>
-  </data>
   <data name="ErrorExplicitImplementationAccess" xml:space="preserve">
     <value>	
 Não é possível definir o acesso modificador explícito em execução.</value>

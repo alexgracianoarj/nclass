@@ -72,7 +72,8 @@
     <Compile Include="ClassDiagram\ConnectionCreator.cs" />
     <Compile Include="ClassDiagram\ClearTypeMode.cs" />
     <Compile Include="ClassDiagram\ElementContainer.cs" />
-    <Compile Include="ClassDiagram\DiagramDynamicMenu.cs" />
+    <Compile Include="ClassDiagram\DiagramDynamicMenu.cs">
+    </Compile>
     <Compile Include="ClassDiagram\DiagramDynamicMenu.designer.cs">
       <DependentUpon>DiagramDynamicMenu.cs</DependentUpon>
     </Compile>

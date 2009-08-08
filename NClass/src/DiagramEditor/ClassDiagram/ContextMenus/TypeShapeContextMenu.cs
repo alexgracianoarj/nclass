@@ -26,7 +26,7 @@ namespace NClass.DiagramEditor.ClassDiagram.ContextMenus
 	{
 		static TypeShapeContextMenu _default = new TypeShapeContextMenu();
 
-		ToolStripMenuItem mnuSize, mnuAutoWidth, mnuAutoHeight;
+		ToolStripMenuItem mnuSize, mnuAutoSize, mnuAutoWidth, mnuAutoHeight;
 		ToolStripMenuItem mnuCollapseAllSelected, mnuExpandAllSelected;
 		ToolStripMenuItem mnuEditMembers;
 
@@ -43,6 +43,7 @@ namespace NClass.DiagramEditor.ClassDiagram.ContextMenus
 		private void UpdateTexts()
 		{
 			mnuSize.Text = Strings.MenuSize;
+			mnuAutoSize.Text = Strings.MenuAutoSize;
 			mnuAutoWidth.Text = Strings.MenuAutoWidth;
 			mnuAutoHeight.Text = Strings.MenuAutoHeight;
 			mnuCollapseAllSelected.Text = Strings.MenuCollapseAllSelected;
@@ -61,6 +62,8 @@ namespace NClass.DiagramEditor.ClassDiagram.ContextMenus
 		{
 			mnuEditMembers = new ToolStripMenuItem(Strings.MenuEditMembers,
 				Resources.EditMembers, mnuEditMembers_Click);
+			mnuAutoSize = new ToolStripMenuItem(Strings.MenuAutoSize,
+				null, mnuAutoSize_Click);
 			mnuAutoWidth = new ToolStripMenuItem(Strings.MenuAutoWidth,
 				null, mnuAutoWidth_Click);
 			mnuAutoHeight = new ToolStripMenuItem(Strings.MenuAutoHeight,
@@ -72,6 +75,7 @@ namespace NClass.DiagramEditor.ClassDiagram.ContextMenus
 				Strings.MenuExpandAllSelected,
 				null, mnuExpandAllSelected_Click);
 			mnuSize = new ToolStripMenuItem(Strings.MenuSize, null,
+				mnuAutoSize,
 				mnuAutoWidth,
 				mnuAutoHeight,
 				new ToolStripSeparator(),
@@ -85,6 +89,12 @@ namespace NClass.DiagramEditor.ClassDiagram.ContextMenus
 				new ToolStripSeparator(),
 				mnuEditMembers,
 			});
+		}
+
+		private void mnuAutoSize_Click(object sender, EventArgs e)
+		{
+			if (Diagram != null)
+				Diagram.AutoSizeOfSelectedShapes();
 		}
 
 		private void mnuAutoWidth_Click(object sender, EventArgs e)

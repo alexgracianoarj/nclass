@@ -10,8 +10,23 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+			this.menuStrip = new System.Windows.Forms.MenuStrip();
 			this.mnuDiagram = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+			this.mnuFormat = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuAlign = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+			this.mnuMakeSameSize = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuSameWidth = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuSameHeight = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuSameSize = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+			this.mnuAutoWidth = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuAutoHeight = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+			this.elementsToolStrip = new System.Windows.Forms.ToolStrip();
+			this.toolSepEntities = new System.Windows.Forms.ToolStripSeparator();
+			this.toolSepRelationships = new System.Windows.Forms.ToolStripSeparator();
 			this.mnuAddNewElement = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuNewClass = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuNewStructure = new System.Windows.Forms.ToolStripMenuItem();
@@ -19,6 +34,7 @@
 			this.mnuNewEnum = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuNewDelegate = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuNewComment = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
 			this.mnuNewAssociation = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuNewComposition = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuNewAggregation = new System.Windows.Forms.ToolStripMenuItem();
@@ -34,31 +50,21 @@
 			this.mnuShowInitialValue = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuGenerateCode = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuSaveAsImage = new System.Windows.Forms.ToolStripMenuItem();
-			this.mnuFormat = new System.Windows.Forms.ToolStripMenuItem();
-			this.mnuAlign = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuAlignTop = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuAlignLeft = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuAlignBottom = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuAlignRight = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuAlignHorizontal = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuAlignVertical = new System.Windows.Forms.ToolStripMenuItem();
-			this.mnuMakeSameSize = new System.Windows.Forms.ToolStripMenuItem();
-			this.mnuSameWidth = new System.Windows.Forms.ToolStripMenuItem();
-			this.mnuSameHeight = new System.Windows.Forms.ToolStripMenuItem();
-			this.mnuSameSize = new System.Windows.Forms.ToolStripMenuItem();
-			this.mnuAutoWidth = new System.Windows.Forms.ToolStripMenuItem();
-			this.mnuAutoHeight = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuAutoLayout = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuCollapseAll = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuExpandAll = new System.Windows.Forms.ToolStripMenuItem();
-			this.elementsToolStrip = new System.Windows.Forms.ToolStrip();
 			this.toolNewClass = new System.Windows.Forms.ToolStripButton();
 			this.toolNewStructure = new System.Windows.Forms.ToolStripButton();
 			this.toolNewInterface = new System.Windows.Forms.ToolStripButton();
 			this.toolNewEnum = new System.Windows.Forms.ToolStripButton();
 			this.toolNewDelegate = new System.Windows.Forms.ToolStripButton();
 			this.toolNewComment = new System.Windows.Forms.ToolStripButton();
-			this.toolSepEntities = new System.Windows.Forms.ToolStripSeparator();
 			this.toolNewAssociation = new System.Windows.Forms.ToolStripButton();
 			this.toolNewComposition = new System.Windows.Forms.ToolStripButton();
 			this.toolNewAggregation = new System.Windows.Forms.ToolStripButton();
@@ -67,24 +73,21 @@
 			this.toolNewDependency = new System.Windows.Forms.ToolStripButton();
 			this.toolNewNesting = new System.Windows.Forms.ToolStripButton();
 			this.toolNewCommentRelationship = new System.Windows.Forms.ToolStripButton();
-			this.toolSepRelationships = new System.Windows.Forms.ToolStripSeparator();
 			this.toolDelete = new System.Windows.Forms.ToolStripButton();
-			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-			this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-			this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+			this.mnuAutoSize = new System.Windows.Forms.ToolStripMenuItem();
+			this.menuStrip.SuspendLayout();
+			this.elementsToolStrip.SuspendLayout();
 			// 
-			// menuStrip1
+			// menuStrip
 			// 
-			this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+			this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuDiagram,
             this.mnuFormat});
-			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-			this.menuStrip1.Name = "menuStrip1";
-			this.menuStrip1.Size = new System.Drawing.Size(530, 24);
-			this.menuStrip1.TabIndex = 0;
-			this.menuStrip1.Text = "menuStrip1";
+			this.menuStrip.Location = new System.Drawing.Point(0, 0);
+			this.menuStrip.Name = "menuStrip";
+			this.menuStrip.Size = new System.Drawing.Size(530, 24);
+			this.menuStrip.TabIndex = 0;
+			this.menuStrip.Text = "menuStrip1";
 			// 
 			// mnuDiagram
 			// 
@@ -98,6 +101,140 @@
 			this.mnuDiagram.Size = new System.Drawing.Size(58, 20);
 			this.mnuDiagram.Text = "&Diagram";
 			this.mnuDiagram.DropDownOpening += new System.EventHandler(this.mnuDiagram_DropDownOpening);
+			// 
+			// toolStripSeparator1
+			// 
+			this.toolStripSeparator1.Name = "toolStripSeparator1";
+			this.toolStripSeparator1.Size = new System.Drawing.Size(167, 6);
+			// 
+			// mnuFormat
+			// 
+			this.mnuFormat.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuAlign,
+            this.mnuMakeSameSize,
+            this.toolStripSeparator4,
+            this.mnuAutoSize,
+            this.mnuAutoWidth,
+            this.mnuAutoHeight,
+            this.mnuAutoLayout,
+            this.toolStripSeparator5,
+            this.mnuCollapseAll,
+            this.mnuExpandAll});
+			this.mnuFormat.Name = "mnuFormat";
+			this.mnuFormat.Size = new System.Drawing.Size(53, 20);
+			this.mnuFormat.Text = "F&ormat";
+			this.mnuFormat.DropDownOpening += new System.EventHandler(this.mnuFormat_DropDownOpening);
+			// 
+			// mnuAlign
+			// 
+			this.mnuAlign.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuAlignTop,
+            this.mnuAlignLeft,
+            this.mnuAlignBottom,
+            this.mnuAlignRight,
+            this.toolStripSeparator3,
+            this.mnuAlignHorizontal,
+            this.mnuAlignVertical});
+			this.mnuAlign.Name = "mnuAlign";
+			this.mnuAlign.Size = new System.Drawing.Size(161, 22);
+			this.mnuAlign.Text = "&Align";
+			// 
+			// toolStripSeparator3
+			// 
+			this.toolStripSeparator3.Name = "toolStripSeparator3";
+			this.toolStripSeparator3.Size = new System.Drawing.Size(192, 6);
+			// 
+			// mnuMakeSameSize
+			// 
+			this.mnuMakeSameSize.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuSameWidth,
+            this.mnuSameHeight,
+            this.mnuSameSize});
+			this.mnuMakeSameSize.Name = "mnuMakeSameSize";
+			this.mnuMakeSameSize.Size = new System.Drawing.Size(161, 22);
+			this.mnuMakeSameSize.Text = "&Make Same Size";
+			// 
+			// mnuSameWidth
+			// 
+			this.mnuSameWidth.Name = "mnuSameWidth";
+			this.mnuSameWidth.Size = new System.Drawing.Size(197, 22);
+			this.mnuSameWidth.Text = "Same &Width";
+			this.mnuSameWidth.Click += new System.EventHandler(this.mnuSameWidth_Click);
+			// 
+			// mnuSameHeight
+			// 
+			this.mnuSameHeight.Name = "mnuSameHeight";
+			this.mnuSameHeight.Size = new System.Drawing.Size(197, 22);
+			this.mnuSameHeight.Text = "Same &Height";
+			this.mnuSameHeight.Click += new System.EventHandler(this.mnuSameHeight_Click);
+			// 
+			// mnuSameSize
+			// 
+			this.mnuSameSize.Name = "mnuSameSize";
+			this.mnuSameSize.Size = new System.Drawing.Size(197, 22);
+			this.mnuSameSize.Text = "&Same Width and Height";
+			this.mnuSameSize.Click += new System.EventHandler(this.mnuSameSize_Click);
+			// 
+			// toolStripSeparator4
+			// 
+			this.toolStripSeparator4.Name = "toolStripSeparator4";
+			this.toolStripSeparator4.Size = new System.Drawing.Size(158, 6);
+			// 
+			// mnuAutoWidth
+			// 
+			this.mnuAutoWidth.Name = "mnuAutoWidth";
+			this.mnuAutoWidth.Size = new System.Drawing.Size(161, 22);
+			this.mnuAutoWidth.Text = "Auto &Width";
+			this.mnuAutoWidth.Click += new System.EventHandler(this.mnuAutoWidth_Click);
+			// 
+			// mnuAutoHeight
+			// 
+			this.mnuAutoHeight.Name = "mnuAutoHeight";
+			this.mnuAutoHeight.Size = new System.Drawing.Size(161, 22);
+			this.mnuAutoHeight.Text = "Auto &Height";
+			this.mnuAutoHeight.Click += new System.EventHandler(this.mnuAutoHeight_Click);
+			// 
+			// toolStripSeparator5
+			// 
+			this.toolStripSeparator5.Name = "toolStripSeparator5";
+			this.toolStripSeparator5.Size = new System.Drawing.Size(158, 6);
+			// 
+			// elementsToolStrip
+			// 
+			this.elementsToolStrip.Dock = System.Windows.Forms.DockStyle.None;
+			this.elementsToolStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+			this.elementsToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolNewClass,
+            this.toolNewStructure,
+            this.toolNewInterface,
+            this.toolNewEnum,
+            this.toolNewDelegate,
+            this.toolNewComment,
+            this.toolSepEntities,
+            this.toolNewAssociation,
+            this.toolNewComposition,
+            this.toolNewAggregation,
+            this.toolNewGeneralization,
+            this.toolNewRealization,
+            this.toolNewDependency,
+            this.toolNewNesting,
+            this.toolNewCommentRelationship,
+            this.toolSepRelationships,
+            this.toolDelete});
+			this.elementsToolStrip.Location = new System.Drawing.Point(0, 0);
+			this.elementsToolStrip.Name = "elementsToolStrip";
+			this.elementsToolStrip.Size = new System.Drawing.Size(369, 25);
+			this.elementsToolStrip.TabIndex = 8;
+			// 
+			// toolSepEntities
+			// 
+			this.toolSepEntities.Name = "toolSepEntities";
+			this.toolSepEntities.Size = new System.Drawing.Size(6, 25);
+			// 
+			// toolSepRelationships
+			// 
+			this.toolSepRelationships.Name = "toolSepRelationships";
+			this.toolSepRelationships.Size = new System.Drawing.Size(6, 25);
 			// 
 			// mnuAddNewElement
 			// 
@@ -126,7 +263,7 @@
 			// 
 			this.mnuNewClass.Image = global::NClass.DiagramEditor.Properties.Resources.Class;
 			this.mnuNewClass.Name = "mnuNewClass";
-			this.mnuNewClass.Size = new System.Drawing.Size(172, 22);
+			this.mnuNewClass.Size = new System.Drawing.Size(191, 22);
 			this.mnuNewClass.Text = "&Class";
 			this.mnuNewClass.Click += new System.EventHandler(this.mnuNewClass_Click);
 			// 
@@ -134,7 +271,7 @@
 			// 
 			this.mnuNewStructure.Image = global::NClass.DiagramEditor.Properties.Resources.Structure;
 			this.mnuNewStructure.Name = "mnuNewStructure";
-			this.mnuNewStructure.Size = new System.Drawing.Size(172, 22);
+			this.mnuNewStructure.Size = new System.Drawing.Size(191, 22);
 			this.mnuNewStructure.Text = "&Structure";
 			this.mnuNewStructure.Click += new System.EventHandler(this.mnuNewStructure_Click);
 			// 
@@ -142,7 +279,7 @@
 			// 
 			this.mnuNewInterface.Image = global::NClass.DiagramEditor.Properties.Resources.Interface32;
 			this.mnuNewInterface.Name = "mnuNewInterface";
-			this.mnuNewInterface.Size = new System.Drawing.Size(172, 22);
+			this.mnuNewInterface.Size = new System.Drawing.Size(191, 22);
 			this.mnuNewInterface.Text = "&Interface";
 			this.mnuNewInterface.Click += new System.EventHandler(this.mnuNewInterface_Click);
 			// 
@@ -150,7 +287,7 @@
 			// 
 			this.mnuNewEnum.Image = global::NClass.DiagramEditor.Properties.Resources.Enum;
 			this.mnuNewEnum.Name = "mnuNewEnum";
-			this.mnuNewEnum.Size = new System.Drawing.Size(172, 22);
+			this.mnuNewEnum.Size = new System.Drawing.Size(191, 22);
 			this.mnuNewEnum.Text = "&Enum";
 			this.mnuNewEnum.Click += new System.EventHandler(this.mnuNewEnum_Click);
 			// 
@@ -158,7 +295,7 @@
 			// 
 			this.mnuNewDelegate.Image = global::NClass.DiagramEditor.Properties.Resources.Delegate;
 			this.mnuNewDelegate.Name = "mnuNewDelegate";
-			this.mnuNewDelegate.Size = new System.Drawing.Size(172, 22);
+			this.mnuNewDelegate.Size = new System.Drawing.Size(191, 22);
 			this.mnuNewDelegate.Text = "&Delegate";
 			this.mnuNewDelegate.Click += new System.EventHandler(this.mnuNewDelegate_Click);
 			// 
@@ -166,15 +303,20 @@
 			// 
 			this.mnuNewComment.Image = global::NClass.DiagramEditor.Properties.Resources.Comment;
 			this.mnuNewComment.Name = "mnuNewComment";
-			this.mnuNewComment.Size = new System.Drawing.Size(172, 22);
+			this.mnuNewComment.Size = new System.Drawing.Size(191, 22);
 			this.mnuNewComment.Text = "Commen&t";
 			this.mnuNewComment.Click += new System.EventHandler(this.mnuNewComment_Click);
+			// 
+			// toolStripSeparator2
+			// 
+			this.toolStripSeparator2.Name = "toolStripSeparator2";
+			this.toolStripSeparator2.Size = new System.Drawing.Size(188, 6);
 			// 
 			// mnuNewAssociation
 			// 
 			this.mnuNewAssociation.Image = global::NClass.DiagramEditor.Properties.Resources.Association;
 			this.mnuNewAssociation.Name = "mnuNewAssociation";
-			this.mnuNewAssociation.Size = new System.Drawing.Size(172, 22);
+			this.mnuNewAssociation.Size = new System.Drawing.Size(191, 22);
 			this.mnuNewAssociation.Text = "&Association";
 			this.mnuNewAssociation.Click += new System.EventHandler(this.mnuNewAssociation_Click);
 			// 
@@ -182,7 +324,7 @@
 			// 
 			this.mnuNewComposition.Image = global::NClass.DiagramEditor.Properties.Resources.Composition;
 			this.mnuNewComposition.Name = "mnuNewComposition";
-			this.mnuNewComposition.Size = new System.Drawing.Size(172, 22);
+			this.mnuNewComposition.Size = new System.Drawing.Size(191, 22);
 			this.mnuNewComposition.Text = "C&omposition";
 			this.mnuNewComposition.Click += new System.EventHandler(this.mnuNewComposition_Click);
 			// 
@@ -190,7 +332,7 @@
 			// 
 			this.mnuNewAggregation.Image = global::NClass.DiagramEditor.Properties.Resources.Aggregation;
 			this.mnuNewAggregation.Name = "mnuNewAggregation";
-			this.mnuNewAggregation.Size = new System.Drawing.Size(172, 22);
+			this.mnuNewAggregation.Size = new System.Drawing.Size(191, 22);
 			this.mnuNewAggregation.Text = "A&ggregation";
 			this.mnuNewAggregation.Click += new System.EventHandler(this.mnuNewAggregation_Click);
 			// 
@@ -198,7 +340,7 @@
 			// 
 			this.mnuNewGeneralization.Image = global::NClass.DiagramEditor.Properties.Resources.Generalization;
 			this.mnuNewGeneralization.Name = "mnuNewGeneralization";
-			this.mnuNewGeneralization.Size = new System.Drawing.Size(172, 22);
+			this.mnuNewGeneralization.Size = new System.Drawing.Size(191, 22);
 			this.mnuNewGeneralization.Text = "Genera&lization";
 			this.mnuNewGeneralization.Click += new System.EventHandler(this.mnuNewGeneralization_Click);
 			// 
@@ -206,7 +348,7 @@
 			// 
 			this.mnuNewRealization.Image = global::NClass.DiagramEditor.Properties.Resources.Realization;
 			this.mnuNewRealization.Name = "mnuNewRealization";
-			this.mnuNewRealization.Size = new System.Drawing.Size(172, 22);
+			this.mnuNewRealization.Size = new System.Drawing.Size(191, 22);
 			this.mnuNewRealization.Text = "&Realization";
 			this.mnuNewRealization.Click += new System.EventHandler(this.mnuNewRealization_Click);
 			// 
@@ -214,7 +356,7 @@
 			// 
 			this.mnuNewDependency.Image = global::NClass.DiagramEditor.Properties.Resources.Dependency;
 			this.mnuNewDependency.Name = "mnuNewDependency";
-			this.mnuNewDependency.Size = new System.Drawing.Size(172, 22);
+			this.mnuNewDependency.Size = new System.Drawing.Size(191, 22);
 			this.mnuNewDependency.Text = "&Dependency";
 			this.mnuNewDependency.Click += new System.EventHandler(this.mnuNewDependency_Click);
 			// 
@@ -222,7 +364,7 @@
 			// 
 			this.mnuNewNesting.Image = global::NClass.DiagramEditor.Properties.Resources.Nesting;
 			this.mnuNewNesting.Name = "mnuNewNesting";
-			this.mnuNewNesting.Size = new System.Drawing.Size(172, 22);
+			this.mnuNewNesting.Size = new System.Drawing.Size(191, 22);
 			this.mnuNewNesting.Text = "&Nesting";
 			this.mnuNewNesting.Click += new System.EventHandler(this.mnuNewNesting_Click);
 			// 
@@ -230,7 +372,7 @@
 			// 
 			this.mnuNewCommentRelationship.Image = global::NClass.DiagramEditor.Properties.Resources.CommentRel;
 			this.mnuNewCommentRelationship.Name = "mnuNewCommentRelationship";
-			this.mnuNewCommentRelationship.Size = new System.Drawing.Size(172, 22);
+			this.mnuNewCommentRelationship.Size = new System.Drawing.Size(191, 22);
 			this.mnuNewCommentRelationship.Text = "Co&mment Relationship";
 			this.mnuNewCommentRelationship.Click += new System.EventHandler(this.mnuNewCommentRelationship_Click);
 			// 
@@ -295,37 +437,6 @@
 			this.mnuSaveAsImage.Text = "&Save As Image...";
 			this.mnuSaveAsImage.Click += new System.EventHandler(this.mnuSaveAsImage_Click);
 			// 
-			// mnuFormat
-			// 
-			this.mnuFormat.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mnuAlign,
-            this.mnuMakeSameSize,
-            this.toolStripSeparator4,
-            this.mnuAutoWidth,
-            this.mnuAutoHeight,
-            this.mnuAutoLayout,
-            this.toolStripSeparator5,
-            this.mnuCollapseAll,
-            this.mnuExpandAll});
-			this.mnuFormat.Name = "mnuFormat";
-			this.mnuFormat.Size = new System.Drawing.Size(53, 20);
-			this.mnuFormat.Text = "F&ormat";
-			this.mnuFormat.DropDownOpening += new System.EventHandler(this.mnuFormat_DropDownOpening);
-			// 
-			// mnuAlign
-			// 
-			this.mnuAlign.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mnuAlignTop,
-            this.mnuAlignLeft,
-            this.mnuAlignBottom,
-            this.mnuAlignRight,
-            this.toolStripSeparator3,
-            this.mnuAlignHorizontal,
-            this.mnuAlignVertical});
-			this.mnuAlign.Name = "mnuAlign";
-			this.mnuAlign.Size = new System.Drawing.Size(161, 22);
-			this.mnuAlign.Text = "&Align";
-			// 
 			// mnuAlignTop
 			// 
 			this.mnuAlignTop.Image = global::NClass.DiagramEditor.Properties.Resources.AlignTop;
@@ -374,51 +485,6 @@
 			this.mnuAlignVertical.Text = "Align &Vertical Center";
 			this.mnuAlignVertical.Click += new System.EventHandler(this.mnuAlignVertical_Click);
 			// 
-			// mnuMakeSameSize
-			// 
-			this.mnuMakeSameSize.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mnuSameWidth,
-            this.mnuSameHeight,
-            this.mnuSameSize});
-			this.mnuMakeSameSize.Name = "mnuMakeSameSize";
-			this.mnuMakeSameSize.Size = new System.Drawing.Size(161, 22);
-			this.mnuMakeSameSize.Text = "&Make Same Size";
-			// 
-			// mnuSameWidth
-			// 
-			this.mnuSameWidth.Name = "mnuSameWidth";
-			this.mnuSameWidth.Size = new System.Drawing.Size(197, 22);
-			this.mnuSameWidth.Text = "Same &Width";
-			this.mnuSameWidth.Click += new System.EventHandler(this.mnuSameWidth_Click);
-			// 
-			// mnuSameHeight
-			// 
-			this.mnuSameHeight.Name = "mnuSameHeight";
-			this.mnuSameHeight.Size = new System.Drawing.Size(197, 22);
-			this.mnuSameHeight.Text = "Same &Height";
-			this.mnuSameHeight.Click += new System.EventHandler(this.mnuSameHeight_Click);
-			// 
-			// mnuSameSize
-			// 
-			this.mnuSameSize.Name = "mnuSameSize";
-			this.mnuSameSize.Size = new System.Drawing.Size(197, 22);
-			this.mnuSameSize.Text = "&Same Width and Height";
-			this.mnuSameSize.Click += new System.EventHandler(this.mnuSameSize_Click);
-			// 
-			// mnuAutoWidth
-			// 
-			this.mnuAutoWidth.Name = "mnuAutoWidth";
-			this.mnuAutoWidth.Size = new System.Drawing.Size(161, 22);
-			this.mnuAutoWidth.Text = "Auto &Width";
-			this.mnuAutoWidth.Click += new System.EventHandler(this.mnuAutoWidth_Click);
-			// 
-			// mnuAutoHeight
-			// 
-			this.mnuAutoHeight.Name = "mnuAutoHeight";
-			this.mnuAutoHeight.Size = new System.Drawing.Size(161, 22);
-			this.mnuAutoHeight.Text = "Auto &Height";
-			this.mnuAutoHeight.Click += new System.EventHandler(this.mnuAutoHeight_Click);
-			// 
 			// mnuAutoLayout
 			// 
 			this.mnuAutoLayout.Image = global::NClass.DiagramEditor.Properties.Resources.AutoLayout;
@@ -443,33 +509,6 @@
 			this.mnuExpandAll.Text = "&Expand All";
 			this.mnuExpandAll.Click += new System.EventHandler(this.mnuExpandAll_Click);
 			// 
-			// elementsToolStrip
-			// 
-			this.elementsToolStrip.Dock = System.Windows.Forms.DockStyle.None;
-			this.elementsToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolNewClass,
-            this.toolNewStructure,
-            this.toolNewInterface,
-            this.toolNewEnum,
-            this.toolNewDelegate,
-            this.toolNewComment,
-            this.toolSepEntities,
-            this.toolNewAssociation,
-            this.toolNewComposition,
-            this.toolNewAggregation,
-            this.toolNewGeneralization,
-            this.toolNewRealization,
-            this.toolNewDependency,
-            this.toolNewNesting,
-            this.toolNewCommentRelationship,
-            this.toolSepRelationships,
-            this.toolDelete});
-			this.elementsToolStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-			this.elementsToolStrip.Location = new System.Drawing.Point(0, 0);
-			this.elementsToolStrip.Name = "elementsToolStrip";
-			this.elementsToolStrip.Size = new System.Drawing.Size(369, 25);
-			this.elementsToolStrip.TabIndex = 8;
-			// 
 			// toolNewClass
 			// 
 			this.toolNewClass.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -479,12 +518,12 @@
 			this.toolNewClass.Size = new System.Drawing.Size(23, 22);
 			this.toolNewClass.Click += new System.EventHandler(this.mnuNewClass_Click);
 			// 
-			// toolNewStruct
+			// toolNewStructure
 			// 
 			this.toolNewStructure.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
 			this.toolNewStructure.Image = global::NClass.DiagramEditor.Properties.Resources.Structure;
 			this.toolNewStructure.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.toolNewStructure.Name = "toolNewStruct";
+			this.toolNewStructure.Name = "toolNewStructure";
 			this.toolNewStructure.Size = new System.Drawing.Size(23, 22);
 			this.toolNewStructure.Click += new System.EventHandler(this.mnuNewStructure_Click);
 			// 
@@ -523,11 +562,6 @@
 			this.toolNewComment.Name = "toolNewComment";
 			this.toolNewComment.Size = new System.Drawing.Size(23, 22);
 			this.toolNewComment.Click += new System.EventHandler(this.mnuNewComment_Click);
-			// 
-			// toolSepEntities
-			// 
-			this.toolSepEntities.Name = "toolSepEntities";
-			this.toolSepEntities.Size = new System.Drawing.Size(6, 25);
 			// 
 			// toolNewAssociation
 			// 
@@ -601,11 +635,6 @@
 			this.toolNewCommentRelationship.Size = new System.Drawing.Size(23, 22);
 			this.toolNewCommentRelationship.Click += new System.EventHandler(this.mnuNewCommentRelationship_Click);
 			// 
-			// toolSepRelationships
-			// 
-			this.toolSepRelationships.Name = "toolSepRelationships";
-			this.toolSepRelationships.Size = new System.Drawing.Size(6, 25);
-			// 
 			// toolDelete
 			// 
 			this.toolDelete.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -616,35 +645,25 @@
 			this.toolDelete.Size = new System.Drawing.Size(23, 22);
 			this.toolDelete.Click += new System.EventHandler(this.toolDelete_Click);
 			// 
-			// toolStripSeparator1
+			// mnuAutoSize
 			// 
-			this.toolStripSeparator1.Name = "toolStripSeparator1";
-			this.toolStripSeparator1.Size = new System.Drawing.Size(167, 6);
+			this.mnuAutoSize.Name = "mnuAutoSize";
+			this.mnuAutoSize.Size = new System.Drawing.Size(161, 22);
+			this.mnuAutoSize.Text = "Auto &Size";
+			this.mnuAutoSize.Click += new System.EventHandler(this.mnuAutoSize_Click);
 			// 
-			// toolStripSeparator2
+			// DiagramDynamicMenu
 			// 
-			this.toolStripSeparator2.Name = "toolStripSeparator2";
-			this.toolStripSeparator2.Size = new System.Drawing.Size(169, 6);
-			// 
-			// toolStripSeparator3
-			// 
-			this.toolStripSeparator3.Name = "toolStripSeparator3";
-			this.toolStripSeparator3.Size = new System.Drawing.Size(192, 6);
-			// 
-			// toolStripSeparator4
-			// 
-			this.toolStripSeparator4.Name = "toolStripSeparator4";
-			this.toolStripSeparator4.Size = new System.Drawing.Size(158, 6);
-			// 
-			// toolStripSeparator5
-			// 
-			this.toolStripSeparator5.Name = "toolStripSeparator5";
-			this.toolStripSeparator5.Size = new System.Drawing.Size(158, 6);
+			this.menuStrip.ResumeLayout(false);
+			this.menuStrip.PerformLayout();
+			this.elementsToolStrip.ResumeLayout(false);
+			this.elementsToolStrip.PerformLayout();
+
 		}
 
 		#endregion
 
-		private System.Windows.Forms.MenuStrip menuStrip1;
+		private System.Windows.Forms.MenuStrip menuStrip;
 		private System.Windows.Forms.ToolStripMenuItem mnuAddNewElement;
 		private System.Windows.Forms.ToolStripMenuItem mnuNewClass;
 		private System.Windows.Forms.ToolStripMenuItem mnuNewStructure;
@@ -708,5 +727,6 @@
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
 		private System.Windows.Forms.ToolStrip elementsToolStrip;
+		private System.Windows.Forms.ToolStripMenuItem mnuAutoSize;
 	}
 }

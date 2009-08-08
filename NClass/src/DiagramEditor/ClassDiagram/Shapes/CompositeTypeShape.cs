@@ -139,6 +139,20 @@ namespace NClass.DiagramEditor.ClassDiagram.Shapes
 			}
 		}
 
+		protected internal sealed override bool DeleteSelectedMember(bool showConfirmation)
+		{
+			if (IsActive && ActiveMember != null)
+			{
+				if (!showConfirmation || ConfirmMemberDelete())
+					DeleteActiveMember();
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+
 		protected override void OnMouseDown(AbsoluteMouseEventArgs e)
 		{
 			base.OnMouseDown(e);
@@ -197,17 +211,28 @@ namespace NClass.DiagramEditor.ClassDiagram.Shapes
 
 		internal void DeleteActiveMember()
 		{
-			int index = ActiveMemberIndex;
-			if (index >= 0)
+			if (ActiveMemberIndex >= 0)
 			{
+				int newIndex;
 				int fieldCount = CompositeType.FieldCount;
-				bool lastField = (index == fieldCount - 1 && fieldCount >= 2);
-				bool lastOperation = (index == CompositeType.MemberCount - 1);
+				int memberCount = CompositeType.MemberCount;
+
+				if (ActiveMemberIndex == fieldCount - 1 && fieldCount >= 2) // Last field
+				{
+					newIndex = fieldCount - 2;
+				}
+				else if (ActiveMemberIndex == memberCount - 1) // Last member
+				{
+					newIndex = ActiveMemberIndex - 1;
+				}
+				else
+				{
+					newIndex = ActiveMemberIndex;
+				}
 				
 				CompositeType.RemoveMember(ActiveMember);
-				if (lastField)
-					index = CompositeType.FieldCount - 1;
-				ActiveMemberIndex = index;
+				ActiveMemberIndex = newIndex;
+				OnActiveMemberChanged(EventArgs.Empty);
 			}
 		}
 

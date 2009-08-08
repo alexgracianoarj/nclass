@@ -401,9 +401,6 @@
   <data name="ImplementExplicitly" xml:space="preserve">
     <value>Implementiere expliziet</value>
   </data>
-  <data name="DeleteConfirmation" xml:space="preserve">
-    <value>Sind Sie sicher, dass Sie dieses Item löschen möchten?</value>
-  </data>
   <data name="ErrorExplicitImplementationAccess" xml:space="preserve">
     <value>In einer expliziten Implementierung können Zugriffsrechte vergeben werden.</value>
   </data>

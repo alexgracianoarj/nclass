@@ -387,9 +387,6 @@
   <data name="ImplementExplicitly" xml:space="preserve">
     <value>显示实现</value>
   </data>
-  <data name="DeleteConfirmation" xml:space="preserve">
-    <value>确认要删除所选项？</value>
-  </data>
   <data name="ErrorExplicitImplementationAccess" xml:space="preserve">
     <value>无法以显示实现方式设置访问修饰符。</value>
   </data>

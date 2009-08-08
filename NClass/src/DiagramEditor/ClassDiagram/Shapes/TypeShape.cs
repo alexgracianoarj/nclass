@@ -258,6 +258,8 @@ namespace NClass.DiagramEditor.ClassDiagram.Shapes
 
 		protected internal abstract void EditMembers();
 
+		protected internal abstract override bool DeleteSelectedMember(bool showConfirmation);
+
 		protected internal override IEnumerable<ToolStripItem> GetContextMenuItems(Diagram diagram)
 		{
 			return TypeShapeContextMenu.Default.GetMenuItems(diagram);

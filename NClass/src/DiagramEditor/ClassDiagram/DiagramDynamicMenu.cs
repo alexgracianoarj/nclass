@@ -121,6 +121,7 @@ namespace NClass.DiagramEditor.ClassDiagram
 			mnuSameWidth.Text = Strings.MenuSameWidth;
 			mnuSameHeight.Text = Strings.MenuSameHeight;
 			mnuSameSize.Text = Strings.MenuSameSize;
+			mnuAutoSize.Text = Strings.MenuAutoSize;
 			mnuAutoWidth.Text = Strings.MenuAutoWidth;
 			mnuAutoHeight.Text = Strings.MenuAutoHeight;
 			mnuCollapseAll.Text = Strings.MenuCollapseAll;
@@ -198,7 +199,7 @@ namespace NClass.DiagramEditor.ClassDiagram
 		private void mnuNewComposition_Click(object sender, EventArgs e)
 		{
 			diagram.CreateConnection(RelationshipType.Composition);
-			//TODO: toolNewComposition.Checked = true;
+			//toolNewComposition.Checked = true;
 		}
 
 		private void mnuNewAggregation_Click(object sender, EventArgs e)
@@ -361,6 +362,12 @@ namespace NClass.DiagramEditor.ClassDiagram
 		{
 			if (diagram != null)
 				diagram.AdjustToSameSize();
+		}
+
+		private void mnuAutoSize_Click(object sender, EventArgs e)
+		{
+			if (diagram != null)
+				diagram.AutoSizeOfSelectedShapes();
 		}
 
 		private void mnuAutoWidth_Click(object sender, EventArgs e)

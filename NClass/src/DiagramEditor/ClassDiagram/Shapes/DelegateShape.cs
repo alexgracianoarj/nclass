@@ -99,6 +99,20 @@ namespace NClass.DiagramEditor.ClassDiagram.Shapes
 				return parameterEditor;
 		}
 
+		protected internal override bool DeleteSelectedMember(bool showConfirmation)
+		{
+			if (IsActive && ActiveParameter != null)
+			{
+				if (!showConfirmation || ConfirmMemberDelete())
+					DeleteActiveParameter();
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+
 		protected override bool CloneEntity(Diagram diagram)
 		{
 			return diagram.InsertDelegate(DelegateType.Clone());
@@ -187,15 +201,23 @@ namespace NClass.DiagramEditor.ClassDiagram.Shapes
 			}
 		}
 		
-		internal void RemoveActiveParameter()
+		internal void DeleteActiveParameter()
 		{
 			if (ActiveMemberIndex >= 0)
 			{
-				int index = ActiveMemberIndex;
-				bool lastParameter = (index == DelegateType.ArgumentCount - 1);
+				int newIndex;
+				if (ActiveMemberIndex == DelegateType.ArgumentCount - 1) // Last parameter
+				{
+					newIndex = ActiveMemberIndex - 1;
+				}
+				else
+				{
+					newIndex = ActiveMemberIndex;
+				}
 
 				DelegateType.RemoveParameter(ActiveParameter);
-				ActiveMemberIndex = index;
+				ActiveMemberIndex = newIndex;
+				OnActiveMemberChanged(EventArgs.Empty);
 			}
 		}
 

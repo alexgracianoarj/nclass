@@ -135,7 +135,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
 
 		protected override void Delete()
 		{
-			shape.RemoveActiveParameter();
+			shape.DeleteActiveParameter();
 		}
 	}
 }

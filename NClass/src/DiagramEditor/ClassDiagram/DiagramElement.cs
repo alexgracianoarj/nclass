@@ -20,6 +20,7 @@ using System.Windows.Forms;
 using System.Collections.Generic;
 using NClass.Core;
 using NClass.DiagramEditor.ClassDiagram.Editors;
+using NClass.Translations;
 
 namespace NClass.DiagramEditor.ClassDiagram
 {
@@ -176,6 +177,25 @@ namespace NClass.DiagramEditor.ClassDiagram
 
 		protected internal virtual void RelocateWindow()
 		{
+		}
+
+		internal bool DeleteSelectedMember()
+		{
+			return DeleteSelectedMember(true);
+		}
+
+		protected internal virtual bool DeleteSelectedMember(bool showConfirmation)
+		{
+			return false;
+		}
+
+		protected bool ConfirmMemberDelete()
+		{
+			DialogResult result = MessageBox.Show(
+				Strings.DeleteMemberConfirmation, Strings.Confirmation,
+				MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+			return (result == DialogResult.Yes);
 		}
 
 		public void Draw(Graphics g)

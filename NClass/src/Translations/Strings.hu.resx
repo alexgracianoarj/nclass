@@ -271,9 +271,6 @@ Biztos, hogy folytatni akarja?</value>
   <data name="Delete" xml:space="preserve">
     <value>Törlés</value>
   </data>
-  <data name="DeleteConfirmation" xml:space="preserve">
-    <value>Biztos, hogy törölni akarja a kijelölt elem(ek)et?</value>
-  </data>
   <data name="DeleteSelectedItems" xml:space="preserve">
     <value>Kijelölt elem(ek) törlése</value>
   </data>
@@ -929,7 +926,7 @@ A hibát leíró fájl és a megnyitott projektek az Application Data könyvtár
     <value>Névtelen</value>
   </data>
   <data name="UseSnapping" xml:space="preserve">
-    <value>Precíziós csúsztatás használata</value>
+    <value>Diagram elemek egymáshoz igazítása</value>
   </data>
   <data name="UseTabs" xml:space="preserve">
     <value>Tabulátor használata szóközök helyett</value>
@@ -1092,5 +1089,14 @@ Szeretné most letölteni a szükséges keretrendszert a Microsoft honlapjáról
   <data name="MenuReverse" xml:space="preserve">
     <value>Megfordít</value>
     <comment>Reverse the whole association relationship</comment>
+  </data>
+  <data name="MenuAutoSize" xml:space="preserve">
+    <value>Automatikus &amp;méret</value>
+  </data>
+  <data name="DeleteElementsConfirmation" xml:space="preserve">
+    <value>Biztos, hogy törölni akarja a kijelölt diagram elemeket?</value>
+  </data>
+  <data name="DeleteMemberConfirmation" xml:space="preserve">
+    <value>Biztos, hogy törölni akarja a kijelölt tagot?</value>
   </data>
 </root>

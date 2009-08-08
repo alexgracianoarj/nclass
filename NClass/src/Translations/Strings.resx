@@ -401,8 +401,8 @@
   <data name="ImplementExplicitly" xml:space="preserve">
     <value>Implement explicitly</value>
   </data>
-  <data name="DeleteConfirmation" xml:space="preserve">
-    <value>Are you sure you want to delete the selected item(s)?</value>
+  <data name="DeleteElementsConfirmation" xml:space="preserve">
+    <value>Are you sure you want to delete the selected diagram element(s)?</value>
   </data>
   <data name="ErrorExplicitImplementationAccess" xml:space="preserve">
     <value>Cannot set access modifier in explicit implementing.</value>
@@ -1140,5 +1140,11 @@ Do you want to download the framework now?</value>
   <data name="MenuReverse" xml:space="preserve">
     <value>Reverse</value>
     <comment>Reverse the whole association relationship</comment>
+  </data>
+  <data name="MenuAutoSize" xml:space="preserve">
+    <value>Auto &amp;Size</value>
+  </data>
+  <data name="DeleteMemberConfirmation" xml:space="preserve">
+    <value>Are you sure you want to delete the selected member?</value>
   </data>
 </root>

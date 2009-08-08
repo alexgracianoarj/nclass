@@ -538,11 +538,20 @@ namespace NClass.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Are you sure you want to delete the selected item(s)?.
+        ///   Looks up a localized string similar to Are you sure you want to delete the selected diagram element(s)?.
         /// </summary>
-        public static string DeleteConfirmation {
+        public static string DeleteElementsConfirmation {
             get {
-                return ResourceManager.GetString("DeleteConfirmation", resourceCulture);
+                return ResourceManager.GetString("DeleteElementsConfirmation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to delete the selected member?.
+        /// </summary>
+        public static string DeleteMemberConfirmation {
+            get {
+                return ResourceManager.GetString("DeleteMemberConfirmation", resourceCulture);
             }
         }
         
@@ -1508,6 +1517,15 @@ namespace NClass.Translations {
         public static string MenuAutoRouting {
             get {
                 return ResourceManager.GetString("MenuAutoRouting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Auto &amp;Size.
+        /// </summary>
+        public static string MenuAutoSize {
+            get {
+                return ResourceManager.GetString("MenuAutoSize", resourceCulture);
             }
         }
         

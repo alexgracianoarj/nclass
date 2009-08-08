@@ -369,7 +369,10 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
 			switch (e.KeyCode)
 			{
 				case Keys.Enter:
-					ValidateName();
+					if (e.Modifiers == Keys.Shift)
+						OpenNewMemberDropDown();
+					else
+						ValidateName();
 					e.Handled = true;
 					break;
 
@@ -382,6 +385,38 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
 				case Keys.Down:
 					shape.ActiveMemberIndex = 0;
 					e.Handled = true;
+					break;
+			}
+		}
+
+		private void OpenNewMemberDropDown()
+		{
+			toolNewMember.ShowDropDown();
+
+			switch (NewMemberType)
+			{
+				case MemberType.Field:
+					toolNewField.Select();
+					break;
+
+				case MemberType.Method:
+					toolNewMethod.Select();
+					break;
+
+				case MemberType.Constructor:
+					toolNewConstructor.Select();
+					break;
+
+				case MemberType.Destructor:
+					toolNewDestructor.Select();
+					break;
+
+				case MemberType.Property:
+					toolNewProperty.Select();
+					break;
+
+				case MemberType.Event:
+					toolNewEvent.Select();
 					break;
 			}
 		}
