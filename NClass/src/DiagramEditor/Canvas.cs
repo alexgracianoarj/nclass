@@ -241,9 +241,6 @@ namespace NClass.DiagramEditor
 					Point absPos = ParentForm.PointToClient(point);
 					window.ParentLocation = absPos;
 					window.BringToFront();
-
-					if (MonoHelper.IsRunningOnMono)
-						this.Focus();
 				}
 			}
 		}
@@ -280,6 +277,16 @@ namespace NClass.DiagramEditor
 				(int) (location.X * Zoom - Offset.X),
 				(int) (location.Y * Zoom - Offset.Y)
 			);
+		}
+
+		public void ZoomIn()
+		{
+			ChangeZoom(true);
+		}
+
+		public void ZoomOut()
+		{
+			ChangeZoom(false);
 		}
 
 		public void ChangeZoom(bool enlarge)
@@ -541,6 +548,8 @@ namespace NClass.DiagramEditor
 
 		protected override void OnMouseDown(MouseEventArgs e)
 		{
+			base.OnMouseDown(e);
+			
 			if (HasDocument)
 			{
 				AbsoluteMouseEventArgs abs_e = new AbsoluteMouseEventArgs(e, Document);
@@ -548,41 +557,62 @@ namespace NClass.DiagramEditor
 				if (e.Button == MouseButtons.Right)
 					this.ContextMenuStrip = Document.GetContextMenu(abs_e);
 			}
-			base.OnMouseDown(e);
 		}
 
 		protected override void OnMouseMove(MouseEventArgs e)
 		{
+			base.OnMouseMove(e);
+			
 			if (HasDocument)
 			{
 				Document.MouseMove(new AbsoluteMouseEventArgs(e, Document));
 			}
-			base.OnMouseMove(e);
 		}
 
 		protected override void OnMouseUp(MouseEventArgs e)
 		{
+			base.OnMouseUp(e);
+			
 			if (HasDocument)
 			{
 				Document.MouseUp(new AbsoluteMouseEventArgs(e, Document));
 			}
-			base.OnMouseUp(e);
 		}
 
 		protected override void OnMouseDoubleClick(MouseEventArgs e)
 		{
+			base.OnMouseDoubleClick(e);
+			
 			if (HasDocument)
 			{
 				Document.DoubleClick(new AbsoluteMouseEventArgs(e, Document));
 			}
-			base.OnMouseDoubleClick(e);
 		}
 
 		protected override void OnKeyDown(KeyEventArgs e)
 		{
 			base.OnKeyDown(e);
+
 			if (document != null)
+			{
+				if (e.Modifiers == Keys.Control)
+				{
+					if (e.KeyCode == Keys.Add)
+					{
+						ZoomIn();
+					}
+					else if (e.KeyCode == Keys.Subtract)
+					{
+						ZoomOut();
+					}
+					else if (e.KeyCode == Keys.Multiply || e.KeyCode == Keys.NumPad0)
+					{
+						Zoom = 1.0F;
+					}
+				}
+				
 				document.KeyDown(e);
+			}
 		}
 
 		protected override void OnPaint(PaintEventArgs e)

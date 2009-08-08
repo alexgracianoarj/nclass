@@ -95,6 +95,12 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
 			return true;
 		}
 
+		protected override void HideEditor()
+		{
+			NeedValidation = false;
+			shape.HideEditor();
+		}
+
 		protected override void SelectPrevious()
 		{
 			if (ValidateDeclarationLine())

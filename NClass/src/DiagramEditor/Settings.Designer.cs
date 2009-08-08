@@ -130,5 +130,17 @@ namespace NClass.DiagramEditor {
                 this["UseClearType"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool UseClearTypeForImages {
+            get {
+                return ((bool)(this["UseClearTypeForImages"]));
+            }
+            set {
+                this["UseClearTypeForImages"] = value;
+            }
+        }
     }
 }

@@ -57,6 +57,7 @@
 			this.btnLoad = new System.Windows.Forms.Button();
 			this.btnSave = new System.Windows.Forms.Button();
 			this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+			this.chkClearTypeForImages = new System.Windows.Forms.CheckBox();
 			this.tabOptions.SuspendLayout();
 			this.tabGeneral.SuspendLayout();
 			this.grpGeneral.SuspendLayout();
@@ -104,7 +105,7 @@
 			this.tabOptions.Multiline = true;
 			this.tabOptions.Name = "tabOptions";
 			this.tabOptions.SelectedIndex = 0;
-			this.tabOptions.Size = new System.Drawing.Size(318, 410);
+			this.tabOptions.Size = new System.Drawing.Size(328, 435);
 			this.tabOptions.TabIndex = 4;
 			// 
 			// tabGeneral
@@ -114,7 +115,7 @@
 			this.tabGeneral.Location = new System.Drawing.Point(4, 22);
 			this.tabGeneral.Name = "tabGeneral";
 			this.tabGeneral.Padding = new System.Windows.Forms.Padding(3);
-			this.tabGeneral.Size = new System.Drawing.Size(310, 384);
+			this.tabGeneral.Size = new System.Drawing.Size(320, 409);
 			this.tabGeneral.TabIndex = 0;
 			this.tabGeneral.Text = "General";
 			this.tabGeneral.UseVisualStyleBackColor = true;
@@ -130,7 +131,7 @@
 			this.grpGeneral.Controls.Add(this.cboLanguage);
 			this.grpGeneral.Location = new System.Drawing.Point(6, 6);
 			this.grpGeneral.Name = "grpGeneral";
-			this.grpGeneral.Size = new System.Drawing.Size(298, 124);
+			this.grpGeneral.Size = new System.Drawing.Size(308, 124);
 			this.grpGeneral.TabIndex = 0;
 			this.grpGeneral.TabStop = false;
 			this.grpGeneral.Text = "General";
@@ -182,7 +183,7 @@
 			this.cboLanguage.FormattingEnabled = true;
 			this.cboLanguage.Location = new System.Drawing.Point(67, 17);
 			this.cboLanguage.Name = "cboLanguage";
-			this.cboLanguage.Size = new System.Drawing.Size(200, 21);
+			this.cboLanguage.Size = new System.Drawing.Size(210, 21);
 			this.cboLanguage.TabIndex = 1;
 			// 
 			// grpDiagram
@@ -195,26 +196,30 @@
 			this.grpDiagram.Controls.Add(this.chkUsePrecisionSnapping);
 			this.grpDiagram.Location = new System.Drawing.Point(6, 136);
 			this.grpDiagram.Name = "grpDiagram";
-			this.grpDiagram.Size = new System.Drawing.Size(298, 242);
+			this.grpDiagram.Size = new System.Drawing.Size(308, 267);
 			this.grpDiagram.TabIndex = 1;
 			this.grpDiagram.TabStop = false;
 			this.grpDiagram.Text = "Diagram";
 			// 
 			// panelClearType
 			// 
+			this.panelClearType.Anchor = ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+						| System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
+			this.panelClearType.Controls.Add(this.chkClearTypeForImages);
 			this.panelClearType.Controls.Add(this.radClearTypeNever);
 			this.panelClearType.Controls.Add(this.radClearTypeAlways);
 			this.panelClearType.Controls.Add(this.radClearTypeWhenZoomed);
 			this.panelClearType.Controls.Add(this.lblUseClearType);
 			this.panelClearType.Location = new System.Drawing.Point(9, 150);
 			this.panelClearType.Name = "panelClearType";
-			this.panelClearType.Size = new System.Drawing.Size(200, 88);
+			this.panelClearType.Size = new System.Drawing.Size(293, 111);
 			this.panelClearType.TabIndex = 10;
 			// 
 			// radClearTypeNever
 			// 
 			this.radClearTypeNever.AutoSize = true;
-			this.radClearTypeNever.Location = new System.Drawing.Point(19, 67);
+			this.radClearTypeNever.Location = new System.Drawing.Point(12, 67);
 			this.radClearTypeNever.Name = "radClearTypeNever";
 			this.radClearTypeNever.Size = new System.Drawing.Size(54, 17);
 			this.radClearTypeNever.TabIndex = 12;
@@ -225,7 +230,7 @@
 			// radClearTypeAlways
 			// 
 			this.radClearTypeAlways.AutoSize = true;
-			this.radClearTypeAlways.Location = new System.Drawing.Point(19, 21);
+			this.radClearTypeAlways.Location = new System.Drawing.Point(12, 21);
 			this.radClearTypeAlways.Name = "radClearTypeAlways";
 			this.radClearTypeAlways.Size = new System.Drawing.Size(58, 17);
 			this.radClearTypeAlways.TabIndex = 11;
@@ -236,7 +241,7 @@
 			// radClearTypeWhenZoomed
 			// 
 			this.radClearTypeWhenZoomed.AutoSize = true;
-			this.radClearTypeWhenZoomed.Location = new System.Drawing.Point(19, 44);
+			this.radClearTypeWhenZoomed.Location = new System.Drawing.Point(12, 44);
 			this.radClearTypeWhenZoomed.Name = "radClearTypeWhenZoomed";
 			this.radClearTypeWhenZoomed.Size = new System.Drawing.Size(125, 17);
 			this.radClearTypeWhenZoomed.TabIndex = 10;
@@ -255,13 +260,15 @@
 			// 
 			// panelChevron
 			// 
+			this.panelChevron.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this.panelChevron.Controls.Add(this.lblShowChevron);
 			this.panelChevron.Controls.Add(this.radChevronAsNeeded);
 			this.panelChevron.Controls.Add(this.radChevronNever);
 			this.panelChevron.Controls.Add(this.radChevronAlways);
 			this.panelChevron.Location = new System.Drawing.Point(9, 49);
 			this.panelChevron.Name = "panelChevron";
-			this.panelChevron.Size = new System.Drawing.Size(200, 89);
+			this.panelChevron.Size = new System.Drawing.Size(293, 89);
 			this.panelChevron.TabIndex = 9;
 			// 
 			// lblShowChevron
@@ -276,7 +283,7 @@
 			// radChevronAsNeeded
 			// 
 			this.radChevronAsNeeded.AutoSize = true;
-			this.radChevronAsNeeded.Location = new System.Drawing.Point(19, 44);
+			this.radChevronAsNeeded.Location = new System.Drawing.Point(12, 44);
 			this.radChevronAsNeeded.Name = "radChevronAsNeeded";
 			this.radChevronAsNeeded.Size = new System.Drawing.Size(123, 17);
 			this.radChevronAsNeeded.TabIndex = 2;
@@ -287,7 +294,7 @@
 			// radChevronNever
 			// 
 			this.radChevronNever.AutoSize = true;
-			this.radChevronNever.Location = new System.Drawing.Point(19, 67);
+			this.radChevronNever.Location = new System.Drawing.Point(12, 67);
 			this.radChevronNever.Name = "radChevronNever";
 			this.radChevronNever.Size = new System.Drawing.Size(54, 17);
 			this.radChevronNever.TabIndex = 4;
@@ -298,7 +305,7 @@
 			// radChevronAlways
 			// 
 			this.radChevronAlways.AutoSize = true;
-			this.radChevronAlways.Location = new System.Drawing.Point(19, 21);
+			this.radChevronAlways.Location = new System.Drawing.Point(12, 21);
 			this.radChevronAlways.Name = "radChevronAlways";
 			this.radChevronAlways.Size = new System.Drawing.Size(58, 17);
 			this.radChevronAlways.TabIndex = 3;
@@ -322,7 +329,7 @@
 			this.tabStyle.Location = new System.Drawing.Point(4, 22);
 			this.tabStyle.Name = "tabStyle";
 			this.tabStyle.Padding = new System.Windows.Forms.Padding(3);
-			this.tabStyle.Size = new System.Drawing.Size(310, 384);
+			this.tabStyle.Size = new System.Drawing.Size(310, 409);
 			this.tabStyle.TabIndex = 1;
 			this.tabStyle.Text = "Style";
 			this.tabStyle.UseVisualStyleBackColor = true;
@@ -345,14 +352,14 @@
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel1.Size = new System.Drawing.Size(304, 378);
+			this.tableLayoutPanel1.Size = new System.Drawing.Size(304, 403);
 			this.tableLayoutPanel1.TabIndex = 6;
 			// 
 			// btnClear
 			// 
 			this.btnClear.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnClear.AutoSize = true;
-			this.btnClear.Location = new System.Drawing.Point(64, 352);
+			this.btnClear.Location = new System.Drawing.Point(64, 377);
 			this.btnClear.Name = "btnClear";
 			this.btnClear.Size = new System.Drawing.Size(75, 23);
 			this.btnClear.TabIndex = 4;
@@ -368,7 +375,7 @@
 			this.tableLayoutPanel1.SetColumnSpan(this.stylePropertyGrid, 3);
 			this.stylePropertyGrid.Location = new System.Drawing.Point(3, 3);
 			this.stylePropertyGrid.Name = "stylePropertyGrid";
-			this.stylePropertyGrid.Size = new System.Drawing.Size(298, 316);
+			this.stylePropertyGrid.Size = new System.Drawing.Size(298, 341);
 			this.stylePropertyGrid.TabIndex = 0;
 			this.stylePropertyGrid.ToolbarVisible = false;
 			this.stylePropertyGrid.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.stylePropertyGrid_PropertyValueChanged);
@@ -380,7 +387,7 @@
 			this.tableLayoutPanel1.SetColumnSpan(this.cboStyles, 3);
 			this.cboStyles.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.cboStyles.FormattingEnabled = true;
-			this.cboStyles.Location = new System.Drawing.Point(3, 325);
+			this.cboStyles.Location = new System.Drawing.Point(3, 350);
 			this.cboStyles.Name = "cboStyles";
 			this.cboStyles.Size = new System.Drawing.Size(298, 21);
 			this.cboStyles.TabIndex = 1;
@@ -390,7 +397,7 @@
 			// 
 			this.btnLoad.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnLoad.AutoSize = true;
-			this.btnLoad.Location = new System.Drawing.Point(145, 352);
+			this.btnLoad.Location = new System.Drawing.Point(145, 377);
 			this.btnLoad.Name = "btnLoad";
 			this.btnLoad.Size = new System.Drawing.Size(75, 23);
 			this.btnLoad.TabIndex = 2;
@@ -402,7 +409,7 @@
 			// 
 			this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnSave.AutoSize = true;
-			this.btnSave.Location = new System.Drawing.Point(226, 352);
+			this.btnSave.Location = new System.Drawing.Point(226, 377);
 			this.btnSave.Name = "btnSave";
 			this.btnSave.Size = new System.Drawing.Size(75, 23);
 			this.btnSave.TabIndex = 3;
@@ -418,16 +425,28 @@
 			this.flowLayoutPanel1.Controls.Add(this.btnCancel);
 			this.flowLayoutPanel1.Controls.Add(this.btnOK);
 			this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
-			this.flowLayoutPanel1.Location = new System.Drawing.Point(168, 425);
+			this.flowLayoutPanel1.Location = new System.Drawing.Point(178, 450);
 			this.flowLayoutPanel1.Name = "flowLayoutPanel1";
 			this.flowLayoutPanel1.Size = new System.Drawing.Size(162, 29);
 			this.flowLayoutPanel1.TabIndex = 5;
 			// 
+			// chkClearTypeForImages
+			// 
+			this.chkClearTypeForImages.AutoSize = true;
+			this.chkClearTypeForImages.Location = new System.Drawing.Point(12, 90);
+			this.chkClearTypeForImages.Name = "chkClearTypeForImages";
+			this.chkClearTypeForImages.Size = new System.Drawing.Size(226, 17);
+			this.chkClearTypeForImages.TabIndex = 13;
+			this.chkClearTypeForImages.Text = "In exported images (disables transparency)";
+			this.chkClearTypeForImages.UseVisualStyleBackColor = true;
+			// 
 			// OptionsDialog
 			// 
+			this.AcceptButton = this.btnOK;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(342, 466);
+			this.CancelButton = this.btnCancel;
+			this.ClientSize = new System.Drawing.Size(352, 491);
 			this.Controls.Add(this.flowLayoutPanel1);
 			this.Controls.Add(this.tabOptions);
 			this.MaximizeBox = false;
@@ -491,6 +510,7 @@
 		private System.Windows.Forms.Label lblUseClearType;
 		private System.Windows.Forms.Panel panelChevron;
 		private System.Windows.Forms.CheckBox chkRememberOpenProjects;
+		private System.Windows.Forms.CheckBox chkClearTypeForImages;
 
 
 

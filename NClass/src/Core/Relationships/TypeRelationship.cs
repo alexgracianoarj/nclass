@@ -38,14 +38,17 @@ namespace NClass.Core
 			this.second = second;
 		}
 
+		//TODO: inkább abstract property-kre hivatkozzon
 		public sealed override IEntity First
 		{
 			get { return first; }
+			protected set { first = (TypeBase) value; }
 		}
 
 		public sealed override IEntity Second
 		{
 			get { return second; }
+			protected set { second = (TypeBase) value; }
 		}
 	}
 }

@@ -306,11 +306,11 @@ namespace NClass.DiagramEditor.ClassDiagram
 
 		private IEnumerable<DiagramElement> GetElementsInDisplayOrder()
 		{
-			foreach (Connection connection in connections.GetSelectedElements())
-				yield return connection;
-			
 			foreach (Shape shape in shapes.GetSelectedElements())
 				yield return shape;
+
+			foreach (Connection connection in connections.GetSelectedElements())
+				yield return connection;
 			
 			foreach (Connection connection in connections.GetUnselectedElements())
 				yield return connection;
@@ -327,17 +327,17 @@ namespace NClass.DiagramEditor.ClassDiagram
 			foreach (Connection connection in connections.GetUnselectedElementsReversed())
 				yield return connection;
 			
-			foreach (Shape shape in shapes.GetSelectedElementsReversed())
-				yield return shape;
-			
 			foreach (Connection connection in connections.GetSelectedElementsReversed())
 				yield return connection;
+
+			foreach (Shape shape in shapes.GetSelectedElementsReversed())
+				yield return shape;
 		}
 
 		public void CloseWindows()
 		{
 			if (ActiveElement != null)
-				ActiveElement.IsActive = false;
+				ActiveElement.HideEditor();
 		}
 
 		public void Cut()
@@ -949,10 +949,7 @@ namespace NClass.DiagramEditor.ClassDiagram
 			RedrawSuspended = true;
 			if (state == State.CreatingShape)
 			{
-				Shape shape = AddShape(shapeType);
-				shape.Location = shapeOutline.Location;
-				RecalculateSize();
-				state = State.Normal;
+				AddCreatedShape();
 			}
 			else if (state == State.CreatingConnection)
 			{
@@ -965,7 +962,26 @@ namespace NClass.DiagramEditor.ClassDiagram
 				SelectElements(e);
 			}
 
+			if (e.Button == MouseButtons.Right)
+			{
+				ActiveElement = null;
+			}
+
 			RedrawSuspended = false;
+		}
+
+		private void AddCreatedShape()
+		{
+			DeselectAll();
+			Shape shape = AddShape(shapeType);
+			shape.Location = shapeOutline.Location;
+			RecalculateSize();
+			state = State.Normal;
+
+			shape.IsSelected = true;
+			shape.IsActive = true;
+			if (shape is TypeShape) //TODO: nem szép
+				shape.ShowEditor();
 		}
 
 		private void SelectElements(AbsoluteMouseEventArgs e)
@@ -1025,13 +1041,9 @@ namespace NClass.DiagramEditor.ClassDiagram
 			}
 			else
 			{
-				foreach (Shape shape in shapes)
+				foreach (DiagramElement element in GetElementsInDisplayOrder())
 				{
-					shape.MouseMoved(e);
-				}
-				foreach (Connection connection in connections)
-				{
-					connection.MouseMoved(e);
+					element.MouseMoved(e);
 				}
 			}
 			
@@ -1049,13 +1061,9 @@ namespace NClass.DiagramEditor.ClassDiagram
 			}
 			else
 			{
-				foreach (Shape shape in shapes)
+				foreach (DiagramElement element in GetElementsInDisplayOrder())
 				{
-					shape.MouseUpped(e);
-				}
-				foreach (Connection connection in connections)
-				{
-					connection.MouseUpped(e);
+					element.MouseUpped(e);
 				}
 			}
 
@@ -1092,18 +1100,17 @@ namespace NClass.DiagramEditor.ClassDiagram
 
 		public void DoubleClick(AbsoluteMouseEventArgs e)
 		{
-			foreach (Shape shape in shapes)
+			foreach (DiagramElement element in GetElementsInDisplayOrder())
 			{
-				shape.DoubleClicked(e);
-			}
-			foreach (Connection connection in connections)
-			{
-				connection.DoubleClicked(e);
+				element.DoubleClicked(e);
 			}
 		}
 
 		public void KeyDown(KeyEventArgs e)
 		{
+			RedrawSuspended = true;
+			
+			//TODO: ActiveElement.KeyDown()
 			switch (e.KeyCode)
 			{
 				case Keys.Delete:
@@ -1112,7 +1119,13 @@ namespace NClass.DiagramEditor.ClassDiagram
 
 				case Keys.Escape:
 					state = State.Normal;
+					DeselectAll();
 					Redraw();
+					break;
+
+				case Keys.Enter:
+					if (ActiveElement != null)
+						ActiveElement.ShowEditor();
 					break;
 
 				case Keys.Up:
@@ -1152,6 +1165,7 @@ namespace NClass.DiagramEditor.ClassDiagram
 						Paste();
 					break;
 			}
+			RedrawSuspended = false;
 		}
 
 		public RectangleF GetPrintingArea(bool selectedOnly)
@@ -1728,7 +1742,7 @@ namespace NClass.DiagramEditor.ClassDiagram
 		{
 			if (ZoomChanged != null)
 				ZoomChanged(this, e);
-			ActiveElement = null;
+			CloseWindows();
 		}
 
 		protected virtual void OnSatusChanged(EventArgs e)

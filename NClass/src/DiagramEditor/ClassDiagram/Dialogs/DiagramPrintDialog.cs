@@ -132,7 +132,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Dialogs
 			}
 		}
 
-		private static Style ConvertStyle(Style selectedStyle)
+		private static Style MakeShadowsOpaque(Style selectedStyle)
 		{
 			Style converted = selectedStyle.Clone();
 			converted.ShadowColor = DisableTransparency(converted.ShadowColor);
@@ -151,7 +151,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Dialogs
 		private void printDocument_BeginPrint(object sender, PrintEventArgs e)
 		{
 			pageIndex = 0;
-			printingStyle = ConvertStyle(selectedStyle);
+			printingStyle = MakeShadowsOpaque(selectedStyle);
 		}
 
 		private void printDocument_PrintPage(object sender, PrintPageEventArgs e)

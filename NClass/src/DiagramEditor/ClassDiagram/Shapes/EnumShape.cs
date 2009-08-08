@@ -69,10 +69,15 @@ namespace NClass.DiagramEditor.ClassDiagram.Shapes
 			}
 			set
 			{
+				EnumValue oldValue = ActiveValue;
+
 				if (value < EnumType.ValueCount)
 					base.ActiveMemberIndex = value;
 				else
 					base.ActiveMemberIndex = EnumType.ValueCount - 1;
+
+				if (oldValue != ActiveValue)
+					OnActiveMemberChanged(EventArgs.Empty);
 			}
 		}
 
@@ -134,22 +139,6 @@ namespace NClass.DiagramEditor.ClassDiagram.Shapes
 			return style.EnumGradientHeaderStyle;
 		}
 
-		public override void SelectPrevious()
-		{
-			if (ActiveMemberIndex > 0)
-			{
-				ActiveMemberIndex--;
-			}
-		}
-
-		public override void SelectNext()
-		{
-			if (ActiveValue != null)
-			{
-				ActiveMemberIndex++;
-			}
-		}
-
 		public override void MoveUp()
 		{
 			if (ActiveValue != null && EnumType.MoveUpItem(ActiveValue))
@@ -206,11 +195,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Shapes
 				bool lastValue = (index == EnumType.ValueCount - 1);
 				EnumType.RemoveValue(ActiveValue);
 
-				if (!lastValue)
-					OnActiveMemberChanging(EventArgs.Empty); //TODO: nem szép!
 				ActiveMemberIndex = index;
-				if (!lastValue)
-					OnActiveMemberChanged(EventArgs.Empty);
 			}
 		}
 

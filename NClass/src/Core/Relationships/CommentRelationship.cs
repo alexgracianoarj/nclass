@@ -47,11 +47,13 @@ namespace NClass.Core
 		public override IEntity First
 		{
 			get { return comment; }
+			protected set { comment = (Comment) value; }
 		}
 
 		public override IEntity Second
 		{
 			get { return entity; }
+			protected set { entity = value; }
 		}
 
 		public CommentRelationship Clone(Comment comment, IEntity entity)

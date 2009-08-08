@@ -137,6 +137,7 @@ namespace NClass.GUI
 			UpdateTexts();
 			this.BackColor = SystemColors.Control;
 			this.SetStyle(ControlStyles.Selectable, false);
+			this.SetStyle(ControlStyles.ResizeRedraw, true);
 
 			stringFormat = new StringFormat(StringFormat.GenericTypographic);
 			stringFormat.Alignment = StringAlignment.Center;

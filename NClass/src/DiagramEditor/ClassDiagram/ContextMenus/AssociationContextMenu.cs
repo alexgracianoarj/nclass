@@ -29,6 +29,7 @@ namespace NClass.DiagramEditor.ClassDiagram.ContextMenus
 
 		ToolStripMenuItem mnuDirection, mnuUnidirectional, mnuBidirectional;
 		ToolStripMenuItem mnuType, mnuAssociation, mnuComposition, mnuAggregation;
+		ToolStripMenuItem mnuReverse;
 		ToolStripMenuItem mnuEdit;
 
 		private AssociationContextMenu()
@@ -50,6 +51,7 @@ namespace NClass.DiagramEditor.ClassDiagram.ContextMenus
 			mnuAssociation.Text = Strings.MenuAssociation;
 			mnuComposition.Text = Strings.MenuComposition;
 			mnuAggregation.Text = Strings.MenuAggregation;
+			mnuReverse.Text = Strings.MenuReverse;
 			mnuEdit.Text = Strings.MenuProperties;
 		}
 
@@ -83,14 +85,16 @@ namespace NClass.DiagramEditor.ClassDiagram.ContextMenus
 				mnuAggregation
 			);
 
+			mnuReverse = new ToolStripMenuItem(Strings.MenuReverse, null, mnuReverse_Click);
 			mnuEdit = new ToolStripMenuItem(Strings.MenuEditAssociation,
 				Resources.Property, mnuEdit_Click);
 
 			MenuList.AddRange(ConnectionContextMenu.Default.MenuItems);
-			MenuList.InsertRange(5, new ToolStripItem[] {
-				new ToolStripSeparator(),
+			MenuList.InsertRange(7, new ToolStripItem[] {
 				mnuDirection,
 				mnuType,
+				mnuReverse,
+				new ToolStripSeparator(),
 			});
 			MenuList.Add(mnuEdit);
 		}
@@ -139,6 +143,16 @@ namespace NClass.DiagramEditor.ClassDiagram.ContextMenus
 			{
 				foreach (Association association in Diagram.GetSelectedConnections())
 					association.AssociationRelationship.AssociationType = AssociationType.Aggregation;
+			}
+		}
+
+		private void mnuReverse_Click(object sender, EventArgs e)
+		{
+			if (Diagram != null)
+			{
+				Association association = Diagram.TopSelectedElement as Association;
+				if (association != null)
+					association.AssociationRelationship.Reverse();
 			}
 		}
 

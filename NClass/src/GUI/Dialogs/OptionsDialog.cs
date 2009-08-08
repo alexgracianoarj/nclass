@@ -55,6 +55,7 @@ namespace NClass.GUI.Dialogs
 			radClearTypeAlways.Text = Strings.Always;
 			radClearTypeWhenZoomed.Text = Strings.WhenZoomed;
 			radClearTypeNever.Text = Strings.Never;
+			chkClearTypeForImages.Text = Strings.UseClearTypeForImages;
 			btnLoad.Text = Strings.ButtonLoad;
 			btnSave.Text = Strings.ButtonSave;
 			btnOK.Text = Strings.ButtonOK;
@@ -104,6 +105,7 @@ namespace NClass.GUI.Dialogs
 				radClearTypeWhenZoomed.Checked = true;
 			else
 				radClearTypeNever.Checked = true;
+			chkClearTypeForImages.Checked = DiagramEditor.Settings.Default.UseClearTypeForImages;
 
 			// Style settings
 			savedStyle = (Style) Style.CurrentStyle.Clone();
@@ -131,6 +133,7 @@ namespace NClass.GUI.Dialogs
 				DiagramEditor.Settings.Default.UseClearType = ClearTypeMode.WhenZoomed;
 			else
 				DiagramEditor.Settings.Default.UseClearType = ClearTypeMode.Never;
+			DiagramEditor.Settings.Default.UseClearTypeForImages = chkClearTypeForImages.Checked;
 
 			// Style settings
 			Style.SaveCurrentStyle();

@@ -101,10 +101,24 @@ namespace NClass.DiagramEditor.ClassDiagram.Shapes
 			);
 		}
 
+		protected override void OnMouseDown(AbsoluteMouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Left)
+			{
+				IsActive = true;
+			}
+			base.OnMouseDown(e);
+		}
+
 		protected override void OnDoubleClick(AbsoluteMouseEventArgs e)
 		{
 			if (Contains(e.Location) && e.Button == MouseButtons.Left)
 				EditText();
+		}
+
+		protected internal override void ShowEditor()
+		{
+			EditText();
 		}
 
 		internal void EditText()

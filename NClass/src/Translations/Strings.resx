@@ -1134,4 +1134,11 @@ Do you want to download the framework now?</value>
   <data name="MenuOpenFile" xml:space="preserve">
     <value>&amp;File...</value>
   </data>
+  <data name="UseClearTypeForImages" xml:space="preserve">
+    <value>In exported images (disables transparency)</value>
+  </data>
+  <data name="MenuReverse" xml:space="preserve">
+    <value>Reverse</value>
+    <comment>Reverse the whole association relationship</comment>
+  </data>
 </root>

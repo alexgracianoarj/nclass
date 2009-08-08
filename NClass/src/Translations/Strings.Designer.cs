@@ -2115,6 +2115,15 @@ namespace NClass.Translations {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Reverse.
+        /// </summary>
+        public static string MenuReverse {
+            get {
+                return ResourceManager.GetString("MenuReverse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Same &amp;Height.
         /// </summary>
         public static string MenuSameHeight {
@@ -2861,6 +2870,15 @@ namespace NClass.Translations {
         public static string UseClearType {
             get {
                 return ResourceManager.GetString("UseClearType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to In exported images (disables transparency).
+        /// </summary>
+        public static string UseClearTypeForImages {
+            get {
+                return ResourceManager.GetString("UseClearTypeForImages", resourceCulture);
             }
         }
         

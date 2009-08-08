@@ -69,10 +69,15 @@ namespace NClass.DiagramEditor.ClassDiagram.Shapes
 			}
 			set
 			{
+				Parameter oldParameter = ActiveParameter;
+
 				if (value < DelegateType.ArgumentCount)
 					base.ActiveMemberIndex = value;
 				else
 					base.ActiveMemberIndex = DelegateType.ArgumentCount - 1;
+
+				if (oldParameter != ActiveParameter)
+					OnActiveMemberChanged(EventArgs.Empty);
 			}
 		}
 
@@ -134,22 +139,6 @@ namespace NClass.DiagramEditor.ClassDiagram.Shapes
 			return style.DelegateGradientHeaderStyle;
 		}
 
-		public override void SelectPrevious()
-		{
-			if (ActiveMemberIndex > 0)
-			{
-				ActiveMemberIndex--;
-			}
-		}
-
-		public override void SelectNext()
-		{
-			if (ActiveParameter != null)
-			{
-				ActiveMemberIndex++;
-			}
-		}
-
 		public override void MoveUp()
 		{
 			if (ActiveParameter != null && DelegateType.MoveUpItem(ActiveParameter))
@@ -206,11 +195,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Shapes
 				bool lastParameter = (index == DelegateType.ArgumentCount - 1);
 
 				DelegateType.RemoveParameter(ActiveParameter);
-				if (!lastParameter)
-					OnActiveMemberChanging(EventArgs.Empty); //TODO: nem szép!
 				ActiveMemberIndex = index;
-				if (!lastParameter)
-					OnActiveMemberChanged(EventArgs.Empty);
 			}
 		}
 

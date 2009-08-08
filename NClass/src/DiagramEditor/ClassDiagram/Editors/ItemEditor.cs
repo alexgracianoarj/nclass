@@ -53,7 +53,6 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
 		internal override void Init(DiagramElement element)
 		{
 			RefreshValues();
-			txtDeclaration.Focus();
 		}
 
 		protected virtual void UpdateTexts()
@@ -90,7 +89,8 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
 					break;
 
 				case Keys.Escape:
-					RefreshValues();
+					needValidation = false;
+					HideEditor();
 					e.Handled = true;
 					break;
 
@@ -138,6 +138,8 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
 		}
 
 		internal abstract override void Relocate(DiagramElement element);
+
+		protected abstract void HideEditor();
 
 		protected abstract void RefreshValues();
 

@@ -31,11 +31,13 @@ namespace NClass.Core
 		public abstract IEntity First
 		{
 			get;
+			protected set;
 		}
 
 		public abstract IEntity Second
 		{
 			get;
+			protected set;
 		}
 
 		public abstract RelationshipType RelationshipType

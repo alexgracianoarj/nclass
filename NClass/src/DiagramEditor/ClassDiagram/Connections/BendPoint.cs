@@ -61,6 +61,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Connections
 		public bool RelativeToStartShape
 		{
 			get { return relativeToStartShape; }
+			set { relativeToStartShape = value; }
 		}
 
 		internal bool AutoPosition

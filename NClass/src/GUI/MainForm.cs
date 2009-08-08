@@ -905,12 +905,12 @@ namespace NClass.GUI
 
 		private void toolZoomIn_Click(object sender, EventArgs e)
 		{
-			tabbedWindow.Canvas.ChangeZoom(true);
+			tabbedWindow.Canvas.ZoomIn();
 		}
 
 		private void toolZoomOut_Click(object sender, EventArgs e)
 		{
-			tabbedWindow.Canvas.ChangeZoom(false);
+			tabbedWindow.Canvas.ZoomOut();
 		}
 
 		private void toolZoom_ZoomValueChanged(object sender, EventArgs e)

@@ -47,14 +47,13 @@
 			// 
 			// txtName
 			// 
-			this.txtName.AcceptsTab = true;
 			this.txtName.Location = new System.Drawing.Point(4, 27);
 			this.txtName.Name = "txtName";
 			this.txtName.Padding = new System.Windows.Forms.Padding(1);
 			this.txtName.ReadOnly = false;
 			this.txtName.SelectionStart = 0;
 			this.txtName.Size = new System.Drawing.Size(322, 20);
-			this.txtName.TabIndex = 1;
+			this.txtName.TabIndex = 0;
 			this.txtName.TextChanged += new System.EventHandler(this.txtName_TextChanged);
 			this.txtName.Validating += new System.ComponentModel.CancelEventHandler(this.txtName_Validating);
 			this.txtName.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtName_KeyDown);
@@ -69,7 +68,7 @@
 			this.toolStrip.Name = "toolStrip";
 			this.toolStrip.Padding = new System.Windows.Forms.Padding(5, 0, 1, 0);
 			this.toolStrip.Size = new System.Drawing.Size(330, 25);
-			this.toolStrip.TabIndex = 6;
+			this.toolStrip.TabIndex = 2;
 			this.toolStrip.Text = "toolStrip1";
 			// 
 			// toolVisibility
@@ -150,13 +149,14 @@
 			// 
 			// txtNewValue
 			// 
+			this.txtNewValue.AcceptsTab = true;
 			this.txtNewValue.Location = new System.Drawing.Point(110, 4);
 			this.txtNewValue.Name = "txtNewValue";
 			this.txtNewValue.Padding = new System.Windows.Forms.Padding(1);
 			this.txtNewValue.ReadOnly = false;
 			this.txtNewValue.SelectionStart = 0;
 			this.txtNewValue.Size = new System.Drawing.Size(191, 20);
-			this.txtNewValue.TabIndex = 0;
+			this.txtNewValue.TabIndex = 1;
 			this.txtNewValue.TextChanged += new System.EventHandler(this.txtNewValue_TextChanged);
 			this.txtNewValue.GotFocus += new System.EventHandler(this.txtNewValue_GotFocus);
 			this.txtNewValue.LostFocus += new System.EventHandler(this.txtNewValue_LostFocus);

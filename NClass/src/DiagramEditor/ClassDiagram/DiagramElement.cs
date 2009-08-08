@@ -144,6 +144,14 @@ namespace NClass.DiagramEditor.ClassDiagram
 				Diagram.HideWindow(window);
 		}
 
+		protected internal virtual void ShowEditor()
+		{
+		}
+
+		protected internal virtual void HideEditor()
+		{
+		}
+
 		internal RectangleF GetVisibleArea(float zoom)
 		{
 			return GetVisibleArea(Style.CurrentStyle, zoom);

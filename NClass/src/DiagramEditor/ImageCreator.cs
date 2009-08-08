@@ -30,6 +30,9 @@ namespace NClass.DiagramEditor
 		const string DialogFilter = "BMP (*.bmp)|*.bmp|GIF (*.gif)|*.gif|" +
 			"JPEG (*.jpg;*.jpeg)|*.jpg;*.jpeg|PNG (*.png)|*.png|" +
 			"Transparent PNG (*.png)|*.png|Enhanced Metafile (*.emf)|*.emf";
+		const string DialogFilterWithoutTransparentPNG = 
+			"BMP (*.bmp)|*.bmp|GIF (*.gif)|*.gif|JPEG (*.jpg;*.jpeg)|*.jpg;*.jpeg|" +
+			"PNG (*.png)|*.png|Enhanced Metafile (*.emf)|*.emf";
 
 		static Control control = new Control();
 		static string initDir = null;
@@ -60,7 +63,7 @@ namespace NClass.DiagramEditor
 			{
 				// Set drawing parameters
 				g.SmoothingMode = SmoothingMode.HighQuality;
-				if (DiagramEditor.Settings.Default.UseClearType == ClearTypeMode.Always)
+				if (DiagramEditor.Settings.Default.UseClearTypeForImages)
 					g.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
 				else
 					g.TextRenderingHint = TextRenderingHint.SingleBitPerPixelGridFit;
@@ -100,7 +103,10 @@ namespace NClass.DiagramEditor
 			using (SaveFileDialog saveAsImageDialog = new SaveFileDialog())
 			{
 				saveAsImageDialog.DefaultExt = "png";
-				saveAsImageDialog.Filter = DialogFilter;
+				if (Settings.Default.UseClearTypeForImages)
+					saveAsImageDialog.Filter = DialogFilterWithoutTransparentPNG;
+				else
+					saveAsImageDialog.Filter = DialogFilter;
 				saveAsImageDialog.FilterIndex = 4;
 				saveAsImageDialog.FileName = document.Name;
 				if (initDir == null && document.Project != null)
@@ -139,8 +145,11 @@ namespace NClass.DiagramEditor
 							format = ImageFormat.Png;
 							break;
 					}
-					bool transparent = (saveAsImageDialog.FilterIndex == 5);
-					SaveAsImage(document, saveAsImageDialog.FileName, format, selectedOnly, transparent);
+					bool transparent = (saveAsImageDialog.FilterIndex == 5 &&
+						!Settings.Default.UseClearTypeForImages);
+					
+					SaveAsImage(document, saveAsImageDialog.FileName, format,
+						selectedOnly, transparent);
 				}
 			}
 		}
@@ -167,7 +176,7 @@ namespace NClass.DiagramEditor
 					Metafile meta = new Metafile(path, hc);
 					g = Graphics.FromImage(meta);
 					g.SmoothingMode = SmoothingMode.HighQuality;
-					if (DiagramEditor.Settings.Default.UseClearType == ClearTypeMode.Always)
+					if (DiagramEditor.Settings.Default.UseClearTypeForImages)
 						g.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
 					else
 						g.TextRenderingHint = TextRenderingHint.AntiAliasGridFit;
@@ -209,7 +218,7 @@ namespace NClass.DiagramEditor
 				{
 					// Set drawing parameters
 					g.SmoothingMode = SmoothingMode.HighQuality;
-					if (DiagramEditor.Settings.Default.UseClearType == ClearTypeMode.Always)
+					if (DiagramEditor.Settings.Default.UseClearTypeForImages && !transparent)
 						g.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
 					else
 						g.TextRenderingHint = TextRenderingHint.SingleBitPerPixelGridFit;

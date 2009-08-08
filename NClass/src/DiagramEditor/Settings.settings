@@ -29,5 +29,8 @@
     <Setting Name="UseClearType" Type="NClass.DiagramEditor.ClassDiagram.ClearTypeMode" Scope="User">
       <Value Profile="(Default)">Never</Value>
     </Setting>
+    <Setting Name="UseClearTypeForImages" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

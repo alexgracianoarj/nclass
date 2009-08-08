@@ -48,14 +48,13 @@
 			// 
 			// txtName
 			// 
-			this.txtName.AcceptsTab = true;
 			this.txtName.Location = new System.Drawing.Point(166, 27);
 			this.txtName.Name = "txtName";
 			this.txtName.Padding = new System.Windows.Forms.Padding(1);
 			this.txtName.ReadOnly = false;
 			this.txtName.SelectionStart = 0;
 			this.txtName.Size = new System.Drawing.Size(160, 20);
-			this.txtName.TabIndex = 3;
+			this.txtName.TabIndex = 1;
 			this.txtName.TextChanged += new System.EventHandler(this.declaration_TextChanged);
 			this.txtName.Validating += new System.ComponentModel.CancelEventHandler(this.declaration_Validating);
 			this.txtName.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtName_KeyDown);
@@ -70,7 +69,7 @@
 			this.toolStrip.Name = "toolStrip";
 			this.toolStrip.Padding = new System.Windows.Forms.Padding(5, 0, 1, 0);
 			this.toolStrip.Size = new System.Drawing.Size(330, 25);
-			this.toolStrip.TabIndex = 0;
+			this.toolStrip.TabIndex = 3;
 			this.toolStrip.Text = "toolStrip1";
 			// 
 			// toolVisibility
@@ -151,13 +150,14 @@
 			// 
 			// txtNewParameter
 			// 
+			this.txtNewParameter.AcceptsTab = true;
 			this.txtNewParameter.Location = new System.Drawing.Point(110, 4);
 			this.txtNewParameter.Name = "txtNewParameter";
 			this.txtNewParameter.Padding = new System.Windows.Forms.Padding(1);
 			this.txtNewParameter.ReadOnly = false;
 			this.txtNewParameter.SelectionStart = 0;
 			this.txtNewParameter.Size = new System.Drawing.Size(191, 20);
-			this.txtNewParameter.TabIndex = 1;
+			this.txtNewParameter.TabIndex = 2;
 			this.txtNewParameter.TextChanged += new System.EventHandler(this.txtNewValue_TextChanged);
 			this.txtNewParameter.GotFocus += new System.EventHandler(this.txtNewValue_GotFocus);
 			this.txtNewParameter.LostFocus += new System.EventHandler(this.txtNewValue_LostFocus);
@@ -175,7 +175,7 @@
 			this.txtReturnType.ReadOnly = false;
 			this.txtReturnType.SelectionStart = 0;
 			this.txtReturnType.Size = new System.Drawing.Size(159, 20);
-			this.txtReturnType.TabIndex = 2;
+			this.txtReturnType.TabIndex = 0;
 			this.txtReturnType.TextChanged += new System.EventHandler(this.declaration_TextChanged);
 			this.txtReturnType.Validating += new System.ComponentModel.CancelEventHandler(this.declaration_Validating);
 			this.txtReturnType.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtReturnType_KeyDown);

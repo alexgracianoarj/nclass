@@ -45,12 +45,12 @@ namespace NClass.DiagramEditor.ClassDiagram.Shapes
 		static StringFormat headerFormat = new StringFormat(StringFormat.GenericTypographic);
 		static readonly Size chevronSize = new Size(13, 13);
 
-		public event EventHandler ActiveMemberChanging;
 		public event EventHandler ActiveMemberChanged;
 
 		int activeMemberIndex = -1;
 		bool collapsed = false;
 		bool showChevron = false;
+		EditorWindow showedEditor = null;
 
 		static TypeShape()
 		{
@@ -80,12 +80,8 @@ namespace NClass.DiagramEditor.ClassDiagram.Shapes
 			}
 			set
 			{
-				if (activeMemberIndex != value)
-				{
-					OnActiveMemberChanging(EventArgs.Empty);
+				if (value >= -1)
 					activeMemberIndex = value;
-					OnActiveMemberChanged(EventArgs.Empty);
-				}
 			}
 		}
 
@@ -164,6 +160,11 @@ namespace NClass.DiagramEditor.ClassDiagram.Shapes
 			get { return TypeBase; }
 		}
 
+		public abstract TypeBase TypeBase
+		{
+			get;
+		}
+
 		protected abstract TypeEditor HeaderEditor
 		{
 			get;
@@ -178,9 +179,6 @@ namespace NClass.DiagramEditor.ClassDiagram.Shapes
 		{
 			return new Rectangle(0, 0, DefaultWidth, DefaultHeight);
 		}
-
-		//TODO: make it protected
-		public abstract TypeBase TypeBase { get; }
 
 		protected abstract Color GetBackgroundColor(Style style);
 
@@ -230,6 +228,34 @@ namespace NClass.DiagramEditor.ClassDiagram.Shapes
 			Collapsed = false;
 		}
 
+		protected internal override void ShowEditor()
+		{
+			EditorWindow editor = GetEditorWindow();
+			if (editor != null)
+			{
+				ShowEditor(editor);
+			}
+		}
+
+		protected internal override void HideEditor()
+		{
+			if (showedEditor != null)
+			{
+				showedEditor.ValidateData();
+				HideWindow(showedEditor);
+				showedEditor = null;
+			}
+		}
+
+		private void ShowEditor(EditorWindow editor)
+		{
+			editor.Relocate(this);
+			ShowWindow(editor);
+			editor.Init(this);
+			editor.Focus();
+			showedEditor = editor;
+		}
+
 		protected internal abstract void EditMembers();
 
 		protected internal override IEnumerable<ToolStripItem> GetContextMenuItems(Diagram diagram)
@@ -261,6 +287,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Shapes
 		protected override void OnResize(ResizeEventArgs e)
 		{
 			base.OnResize(e);
+			
 			EditorWindow window = GetEditorWindow();
 			if (window != null)
 				window.Relocate(this);
@@ -268,6 +295,8 @@ namespace NClass.DiagramEditor.ClassDiagram.Shapes
 
 		protected override void OnMouseDown(AbsoluteMouseEventArgs e)
 		{
+			base.OnMouseDown(e);
+
 			if (IsChevronPressed(e.Location))
 			{
 				Collapsed = !Collapsed;
@@ -278,19 +307,28 @@ namespace NClass.DiagramEditor.ClassDiagram.Shapes
 				{
 					IsActive = true;
 				}
-				base.OnMouseDown(e);
+			}
+		}
+
+		protected override void OnMouseUp(AbsoluteMouseEventArgs e)
+		{
+			base.OnMouseUp(e);
+
+			if (showedEditor != null)
+			{
+				showedEditor.Focus();
 			}
 		}
 
 		protected override void OnDoubleClick(AbsoluteMouseEventArgs e)
 		{
+			base.OnDoubleClick(e);
+
 			if (!IsChevronPressed(e.Location) && Contains(e.Location) &&
 				e.Button == MouseButtons.Left)
 			{
-				IsActive = false;
-				EditMembers();
+				ShowEditor();
 			}
-			base.OnDoubleClick(e);
 		}
 
 		protected override void OnMouseEnter(EventArgs e)
@@ -620,45 +658,20 @@ namespace NClass.DiagramEditor.ClassDiagram.Shapes
 				editor.Relocate(this);
 		}
 
-		protected override void OnActivated(EventArgs e)
+		public sealed override void SelectPrevious()
 		{
-			base.OnActivated(e);
-			EditorWindow editor = GetEditorWindow();
-			if (editor != null)
-			{
-				editor.ValidateData();
-				editor.Relocate(this);
-				ShowWindow(editor);
-				editor.Init(this);
-			}
+			ActiveMemberIndex--;
+		}
+
+		public sealed override void SelectNext()
+		{
+			ActiveMemberIndex++;
 		}
 
 		protected override void OnDeactivating(EventArgs e)
 		{
 			base.OnDeactivated(e);
-			EditorWindow editor = GetEditorWindow();
-			if (editor != null)
-			{
-				editor.ValidateData();
-				HideWindow(editor);
-			}
-		}
-
-		protected virtual void OnActiveMemberChanging(EventArgs e)
-		{
-			if (ActiveMemberChanging != null)
-				ActiveMemberChanging(this, e);
-
-			if (ActiveMemberIndex < 0)
-			{
-				HeaderEditor.ValidateData();
-				HideWindow(HeaderEditor);
-			}
-			else
-			{
-				ContentEditor.ValidateData();
-				HideWindow(ContentEditor);
-			}
+			HideEditor();
 		}
 
 		protected virtual void OnActiveMemberChanged(EventArgs e)
@@ -666,22 +679,18 @@ namespace NClass.DiagramEditor.ClassDiagram.Shapes
 			if (ActiveMemberChanged != null)
 				ActiveMemberChanged(this, e);
 
-			if (IsActive)
+			if (showedEditor != null)
 			{
-				if (ActiveMemberIndex < 0)
+				EditorWindow editor = GetEditorWindow();
+
+				if (editor != showedEditor)
 				{
-					HeaderEditor.Relocate(this);					
-					ShowWindow(HeaderEditor);
-					HeaderEditor.Init(this);
+					showedEditor.ValidateData();
+					HideWindow(showedEditor);
 				}
-				else
-				{
-					ContentEditor.Relocate(this);
-					ShowWindow(ContentEditor);
-					ContentEditor.Init(this);
-				}
-				NeedsRedraw = true;
+				ShowEditor(editor);
 			}
+			NeedsRedraw = true;
 		}
 
 		protected override void OnSerializing(SerializeEventArgs e)

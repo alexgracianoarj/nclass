@@ -149,7 +149,7 @@
 			this.Name = "AssociationDialog";
 			this.ShowInTaskbar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-			this.Text = "AssociationDialog";
+			this.Text = "Edit Association";
 			((System.ComponentModel.ISupportInitialize) (this.picArrow)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();

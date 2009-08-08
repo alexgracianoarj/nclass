@@ -1369,37 +1369,46 @@ namespace NClass.DiagramEditor.ClassDiagram.Connections
 
 		internal override void MousePressed(AbsoluteMouseEventArgs e)
 		{
-			bool pressed = Picked(e.Location, e.Zoom);
-
-			if (e.Button == MouseButtons.Left)
-				pressed |= (IsSelected && BendPointPressed(e));
-
-			if (pressed)
+			if (!e.Handled)
 			{
-				e.Handled = true;
-				OnMouseDown(e);
+				bool pressed = Picked(e.Location, e.Zoom);
+
+				if (e.Button == MouseButtons.Left)
+					pressed |= (IsSelected && BendPointPressed(e));
+
+				if (pressed)
+				{
+					e.Handled = true;
+					OnMouseDown(e);
+				}
 			}
 		}
 
 		internal override void MouseMoved(AbsoluteMouseEventArgs e)
 		{
-			bool moved = IsMousePressed;
-
-			if (moved)
+			if (!e.Handled)
 			{
-				e.Handled = true;
-				OnMouseMove(e);
+				bool moved = IsMousePressed;
+
+				if (moved)
+				{
+					e.Handled = true;
+					OnMouseMove(e);
+				}
 			}
 		}
 
 		internal override void MouseUpped(AbsoluteMouseEventArgs e)
 		{
-			bool upped = IsMousePressed;
-
-			if (upped)
+			if (!e.Handled)
 			{
-				e.Handled = true;
-				OnMouseUp(e);
+				bool upped = IsMousePressed;
+
+				if (upped)
+				{
+					e.Handled = true;
+					OnMouseUp(e);
+				}
 			}
 		}
 
@@ -1419,6 +1428,10 @@ namespace NClass.DiagramEditor.ClassDiagram.Connections
 		
 		protected override void OnMouseDown(AbsoluteMouseEventArgs e)
 		{
+			if (e.Button == MouseButtons.Left)
+			{
+				IsActive = true;
+			}
 			base.OnMouseDown(e);
 			copied = false;
 		}

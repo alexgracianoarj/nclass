@@ -43,7 +43,6 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
 			shape = (CompositeTypeShape) element;
 			RefreshToolAvailability();
 			RefreshValues();
-			txtName.Focus();
 		}
 
 		private void RefreshToolAvailability()
@@ -375,7 +374,13 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
 					break;
 
 				case Keys.Escape:
-					RefreshValues();
+					needValidation = false;
+					shape.HideEditor();
+					e.Handled = true;
+					break;
+
+				case Keys.Down:
+					shape.ActiveMemberIndex = 0;
 					e.Handled = true;
 					break;
 			}

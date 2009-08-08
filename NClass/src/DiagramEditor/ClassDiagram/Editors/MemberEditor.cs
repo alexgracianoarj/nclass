@@ -638,7 +638,8 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
 					break;
 
 				case Keys.Escape:
-					RefreshValues();
+					needValidation = false;
+					shape.HideEditor();
 					e.Handled = true;
 					break;
 

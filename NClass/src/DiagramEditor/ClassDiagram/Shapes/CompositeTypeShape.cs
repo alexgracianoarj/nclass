@@ -91,26 +91,15 @@ namespace NClass.DiagramEditor.ClassDiagram.Shapes
 			}
 			set
 			{
+				Member oldMember = ActiveMember;
+
 				if (value < CompositeType.MemberCount)
 					base.ActiveMemberIndex = value;
 				else
 					base.ActiveMemberIndex = CompositeType.MemberCount - 1;
-			}
-		}
 
-		public override void SelectPrevious()
-		{
-			if (ActiveMemberIndex > 0)
-			{
-				ActiveMemberIndex--;
-			}
-		}
-
-		public override void SelectNext()
-		{
-			if (ActiveMember != null)
-			{
-				ActiveMemberIndex++;
+				if (oldMember != ActiveMember)
+					OnActiveMemberChanged(EventArgs.Empty);
 			}
 		}
 
@@ -218,11 +207,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Shapes
 				CompositeType.RemoveMember(ActiveMember);
 				if (lastField)
 					index = CompositeType.FieldCount - 1;
-				if (!lastField && !lastOperation) //TODO: ezt nem lehetne szebben?
-					OnActiveMemberChanging(EventArgs.Empty);
 				ActiveMemberIndex = index;
-				if (!lastField && !lastOperation)
-					OnActiveMemberChanged(EventArgs.Empty);
 			}
 		}
 
@@ -234,17 +219,12 @@ namespace NClass.DiagramEditor.ClassDiagram.Shapes
 				case MemberType.Field:
 					if (CompositeType.SupportsFields)
 					{
-						//TODO: ezt nem lehetne szebben?
 						int index = Math.Min(ActiveMemberIndex + 1, fieldCount);
 						bool changing = (index == fieldCount &&
 							ActiveMember.MemberType != MemberType.Field);
 
 						CompositeType.InsertMember(MemberType.Field, index);
-						if (changing)
-							OnActiveMemberChanging(EventArgs.Empty);
 						ActiveMemberIndex = index;
-						if (changing)
-							OnActiveMemberChanged(EventArgs.Empty);
 					}
 					break;
 

@@ -27,6 +27,8 @@ namespace NClass.Core
 		string startRole, endRole;
 		string startMultiplicity, endMultiplicity;
 
+		public event EventHandler Reversed;
+
 		/// <exception cref="ArgumentNullException">
 		/// <paramref name="first"/> or <paramref name="second"/> is null.
 		/// </exception>
@@ -181,6 +183,16 @@ namespace NClass.Core
 			}
 		}
 
+		public void Reverse()
+		{
+			IEntity first = First;
+			First = Second;
+			Second = first;
+
+			OnReversed(EventArgs.Empty);
+			Changed();
+		}
+
 		protected override void CopyFrom(Relationship relationship)
 		{
 			base.CopyFrom(relationship);
@@ -305,6 +317,12 @@ namespace NClass.Core
 				// Wrong format
 			}
 			RaiseChangedEvent = true;
+		}
+
+		private void OnReversed(EventArgs e)
+		{
+			if (Reversed != null)
+				Reversed(this, e);
 		}
 
 		public override string ToString()

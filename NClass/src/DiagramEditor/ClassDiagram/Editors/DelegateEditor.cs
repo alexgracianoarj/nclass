@@ -44,7 +44,6 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
 			txtNewParameter.Text = newValueText;
 			noNewValue = true;
 			RefreshValues();
-			txtName.Focus();
 		}
 
 		private void UpdateTexts()
@@ -248,7 +247,13 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
 					break;
 
 				case Keys.Escape:
-					ClearNewValueField();
+					needValidation = false;
+					shape.HideEditor();
+					e.Handled = true;
+					break;
+
+				case Keys.Tab:
+					txtReturnType.Focus();
 					e.Handled = true;
 					break;
 			}
@@ -291,7 +296,13 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
 					break;
 
 				case Keys.Escape:
-					RefreshValues();
+					needValidation = false;
+					shape.HideEditor();
+					e.Handled = true;
+					break;
+
+				case Keys.Down:
+					shape.ActiveMemberIndex = 0;
 					e.Handled = true;
 					break;
 			}
@@ -307,12 +318,13 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
 					break;
 
 				case Keys.Escape:
-					RefreshValues();
+					needValidation = false;
+					shape.HideEditor();
 					e.Handled = true;
 					break;
 
-				case Keys.Tab:
-					txtNewParameter.Focus();
+				case Keys.Down:
+					shape.ActiveMemberIndex = 0;
 					e.Handled = true;
 					break;
 			}

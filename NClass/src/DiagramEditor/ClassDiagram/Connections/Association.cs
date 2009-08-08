@@ -57,6 +57,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Connections
 			: base(association, startShape, endShape)
 		{
 			this.association = association;
+			association.Reversed += new EventHandler(association_Reversed);
 		}
 
 		internal AssociationRelationship AssociationRelationship
@@ -117,6 +118,11 @@ namespace NClass.DiagramEditor.ClassDiagram.Connections
 			}
 		}
 
+		protected internal override void ShowEditor()
+		{
+			ShowEditDialog();
+		}
+
 		public void ShowEditDialog()
 		{
 			using (AssociationDialog dialog = new AssociationDialog())
@@ -124,6 +130,16 @@ namespace NClass.DiagramEditor.ClassDiagram.Connections
 				dialog.Association = AssociationRelationship;
 				dialog.ShowDialog();
 			}
+		}
+
+		private void association_Reversed(object sender, EventArgs e)
+		{
+			RouteCache.Reverse();
+			foreach (BendPoint point in BendPoints)
+			{
+				point.RelativeToStartShape = !point.RelativeToStartShape;
+			}
+			NeedsRedraw = true;
 		}
 
 		protected override bool CloneRelationship(Diagram diagram, Shape first, Shape second)
