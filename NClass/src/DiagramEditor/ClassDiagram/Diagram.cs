@@ -1174,10 +1174,39 @@ namespace NClass.DiagramEditor.ClassDiagram
 			{
 				Paste();
 			}
-			// Ctrl + Shift + A
-			else if (e.KeyCode == Keys.A && e.Modifiers == (Keys.Control | Keys.Shift))
+			// Ctrl + Shift + ?
+			else if (e.Modifiers == (Keys.Control | Keys.Shift))
 			{
-				CreateShape();
+				switch (e.KeyCode)
+				{
+					case Keys.A:
+						CreateShape();
+						break;
+
+					case Keys.C:
+						CreateShape(EntityType.Class);
+						break;
+
+					case Keys.S:
+						CreateShape(EntityType.Structure);
+						break;
+
+					case Keys.I:
+						CreateShape(EntityType.Interface);
+						break;
+
+					case Keys.E:
+						CreateShape(EntityType.Enum);
+						break;
+
+					case Keys.D:
+						CreateShape(EntityType.Delegate);
+						break;
+
+					case Keys.N:
+						CreateShape(EntityType.Comment);
+						break;
+				}
 			}
 			RedrawSuspended = false;
 		}

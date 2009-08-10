@@ -59,8 +59,8 @@
 			this.lstItems.TabIndex = 4;
 			this.lstItems.UseCompatibleStateImageBehavior = false;
 			this.lstItems.View = System.Windows.Forms.View.Details;
-			this.lstItems.KeyDown += new System.Windows.Forms.KeyEventHandler(this.lstItems_KeyDown);
 			this.lstItems.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.lstItems_ItemSelectionChanged);
+			this.lstItems.KeyDown += new System.Windows.Forms.KeyEventHandler(this.lstItems_KeyDown);
 			// 
 			// value
 			// 
@@ -172,6 +172,7 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.CancelButton = this.btnClose;
 			this.ClientSize = new System.Drawing.Size(292, 323);
 			this.Controls.Add(this.lstItems);
 			this.Controls.Add(this.btnClose);

@@ -28,6 +28,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Dialogs
 		Member member = null;
 		bool locked = false;
 		int attributeCount = 0;
+		bool error = false;
 
 		public event EventHandler ContentsChanged;
 
@@ -104,6 +105,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Dialogs
 			errorProvider.SetError(txtSyntax, null);
 			errorProvider.SetError(txtName, null);
 			errorProvider.SetError(cboType, null);
+			error = false;
 
 			base.ShowDialog();
 		}
@@ -357,6 +359,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Dialogs
 			errorProvider.SetError(txtName, null);
 			errorProvider.SetError(cboType, null);
 			errorProvider.SetError(cboAccess, null);
+			error = false;
 		}
 
 		private void RefreshMembersList()
@@ -465,14 +468,20 @@ namespace NClass.DiagramEditor.ClassDiagram.Dialogs
 			UpdateTexts();
 			errorProvider.SetError(grpFieldModifiers, null);
 			errorProvider.SetError(grpOperationModifiers, null);
+			error = false;
 		}
 
 		private void PropertiesDialog_KeyDown(object sender, KeyEventArgs e)
 		{
-			if (e.KeyCode == Keys.Escape)
-				RefreshValues();
-			else if (e.KeyCode == Keys.Enter)
+			if (e.KeyCode == Keys.Escape) {
+				if (error)
+					RefreshValues();
+				else
+					this.Close();
+			}
+			else if (e.KeyCode == Keys.Enter) {
 				lstMembers.Focus();
+			}
 		}
 
 		private void txtSyntax_Validating(object sender, CancelEventArgs e)
@@ -483,6 +492,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Dialogs
 
 					member.InitFromString(txtSyntax.Text);
 					errorProvider.SetError(txtSyntax, null);
+					error = false;
 
 					RefreshValues();
 					if (oldValue != txtSyntax.Text)
@@ -491,6 +501,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Dialogs
 				catch (BadSyntaxException ex) {
 					e.Cancel = true;
 					errorProvider.SetError(txtSyntax, ex.Message);
+					error = true;
 				}
 			}
 		}
@@ -503,6 +514,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Dialogs
 
 					member.Name = txtName.Text;
 					errorProvider.SetError(txtName, null);
+					error = false;
 
 					RefreshValues();
 					if (oldValue != txtName.Text)
@@ -511,6 +523,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Dialogs
 				catch (BadSyntaxException ex) {
 					e.Cancel = true;
 					errorProvider.SetError(txtName, ex.Message);
+					error = true;
 				}
 			}
 		}
@@ -525,6 +538,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Dialogs
 					if (!cboType.Items.Contains(cboType.Text))
 						cboType.Items.Add(cboType.Text);
 					errorProvider.SetError(cboType, null);
+					error = false;
 					cboType.Select(0, 0);
 
 					RefreshValues();
@@ -534,6 +548,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Dialogs
 				catch (BadSyntaxException ex) {
 					e.Cancel = true;
 					errorProvider.SetError(cboType, ex.Message);
+					error = true;
 				}
 			}
 		}
@@ -559,6 +574,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Dialogs
 				}
 				catch (BadSyntaxException ex) {
 					errorProvider.SetError(cboAccess, ex.Message);
+					error = true;
 				}
 			}
 		}
@@ -568,6 +584,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Dialogs
 			if (!string.IsNullOrEmpty(errorProvider.GetError(cboAccess))) {
 				errorProvider.SetError(cboAccess, null);
 				RefreshValues();
+				error = false;
 			}
 		}
 
@@ -578,11 +595,13 @@ namespace NClass.DiagramEditor.ClassDiagram.Dialogs
 					((Field) member).IsStatic = chkFieldStatic.Checked;
 					RefreshValues();
 					errorProvider.SetError(grpFieldModifiers, null);
+					error = false;
 					OnContentsChanged(EventArgs.Empty);
 				}
 				catch (BadSyntaxException ex) {
 					RefreshValues();
 					errorProvider.SetError(grpFieldModifiers, ex.Message);
+					error = true;
 				}
 			}
 		}
@@ -594,11 +613,13 @@ namespace NClass.DiagramEditor.ClassDiagram.Dialogs
 					((Field) member).IsReadonly = chkReadonly.Checked;
 					RefreshValues();
 					errorProvider.SetError(grpFieldModifiers, null);
+					error = false;
 					OnContentsChanged(EventArgs.Empty);
 				}
 				catch (BadSyntaxException ex) {
 					RefreshValues();
 					errorProvider.SetError(grpFieldModifiers, ex.Message);
+					error = true;
 				}
 			}
 		}
@@ -610,11 +631,13 @@ namespace NClass.DiagramEditor.ClassDiagram.Dialogs
 					((Field) member).IsConstant = chkConstant.Checked;
 					RefreshValues();
 					errorProvider.SetError(grpFieldModifiers, null);
+					error = false;
 					OnContentsChanged(EventArgs.Empty);
 				}
 				catch (BadSyntaxException ex) {
 					RefreshValues();
 					errorProvider.SetError(grpFieldModifiers, ex.Message);
+					error = true;
 				}
 			}
 		}
@@ -626,11 +649,13 @@ namespace NClass.DiagramEditor.ClassDiagram.Dialogs
 					((Field) member).IsHider = chkFieldHider.Checked;
 					RefreshValues();
 					errorProvider.SetError(grpFieldModifiers, null);
+					error = false;
 					OnContentsChanged(EventArgs.Empty);
 				}
 				catch (BadSyntaxException ex) {
 					RefreshValues();
 					errorProvider.SetError(grpFieldModifiers, ex.Message);
+					error = true;
 				}
 			}
 		}
@@ -642,11 +667,13 @@ namespace NClass.DiagramEditor.ClassDiagram.Dialogs
 					((Field) member).IsVolatile = chkVolatile.Checked;
 					RefreshValues();
 					errorProvider.SetError(grpFieldModifiers, null);
+					error = false;
 					OnContentsChanged(EventArgs.Empty);
 				}
 				catch (BadSyntaxException ex) {
 					RefreshValues();
 					errorProvider.SetError(grpFieldModifiers, ex.Message);
+					error = true;
 				}
 			}
 		}
@@ -658,11 +685,13 @@ namespace NClass.DiagramEditor.ClassDiagram.Dialogs
 					((Operation) member).IsStatic = chkOperationStatic.Checked;
 					RefreshValues();
 					errorProvider.SetError(grpOperationModifiers, null);
+					error = false;
 					OnContentsChanged(EventArgs.Empty);
 				}
 				catch (BadSyntaxException ex) {
 					RefreshValues();
 					errorProvider.SetError(grpOperationModifiers, ex.Message);
+					error = true;
 				}
 			}
 		}
@@ -674,11 +703,13 @@ namespace NClass.DiagramEditor.ClassDiagram.Dialogs
 					((Operation) member).IsVirtual = chkVirtual.Checked;
 					RefreshValues();
 					errorProvider.SetError(grpOperationModifiers, null);
+					error = false;
 					OnContentsChanged(EventArgs.Empty);
 				}
 				catch (BadSyntaxException ex) {
 					RefreshValues();
 					errorProvider.SetError(grpOperationModifiers, ex.Message);
+					error = true;
 				}
 			}
 		}
@@ -703,11 +734,13 @@ namespace NClass.DiagramEditor.ClassDiagram.Dialogs
 					((Operation) member).IsAbstract = chkAbstract.Checked;
 					RefreshValues();
 					errorProvider.SetError(grpOperationModifiers, null);
+					error = false;
 					OnContentsChanged(EventArgs.Empty);
 				}
 				catch (BadSyntaxException ex) {
 					RefreshValues();
 					errorProvider.SetError(grpOperationModifiers, ex.Message);
+					error = true;
 				}
 			}
 		}
@@ -719,11 +752,13 @@ namespace NClass.DiagramEditor.ClassDiagram.Dialogs
 					((Operation) member).IsHider = chkOperationHider.Checked;
 					RefreshValues();
 					errorProvider.SetError(grpOperationModifiers, null);
+					error = false;
 					OnContentsChanged(EventArgs.Empty);
 				}
 				catch (BadSyntaxException ex) {
 					RefreshValues();
 					errorProvider.SetError(grpOperationModifiers, ex.Message);
+					error = true;
 				}
 			}
 		}
@@ -735,11 +770,13 @@ namespace NClass.DiagramEditor.ClassDiagram.Dialogs
 					((Operation) member).IsOverride = chkOverride.Checked;
 					RefreshValues();
 					errorProvider.SetError(grpOperationModifiers, null);
+					error = false;
 					OnContentsChanged(EventArgs.Empty);
 				}
 				catch (BadSyntaxException ex) {
 					RefreshValues();
 					errorProvider.SetError(grpOperationModifiers, ex.Message);
+					error = true;
 				}
 			}
 		}
@@ -751,11 +788,13 @@ namespace NClass.DiagramEditor.ClassDiagram.Dialogs
 					((Operation) member).IsSealed = chkSealed.Checked;
 					RefreshValues();
 					errorProvider.SetError(grpOperationModifiers, null);
+					error = false;
 					OnContentsChanged(EventArgs.Empty);
 				}
 				catch (BadSyntaxException ex) {
 					RefreshValues();
 					errorProvider.SetError(grpOperationModifiers, ex.Message);
+					error = true;
 				}
 			}
 		}
@@ -763,11 +802,13 @@ namespace NClass.DiagramEditor.ClassDiagram.Dialogs
 		private void grpFieldModifiers_Validated(object sender, EventArgs e)
 		{
 			errorProvider.SetError(grpFieldModifiers, null);
+			error = false;
 		}
 
 		private void grpOperationModifiers_Validated(object sender, EventArgs e)
 		{
 			errorProvider.SetError(grpOperationModifiers, null);
+			error = false;
 		}
 
 		private void txtInitialValue_Validating(object sender, CancelEventArgs e)
@@ -1023,9 +1064,6 @@ namespace NClass.DiagramEditor.ClassDiagram.Dialogs
 
 		private void txtSyntax_KeyDown(object sender, KeyEventArgs e)
 		{
-			if (e.KeyCode == Keys.Enter) {
-				toolNewMethod_Click(null, null);
-			}
 		}
 	}
 }

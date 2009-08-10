@@ -633,7 +633,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
 			switch (e.KeyCode)
 			{
 				case Keys.Enter:
-					if (e.Modifiers == Keys.Shift)
+					if (e.Modifiers == Keys.Control || e.Modifiers == Keys.Shift)
 						OpenNewMemberDropDown();
 					else
 						ValidateDeclarationLine();
@@ -661,6 +661,40 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
 						SelectNext();
 					e.Handled = true;
 					break;
+			}
+
+			if (e.Modifiers == (Keys.Control | Keys.Shift))
+			{
+				switch (e.KeyCode)
+				{
+					case Keys.A:
+						AddNewMember();
+						break;
+
+					case Keys.F:
+						AddNewMember(MemberType.Field);
+						break;
+
+					case Keys.M:
+						AddNewMember(MemberType.Method);
+						break;
+
+					case Keys.C:
+						AddNewMember(MemberType.Constructor);
+						break;
+
+					case Keys.D:
+						AddNewMember(MemberType.Destructor);
+						break;
+
+					case Keys.P:
+						AddNewMember(MemberType.Property);
+						break;
+
+					case Keys.E:
+						AddNewMember(MemberType.Event);
+						break;
+				}
 			}
 		}
 
@@ -888,6 +922,11 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
 			}
 		}
 
+		private void AddNewMember()
+		{
+			AddNewMember(NewMemberType);
+		}
+
 		private void AddNewMember(MemberType type)
 		{
 			if (!ValidateDeclarationLine())
@@ -900,7 +939,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
 
 		private void toolNewMember_ButtonClick(object sender, EventArgs e)
 		{
-			AddNewMember(NewMemberType);
+			AddNewMember();
 		}
 
 		private void toolNewField_Click(object sender, EventArgs e)
