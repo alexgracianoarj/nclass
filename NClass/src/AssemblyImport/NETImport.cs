@@ -1,16 +1,14 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Reflection;
-
-using NClass.Core;
-using System.ComponentModel;
-using System.Windows.Forms;
-using System.Runtime.CompilerServices;
-using System.IO;
-using NClass.DiagramEditor.ClassDiagram;
-using NClass.DiagramEditor.ClassDiagram.Shapes;
 using System.Drawing;
+using System.Reflection;
+using System.Runtime.CompilerServices;
+using System.Text;
+using System.Windows.Forms;
+using NClass.Core;
+using NClass.DiagramEditor.ClassDiagram;
+using NClass.DiagramEditor.ClassDiagram.Connections;
+using NClass.DiagramEditor.ClassDiagram.Shapes;
 
 namespace NClass.AssemblyImport
 {
@@ -207,11 +205,11 @@ namespace NClass.AssemblyImport
         xProject.RedrawSuspended = true;
         Type[] axTypes = xNewAssembly.GetTypes();
         ReflectTypes(axTypes);
+		ArrangeTypes();
 
         CreateNestingRelationships();
         CreateGeneralizationRelationships();
         CreateRealizationRelationship();
-        ArrangeTypes();
       }
       catch(ReflectionTypeLoadException)
       {
@@ -233,7 +231,7 @@ namespace NClass.AssemblyImport
 
 	private void ArrangeTypes()
 	{
-		const int Margin = 30;
+		const int Margin = Connection.Spacing * 2;
 		const int DiagramPadding = Shape.SelectionMargin;
 
 		int shapeCount = xProject.ShapeCount;

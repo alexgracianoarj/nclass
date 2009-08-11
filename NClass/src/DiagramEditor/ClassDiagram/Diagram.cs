@@ -1553,16 +1553,19 @@ namespace NClass.DiagramEditor.ClassDiagram
 				{
 					foreach (BendPoint point in connection.BendPoints)
 					{
-						int xDist = Math.Abs(e.BendPoint.X - point.X);
-						int yDist = Math.Abs(e.BendPoint.Y - point.Y);
+						if (point != e.BendPoint && !point.AutoPosition)
+						{
+							int xDist = Math.Abs(e.BendPoint.X - point.X);
+							int yDist = Math.Abs(e.BendPoint.Y - point.Y);
 
-						if (xDist <= Connection.PrecisionSize)
-						{
-							e.BendPoint.X = point.X;
-						}
-						if (yDist <= Connection.PrecisionSize)
-						{
-							e.BendPoint.Y = point.Y;
+							if (xDist <= Connection.PrecisionSize)
+							{
+								e.BendPoint.X = point.X;
+							}
+							if (yDist <= Connection.PrecisionSize)
+							{
+								e.BendPoint.Y = point.Y;
+							}
 						}
 					}
 				}

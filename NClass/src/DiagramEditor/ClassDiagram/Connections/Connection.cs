@@ -34,9 +34,9 @@ namespace NClass.DiagramEditor.ClassDiagram.Connections
 			Vertical
 		}
 
+		public const int Spacing = 25;
 		public const int PrecisionSize = 6;
 		const int PickTolerance = 4;
-		internal const int Spacing = 25;
 		protected static readonly Size TextMargin = new Size(5, 3);
 		static readonly float[] dashPattern = new float[] { 5, 5 };
 		static Pen linePen = new Pen(Color.Black);
@@ -45,8 +45,8 @@ namespace NClass.DiagramEditor.ClassDiagram.Connections
 
 		Shape startShape;
 		Shape endShape;
-		LineOrientation startOrientation = LineOrientation.Vertical;
-		LineOrientation endOrientation = LineOrientation.Vertical;
+		LineOrientation startOrientation;
+		LineOrientation endOrientation;
 		OrderedList<BendPoint> bendPoints = new OrderedList<BendPoint>();
 		BendPoint selectedBendPoint = null;
 		bool copied = false;
@@ -73,8 +73,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Connections
 
 			this.startShape = startShape;
 			this.endShape = endShape;
-			if (startShape == endShape)
-				startOrientation = LineOrientation.Horizontal;
+			InitOrientations();
 			bendPoints.Add(new BendPoint(startShape, true));
 			bendPoints.Add(new BendPoint(endShape, false));
 
@@ -151,6 +150,36 @@ namespace NClass.DiagramEditor.ClassDiagram.Connections
 		protected virtual bool IsDashed
 		{
 			get { return false; }
+		}
+
+		public void InitOrientations()
+		{
+			if (startShape == endShape)
+			{
+				startOrientation = LineOrientation.Horizontal;
+				endOrientation = LineOrientation.Vertical;
+			}
+			else
+			{
+				int hDiff = Math.Max(startShape.Left - endShape.Right, endShape.Left - startShape.Right);
+				int vDiff = Math.Max(startShape.Top - endShape.Bottom, endShape.Top - startShape.Bottom);
+
+				if (vDiff >= Spacing * 2)
+				{
+					startOrientation = LineOrientation.Vertical;
+					endOrientation = LineOrientation.Vertical;
+				}
+				else if (hDiff >= Spacing * 2)
+				{
+					startOrientation = LineOrientation.Horizontal;
+					endOrientation = LineOrientation.Horizontal;
+				}
+				else
+				{
+					startOrientation = LineOrientation.Vertical;
+					endOrientation = LineOrientation.Horizontal;
+				}
+			}
 		}
 
 		protected override RectangleF CalculateDrawingArea(Style style, bool printing, float zoom)
@@ -723,7 +752,16 @@ namespace NClass.DiagramEditor.ClassDiagram.Connections
 						FirstBendPoint.X = startShape.Left - Spacing;
 					else
 						FirstBendPoint.X = startShape.Right + Spacing;
-					FirstBendPoint.Y = startShape.VerticalCenter;
+
+					if (bendPoints.SecondValue.Y >= startShape.Top &&
+					    bendPoints.SecondValue.Y <= startShape.Bottom)
+					{
+						FirstBendPoint.Y = bendPoints.SecondValue.Y;
+					}
+					else
+					{
+						FirstBendPoint.Y = startShape.VerticalCenter;
+					}
 				}
 				else
 				{
@@ -731,7 +769,16 @@ namespace NClass.DiagramEditor.ClassDiagram.Connections
 						FirstBendPoint.Y = startShape.Top - Spacing;
 					else
 						FirstBendPoint.Y = startShape.Bottom + Spacing;
-					FirstBendPoint.X = startShape.HorizontalCenter;
+
+					if (bendPoints.SecondValue.X >= startShape.Left &&
+						bendPoints.SecondValue.X <= startShape.Right)
+					{
+						FirstBendPoint.X = bendPoints.SecondValue.X;
+					}
+					else
+					{
+						FirstBendPoint.X = startShape.HorizontalCenter;
+					}
 				}
 			}
 			else if (LastBendPoint.AutoPosition)
@@ -742,7 +789,16 @@ namespace NClass.DiagramEditor.ClassDiagram.Connections
 						LastBendPoint.X = endShape.Left - Spacing;
 					else
 						LastBendPoint.X = endShape.Right + Spacing;
-					LastBendPoint.Y = endShape.VerticalCenter;
+
+					if (bendPoints.SecondLastValue.Y >= endShape.Top &&
+						bendPoints.SecondLastValue.Y <= endShape.Bottom)
+					{
+						LastBendPoint.Y = bendPoints.SecondLastValue.Y;
+					}
+					else
+					{
+						LastBendPoint.Y = endShape.VerticalCenter;
+					}
 				}
 				else
 				{
@@ -750,7 +806,16 @@ namespace NClass.DiagramEditor.ClassDiagram.Connections
 						LastBendPoint.Y = endShape.Top - Spacing;
 					else
 						LastBendPoint.Y = endShape.Bottom + Spacing;
-					LastBendPoint.X = endShape.HorizontalCenter;
+
+					if (bendPoints.SecondLastValue.X >= endShape.Left &&
+						bendPoints.SecondLastValue.X <= endShape.Right)
+					{
+						LastBendPoint.X = bendPoints.SecondLastValue.X;
+					}
+					else
+					{
+						LastBendPoint.X = endShape.HorizontalCenter;
+					}
 				}
 			}
 		}
@@ -1465,26 +1530,9 @@ namespace NClass.DiagramEditor.ClassDiagram.Connections
 						OnBendPointMove(new BendPointEventArgs(selectedBendPoint));
 					}
 
-					if (Settings.Default.UsePrecisionSnapping && Control.ModifierKeys != Keys.Shift)
-						SnapActiveBendPoint();
-
 					Reroute();
 					OnRouteChanged(EventArgs.Empty);
 					OnModified(EventArgs.Empty);
-				}
-			}
-		}
-
-		private void SnapActiveBendPoint()
-		{
-			foreach (BendPoint bendPoint in bendPoints)
-			{
-				if (bendPoint != selectedBendPoint)
-				{
-					if (Math.Abs(bendPoint.X - selectedBendPoint.X) <= PrecisionSize)
-						selectedBendPoint.X = bendPoint.X;
-					if (Math.Abs(bendPoint.Y - selectedBendPoint.Y) <= PrecisionSize)
-						selectedBendPoint.Y = bendPoint.Y;
 				}
 			}
 		}
