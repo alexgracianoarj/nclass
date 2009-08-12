@@ -21,7 +21,7 @@ using System.ComponentModel;
 
 namespace NClass.DiagramEditor.ClassDiagram.Editors
 {
-	public abstract partial class ItemEditor : EditorWindow
+	public abstract partial class ItemEditor : FloatingEditor
 	{
 		bool needValidation = false;
 

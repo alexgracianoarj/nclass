@@ -1253,7 +1253,7 @@ namespace NClass.DiagramEditor.ClassDiagram
 		private void UpdateWindowPosition()
 		{
 			if (ActiveElement != null)
-				ActiveElement.RelocateWindow();
+				ActiveElement.MoveWindow();
 		}
 
 		internal void ShowWindow(PopupWindow window)
@@ -1371,17 +1371,20 @@ namespace NClass.DiagramEditor.ClassDiagram
 				{
 					foreach (Shape otherShape in shapes.GetUnselectedElements())
 					{
-						int xDist = otherShape.Right - (shape.Right + change.Width);
-						if (Math.Abs(xDist) <= PrecisionSize)
+						if (otherShape != shape)
 						{
-							int distance1 = Math.Abs(shape.Top - otherShape.Bottom);
-							int distance2 = Math.Abs(otherShape.Top - shape.Bottom);
-							int distance = Math.Min(distance1, distance2);
-
-							if (distance <= MaximalPrecisionDistance)
+							int xDist = otherShape.Right - (shape.Right + change.Width);
+							if (Math.Abs(xDist) <= PrecisionSize)
 							{
-								change.Width += xDist;
-								break;
+								int distance1 = Math.Abs(shape.Top - otherShape.Bottom);
+								int distance2 = Math.Abs(otherShape.Top - shape.Bottom);
+								int distance = Math.Min(distance1, distance2);
+
+								if (distance <= MaximalPrecisionDistance)
+								{
+									change.Width += xDist;
+									break;
+								}
 							}
 						}
 					}
@@ -1392,23 +1395,26 @@ namespace NClass.DiagramEditor.ClassDiagram
 				{
 					foreach (Shape otherShape in shapes.GetUnselectedElements())
 					{
-						int yDist = otherShape.Bottom - (shape.Bottom + change.Height);
-						if (Math.Abs(yDist) <= PrecisionSize)
+						if (otherShape != shape)
 						{
-							int distance1 = Math.Abs(shape.Left - otherShape.Right);
-							int distance2 = Math.Abs(otherShape.Left - shape.Right);
-							int distance = Math.Min(distance1, distance2);
-
-							if (distance <= MaximalPrecisionDistance)
+							int yDist = otherShape.Bottom - (shape.Bottom + change.Height);
+							if (Math.Abs(yDist) <= PrecisionSize)
 							{
-								change.Height += yDist;
-								break;
+								int distance1 = Math.Abs(shape.Left - otherShape.Right);
+								int distance2 = Math.Abs(otherShape.Left - shape.Right);
+								int distance = Math.Min(distance1, distance2);
+
+								if (distance <= MaximalPrecisionDistance)
+								{
+									change.Height += yDist;
+									break;
+								}
 							}
 						}
 					}
 				}
 
-				shape.Size += change;
+				e.Change = change;
 			}
 		}
 

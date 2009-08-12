@@ -22,12 +22,30 @@ using NClass.Core;
 
 namespace NClass.DiagramEditor.ClassDiagram.Editors
 {
-	public abstract class EditorWindow : PopupWindow
+	public abstract class FloatingEditor : EditorWindow
 	{
-		internal abstract void Init(DiagramElement element);
+		protected const int MarginSize = 20;
+		static readonly Color beginColor = SystemColors.ControlLight;
+		static readonly Color endColor = SystemColors.Control;
 
-		internal abstract void Relocate(DiagramElement element);
+		static MemberType newMemberType = MemberType.Method;
 
-		public abstract override void ValidateData();
+		protected FloatingEditor()
+		{
+			this.BackColor = System.Drawing.SystemColors.Control;
+			this.Padding = new Padding(1);
+		}
+
+		protected static MemberType NewMemberType
+		{
+			get { return newMemberType; }
+			set { newMemberType = value; }
+		}
+
+		protected override void OnPaintBackground(PaintEventArgs e)
+		{
+			base.OnPaintBackground(e);
+			e.Graphics.DrawRectangle(SystemPens.ControlDark, 0, 0, Width - 1, Height - 1);
+		}
 	}
 }

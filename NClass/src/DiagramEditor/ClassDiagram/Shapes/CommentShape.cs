@@ -28,16 +28,18 @@ namespace NClass.DiagramEditor.ClassDiagram.Shapes
 {
 	internal sealed class CommentShape : Shape
 	{
-		const int MarginSize = 10;
-		const int DefaultWidth = 162;
-		const int DefaultHeight = 72;
+		const int PaddingSize = 10;
+		const int DefaultWidth = 160;
+		const int DefaultHeight = 75;
 
+		static CommentEditor editor = new CommentEditor();
 		static Pen borderPen = new Pen(Color.Black);
 		static SolidBrush backgroundBrush = new SolidBrush(Color.White);
 		static SolidBrush textBrush = new SolidBrush(Color.Black);
 		static StringFormat format = new StringFormat(StringFormat.GenericTypographic);
 
 		Comment comment;
+		bool editorShowed = false;
 
 		static CommentShape()
 		{
@@ -48,8 +50,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Shapes
 		/// <exception cref="ArgumentNullException">
 		/// <paramref name="comment"/> is null.
 		/// </exception>
-		internal CommentShape(Comment comment)
-			: base(comment)
+		internal CommentShape(Comment comment) : base(comment)
 		{
 			this.comment = comment;
 		}
@@ -93,12 +94,29 @@ namespace NClass.DiagramEditor.ClassDiagram.Shapes
 			return style.CommentBorderWidth;
 		}
 
-		private Rectangle GetMarginRectangle()
+		internal Rectangle GetTextRectangle()
 		{
 			return new Rectangle(
-				Left + MarginSize, Top + MarginSize,
-				Width - 2 * MarginSize, Height - 2 * MarginSize
+				Left + PaddingSize, Top + PaddingSize,
+				Width - 2 * PaddingSize, Height - 2 * PaddingSize
 			);
+		}
+
+		protected override void OnMove(MoveEventArgs e)
+		{
+			base.OnMove(e);
+			HideEditor();
+		}
+
+		protected override void OnResize(ResizeEventArgs e)
+		{
+			base.OnResize(e);
+			if (editorShowed)
+			{
+				editor.Relocate(this);
+				if (!editor.Focused)
+					editor.Focus();
+			}
 		}
 
 		protected override void OnMouseDown(AbsoluteMouseEventArgs e)
@@ -113,12 +131,34 @@ namespace NClass.DiagramEditor.ClassDiagram.Shapes
 		protected override void OnDoubleClick(AbsoluteMouseEventArgs e)
 		{
 			if (Contains(e.Location) && e.Button == MouseButtons.Left)
-				EditText();
+				ShowEditor();
 		}
 
 		protected internal override void ShowEditor()
 		{
-			EditText();
+			if (!editorShowed)
+			{
+				editor.Relocate(this);
+				editor.Init(this);
+				ShowWindow(editor);
+				editor.Focus();
+				editorShowed = true;
+			}
+		}
+
+		protected internal override void HideEditor()
+		{
+			if (editorShowed)
+			{
+				editor.ValidateData();
+				HideWindow(editor);
+				editorShowed = false;
+			}
+		}
+
+		protected internal override void MoveWindow()
+		{
+			HideEditor();
 		}
 
 		internal void EditText()
@@ -148,8 +188,8 @@ namespace NClass.DiagramEditor.ClassDiagram.Shapes
 
 			// Create shape pattern
 			GraphicsPath path = new GraphicsPath();
-			path.AddLine(Left, Top, Right - MarginSize, Top);
-			path.AddLine(Right, Top + MarginSize, Right, Bottom);
+			path.AddLine(Left, Top, Right - PaddingSize, Top);
+			path.AddLine(Right, Top + PaddingSize, Right, Bottom);
 			path.AddLine(Right, Bottom, Left, Bottom);
 			path.CloseFigure();
 
@@ -168,8 +208,8 @@ namespace NClass.DiagramEditor.ClassDiagram.Shapes
 
 			// Draw earmark
 			path.Reset();
-			path.AddLine(Right - MarginSize, Top, Right - MarginSize, Top + MarginSize);
-			path.AddLine(Right - MarginSize, Top + MarginSize, Right, Top + MarginSize);
+			path.AddLine(Right - PaddingSize, Top, Right - PaddingSize, Top + PaddingSize);
+			path.AddLine(Right - PaddingSize, Top + PaddingSize, Right, Top + PaddingSize);
 			g.DrawPath(borderPen, path);
 
 			path.Dispose();
@@ -177,7 +217,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Shapes
 
 		private void DrawText(Graphics g, bool onScreen, Style style)
 		{
-			Rectangle textBounds = GetMarginRectangle();
+			Rectangle textBounds = GetTextRectangle();
 
 			if (string.IsNullOrEmpty(Text) && onScreen)
 			{

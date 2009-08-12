@@ -23,7 +23,7 @@ using NClass.Translations;
 
 namespace NClass.DiagramEditor.ClassDiagram.Editors
 {
-	public partial class MemberEditor : EditorWindow
+	public partial class MemberEditor : FloatingEditor
 	{
 		CompositeTypeShape shape = null;
 		bool needValidation = false;

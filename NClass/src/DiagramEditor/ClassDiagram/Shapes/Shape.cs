@@ -669,13 +669,21 @@ namespace NClass.DiagramEditor.ClassDiagram.Shapes
 				change.Height += offset;
 			}
 
-			OnResizing(new ResizeEventArgs(change));
+			ResizeEventArgs e = new ResizeEventArgs(change);
+			OnResizing(e);
+			Size += e.Change;
 		}
 
 		protected virtual void CopyFrom(Shape shape)
 		{
 			location = shape.location;
 			size = shape.size;
+		}
+
+		protected override void OnDeactivating(EventArgs e)
+		{
+			base.OnDeactivated(e);
+			HideEditor();
 		}
 
 		protected override void OnMouseDown(AbsoluteMouseEventArgs e)

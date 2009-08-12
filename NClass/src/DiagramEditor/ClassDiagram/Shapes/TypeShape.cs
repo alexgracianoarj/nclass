@@ -653,7 +653,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Shapes
 
 		protected abstract override int GetRequiredHeight();
 
-		protected internal override void RelocateWindow()
+		protected internal override void MoveWindow()
 		{
 			EditorWindow editor = GetEditorWindow();
 			if (editor != null)
@@ -668,12 +668,6 @@ namespace NClass.DiagramEditor.ClassDiagram.Shapes
 		public sealed override void SelectNext()
 		{
 			ActiveMemberIndex++;
-		}
-
-		protected override void OnDeactivating(EventArgs e)
-		{
-			base.OnDeactivated(e);
-			HideEditor();
 		}
 
 		protected virtual void OnActiveMemberChanged(EventArgs e)

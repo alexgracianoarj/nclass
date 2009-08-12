@@ -32,6 +32,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Shapes
 		public Size Change
 		{
 			get { return change; }
+			set { change = value; }
 		}
 	}
 }

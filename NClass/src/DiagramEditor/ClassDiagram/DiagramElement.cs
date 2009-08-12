@@ -175,7 +175,7 @@ namespace NClass.DiagramEditor.ClassDiagram
 
 		protected abstract RectangleF CalculateDrawingArea(Style style, bool printing, float zoom);
 
-		protected internal virtual void RelocateWindow()
+		protected internal virtual void MoveWindow()
 		{
 		}
 

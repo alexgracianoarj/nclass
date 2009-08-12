@@ -21,7 +21,7 @@ namespace NClass.Core
 {
 	public sealed class Comment : Element, IEntity
 	{
-		string text;
+		string text = string.Empty;
 
 		public event SerializeEventHandler Serializing;
 		public event SerializeEventHandler Deserializing;
@@ -53,6 +53,9 @@ namespace NClass.Core
 			}
 			set
 			{
+				if (value == null)
+					value = string.Empty;
+
 				if (text != value) {
 					text = value;
 					Changed();

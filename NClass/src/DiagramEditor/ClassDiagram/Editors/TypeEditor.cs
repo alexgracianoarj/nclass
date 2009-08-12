@@ -16,11 +16,12 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using NClass.Core;
 using NClass.DiagramEditor.ClassDiagram.Shapes;
 
 namespace NClass.DiagramEditor.ClassDiagram.Editors
 {
-	public abstract class TypeEditor : EditorWindow
+	public abstract class TypeEditor : FloatingEditor
 	{
 		internal sealed override void Relocate(DiagramElement element)
 		{
