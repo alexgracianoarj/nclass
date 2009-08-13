@@ -772,7 +772,7 @@
     <comment>It's needed for version controlling, don't translate it</comment>
   </data>
   <data name="TranslationVersion" xml:space="preserve">
-    <value>2009-07-30</value>
+    <value>2009-08-11</value>
     <comment>It's needed for version controlling, don't translate it</comment>
   </data>
   <data name="Translator" xml:space="preserve">
@@ -813,15 +813,15 @@
     <value>Уменьшить</value>
   </data>
   <data name="RequiresNetFramework" xml:space="preserve">
-    <value>This program requires the .NET 2.0 Framework.
-Please download and install the .NET Framework and run this setup again.
-Do you want to download the framework now?</value>
+    <value>Для работы программы необходим .NET 2.0 Framework.
+Пожалуста, загрузите и установите .NET Framework, а затем перезапустите установку прогаммы.
+Вы хотите загрузить .NET Framework сейчас?</value>
   </data>
   <data name="StartMenuGroup" xml:space="preserve">
-    <value>Create Start menu group</value>
+    <value>Создать группу в Главном меню</value>
   </data>
   <data name="Uninstall" xml:space="preserve">
-    <value>Uninstall</value>
+    <value>Удалить</value>
   </data>
   <data name="EditText" xml:space="preserve">
     <value>Редактировать текст:</value>
@@ -1079,6 +1079,21 @@ Do you want to download the framework now?</value>
     <value>Вставить</value>
   </data>
   <data name="TranslationUpdated" xml:space="preserve">
-    <value>Russian translation has been updated.</value>
+    <value>Обновлен перевод на русский язык</value>
+  </data>
+  <data name="MenuOpenFile" xml:space="preserve">
+    <value>&amp;Файл...</value>
+  </data>
+  <data name="UseClearTypeForImages" xml:space="preserve">
+    <value>В экспортируемых изображениях (отключает прозрачный фон)</value>
+  </data>
+  <data name="MenuReverse" xml:space="preserve">
+    <value>Изменить направление</value>
+  </data>
+  <data name="MenuAutoSize" xml:space="preserve">
+    <value>Автоматический &amp;размер</value>
+  </data>
+  <data name="DeleteMemberConfirmation" xml:space="preserve">
+    <value>Вы уверены, что хотите удалить выбранный член?</value>
   </data>
 </root>

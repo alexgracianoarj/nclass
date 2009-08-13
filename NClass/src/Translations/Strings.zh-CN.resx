@@ -142,7 +142,7 @@
     <value>常规</value>
   </data>
   <data name="MenuGenerateCode" xml:space="preserve">
-    <value>生成代码...(&amp;G)</value>
+    <value>生成代码(&amp;G)...</value>
   </data>
   <data name="ErrorType" xml:space="preserve">
     <value>类型不能为 {0}</value>
@@ -304,7 +304,7 @@
     <value>关联(&amp;A)</value>
   </data>
   <data name="ButtonAddItem" xml:space="preserve">
-    <value>添加新成员</value>
+    <value>添加</value>
   </data>
   <data name="MenuSelectAll" xml:space="preserve">
     <value>全选(&amp;S)</value>
@@ -801,9 +801,6 @@
   <data name="MenuStruct" xml:space="preserve">
     <value>结构体(&amp;S)</value>
   </data>
-  <data name="TranslationUpdated" xml:space="preserve">
-    <value>Chinese translation has been updated.</value>
-  </data>
   <data name="ErrorPrinting" xml:space="preserve">
     <value>在打印时发生错误: {0}</value>
   </data>
@@ -1069,6 +1066,24 @@
     <value>Chinese</value>
   </data>
   <data name="TranslationVersion" xml:space="preserve">
-    <value>2009-07-31</value>
+    <value>2009-08-12</value>
+  </data>
+  <data name="TranslationUpdated" xml:space="preserve">
+    <value>中文翻译已更新</value>
+  </data>
+  <data name="MenuOpenFile" xml:space="preserve">
+    <value>文件(&amp;F)...</value>
+  </data>
+  <data name="UseClearTypeForImages" xml:space="preserve">
+    <value>在导出的图像中(禁用透明)</value>
+  </data>
+  <data name="MenuReverse" xml:space="preserve">
+    <value>逆向</value>
+  </data>
+  <data name="MenuAutoSize" xml:space="preserve">
+    <value>自动大小(&amp;S)</value>
+  </data>
+  <data name="DeleteMemberConfirmation" xml:space="preserve">
+    <value>确定要删除所选取成员吗？</value>
   </data>
 </root>

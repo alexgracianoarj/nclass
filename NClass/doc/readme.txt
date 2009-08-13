@@ -1,5 +1,5 @@
-NClass 2.0
-==========
+NClass 2.01
+===========
 
 Overview
 --------
@@ -18,22 +18,18 @@ you can also import classes from existing .NET assemblies.
 
 Features
 --------
-- Full C# and Java language support 
-- Declaration parsers for class members 
-- Syntactical/semantical verification 
-- Source code generation 
-- Diagram navigator window 
-- Inline class editor for faster editing 
-- Precision snapping to align objects without grid 
-- Configurable diagram styles 
-- Multilanguage user interface 
-- Printing / saving to image 
-- Assembly importer plugin by Malte Ried 
-- Official Mono support 
+- Full C# and Java support with language specific elements
+- Simple and easy to use user interface
+- Inline editors with syntactical parsers for easy and fast editing
+- Source code generation
+- Reverse engineering from .NET assemblies (thanks to Malte Ried)
+- Configurable diagram styles
+- Printing / saving to image
+- Multilanguage user interface
+- Mono support for non-Windows users
 
-
-Reqirements
------------
+Requirements
+------------
 To run this software, the Microsoft .NET Framework 2.0 must be installed on your computer.
 
 If you are a Linux/Mac user, you can alternatively use the Mono framework.

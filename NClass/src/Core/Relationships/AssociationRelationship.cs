@@ -185,6 +185,7 @@ namespace NClass.Core
 
 		public void Reverse()
 		{
+			//TODO: ne az õsosztályon kereszül érje el, egyszerûbb lenne saját taggal
 			IEntity first = First;
 			First = Second;
 			Second = first;
@@ -298,19 +299,19 @@ namespace NClass.Core
 
 				child = node["StartRole"];
 				if (child != null)
-					StartRole = child.InnerText;
+					startRole = child.InnerText;
 
 				child = node["EndRole"];
 				if (child != null)
-					EndRole = child.InnerText;
+					endRole = child.InnerText;
 
 				child = node["StartMultiplicity"];
 				if (child != null)
-					StartMultiplicity = child.InnerText;
+					startMultiplicity = child.InnerText;
 
 				child = node["EndMultiplicity"];
 				if (child != null)
-					EndMultiplicity = child.InnerText;
+					endMultiplicity = child.InnerText;
 			}
 			catch (ArgumentException)
 			{

@@ -58,7 +58,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CrashHelper.cs" />
+    <Compile Include="CrashHandler.cs" />
     <Compile Include="SimplePlugin.cs" />
     <Compile Include="NClassEnvironment.cs" />
     <Compile Include="Plugin.cs" />

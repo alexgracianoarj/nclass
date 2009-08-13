@@ -22,7 +22,7 @@ using NClass.Translations;
 
 namespace NClass.GUI
 {
-	internal static class CrashHelper
+	internal static class CrashHandler
 	{
 		public static void CreateGlobalErrorHandler()
 		{
@@ -82,6 +82,9 @@ namespace NClass.GUI
 				writer.WriteLine();
 				writer.WriteLine("Version: {0}", Program.GetVersionString());
 				writer.WriteLine("Mono: {0}", MonoHelper.IsRunningOnMono ? "yes" : "no");
+				if (MonoHelper.IsRunningOnMono)
+					writer.WriteLine("Mono version: {0}", MonoHelper.Version);
+				writer.WriteLine("OS: {0}", Environment.OSVersion.VersionString);
 
 				writer.WriteLine();
 				writer.WriteLine(exception.Message);

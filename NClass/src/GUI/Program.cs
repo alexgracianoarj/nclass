@@ -36,7 +36,7 @@ namespace NClass.GUI
 		[STAThread]
 		private static void Main(string[] args)
 		{
-			CrashHelper.CreateGlobalErrorHandler();
+			CrashHandler.CreateGlobalErrorHandler();
 			UpdateSettings();
 
 			// Set the user interface language

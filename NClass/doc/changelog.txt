@@ -1,3 +1,19 @@
+Version 2.01 [13-Aug-2009]
+--------------------------
++ Better keyboard support
++ Menu command to reverse an association relationship
++ Option for using ClearType fonts in exported images
++ Inline comment editing
+* Double click now opens the floating editor and focuses it
+* Delete button removes the selected member if only one class is selected
+* Better initial positioning of relationships
+* Fixed a relationship routing problem
+* Fixed a critical bug when using the clipboard or implementing an interface
+* Fixed a printing bug due to bad font scaling
+* Fixed a bug when resizing classes
+* Transparent shadows are disabled for printing
+* Further minor UI changes
+
 Version 2.0 (30-Jul-2009)
 -------------------------
 + Tabbed document interface

@@ -835,9 +835,6 @@ Não é possível definir o acesso modificador explícito em execução.</value>
     <value>2009-07-30</value>
     <comment>#It's needed for version controlling, don't translate it</comment>
   </data>
-  <data name="TranslationUpdated" xml:space="preserve">
-    <value>Brazilian Portuguese translation has been updated.</value>
-  </data>
   <data name="TranslationName" xml:space="preserve">
     <value>Brazilian Portuguese</value>
     <comment>#It's needed for version controlling, don't translate it</comment>

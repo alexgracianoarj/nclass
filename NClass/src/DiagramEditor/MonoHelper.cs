@@ -14,23 +14,45 @@
 // 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Reflection;
 
 namespace NClass.DiagramEditor
 {
 	public static class MonoHelper
 	{
 		static bool isMono;
+		static string version;
 
 		static MonoHelper()
 		{
-			isMono = (Type.GetType("Mono.Runtime") != null);
+			Type monoRuntime = Type.GetType("Mono.Runtime");
+
+			if (monoRuntime != null)
+			{
+				isMono = true;
+				MethodInfo method = monoRuntime.GetMethod("GetDisplayName",
+					BindingFlags.NonPublic | BindingFlags.Static);
+				
+				if (method != null)
+					version = method.Invoke(null, null) as string;
+				else
+					version = "Unknown version";
+			}
+			else
+			{
+				isMono = false;
+				version = string.Empty;
+			}
 		}
 
 		public static bool IsRunningOnMono
 		{
 			get { return isMono; }
+		}
+
+		public static string Version
+		{
+			get { return version; }
 		}
 	}
 }
