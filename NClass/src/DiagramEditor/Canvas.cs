@@ -392,7 +392,7 @@ namespace NClass.DiagramEditor
 
 				float offsetX = (visibleRectangle.Width - diagramRectangle.Width * Zoom) / 2;
 				float offsetY = (visibleRectangle.Height - diagramRectangle.Height * Zoom) / 2;
-				document.Offset = new Point(
+				Offset = new Point(
 					(int) (diagramRectangle.X * Zoom - Margin - offsetX),
 					(int) (diagramRectangle.Y * Zoom - Margin - offsetY)
 				);
@@ -472,6 +472,23 @@ namespace NClass.DiagramEditor
 			}
 		}
 
+		private void ScrollHorizontally(int offset)
+		{
+			if (HScroll)
+			{
+				int posX = -DisplayRectangle.X + offset;
+				int maxX = DisplayRectangle.Width - ClientRectangle.Width;
+
+				if (posX < 0)
+					posX = 0;
+				if (posX > maxX)
+					posX = maxX;
+
+				SetDisplayRectLocation(-posX, DisplayRectangle.Y);
+				AdjustFormScrollbars(true);
+			}
+		}
+
 		private void UpdateDocumentOffset()
 		{
 			if (HasDocument)
@@ -529,19 +546,21 @@ namespace NClass.DiagramEditor
 				else
 					ChangeZoom(enlarge);
 			}
+			else if (Control.ModifierKeys == Keys.Shift)
+			{
+				ScrollHorizontally(-e.Delta);
+			}
 			else
 			{
 				base.OnMouseWheel(e);
-				if (HasDocument)
-					Document.MouseMove(new AbsoluteMouseEventArgs(e, Document));
 			}
 			UpdateDocumentOffset();
 		}
 
-		protected virtual void OnMouseHWheel(EventArgs e)
+		protected virtual void OnMouseHWheel(EventArgs e) //TODO: MouseEventArgs kellene
 		{
 			UpdateDocumentOffset();
-			Invalidate(); //TODO: ezt még pontosítani kell...
+			Invalidate(); //TODO: SetDisplayRectLocation() kellene
 			if (MouseHWheel != null)
 				MouseHWheel(this, e);
 		}

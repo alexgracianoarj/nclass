@@ -41,7 +41,7 @@ namespace NClass.GUI.ModelExplorer
 				new ToolStripSeparator(),
 				new ToolStripMenuItem(Strings.MenuSave, Resources.Save, save_Click),
 				new ToolStripMenuItem(Strings.MenuSaveAs, null, saveAs_Click),
-				new ToolStripMenuItem(Strings.MenuRename, null, rename_Click),
+				new ToolStripMenuItem(Strings.MenuRename, null, rename_Click, Keys.F2),
 				new ToolStripSeparator(),
 				new ToolStripMenuItem(Strings.MenuCloseProject, null, close_Click)
 			});

@@ -1,4 +1,11 @@
-Version 2.01 [13-Aug-2009]
+Version 2.02 [Preliminary]
+--------------------------
++ Scroll horizontally with the mouse wheel while pressing the Shift key
+* Fixed a page margin bug when printing
+* Print dialog remembers last page settings
+* Projects and diagrams are renameable with the F2 key
+
+Version 2.01 (13-Aug-2009)
 --------------------------
 + Better keyboard support
 + Menu command to reverse an association relationship

@@ -1056,7 +1056,7 @@ namespace NClass.DiagramEditor.ClassDiagram
 					element.MouseMoved(e);
 				}
 			}
-			
+
 			RedrawSuspended = false;
 		}
 

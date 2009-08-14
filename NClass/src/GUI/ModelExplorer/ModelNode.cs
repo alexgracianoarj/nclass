@@ -58,8 +58,11 @@ namespace NClass.GUI.ModelExplorer
 
 		public void EditLabel()
 		{
-			editingLabel = true;
-			this.BeginEdit();
+			if (!editingLabel)
+			{
+				editingLabel = true;
+				this.BeginEdit();
+			}
 		}
 
 		internal void LabelEdited()

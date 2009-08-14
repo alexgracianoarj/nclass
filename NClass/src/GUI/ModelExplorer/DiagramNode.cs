@@ -34,7 +34,7 @@ namespace NClass.GUI.ModelExplorer
 		{
 			contextMenu.Items.AddRange(new ToolStripItem[] {
 				new ToolStripMenuItem(Strings.MenuOpen, Resources.Open, open_Click),
-				new ToolStripMenuItem(Strings.MenuRename, null, renameItem_Click),
+				new ToolStripMenuItem(Strings.MenuRename, null, renameItem_Click, Keys.F2),
 				new ToolStripSeparator(),
 				new ToolStripMenuItem(Strings.MenuDeleteProjectItem, Resources.Delete,
 					deleteProjectItem_Click)

@@ -190,6 +190,12 @@ namespace NClass.GUI.ModelExplorer
 				if (selectedNode != null)
 					selectedNode.EnterPressed();
 			}
+			else if (e.KeyCode == Keys.F2)
+			{
+				ModelNode selectedNode = SelectedNode as ModelNode;
+				if (selectedNode != null)
+					selectedNode.EditLabel();
+			}
 		}
 
 		protected override void OnBeforeCollapse(TreeViewCancelEventArgs e)
