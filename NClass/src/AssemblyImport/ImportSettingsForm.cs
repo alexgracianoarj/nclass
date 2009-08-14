@@ -1,9 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 
 using NClass.AssemblyImport.Properties;
@@ -27,52 +23,54 @@ namespace NClass.AssemblyImport
       InitializeComponent();
 
       //Localization goes here...
-      axElementNameMap.Add("class", Elements.Class);
-      axElementNameMap.Add("constructor", Elements.Constructor);
-      axElementNameMap.Add("delegate", Elements.Delegate);
-      axElementNameMap.Add("elements", Elements.Elements);
-      axElementNameMap.Add("enum", Elements.Enum);
-      axElementNameMap.Add("event", Elements.Event);
-      axElementNameMap.Add("field", Elements.Field);
-      axElementNameMap.Add("interface", Elements.Interface);
-      axElementNameMap.Add("method", Elements.Method);
-      axElementNameMap.Add("property", Elements.Property);
-      axElementNameMap.Add("struct", Elements.Struct);
+      elementNameMap.Add("class", Elements.Class);
+      elementNameMap.Add("constructor", Elements.Constructor);
+      elementNameMap.Add("delegate", Elements.Delegate);
+      elementNameMap.Add("elements", Elements.Elements);
+      elementNameMap.Add("enum", Elements.Enum);
+      elementNameMap.Add("event", Elements.Event);
+      elementNameMap.Add("field", Elements.Field);
+      elementNameMap.Add("interface", Elements.Interface);
+      elementNameMap.Add("method", Elements.Method);
+      elementNameMap.Add("property", Elements.Property);
+      elementNameMap.Add("struct", Elements.Struct);
 
-      axModifierNameMap.Add("all", Modifiers.All);
-      axModifierNameMap.Add("instance", Modifiers.Instance);
-      axModifierNameMap.Add("internal", Modifiers.Internal);
-      axModifierNameMap.Add("private", Modifiers.Private);
-      axModifierNameMap.Add("protected", Modifiers.Protected);
-      axModifierNameMap.Add("protected internal", Modifiers.ProtectedInternal);
-      axModifierNameMap.Add("public", Modifiers.Public);
-      axModifierNameMap.Add("static", Modifiers.Static);
+      modifierNameMap.Add("all", Modifiers.All);
+      modifierNameMap.Add("instance", Modifiers.Instance);
+      modifierNameMap.Add("internal", Modifiers.Internal);
+      modifierNameMap.Add("private", Modifiers.Private);
+      modifierNameMap.Add("protected", Modifiers.Protected);
+      modifierNameMap.Add("protected internal", Modifiers.ProtectedInternal);
+      modifierNameMap.Add("public", Modifiers.Public);
+      modifierNameMap.Add("static", Modifiers.Static);
 
       //Build reverse maps and ComboBox-Items
       xExceptionColumnElement.Items.Clear();
-      axReverseElementNameMap.Clear();
-      foreach(string stName in axElementNameMap.Keys)
+      reverseElementNameMap.Clear();
+      foreach(string stName in elementNameMap.Keys)
       {
         xExceptionColumnElement.Items.Add(stName);
-        axReverseElementNameMap.Add(axElementNameMap[stName], stName);
+        reverseElementNameMap.Add(elementNameMap[stName], stName);
       }
       xExceptionColumnModifier.Items.Clear();
-      axReverseModifierNameMap.Clear();
-      foreach(string stName in axModifierNameMap.Keys)
+      reverseModifierNameMap.Clear();
+      foreach(string stName in modifierNameMap.Keys)
       {
         xExceptionColumnModifier.Items.Add(stName);
-        axReverseModifierNameMap.Add(axModifierNameMap[stName], stName);
+        reverseModifierNameMap.Add(modifierNameMap[stName], stName);
       }
 
-      xSettings = theSettings;
+      importSettings = theSettings;
 
       //Templates
       cboTemplate.Items.Clear();
       if(Settings.Default.ImportSettingsTemplates == null)
       {
         Settings.Default.ImportSettingsTemplates = new TemplateList();
-        ImportSettings xNewSettings = new ImportSettings();
-        xNewSettings.Name = "<last used>";
+        ImportSettings xNewSettings = new ImportSettings
+                                        {
+                                          Name = "<last used>"
+                                        };
         Settings.Default.ImportSettingsTemplates.Add(xNewSettings);
       }
       foreach(object xTemplate in Settings.Default.ImportSettingsTemplates)
@@ -91,23 +89,23 @@ namespace NClass.AssemblyImport
     /// <summary>
     /// The settings which are used for the import
     /// </summary>
-    ImportSettings xSettings;
+    readonly ImportSettings importSettings;
     /// <summary>
     /// A map from element names to the element enum.
     /// </summary>
-    Dictionary<string, Elements> axElementNameMap = new Dictionary<string, Elements>();
+    readonly Dictionary<string, Elements> elementNameMap = new Dictionary<string, Elements>();
     /// <summary>
     /// A map from element enum to the element names.
     /// </summary>
-    Dictionary<Elements, string> axReverseElementNameMap = new Dictionary<Elements, string>();
+    readonly Dictionary<Elements, string> reverseElementNameMap = new Dictionary<Elements, string>();
     /// <summary>
     /// A map from the modifier names to the modifier enum.
     /// </summary>
-    Dictionary<string, Modifiers> axModifierNameMap = new Dictionary<string, Modifiers>();
+    readonly Dictionary<string, Modifiers> modifierNameMap = new Dictionary<string, Modifiers>();
     /// <summary>
     /// A map from the modifier enum to the modifier names.
     /// </summary>
-    Dictionary<Modifiers, string> axReverseModifierNameMap = new Dictionary<Modifiers, string>();
+    readonly Dictionary<Modifiers, string> reverseModifierNameMap = new Dictionary<Modifiers, string>();
     
     #endregion
 
@@ -130,7 +128,7 @@ namespace NClass.AssemblyImport
     /// <param name="e">Information about the event.</param>
     private void ImportSettingsForm_FormClosed(object sender, FormClosedEventArgs e)
     {
-      StoreSettings(xSettings);
+      StoreSettings(importSettings);
       StoreSettings((ImportSettings)Settings.Default.ImportSettingsTemplates[0]); //<last used>
       Settings.Default.Save();
     }
@@ -169,11 +167,7 @@ namespace NClass.AssemblyImport
         MessageBox.Show("'<' is not allowed");
         return;
       }
-      ImportSettings xSettings = (ImportSettings)cboTemplate.SelectedItem;
-      if(xSettings == null)
-      {
-        xSettings = new ImportSettings();
-      }
+      ImportSettings xSettings = (ImportSettings)cboTemplate.SelectedItem ?? new ImportSettings();
       StoreSettings(xSettings);
       xSettings.Name = cboTemplate.Text;
       if(cboTemplate.SelectedItem == null)
@@ -207,6 +201,18 @@ namespace NClass.AssemblyImport
       cboTemplate.Items.Remove(cboTemplate.SelectedItem);
     }
 
+    /// <summary>
+    /// Gets called when the CreateAggregations-checkbox is (un)checked. 
+    /// Updates the user interface.
+    /// </summary>
+    /// <param name="sender">The sender of the event.</param>
+    /// <param name="e">Information about the event.</param>
+    private void chkCreateAggregations_CheckedChanged(object sender, EventArgs e)
+    {
+      chkLabelAggregations.Enabled = chkCreateAggregations.Checked;
+      chkRemoveFields.Enabled = chkCreateAggregations.Checked;
+    }
+
     #endregion
 
     #region === Methods
@@ -214,20 +220,24 @@ namespace NClass.AssemblyImport
     /// <summary>
     /// Displays the given Settings.
     /// </summary>
-    /// <param name="xSettings">The Settings which shall be displayed.</param>
+    /// <param name="theSettings">The Settings which shall be displayed.</param>
     private void DisplaySettings(ImportSettings theSettings)
     {
       dgvExceptions.Rows.Clear();
       foreach(ModifierElement xRule in theSettings.Rules)
       {
-        dgvExceptions.Rows.Add(axReverseModifierNameMap[xRule.Modifier], axReverseElementNameMap[xRule.Element]);
+        dgvExceptions.Rows.Add(reverseModifierNameMap[xRule.Modifier], reverseElementNameMap[xRule.Element]);
       }
+
+      chkCreateAggregations.Checked = theSettings.CreateAggregations;
+      chkLabelAggregations.Checked = theSettings.LabelAggregations;
+      chkRemoveFields.Checked = theSettings.RemoveFields;
     }
 
     /// <summary>
-    /// Stores the displayed settings to <paramref name="xSettings"/>
+    /// Stores the displayed settings to <paramref name="theSettings"/>
     /// </summary>
-    /// <param name="xSettings">The destination of the store operation.</param>
+    /// <param name="theSettings">The destination of the store operation.</param>
     private void StoreSettings(ImportSettings theSettings)
     {
       theSettings.Rules.Clear();
@@ -235,9 +245,13 @@ namespace NClass.AssemblyImport
       {
         if(xRow.Cells[0].Value != null && xRow.Cells[1].Value != null)
         {
-          theSettings.Rules.Add(new ModifierElement(axModifierNameMap[(string)xRow.Cells[0].Value], axElementNameMap[(string)xRow.Cells[1].Value]));
+          theSettings.Rules.Add(new ModifierElement(modifierNameMap[(string)xRow.Cells[0].Value], elementNameMap[(string)xRow.Cells[1].Value]));
         }
       }
+
+      theSettings.CreateAggregations = chkCreateAggregations.Checked;
+      theSettings.LabelAggregations = chkLabelAggregations.Checked;
+      theSettings.RemoveFields = chkRemoveFields.Checked;
     }
 
     #endregion

@@ -1,8 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
-using NClass.Core;
-using System.ComponentModel;
 using System.Reflection;
 using System.Collections;
 using System.Xml.Serialization;
@@ -119,24 +116,11 @@ namespace NClass.AssemblyImport
     /// </summary>
     /// <param name="theModifier">The Modifier for this rule.</param>
     /// <param name="theElement">The element for this rule</param>
-    public ModifierElement(Modifiers theModifier, Elements theElement)
+    public ModifierElement(Modifiers theModifier, Elements theElement) : this()
     {
-      xElement = theElement;
-      xModifier = theModifier;
+      Element = theElement;
+      Modifier = theModifier;
     }
-
-    #endregion
-
-    #region === Fields
-
-    /// <summary>
-    /// The modifier for this rule.
-    /// </summary>
-    private Modifiers xModifier;
-    /// <summary>
-    /// The element for this rule.
-    /// </summary>
-    private Elements xElement;
 
     #endregion
 
@@ -145,39 +129,30 @@ namespace NClass.AssemblyImport
     /// <summary>
     /// Gets or sets the modifier for this rule.
     /// </summary>
-    public Modifiers Modifier
-    {
-      get { return xModifier; }
-      set { xModifier = value; }
-    }
+    public Modifiers Modifier { get; set; }
 
     /// <summary>
     /// Gets or sets the element for this rule.
     /// </summary>
-    public Elements Element
-    {
-      get { return xElement; }
-      set { xElement = value; }
-    }
+    public Elements Element { get; set; }
 
     #endregion
   }
 
   /// <summary>
-  /// A set of rules of things which should not be imported.
+  /// The settings in this class describe what and how to import.
   /// </summary>
   public class ImportSettings
   {
-    #region === Fields
+    #region === Construction
 
     /// <summary>
-    /// The list of import exception rules.
+    /// Creates a new ImportSettings.
     /// </summary>
-    private List<ModifierElement> axRules = new List<ModifierElement>();
-    /// <summary>
-    /// The name of this settings.
-    /// </summary>
-    private string stName;
+    public ImportSettings()
+    {
+      Rules = new List<ModifierElement>();
+    }
 
     #endregion
 
@@ -186,19 +161,27 @@ namespace NClass.AssemblyImport
     /// <summary>
     /// Gets or sets the name of this Settings
     /// </summary>
-    public string Name
-    {
-      get { return stName; }
-      set { stName = value; }
-    }
+    public string Name { get; set; }
 
     /// <summary>
     /// Gets the list of import exception rules.
     /// </summary>
-    public List<ModifierElement> Rules
-    {
-      get { return axRules; }
-    }
+    public List<ModifierElement> Rules { get; private set; }
+
+    /// <summary>
+    /// Gets a value indicating whether the to create aggregations.
+    /// </summary>
+    public bool CreateAggregations { get; set; }
+
+    /// <summary>
+    /// Gets a value indicating whether the fields used for an aggregation should be removed.
+    /// </summary>
+    public bool RemoveFields { get; set; }
+
+    /// <summary>
+    /// Gets a value indicating whether the aggregations should be labeled with the fieldname.
+    /// </summary>
+    public bool LabelAggregations { get; set; }
 
     #endregion
 
@@ -218,7 +201,7 @@ namespace NClass.AssemblyImport
     /// <returns>true, if the element should be imported, false otherwise.</returns>
     private bool CheckImport(Elements Element, bool Instance, bool Static, bool Internal, bool Private, bool Protected, bool ProtectedInternal, bool Public)
     {
-      foreach(ModifierElement xRule in axRules)
+      foreach(ModifierElement xRule in Rules)
       {
         if(xRule.Element == Elements.Elements || xRule.Element == Element)
         {
@@ -280,7 +263,7 @@ namespace NClass.AssemblyImport
     /// <summary>
     /// Checks if the structure <paramref name="theStruct"/> should be imported.
     /// </summary>
-    /// <param name="theClass">The structure which is checked.</param>
+    /// <param name="theStruct">The structure which is checked.</param>
     /// <returns>true, if the structure should be imported, false otherwise.</returns>
     public bool CheckImportStruct(Type theStruct)
     {
@@ -290,7 +273,7 @@ namespace NClass.AssemblyImport
     /// <summary>
     /// Checks if the interface <paramref name="theInterface"/> should be imported.
     /// </summary>
-    /// <param name="theClass">The interface which is checked.</param>
+    /// <param name="theInterface">The interface which is checked.</param>
     /// <returns>true, if the interface should be imported, false otherwise.</returns>
     public bool CheckImportInterface(Type theInterface)
     {
@@ -300,7 +283,7 @@ namespace NClass.AssemblyImport
     /// <summary>
     /// Checks if the enumeration <paramref name="theEnum"/> should be imported.
     /// </summary>
-    /// <param name="theClass">The enumeration which is checked.</param>
+    /// <param name="theEnum">The enumeration which is checked.</param>
     /// <returns>true, if the enumeration should be imported, false otherwise.</returns>
     public bool CheckImportEnum(Type theEnum)
     {
@@ -310,7 +293,7 @@ namespace NClass.AssemblyImport
     /// <summary>
     /// Checks if the delegate <paramref name="theDelegate"/> should be imported.
     /// </summary>
-    /// <param name="theClass">The delegate which is checked.</param>
+    /// <param name="theDelegate">The delegate which is checked.</param>
     /// <returns>true, if the delegate should be imported, false otherwise.</returns>
     public bool CheckImportDelegate(Type theDelegate)
     {
@@ -324,7 +307,7 @@ namespace NClass.AssemblyImport
     /// <summary>
     /// Checks if the field <paramref name="theField"/> should be imported.
     /// </summary>
-    /// <param name="theClass">The field which is checked.</param>
+    /// <param name="theField">The field which is checked.</param>
     /// <returns>true, if the field should be imported, false otherwise.</returns>
     public bool CheckImportField(FieldInfo theField)
     {
@@ -334,7 +317,7 @@ namespace NClass.AssemblyImport
     /// <summary>
     /// Checks if the constructor <paramref name="theConstructor"/> should be imported.
     /// </summary>
-    /// <param name="theClass">The constructor which is checked.</param>
+    /// <param name="theConstructor">The constructor which is checked.</param>
     /// <returns>true, if the constructor should be imported, false otherwise.</returns>
     public bool CheckImportConstructor(ConstructorInfo theConstructor)
     {
@@ -344,7 +327,7 @@ namespace NClass.AssemblyImport
     /// <summary>
     /// Checks if the property <paramref name="theProperty"/> should be imported.
     /// </summary>
-    /// <param name="theClass">The property which is checked.</param>
+    /// <param name="theProperty">The property which is checked.</param>
     /// <returns>true, if the property should be imported, false otherwise.</returns>
     public bool CheckImportProperty(MethodInfo theProperty)
     {
@@ -354,7 +337,7 @@ namespace NClass.AssemblyImport
     /// <summary>
     /// Checks if the method <paramref name="theMethod"/> should be imported.
     /// </summary>
-    /// <param name="theClass">The method which is checked.</param>
+    /// <param name="theMethod">The method which is checked.</param>
     /// <returns>true, if the method should be imported, false otherwise.</returns>
     public bool CheckImportMethod(MethodInfo theMethod)
     {
@@ -364,7 +347,7 @@ namespace NClass.AssemblyImport
     /// <summary>
     /// Checks if the event <paramref name="theEvent"/> should be imported.
     /// </summary>
-    /// <param name="theClass">The event which is checked.</param>
+    /// <param name="theEvent">The event which is checked.</param>
     /// <returns>true, if the event should be imported, false otherwise.</returns>
     public bool CheckImportEvent(MethodInfo theEvent)
     {
@@ -379,7 +362,7 @@ namespace NClass.AssemblyImport
     /// <returns>The name of the ImportSettings.</returns>
     public override string ToString()
     {
-      return stName;
+      return Name;
     }
 
     #endregion

@@ -13,13 +13,15 @@ using NClass.DiagramEditor.ClassDiagram.Shapes;
 namespace NClass.AssemblyImport
 {
   /// <summary>
-  /// TODO: 
+  /// Imports an Assembly and creates a classdiagram.
+  /// </summary>
   /// - Relationships between entities
   ///   - Done: Generalization and Realization (DONE)
   ///   - Nested types (DONE)
+  ///   - Composition of fields (DONE)
   /// - Classes / Interfaces / Structs: 
   ///   - Fields:
-  ///     - const (not available in NClass.Core yet)
+  ///     - const (DONE)
   ///   - Methods:
   ///     - out / ref parameters (DONE)
   ///     - params (DONE)
@@ -34,7 +36,6 @@ namespace NClass.AssemblyImport
   ///   - events (DONE)
   ///   - all the overide, new stuff (DONE)
   /// - Delegates (DONE)
-  /// </summary>
   /// <remarks>
   /// This is a brief description of the import progress.
   /// 
@@ -58,35 +59,36 @@ namespace NClass.AssemblyImport
     /// </summary>
     /// <param name="Destination">An instance of a Project to which all entities
     ///                           are added.</param>
+    /// <param name="ImportSettings">Settings, which control what to import.</param>
     public NETImport(Diagram Destination, ImportSettings ImportSettings)
     {
-      xProject = Destination;
-      xImportSettings = ImportSettings;
+      diagram = Destination;
+      importSettings = ImportSettings;
 
-      dstOperatorMethodsMap.Add("op_UnaryPlus", "operator +");
-      dstOperatorMethodsMap.Add("op_UnaryNegation", "operator -");
-      dstOperatorMethodsMap.Add("op_LogicalNot", "operator !");
-      dstOperatorMethodsMap.Add("op_OnesComplement", "operator ~");
-      dstOperatorMethodsMap.Add("op_Increment", "operator ++");
-      dstOperatorMethodsMap.Add("op_Decrement", "operator --");
-      dstOperatorMethodsMap.Add("op_True", "operator true");
-      dstOperatorMethodsMap.Add("op_False", "operator false");
-      dstOperatorMethodsMap.Add("op_Addition", "operator +");
-      dstOperatorMethodsMap.Add("op_Subtraction", "operator -");
-      dstOperatorMethodsMap.Add("op_Multiply", "operator *");
-      dstOperatorMethodsMap.Add("op_Division", "operator /");
-      dstOperatorMethodsMap.Add("op_Modulus", "operator %");
-      dstOperatorMethodsMap.Add("op_BitwiseAnd", "operator &");
-      dstOperatorMethodsMap.Add("op_BitwiseOr", "operator |");
-      dstOperatorMethodsMap.Add("op_ExclusiveOr", "operator ^");
-      dstOperatorMethodsMap.Add("op_LeftShift", "operator <<");
-      dstOperatorMethodsMap.Add("op_RightShift", "operator >>");
-      dstOperatorMethodsMap.Add("op_Equality", "operator ==");
-      dstOperatorMethodsMap.Add("op_Inequality", "operator !=");
-      dstOperatorMethodsMap.Add("op_LessThan", "operator <");
-      dstOperatorMethodsMap.Add("op_GreaterThan", "operator >");
-      dstOperatorMethodsMap.Add("op_LessThanOrEqual", "operator <=");
-      dstOperatorMethodsMap.Add("op_GreaterThanOrEqual", "operator >=");
+      operatorMethodsMap.Add("op_UnaryPlus", "operator +");
+      operatorMethodsMap.Add("op_UnaryNegation", "operator -");
+      operatorMethodsMap.Add("op_LogicalNot", "operator !");
+      operatorMethodsMap.Add("op_OnesComplement", "operator ~");
+      operatorMethodsMap.Add("op_Increment", "operator ++");
+      operatorMethodsMap.Add("op_Decrement", "operator --");
+      operatorMethodsMap.Add("op_True", "operator true");
+      operatorMethodsMap.Add("op_False", "operator false");
+      operatorMethodsMap.Add("op_Addition", "operator +");
+      operatorMethodsMap.Add("op_Subtraction", "operator -");
+      operatorMethodsMap.Add("op_Multiply", "operator *");
+      operatorMethodsMap.Add("op_Division", "operator /");
+      operatorMethodsMap.Add("op_Modulus", "operator %");
+      operatorMethodsMap.Add("op_BitwiseAnd", "operator &");
+      operatorMethodsMap.Add("op_BitwiseOr", "operator |");
+      operatorMethodsMap.Add("op_ExclusiveOr", "operator ^");
+      operatorMethodsMap.Add("op_LeftShift", "operator <<");
+      operatorMethodsMap.Add("op_RightShift", "operator >>");
+      operatorMethodsMap.Add("op_Equality", "operator ==");
+      operatorMethodsMap.Add("op_Inequality", "operator !=");
+      operatorMethodsMap.Add("op_LessThan", "operator <");
+      operatorMethodsMap.Add("op_GreaterThan", "operator >");
+      operatorMethodsMap.Add("op_LessThanOrEqual", "operator <=");
+      operatorMethodsMap.Add("op_GreaterThanOrEqual", "operator >=");
     }
 
     #endregion
@@ -96,10 +98,10 @@ namespace NClass.AssemblyImport
     /// <summary>
     /// Bindingflags which reflect every member.
     /// </summary>
-    private const BindingFlags xStandardBindingFlags = BindingFlags.NonPublic | 
-                                                       BindingFlags.Public |
-                                                       BindingFlags.Static |
-                                                       BindingFlags.Instance;
+    private const BindingFlags STANDARD_BINDING_FLAGS = BindingFlags.NonPublic |
+                                                        BindingFlags.Public |
+                                                        BindingFlags.Static |
+                                                        BindingFlags.Instance;
 
     #endregion
 
@@ -108,18 +110,18 @@ namespace NClass.AssemblyImport
     /// <summary>
     /// The imported entities get added to this project.
     /// </summary>
-    private Diagram xProject;
+    private readonly Diagram diagram;
     /// <summary>
     /// These settings describe which entities or elements should be imported.
     /// </summary>
-    private ImportSettings xImportSettings = new ImportSettings();
+    private readonly ImportSettings importSettings = new ImportSettings();
     /// <summary>
     /// Mapping from operator-method to operator.
     /// </summary>
-    private Dictionary<string, string> dstOperatorMethodsMap = new Dictionary<string, string>();
+    private readonly Dictionary<string, string> operatorMethodsMap = new Dictionary<string, string>();
 
     /// <summary>
-    /// Takes mappings from the fullname of a type to the generated NClass-
+    /// Takes mappings from the full qualified name of a type to the generated NClass-
     /// entity.
     /// </summary>
     private Dictionary<string, IEntity> entities;
@@ -142,6 +144,10 @@ namespace NClass.AssemblyImport
     /// a list of fullnames of the implemented interfaces (value).
     /// </summary>
     private Dictionary<string, List<string>> implementations;
+    /// <summary>
+    /// Takes mappings from each field in any entity to the (reflected) FieldInfo.
+    /// </summary>
+    private Dictionary<Field, FieldInfo> fieldMap;
 
     #endregion
 
@@ -152,7 +158,7 @@ namespace NClass.AssemblyImport
     /// </summary>
     public ImportSettings ImportSettings
     {
-      get { return xImportSettings; }
+      get { return importSettings; }
     }
 
     #endregion
@@ -174,9 +180,9 @@ namespace NClass.AssemblyImport
       }
       try
       {
-         Assembly xNewAssembly = Assembly.LoadFrom(FileName);
+        Assembly xNewAssembly = Assembly.LoadFrom(FileName);
 
-        //Not needed until loading the Assembly into a new AppDomain doesn't work...
+//Not needed until loading the Assembly into a new AppDomain doesn't work...
 //         FileInfo fileInfo = new FileInfo(FileName);
 // 
 //         AppDomainSetup setup = new AppDomainSetup();
@@ -201,27 +207,29 @@ namespace NClass.AssemblyImport
         nestings = new Dictionary<string, string>();
         generalizations = new Dictionary<string, List<string>>();
         implementations = new Dictionary<string, List<string>>();
+        fieldMap = new Dictionary<Field, FieldInfo>();
 
-        xProject.RedrawSuspended = true;
+        diagram.RedrawSuspended = true;
         Type[] axTypes = xNewAssembly.GetTypes();
         ReflectTypes(axTypes);
-		ArrangeTypes();
+        ArrangeTypes();
 
         CreateNestingRelationships();
         CreateGeneralizationRelationships();
         CreateRealizationRelationship();
+        CreateAggregationRelationship();
       }
       catch(ReflectionTypeLoadException)
       {
-          MessageBox.Show("Could not open assembly due to missing referenced assemblys", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        MessageBox.Show("Could not open assembly due to missing referenced assemblys", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
       }
       catch(BadImageFormatException)
       {
-          MessageBox.Show("Could not load assembly since it seems to be not an assembly...", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        MessageBox.Show("Could not load assembly since it seems to be not an assembly...", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
       }
       finally
       {
-          xProject.RedrawSuspended = false;
+        diagram.RedrawSuspended = false;
       }
 //       catch(Exception ex)
 //       {
@@ -229,39 +237,42 @@ namespace NClass.AssemblyImport
 //       }
     }
 
-	private void ArrangeTypes()
-	{
-		const int Margin = Connection.Spacing * 2;
-		const int DiagramPadding = Shape.SelectionMargin;
+    /// <summary>
+    /// Creates a nice arrangement for each entity.
+    /// </summary>
+    private void ArrangeTypes()
+    {
+      const int Margin = Connection.Spacing * 2;
+      const int DiagramPadding = Shape.SelectionMargin;
 
-		int shapeCount = xProject.ShapeCount;
-		int columns = (int) Math.Ceiling(Math.Sqrt(shapeCount * 2));
-		int shapeIndex = 0;
-		int top = Shape.SelectionMargin;
-		int maxHeight = 0;
+      int shapeCount = diagram.ShapeCount;
+      int columns = (int)Math.Ceiling(Math.Sqrt(shapeCount * 2));
+      int shapeIndex = 0;
+      int top = Shape.SelectionMargin;
+      int maxHeight = 0;
 
-		foreach (Shape shape in xProject.Shapes)
-		{
-			int column = shapeIndex % columns;
+      foreach(Shape shape in diagram.Shapes)
+      {
+        int column = shapeIndex % columns;
 
-			shape.Location = new Point(
-				(TypeShape.DefaultWidth + Margin) * column + DiagramPadding, top);
+        shape.Location = new Point(
+          (TypeShape.DefaultWidth + Margin) * column + DiagramPadding, top);
 
-			maxHeight = Math.Max(maxHeight, shape.Height);
-			if (column == columns - 1)
-			{
-				top += maxHeight + Margin;
-				maxHeight = 0;
-			}
-			shapeIndex++;
-		}
-	}
+        maxHeight = Math.Max(maxHeight, shape.Height);
+        if(column == columns - 1)
+        {
+          top += maxHeight + Margin;
+          maxHeight = 0;
+        }
+        shapeIndex++;
+      }
+    }
 
     /// <summary>
     /// Reflect all given types and create NClass-entities.
     /// </summary>
     /// <param name="Types">The types to reflect.</param>
-    private void ReflectTypes(Type[] Types)
+    private void ReflectTypes(IEnumerable<Type> Types)
     {
       foreach(Type xType in Types)
       {
@@ -312,8 +323,8 @@ namespace NClass.AssemblyImport
       {
         if(entities.ContainsKey(nestings[stType]))
         {
-          xProject.AddNesting((CompositeType) entities[nestings[stType]],
-            (TypeBase) entities[stType]);
+          diagram.AddNesting((CompositeType)entities[nestings[stType]],
+            (TypeBase)entities[stType]);
           //Repair access modifier (might not be set correctly at the first
           //phase)
           ((TypeBase)entities[stType]).AccessModifier = GetTypeAccessModifier(types[stType]);
@@ -337,8 +348,8 @@ namespace NClass.AssemblyImport
             {
               if(!IsInterfaceAlreadyImplemented(stChildTypeName, stBaseType, 0))
               {
-                xProject.AddGeneralization((CompositeType) entities[stChildTypeName],
-                  (CompositeType) entities[stBaseType]);
+                diagram.AddGeneralization((CompositeType)entities[stChildTypeName],
+                  (CompositeType)entities[stBaseType]);
               }
             }
           }
@@ -362,9 +373,65 @@ namespace NClass.AssemblyImport
             {
               if(!IsInterfaceAlreadyImplemented(stInterface, stType, 0))
               {
-                xProject.AddRealization((TypeBase) entities[stType],
-                  (InterfaceType) entities[stInterface]);
+                diagram.AddRealization((TypeBase)entities[stType],
+                  (InterfaceType)entities[stInterface]);
               }
+            }
+          }
+        }
+      }
+    }
+
+    /// <summary>
+    /// Creates all aggregation relationships. Uses information stored in the 
+    /// entities and fieldMap dictionary which is filled in the first pass.
+    /// </summary>
+    private void CreateAggregationRelationship()
+    {
+      if(!importSettings.CreateAggregations)
+      {
+        return;
+      }
+      foreach(IEntity entity in entities.Values)
+      {
+        if(entity is CompositeType)
+        {
+          CompositeType compositeType = entity as CompositeType;
+          List<Field> addedFieldAggregations = new List<Field>();
+          foreach(Field field in compositeType.Fields)
+          {
+            string fullName = fieldMap[field].FieldType.FullName;
+            if(fullName == null)
+            {
+              continue;
+            }
+            if(fullName.Contains("`"))
+            {
+              fullName = fullName.Substring(0, fullName.IndexOf("[[", fullName.IndexOf("`")));
+            }
+            while(fullName.EndsWith("[]"))
+            {
+              fullName = fullName.Substring(0, fullName.Length - 2);
+            }
+            if(entities.ContainsKey(fullName) && entities[fullName] is TypeBase)
+            {
+              AssociationRelationship relationship = diagram.AddAggregation(compositeType, entities[fullName] as TypeBase);
+              if(importSettings.LabelAggregations)
+              {
+                relationship.StartRole = field.Name;
+              }
+              if(fieldMap[field].FieldType.FullName.EndsWith("[]"))
+              {
+                relationship.EndMultiplicity = "*";
+              }
+              addedFieldAggregations.Add(field);
+            }
+          }
+          if(importSettings.RemoveFields)
+          {
+            foreach(Field field in addedFieldAggregations)
+            {
+              compositeType.RemoveMember(field);
             }
           }
         }
@@ -381,12 +448,12 @@ namespace NClass.AssemblyImport
     /// <param name="xType">A type with informations about the class which gets reflected.</param>
     private void ReflectClass(Type xType)
     {
-      if(!xImportSettings.CheckImportClass(xType))
+      if(!importSettings.CheckImportClass(xType))
       {
         return;
       }
-      ClassType xNewClass = xProject.AddClass();
-      ReflectFields(xType, (CompositeType)xNewClass);
+      ClassType xNewClass = diagram.AddClass();
+      ReflectFields(xType, xNewClass);
     }
 
     /// <summary>
@@ -395,11 +462,11 @@ namespace NClass.AssemblyImport
     /// <param name="xType">A type with informations about the delegate which gets reflected.</param>
     private void ReflectDelegate(Type xType)
     {
-      if(!xImportSettings.CheckImportDelegate(xType))
+      if(!importSettings.CheckImportDelegate(xType))
       {
         return;
       }
-      DelegateType xNewDelegate = xProject.AddDelegate();
+      DelegateType xNewDelegate = diagram.AddDelegate();
       MethodInfo xMethodInfo = xType.GetMethod("Invoke");
       xNewDelegate.ReturnType = xMethodInfo.ReturnType.Name;
       foreach(ParameterInfo xParameter in xMethodInfo.GetParameters())
@@ -415,12 +482,12 @@ namespace NClass.AssemblyImport
     /// <param name="xType">A type with informations about the interface which gets reflected.</param>
     private void ReflectInterface(Type xType)
     {
-      if(!xImportSettings.CheckImportInterface(xType))
+      if(!importSettings.CheckImportInterface(xType))
       {
         return;
       }
-      InterfaceType xNewInterface = xProject.AddInterface();
-      ReflectOperations(xType, (CompositeType)xNewInterface);
+      InterfaceType xNewInterface = diagram.AddInterface();
+      ReflectOperations(xType, xNewInterface);
     }
 
     /// <summary>
@@ -429,12 +496,12 @@ namespace NClass.AssemblyImport
     /// <param name="xType">A type with informations about the struct which gets reflected.</param>
     private void ReflectStruct(Type xType)
     {
-      if(!xImportSettings.CheckImportStruct(xType))
+      if(!importSettings.CheckImportStruct(xType))
       {
         return;
       }
-      StructureType xNewStruct = xProject.AddStructure();
-      ReflectFields(xType, (CompositeType)xNewStruct);
+      StructureType xNewStruct = diagram.AddStructure();
+      ReflectFields(xType, xNewStruct);
     }
 
     /// <summary>
@@ -443,12 +510,12 @@ namespace NClass.AssemblyImport
     /// <param name="xType">A type with informations about the enum which gets reflected.</param>
     private void ReflectEnum(Type xType)
     {
-      if(!xImportSettings.CheckImportEnum(xType))
+      if(!importSettings.CheckImportEnum(xType))
       {
         return;
       }
-      EnumType xNewEnum = xProject.AddEnum();
-      FieldInfo[] axFields = xType.GetFields(xStandardBindingFlags);
+      EnumType xNewEnum = diagram.AddEnum();
+      FieldInfo[] axFields = xType.GetFields(STANDARD_BINDING_FLAGS);
       foreach(FieldInfo xField in axFields)
       {
         //Sort this special field out
@@ -458,7 +525,7 @@ namespace NClass.AssemblyImport
         }
         xNewEnum.AddValue(xField.Name);
       }
-      ReflectTypeBase(xType, (TypeBase)xNewEnum);
+      ReflectTypeBase(xType, xNewEnum);
     }
 
     #endregion
@@ -467,15 +534,15 @@ namespace NClass.AssemblyImport
 
     /// <summary>
     /// Reflects all fields within the type <paramref name="xType"/>. Reflected
-    /// fields are added to <paramref name="xFieldContainer"/>.
+    /// fields are added to <paramref name="fieldContainer"/>.
     /// </summary>
     /// <param name="xType">The fields are taken from this type.</param>
-    /// <param name="xFieldContainer">Reflected fields are added to this FieldContainer.</param>
-    private void ReflectFields(Type xType, CompositeType xFieldContainer)
+    /// <param name="fieldContainer">Reflected fields are added to this FieldContainer.</param>
+    private void ReflectFields(Type xType, CompositeType fieldContainer)
     {
       #region --- Events
 
-      EventInfo[] axEvents = xType.GetEvents(xStandardBindingFlags);
+      EventInfo[] axEvents = xType.GetEvents(STANDARD_BINDING_FLAGS);
       List<string> astEvents = new List<string>();
       foreach(EventInfo xEvent in axEvents)
       {
@@ -486,12 +553,12 @@ namespace NClass.AssemblyImport
         }
         //The access modifier isn't stored at the event. So we have to take
         //that from the corresponding add_XXX (or perhaps remove_XXX) method.
-        MethodInfo xAddMethodInfo = xType.GetMethod("add_" + xEvent.Name, xStandardBindingFlags);
-        if(!xImportSettings.CheckImportEvent(xAddMethodInfo))
+        MethodInfo xAddMethodInfo = xType.GetMethod("add_" + xEvent.Name, STANDARD_BINDING_FLAGS);
+        if(!importSettings.CheckImportEvent(xAddMethodInfo))
         {
           continue;
         }
-        Event xNewEvent = xFieldContainer.AddEvent();
+        Event xNewEvent = fieldContainer.AddEvent();
         xNewEvent.Name = xEvent.Name;
         xNewEvent.AccessModifier = GetMethodAccessModifier(xAddMethodInfo);
         xNewEvent.IsStatic = xAddMethodInfo.IsStatic;
@@ -503,47 +570,48 @@ namespace NClass.AssemblyImport
 
       #region --- Fields
 
-      FieldInfo[] axFields = xType.GetFields(xStandardBindingFlags);
-      foreach(FieldInfo xField in axFields)
+      FieldInfo[] fieldInfos = xType.GetFields(STANDARD_BINDING_FLAGS);
+      foreach(FieldInfo fieldInfo in fieldInfos)
       {
-        if(!xImportSettings.CheckImportField(xField))
+        if(!importSettings.CheckImportField(fieldInfo))
         {
           continue;
         }
         //Don't import fields belonging to events
-        if(astEvents.Contains(xField.Name))
-      	{
+        if(astEvents.Contains(fieldInfo.Name))
+        {
           continue;
-      	}
+        }
         //Don't display derived fields
-        if(xField.DeclaringType != xType)
+        if(fieldInfo.DeclaringType != xType)
+        {
+          continue;
+        }
+        //Don't add compiler generated fields (thanks to Luca)
+        if(fieldInfo.GetCustomAttributes(typeof(CompilerGeneratedAttribute), true).Length > 0)
         {
           continue;
         }
 
-				//Don't add compiler generated fields (thaks to Luca)
-				if(xField.GetCustomAttributes(typeof(CompilerGeneratedAttribute), true).Length > 0)
-				{
-					continue;
-				}
-
-        Field xNewField = xFieldContainer.AddField();
-        xNewField.Name = xField.Name;
-        xNewField.AccessModifier = GetFieldAccessModifier(xField);
-        xNewField.IsReadonly = xField.IsInitOnly;
-        xNewField.IsStatic = xField.IsStatic;
-        if(xField.IsLiteral)
+        Field newField = fieldContainer.AddField();
+        newField.Name = fieldInfo.Name;
+        newField.AccessModifier = GetFieldAccessModifier(fieldInfo);
+        newField.IsReadonly = fieldInfo.IsInitOnly;
+        newField.IsStatic = fieldInfo.IsStatic;
+        if(fieldInfo.IsLiteral)
         {
-          xNewField.InitialValue = xField.GetValue(null).ToString();
-          xNewField.IsStatic = false;
-          xNewField.IsConstant = true;
+          newField.InitialValue = fieldInfo.GetValue(null).ToString();
+          newField.IsStatic = false;
+          newField.IsConstant = true;
         }
-        xNewField.Type = GetTypeName(xField.FieldType);
+        newField.Type = GetTypeName(fieldInfo.FieldType);
+
+        fieldMap.Add(newField, fieldInfo);
       }
 
       #endregion
 
-      ReflectOperations(xType, (CompositeType)xFieldContainer);
+      ReflectOperations(xType, fieldContainer);
     }
 
     /// <summary>
@@ -556,7 +624,7 @@ namespace NClass.AssemblyImport
     {
       #region --- Properties
 
-      PropertyInfo[] axProperties = xType.GetProperties(xStandardBindingFlags);
+      PropertyInfo[] axProperties = xType.GetProperties(STANDARD_BINDING_FLAGS);
       List<string> astPropertyNames = new List<string>();
       foreach(PropertyInfo xProperty in axProperties)
       {
@@ -581,22 +649,22 @@ namespace NClass.AssemblyImport
         //get_XXX and set_XXX might be overloaded, so we have to specify the
         //index parameters as well.
         Type[] axGetIndexParamTypes = new Type[axIndexParameter.Length];
-        Type[] axSetIndexParamTypes = new Type[axIndexParameter.Length +1];
+        Type[] axSetIndexParamTypes = new Type[axIndexParameter.Length + 1];
         for(int i = 0; i < axIndexParameter.Length; i++)
-			  {
+        {
           axGetIndexParamTypes[i] = axIndexParameter[i].ParameterType;
           axSetIndexParamTypes[i] = axIndexParameter[i].ParameterType;
         }
         axSetIndexParamTypes[axSetIndexParamTypes.Length - 1] = xProperty.PropertyType;
         string stGetMethodName = xProperty.Name.Insert(xProperty.Name.LastIndexOf('.') + 1, "get_");
         string stSetMethodName = xProperty.Name.Insert(xProperty.Name.LastIndexOf('.') + 1, "set_");
-        MethodInfo xGetMethod = xType.GetMethod(stGetMethodName, xStandardBindingFlags, null, axGetIndexParamTypes, null);//, xStandardBindingFlags);
-        MethodInfo xSetMethod = xType.GetMethod(stSetMethodName, xStandardBindingFlags, null, axSetIndexParamTypes, null);//, xStandardBindingFlags);
+        MethodInfo xGetMethod = xType.GetMethod(stGetMethodName, STANDARD_BINDING_FLAGS, null, axGetIndexParamTypes, null);//, STANDARD_BINDING_FLAGS);
+        MethodInfo xSetMethod = xType.GetMethod(stSetMethodName, STANDARD_BINDING_FLAGS, null, axSetIndexParamTypes, null);//, STANDARD_BINDING_FLAGS);
 
         //If one of the access methods (get_XXX or set_XXX) should be importet
         //import the property.
-        if(!((xProperty.CanRead && xImportSettings.CheckImportProperty(xGetMethod)) ||
-             (xProperty.CanWrite && xImportSettings.CheckImportProperty(xSetMethod))))
+        if(!((xProperty.CanRead && importSettings.CheckImportProperty(xGetMethod)) ||
+             (xProperty.CanWrite && importSettings.CheckImportProperty(xSetMethod))))
         {
           continue;
         }
@@ -662,7 +730,7 @@ namespace NClass.AssemblyImport
 
       #region --- Methods
 
-      MethodInfo[] axMethods = xType.GetMethods(xStandardBindingFlags);
+      MethodInfo[] axMethods = xType.GetMethods(STANDARD_BINDING_FLAGS);
       foreach(MethodInfo xMethod in axMethods)
       {
         //Don't display derived Methods
@@ -671,7 +739,7 @@ namespace NClass.AssemblyImport
           continue;
         }
 
-        if(!xImportSettings.CheckImportMethod(xMethod))
+        if(!importSettings.CheckImportMethod(xMethod))
         {
           continue;
         }
@@ -699,9 +767,9 @@ namespace NClass.AssemblyImport
           }
           //!xMethod.Name starts witch 'op_' and so it is an operator. We
           //have to get the 'real' method name here.
-          if(dstOperatorMethodsMap.ContainsKey(stMethodName))
+          if(operatorMethodsMap.ContainsKey(stMethodName))
           {
-            stMethodName = dstOperatorMethodsMap[stMethodName];
+            stMethodName = operatorMethodsMap[stMethodName];
           }
 
           if(stMethodName == "op_Implicit")
@@ -716,7 +784,7 @@ namespace NClass.AssemblyImport
           }
         }
 
-        Method xNewMethod = (Method)xOpContainer.AddMethod();
+        Method xNewMethod = xOpContainer.AddMethod();
         StringBuilder stDeclaration = new StringBuilder();
 
         if(!(xOpContainer is InterfaceType))
@@ -744,10 +812,10 @@ namespace NClass.AssemblyImport
 
       if(xOpContainer.SupportsConstuctors)
       {
-        ConstructorInfo[] axConstructors = xType.GetConstructors(xStandardBindingFlags);
+        ConstructorInfo[] axConstructors = xType.GetConstructors(STANDARD_BINDING_FLAGS);
         foreach(ConstructorInfo xConstructor in axConstructors)
         {
-          if(!xImportSettings.CheckImportConstructor(xConstructor))
+          if(!importSettings.CheckImportConstructor(xConstructor))
           {
             continue;
           }
@@ -764,7 +832,7 @@ namespace NClass.AssemblyImport
 
       #endregion
 
-      ReflectTypeBase(xType, (TypeBase)xOpContainer);
+      ReflectTypeBase(xType, xOpContainer);
     }
 
     /// <summary>
@@ -841,7 +909,7 @@ namespace NClass.AssemblyImport
     /// </summary>
     /// <param name="xType">The type to test</param>
     /// <returns>True, if <paramref name="xType"/> has the CompilerGeneratedAttribute.</returns>
-    private bool IsTypeCompilerGenerated(Type xType)
+    private static bool IsTypeCompilerGenerated(Type xType)
     {
       if(xType == null)
       {
@@ -901,7 +969,7 @@ namespace NClass.AssemblyImport
     /// <param name="xType">The type which coud define <paramref name="xMethod"/> already</param>
     /// <param name="xMethod">The method wich should be checked</param>
     /// <returns>True, if <paramref name="xMethod"/> is defined in <paramref name="xType"/> or above.</returns>
-    private bool IsMethodOverwritten(Type xType, MethodInfo xMethod)
+    private static bool IsMethodOverwritten(Type xType, MethodBase xMethod)
     {
       if(xType == null)
       {
@@ -925,13 +993,13 @@ namespace NClass.AssemblyImport
     #region +++ string Get...
 
     /// <summary>
-    /// Returns a string describing the parameters of the method <typeparamref name="xMethod"/>.
+    /// Returns a string describing the parameters of the method <paramref name="xMethod"/>.
     /// The string cantains the opening and closing parenthesis. It is formated
     /// like C# code.
     /// </summary>
     /// <param name="xMethod">The parameters string is generated for this method. </param>
     /// <returns>The parameter string.</returns>
-    private string GetParameterDeclarationString(MethodBase xMethod)
+    private static string GetParameterDeclarationString(MethodBase xMethod)
     {
       ParameterInfo[] axParameters = xMethod.GetParameters();
       StringBuilder stDeclaration = new StringBuilder("(");
@@ -976,10 +1044,9 @@ namespace NClass.AssemblyImport
     /// </summary>
     /// <param name="xType">The type name is returned for this Type.</param>
     /// <returns>The name of <paramref name="xType"/> as a string.</returns>
-    private string GetTypeName(Type xType)
+    private static string GetTypeName(Type xType)
     {
       StringBuilder stTypeName = new StringBuilder(xType.Name);
-      Type b = xType.GetElementType();
       if(xType.IsArray)
       {
         stTypeName = new StringBuilder(GetTypeName(xType.GetElementType()) + xType.Name.Substring(xType.GetElementType().Name.Length));
@@ -1016,7 +1083,7 @@ namespace NClass.AssemblyImport
     /// <param name="xMethod">The method to check.</param>
     /// <param name="stDeclaration">The declaration string which holds the
     /// declaration if the method is not overwriting another.</param>
-    private void ChangeOperationModifierIfOverwritten(Type xType, MethodInfo xMethod, StringBuilder stDeclaration)
+    private static void ChangeOperationModifierIfOverwritten(Type xType, MethodBase xMethod, StringBuilder stDeclaration)
     {
       if(IsMethodOverwritten(xType.BaseType, xMethod))
       {
@@ -1064,7 +1131,7 @@ namespace NClass.AssemblyImport
     /// </summary>
     /// <param name="xMethod">The operation modifiers is returned for this MethodBase.</param>
     /// <returns>The OperationModifier of <paramref name="xMethod"/>.</returns>
-    private OperationModifier GetOperationModifier(MethodBase xMethod)
+    private static OperationModifier GetOperationModifier(MethodBase xMethod)
     {
       if(xMethod.DeclaringType.IsValueType)
       {
@@ -1075,15 +1142,15 @@ namespace NClass.AssemblyImport
         return OperationModifier.Abstract;
       }
       // lytico: possible value is: IsFinal AND IsVirtual
-      else if(xMethod.IsFinal && xMethod.IsVirtual)
+      if(xMethod.IsFinal && xMethod.IsVirtual)
       {
         return OperationModifier.None;
       }
-      else if(xMethod.IsFinal)
+      if(xMethod.IsFinal)
       {
         return OperationModifier.Sealed;
       }
-      else if(xMethod.IsVirtual)
+      if(xMethod.IsVirtual)
       {
         return OperationModifier.Virtual;
       }
@@ -1095,7 +1162,7 @@ namespace NClass.AssemblyImport
     /// </summary>
     /// <param name="xType">The access modifier is returned for this Type.</param>
     /// <returns>The AccessModifier of <paramref name="xType"/>.</returns>
-    private AccessModifier GetTypeAccessModifier(Type xType)
+    private static AccessModifier GetTypeAccessModifier(Type xType)
     {
       if(xType.IsNested)
       {
@@ -1141,7 +1208,7 @@ namespace NClass.AssemblyImport
     /// </summary>
     /// <param name="xField">The access modifier is returned for this FieldInfo.</param>
     /// <returns>The AccessModifier of <paramref name="xField"/>.</returns>
-    private AccessModifier GetFieldAccessModifier(FieldInfo xField)
+    private static AccessModifier GetFieldAccessModifier(FieldInfo xField)
     {
       if(xField.IsPublic)
       {
@@ -1169,9 +1236,9 @@ namespace NClass.AssemblyImport
     /// <summary>
     /// Returns the access modifier for the method <paramref name="xMethodBase"/>.
     /// </summary>
-    /// <param name="xField">The access modifier is returned for this MethodBase.</param>
+    /// <param name="xMethodBase">The access modifier is returned for this MethodBase.</param>
     /// <returns>The AccessModifier of <paramref name="xMethodBase"/>.</returns>
-    private AccessModifier GetMethodAccessModifier(MethodBase xMethodBase)
+    private static AccessModifier GetMethodAccessModifier(MethodBase xMethodBase)
     {
       if(xMethodBase.Name.Contains(".") && !xMethodBase.IsConstructor)
       {
@@ -1209,7 +1276,7 @@ namespace NClass.AssemblyImport
     /// <returns>The operation modifier of <paramref name="xMethod"/> as a string.</returns>
     private string GetOperationModifierString(MethodBase xMethod)
     {
-      return xProject.Language.GetOperationModifierString(GetOperationModifier(xMethod), true);
+      return diagram.Language.GetOperationModifierString(GetOperationModifier(xMethod), true);
     }
 
     /// <summary>
@@ -1224,7 +1291,7 @@ namespace NClass.AssemblyImport
       {
         return "private";
       }
-      return xProject.Language.GetAccessString(GetMethodAccessModifier(xMethodBase), true);
+      return diagram.Language.GetAccessString(GetMethodAccessModifier(xMethodBase), true);
     }
 
     #endregion
