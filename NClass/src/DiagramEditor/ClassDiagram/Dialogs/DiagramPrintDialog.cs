@@ -24,7 +24,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Dialogs
 {
 	public partial class DiagramPrintDialog : Form
 	{
-		IDocument document;
+		IDocument document = null;
 		int pageIndex = 0;
 		int rows = 1;
 		int columns = 1;
@@ -32,20 +32,17 @@ namespace NClass.DiagramEditor.ClassDiagram.Dialogs
 		Style selectedStyle = Style.CurrentStyle;
 		Style printingStyle = null;
 
-		/// <exception cref="ArgumentNullException">
-		/// <paramref name="document"/> is null.
-		/// </exception>
-		public DiagramPrintDialog(IDocument document)
+		public DiagramPrintDialog()
 		{
-			if (document == null)
-				throw new ArgumentNullException("document");
-
-			this.document = document;
-
 			InitializeComponent();
 			printPreview.AutoZoom = true;
-			printDocument.DefaultPageSettings.Margins = new Margins(40, 40, 40, 40);
-			printDocument.DocumentName = document.Name;
+			printDocument.DefaultPageSettings.Margins = new Margins(50, 50, 50, 50);
+		}
+
+		public IDocument Document
+		{
+			get { return document; }
+			set { document = value; }
 		}
 
 		private int PageCount
@@ -108,6 +105,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Dialogs
 		{
 			if (printDocument.PrinterSettings.IsValid)
 			{
+				printPreview.InvalidatePreview();
 				return base.ShowDialog(owner);
 			}
 			else
@@ -150,50 +148,69 @@ namespace NClass.DiagramEditor.ClassDiagram.Dialogs
 
 		private void printDocument_BeginPrint(object sender, PrintEventArgs e)
 		{
-			pageIndex = 0;
-			printingStyle = MakeShadowsOpaque(selectedStyle);
+			if (document != null)
+			{
+				pageIndex = 0;
+				printingStyle = MakeShadowsOpaque(selectedStyle);
+				printDocument.DocumentName = document.Name;
+			}
+			else
+			{
+				e.Cancel = true;
+			}
 		}
 
 		private void printDocument_PrintPage(object sender, PrintPageEventArgs e)
 		{
+			// Scale the page to match sizes of the screen
 			e.Graphics.PageUnit = GraphicsUnit.Inch;
 			e.Graphics.PageScale = 1 / DiagramElement.Graphics.DpiX;
 
+			// Get the phisical page margins
+			float marginScale = DiagramElement.Graphics.DpiX / 100;
+			RectangleF marginBounds = e.MarginBounds;
+			if (!printDocument.PrintController.IsPreview)
+				marginBounds.Offset(-e.PageSettings.HardMarginX, -e.PageSettings.HardMarginY);
+			marginBounds = new RectangleF(
+				marginBounds.X * marginScale, marginBounds.Y * marginScale,
+				marginBounds.Width * marginScale, marginBounds.Height * marginScale);
+
+			// Get logical area information
+			RectangleF drawingArea = document.GetPrintingArea(selectedOnly);
 			int column = pageIndex % columns;
 			int row = pageIndex / columns;
 
-			RectangleF drawingArea = document.GetPrintingArea(selectedOnly);
-
-			float scaleX = e.MarginBounds.Width * columns / drawingArea.Width;
-			float scaleY = e.MarginBounds.Height * rows / drawingArea.Height;
+			// Get zooming information if diagram is too big
+			float scaleX = columns * marginBounds.Width / drawingArea.Width;
+			float scaleY = rows * marginBounds.Height / drawingArea.Height;
 			float scale = Math.Min(scaleX, scaleY);
-			if (scale > 1) scale = 1;
+			if (scale > 1) scale = 1; // No need for zooming in
 
 			// Set the printing clip region
-			Rectangle clipBounds = e.MarginBounds;
+			RectangleF clipBounds = marginBounds;
 			if (column == 0)
 			{
 				clipBounds.X = 0;
-				clipBounds.Width += e.MarginBounds.Left;
+				clipBounds.Width += marginBounds.Left;
 			}
 			if (row == 0)
 			{
 				clipBounds.Y = 0;
-				clipBounds.Height += e.MarginBounds.Top;
+				clipBounds.Height += marginBounds.Top;
 			}
 			if (column == columns - 1)
 			{
-				clipBounds.Width += e.MarginBounds.Left;
+				clipBounds.Width += marginBounds.Left;
 			}
 			if (row == rows - 1)
 			{
-				clipBounds.Height += e.MarginBounds.Top;
+				clipBounds.Height += marginBounds.Top;
 			}
 			e.Graphics.SetClip(clipBounds);
 
 			// Moving the image to it's right position
-			e.Graphics.TranslateTransform(-column * e.MarginBounds.Width, -row * e.MarginBounds.Height);
-			e.Graphics.TranslateTransform(e.MarginBounds.Left, e.MarginBounds.Top);
+			e.Graphics.TranslateTransform(-column * marginBounds.Width, -row * marginBounds.Height);
+			e.Graphics.TranslateTransform(marginBounds.Left, marginBounds.Top);
 			e.Graphics.ScaleTransform(scale, scale);
 			e.Graphics.TranslateTransform(-drawingArea.Left, -drawingArea.Top);
 			// Printing

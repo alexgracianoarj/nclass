@@ -44,6 +44,7 @@ namespace NClass.DiagramEditor.ClassDiagram
 		const int PrecisionSize = 10;
 		const int MaximalPrecisionDistance = 500;
 		const float DashSize = 3;
+		static readonly DiagramPrintDialog printDialog = new DiagramPrintDialog();
 		static readonly Size MinSize = new Size(3000, 2000);
 		public static readonly Pen SelectionPen;
 
@@ -471,10 +472,8 @@ namespace NClass.DiagramEditor.ClassDiagram
 
 		public void ShowPrintDialog()
 		{
-			using (DiagramPrintDialog dialog = new DiagramPrintDialog(this))
-			{
-				dialog.ShowDialog();
-			}
+			printDialog.Document = this;
+			printDialog.ShowDialog();
 		}
 
 		public void Print(Graphics g)
