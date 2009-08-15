@@ -85,7 +85,7 @@
       this.dgvExceptions.Name = "dgvExceptions";
       this.dgvExceptions.RowHeadersVisible = false;
       this.dgvExceptions.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-      this.dgvExceptions.Size = new System.Drawing.Size(412, 234);
+      this.dgvExceptions.Size = new System.Drawing.Size(412, 223);
       this.dgvExceptions.TabIndex = 4;
       // 
       // xExceptionColumnModifier
@@ -197,20 +197,22 @@
       this.grpAggregations.Controls.Add(this.chkRemoveFields);
       this.grpAggregations.Controls.Add(this.chkLabelAggregations);
       this.grpAggregations.Controls.Add(this.chkCreateAggregations);
-      this.grpAggregations.Location = new System.Drawing.Point(12, 321);
+      this.grpAggregations.Location = new System.Drawing.Point(12, 310);
       this.grpAggregations.Name = "grpAggregations";
-      this.grpAggregations.Size = new System.Drawing.Size(412, 72);
+      this.grpAggregations.Size = new System.Drawing.Size(412, 83);
       this.grpAggregations.TabIndex = 10;
       this.grpAggregations.TabStop = false;
       // 
       // chkRemoveFields
       // 
-      this.chkRemoveFields.AutoSize = true;
+      this.chkRemoveFields.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                  | System.Windows.Forms.AnchorStyles.Right)));
       this.chkRemoveFields.Location = new System.Drawing.Point(6, 46);
       this.chkRemoveFields.Name = "chkRemoveFields";
-      this.chkRemoveFields.Size = new System.Drawing.Size(253, 17);
+      this.chkRemoveFields.Size = new System.Drawing.Size(400, 30);
       this.chkRemoveFields.TabIndex = 1;
-      this.chkRemoveFields.Text = "Remove fields which constructs the aggregation";
+      this.chkRemoveFields.Text = "Remove fields which constructs the aggregation (code generation won\'t produce any" +
+          " code for that aggregation)";
       this.chkRemoveFields.UseVisualStyleBackColor = true;
       // 
       // chkLabelAggregations
