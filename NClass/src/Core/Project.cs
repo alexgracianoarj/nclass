@@ -134,7 +134,7 @@ namespace NClass.Core
 				if (projectFile != null)
 					return projectFile.Name;
 				else
-					return Name;
+					return Name + ".ncp";
 			}
 		}
 

@@ -54,5 +54,11 @@ namespace NClass.DiagramEditor
 		{
 			get { return version; }
 		}
+
+		public static bool IsOlderVersionThan(string version)
+		{
+			version = "Mono " + version;
+			return (Version.CompareTo(version) < 0);
+		}
 	}
 }

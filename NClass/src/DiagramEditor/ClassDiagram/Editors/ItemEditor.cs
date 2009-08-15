@@ -70,6 +70,9 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
 
 		protected void SetError(string message)
 		{
+			if (MonoHelper.IsRunningOnMono && MonoHelper.IsOlderVersionThan("2.4"))
+				return;
+
 			errorProvider.SetError(this, message);
 		}
 

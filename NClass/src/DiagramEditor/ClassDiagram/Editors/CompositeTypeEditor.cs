@@ -34,6 +34,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
 			InitializeComponent();
 			toolStrip.Renderer = ToolStripSimplifiedRenderer.Default;
 			UpdateTexts();
+
 			if (MonoHelper.IsRunningOnMono)
 				toolNewMember.Alignment = ToolStripItemAlignment.Left;
 		}
@@ -86,7 +87,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
 			txtName.Text = type.Name;
 			txtName.SelectionStart = cursorPosition;
 
-			errorProvider.SetError(this, null);
+			SetError(null);
 			needValidation = false;
 
 			bool hasMember = (type.MemberCount > 0);
@@ -305,9 +306,9 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
 		public override void ValidateData()
 		{
 			ValidateName();
-			errorProvider.SetError(this, null);
+			SetError(null);
 		}
-		
+
 		private bool ValidateName()
 		{
 			if (needValidation)
@@ -319,11 +320,19 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
 				}
 				catch (BadSyntaxException ex)
 				{
-					errorProvider.SetError(this, ex.Message);
+					SetError(ex.Message);
 					return false;
 				}
 			}
 			return true;
+		}
+
+		private void SetError(string message)
+		{
+			if (MonoHelper.IsRunningOnMono && MonoHelper.IsOlderVersionThan("2.4"))
+				return;
+
+			errorProvider.SetError(this, message);
 		}
 
 		private void ChangeAccess(AccessModifier access)
@@ -338,7 +347,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
 				catch (BadSyntaxException ex)
 				{
 					RefreshValues();
-					errorProvider.SetError(this, ex.Message);
+					SetError(ex.Message);
 				}
 			}
 		}
@@ -358,7 +367,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
 					catch (BadSyntaxException ex)
 					{
 						RefreshValues();
-						errorProvider.SetError(this, ex.Message);
+						SetError(ex.Message);
 					}
 				}
 			}

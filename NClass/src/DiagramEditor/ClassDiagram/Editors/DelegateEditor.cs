@@ -66,7 +66,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
 			txtName.Text = type.Name;
 			txtName.SelectionStart = cursorPosition;
 
-			errorProvider.SetError(this, null);
+			SetError(null);
 			needValidation = false;
 
 			RefreshVisibility();
@@ -146,7 +146,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
 		public override void ValidateData()
 		{
 			ValidateName();
-			errorProvider.SetError(this, null);
+			SetError(null);
 		}
 
 		private bool ValidateName()
@@ -161,11 +161,19 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
 				}
 				catch (BadSyntaxException ex)
 				{
-					errorProvider.SetError(this, ex.Message);
+					SetError(ex.Message);
 					return false;
 				}
 			}
 			return true;
+		}
+
+		private void SetError(string message)
+		{
+			if (MonoHelper.IsRunningOnMono && MonoHelper.IsOlderVersionThan("2.4"))
+				return;
+
+			errorProvider.SetError(this, message);
 		}
 
 		private void AddNewValue()
@@ -179,14 +187,14 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
 				}
 				catch (BadSyntaxException ex)
 				{
-					errorProvider.SetError(this, ex.Message);
+					SetError(ex.Message);
 				}
 			}
 		}
 
 		private void ClearNewValueField()
 		{
-			errorProvider.SetError(this, null);
+			SetError(null);
 			txtNewParameter.Text = string.Empty;
 		}
 
@@ -202,7 +210,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
 				catch (BadSyntaxException ex)
 				{
 					RefreshValues();
-					errorProvider.SetError(this, ex.Message);
+					SetError(ex.Message);
 				}
 			}
 		}

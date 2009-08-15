@@ -150,7 +150,6 @@ namespace NClass.DiagramEditor.ClassDiagram.Shapes
 		{
 			if (editorShowed)
 			{
-				editor.ValidateData();
 				HideWindow(editor);
 				editorShowed = false;
 			}

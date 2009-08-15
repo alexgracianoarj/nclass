@@ -28,6 +28,11 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
 
 		internal abstract void Relocate(DiagramElement element);
 
-		public abstract override void ValidateData();
+		public abstract void ValidateData();
+
+		public override void Closing()
+		{
+			ValidateData();
+		}
 	}
 }

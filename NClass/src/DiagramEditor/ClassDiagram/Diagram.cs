@@ -1263,6 +1263,7 @@ namespace NClass.DiagramEditor.ClassDiagram
 
 		internal void HideWindow(PopupWindow window)
 		{
+			window.Closing();
 			OnHidingWindow(new PopupWindowEventArgs(window));
 		}
 

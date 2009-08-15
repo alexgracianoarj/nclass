@@ -241,7 +241,6 @@ namespace NClass.DiagramEditor.ClassDiagram.Shapes
 		{
 			if (showedEditor != null)
 			{
-				showedEditor.ValidateData();
 				HideWindow(showedEditor);
 				showedEditor = null;
 			}
@@ -681,7 +680,6 @@ namespace NClass.DiagramEditor.ClassDiagram.Shapes
 
 				if (editor != showedEditor)
 				{
-					showedEditor.ValidateData();
 					HideWindow(showedEditor);
 				}
 				ShowEditor(editor);

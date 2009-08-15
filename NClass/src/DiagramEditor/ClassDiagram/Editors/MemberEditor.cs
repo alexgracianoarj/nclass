@@ -75,7 +75,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
 				txtDeclaration.SelectionStart = cursorPosition;
 				txtDeclaration.ReadOnly = (member.MemberType == MemberType.Destructor);
 				
-				errorProvider.SetError(this, null);
+				SetError(null);
 				needValidation = false;
 
 				// Visibility
@@ -480,7 +480,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
 		public override void ValidateData()
 		{
 			ValidateDeclarationLine();
-			errorProvider.SetError(this, null);
+			SetError(null);
 		}
 
 		private bool ValidateDeclarationLine()
@@ -494,11 +494,19 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
 				}
 				catch (BadSyntaxException ex)
 				{
-					errorProvider.SetError(this, ex.Message);
+					SetError(ex.Message);
 					return false;
 				}
 			}
 			return true;
+		}
+
+		private void SetError(string message)
+		{
+			if (MonoHelper.IsRunningOnMono && MonoHelper.IsOlderVersionThan("2.4"))
+				return;
+
+			errorProvider.SetError(this, message);
 		}
 
 		private void ChangeAccess(AccessModifier access)
@@ -513,7 +521,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
 				catch (BadSyntaxException ex)
 				{
 					RefreshValues();
-					errorProvider.SetError(this, ex.Message);
+					SetError(ex.Message);
 				}
 			}
 		}
@@ -540,7 +548,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
 					catch (BadSyntaxException ex)
 					{
 						RefreshValues();
-						errorProvider.SetError(this, ex.Message);
+						SetError(ex.Message);
 					}
 				}
 			}
@@ -584,7 +592,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
 					catch (BadSyntaxException ex)
 					{
 						RefreshValues();
-						errorProvider.SetError(this, ex.Message);
+						SetError(ex.Message);
 					}
 				}
 			}
@@ -784,7 +792,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
 				catch (BadSyntaxException ex)
 				{
 					RefreshValues();
-					errorProvider.SetError(this, ex.Message);
+					SetError(ex.Message);
 				}
 			}
 		}
@@ -803,7 +811,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
 				catch (BadSyntaxException ex)
 				{
 					RefreshValues();
-					errorProvider.SetError(this, ex.Message);
+					SetError(ex.Message);
 				}
 			}
 		}
@@ -874,7 +882,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
 					catch (BadSyntaxException ex)
 					{
 						RefreshValues();
-						errorProvider.SetError(this, ex.Message);
+						SetError(ex.Message);
 					}
 				}
 			}
@@ -895,7 +903,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
 					catch (BadSyntaxException ex)
 					{
 						RefreshValues();
-						errorProvider.SetError(this, ex.Message);
+						SetError(ex.Message);
 					}
 				}
 			}
@@ -916,7 +924,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
 					catch (BadSyntaxException ex)
 					{
 						RefreshValues();
-						errorProvider.SetError(this, ex.Message);
+						SetError(ex.Message);
 					}
 				}
 			}

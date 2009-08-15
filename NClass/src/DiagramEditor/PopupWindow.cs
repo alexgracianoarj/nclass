@@ -65,7 +65,7 @@ namespace NClass.DiagramEditor
 			}
 		}
 
-		public virtual void ValidateData()
+		public virtual void Closing()
 		{
 		}
 	}

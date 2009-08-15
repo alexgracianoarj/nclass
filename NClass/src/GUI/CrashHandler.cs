@@ -55,15 +55,25 @@ namespace NClass.GUI
 
 		private static void CreateBackups(string directory)
 		{
+			int untitledCount = 0;			
 			foreach (Project project in Workspace.Default.Projects)
 			{
+				if (project.IsDirty){
 				try
 				{
-					string filePath = Path.Combine(directory, project.FileName);
+					string fileName = project.FileName;
+					if (project.IsUntitled)
+					{
+						untitledCount++;
+						fileName = project.Name + untitledCount + ".ncp";
+					}
+					string filePath = Path.Combine(directory, fileName);
+					
 					project.Save(filePath);
 				}
 				catch
 				{
+				}
 				}
 			}
 		}
