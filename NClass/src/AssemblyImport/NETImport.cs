@@ -418,7 +418,7 @@ namespace NClass.AssemblyImport
               AssociationRelationship relationship = diagram.AddAggregation(compositeType, entities[fullName] as TypeBase);
               if(importSettings.LabelAggregations)
               {
-                relationship.StartRole = field.Name;
+                relationship.EndRole = field.Name;
               }
               if(fieldMap[field].FieldType.FullName.EndsWith("[]"))
               {
