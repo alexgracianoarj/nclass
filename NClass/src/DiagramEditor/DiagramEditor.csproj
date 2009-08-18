@@ -149,6 +149,8 @@
     <Compile Include="ClassDiagram\Editors\EditorWindow.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="GdiGraphics.cs" />
+    <Compile Include="IGraphics.cs" />
     <Compile Include="IClipboardItem.cs" />
     <Compile Include="EditorControlEventArgs.cs" />
     <Compile Include="EventArgs.cs" />

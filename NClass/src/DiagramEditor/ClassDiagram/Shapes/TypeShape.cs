@@ -369,12 +369,12 @@ namespace NClass.DiagramEditor.ClassDiagram.Shapes
 			}
 		}
 
-		protected void DrawSeparatorLine(Graphics g, int height)
+		protected void DrawSeparatorLine(IGraphics g, int height)
 		{
 			g.DrawLine(borderPen, Left, height, Right, height);
 		}
 
-		private void DrawRectangleSurface(Graphics g, bool onScreen, Style style)
+		private void DrawRectangleSurface(IGraphics g, bool onScreen, Style style)
 		{
 			// Draw shadow
 			if ((!onScreen || !IsSelected) && !style.ShadowOffset.IsEmpty)
@@ -396,7 +396,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Shapes
 			g.DrawRectangle(borderPen, BorderRectangle);
 		}
 
-		private void DrawHeaderBackground(Graphics g, Style style)
+		private void DrawHeaderBackground(IGraphics g, Style style)
 		{
 			Color backColor = GetBackgroundColor(style);
 			Color headerColor = GetHeaderColor(style);
@@ -435,7 +435,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Shapes
 			}
 		}
 
-		private void DrawRoundedSurface(Graphics g, bool onScreen, Style style)
+		private void DrawRoundedSurface(IGraphics g, bool onScreen, Style style)
 		{
 			int diameter = GetRoundingSize(style) * 2;
 
@@ -471,7 +471,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Shapes
 			borderPath.Dispose();
 		}
 
-		private void DrawSurface(Graphics g, bool onScreen, Style style)
+		private void DrawSurface(IGraphics g, bool onScreen, Style style)
 		{
 			// Update styles
 			backgroundBrush.Color = GetBackgroundColor(style);
@@ -555,7 +555,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Shapes
 			return top;
 		}
 
-		private void DrawHeaderText(Graphics g, Style style)
+		private void DrawHeaderText(IGraphics g, Style style)
 		{
 			string name = TypeBase.Name;
 			RectangleF textRegion = CaptionRegion;
@@ -610,17 +610,17 @@ namespace NClass.DiagramEditor.ClassDiagram.Shapes
 				DrawSeparatorLine(g, Top + HeaderHeight);
 		}
 
-		private void DrawChevron(Graphics g)
+		private void DrawChevron(IGraphics g)
 		{
 			Bitmap chevron = (Collapsed) ? Properties.Resources.Expand : Properties.Resources.Collapse;
 			Point location = new Point(Right - MarginSize - chevronSize.Width, Top + MarginSize);
 
-			g.DrawImage(chevron, new Rectangle(location, chevronSize));
+			g.DrawImage(chevron, location);
 		}
 
-		protected abstract void DrawContent(Graphics g, Style style);
+		protected abstract void DrawContent(IGraphics g, Style style);
 
-		public override void Draw(Graphics g, bool onScreen, Style style)
+		public override void Draw(IGraphics g, bool onScreen, Style style)
 		{
 			DrawSurface(g, onScreen, style);
 			DrawHeaderText(g, style);

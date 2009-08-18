@@ -213,8 +213,10 @@ namespace NClass.DiagramEditor.ClassDiagram.Dialogs
 			e.Graphics.TranslateTransform(marginBounds.Left, marginBounds.Top);
 			e.Graphics.ScaleTransform(scale, scale);
 			e.Graphics.TranslateTransform(-drawingArea.Left, -drawingArea.Top);
+			
 			// Printing
-			document.Print(e.Graphics, selectedOnly, printingStyle);
+			IGraphics graphics = new GdiGraphics(e.Graphics);
+			document.Print(graphics, selectedOnly, printingStyle);
 			e.HasMorePages = (++pageIndex < PageCount);
 		}
 

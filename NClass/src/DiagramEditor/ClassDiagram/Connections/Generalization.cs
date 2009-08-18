@@ -64,7 +64,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Connections
 			get { return Arrowhead.ClosedArrowHeight; }
 		}
 
-		protected override void DrawEndCap(Graphics g, bool onScreen, Style style)
+		protected override void DrawEndCap(IGraphics g, bool onScreen, Style style)
 		{
 			linePen.Color = style.RelationshipColor;
 			linePen.Width = style.RelationshipWidth;

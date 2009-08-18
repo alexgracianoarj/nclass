@@ -198,7 +198,7 @@ namespace NClass.DiagramEditor.ClassDiagram
 			return (result == DialogResult.Yes);
 		}
 
-		public void Draw(Graphics g)
+		public void Draw(IGraphics g)
 		{
 			Draw(g, false, Style.CurrentStyle);
 		}
@@ -206,7 +206,7 @@ namespace NClass.DiagramEditor.ClassDiagram
 		/// <exception cref="ArgumentNullException">
 		/// <paramref name="style"/> is null.
 		/// </exception>
-		public void Draw(Graphics g, Style style)
+		public void Draw(IGraphics g, Style style)
 		{
 			if (style == null)
 				throw new ArgumentNullException("style");
@@ -214,12 +214,12 @@ namespace NClass.DiagramEditor.ClassDiagram
 			Draw(g, false, style);
 		}
 
-		public void Draw(Graphics g, bool onScreen)
+		public void Draw(IGraphics g, bool onScreen)
 		{
 			Draw(g, onScreen, Style.CurrentStyle);
 		}
 
-		public abstract void Draw(Graphics g, bool onScreen, Style style);
+		public abstract void Draw(IGraphics g, bool onScreen, Style style);
 
 		protected internal abstract Rectangle GetLogicalArea();
 

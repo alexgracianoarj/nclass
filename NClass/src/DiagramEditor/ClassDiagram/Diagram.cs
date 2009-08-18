@@ -386,10 +386,11 @@ namespace NClass.DiagramEditor.ClassDiagram
 			RectangleF clip = g.ClipBounds;
 
 			// Draw diagram elements
+			IGraphics graphics = new GdiGraphics(g);
 			foreach (DiagramElement element in GetElementsInReversedDisplayOrder())
 			{
 				if (clip.IntersectsWith(element.GetVisibleArea(Zoom)))
-					element.Draw(g, true);
+					element.Draw(graphics, true);
 				element.NeedsRedraw = false;
 			}
 			if (state == State.CreatingShape)
@@ -476,12 +477,12 @@ namespace NClass.DiagramEditor.ClassDiagram
 			printDialog.ShowDialog();
 		}
 
-		public void Print(Graphics g)
+		public void Print(IGraphics g)
 		{
 			Print(g, false, Style.CurrentStyle);
 		}
 
-		public void Print(Graphics g, bool selectedOnly, Style style)
+		public void Print(IGraphics g, bool selectedOnly, Style style)
 		{
 			foreach (Shape shape in shapes.GetReversedList())
 			{

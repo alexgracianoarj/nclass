@@ -371,7 +371,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Connections
 			return GetRouteArea();
 		}
 
-		public override void Draw(Graphics g, bool onScreen, Style style)
+		public override void Draw(IGraphics g, bool onScreen, Style style)
 		{
 			DrawLine(g, onScreen, style);
 			DrawCaps(g, onScreen, style);
@@ -379,7 +379,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Connections
 				DrawLabel(g, onScreen, style);
 		}
 
-		private void DrawLine(Graphics g, bool onScreen, Style style)
+		private void DrawLine(IGraphics g, bool onScreen, Style style)
 		{
 			if (!IsSelected || !onScreen)
 			{
@@ -400,7 +400,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Connections
 			}
 		}
 
-		private void DrawCaps(Graphics g, bool onScreen, Style style)
+		private void DrawCaps(IGraphics g, bool onScreen, Style style)
 		{
 			Matrix transformState = g.Transform;
 			g.TranslateTransform(routeCache[0].X, routeCache[0].Y);
@@ -432,15 +432,15 @@ namespace NClass.DiagramEditor.ClassDiagram.Connections
 			}
 		}
 
-		protected virtual void DrawStartCap(Graphics g, bool onScreen, Style style)
+		protected virtual void DrawStartCap(IGraphics g, bool onScreen, Style style)
 		{
 		}
 
-		protected virtual void DrawEndCap(Graphics g, bool onScreen, Style style)
+		protected virtual void DrawEndCap(IGraphics g, bool onScreen, Style style)
 		{
 		}
 
-		private void DrawLabel(Graphics g, bool onScreen, Style style)
+		private void DrawLabel(IGraphics g, bool onScreen, Style style)
 		{
 			if (Relationship.Label != null)
 			{

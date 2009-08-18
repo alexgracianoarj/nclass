@@ -158,7 +158,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Connections
 			}
 		}
 
-		public override void Draw(Graphics g, bool onScreen, Style style)
+		public override void Draw(IGraphics g, bool onScreen, Style style)
 		{
 			base.Draw(g, onScreen, style);
 
@@ -168,7 +168,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Connections
 			DrawEndMultiplicity(g, style);
 		}
 
-		private void DrawStartRole(Graphics g, Style style)
+		private void DrawStartRole(IGraphics g, Style style)
 		{
 			string startRole = AssociationRelationship.StartRole;
 			if (startRole != null)
@@ -177,7 +177,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Connections
 			}
 		}
 
-		private void DrawEndRole(Graphics g, Style style)
+		private void DrawEndRole(IGraphics g, Style style)
 		{
 			string endRole = AssociationRelationship.EndRole;
 			if (endRole != null)
@@ -187,7 +187,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Connections
 			}
 		}
 
-		private void DrawRole(Graphics g, Style style, string text, Point firstPoint,
+		private void DrawRole(IGraphics g, Style style, string text, Point firstPoint,
 			Point secondPoint, Size capSize)
 		{
 			float angle = GetAngle(firstPoint, secondPoint);
@@ -226,7 +226,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Connections
 			g.DrawString(text, style.RelationshipTextFont, textBrush, point, stringFormat);
 		}
 
-		private void DrawStartMultiplicity(Graphics g, Style style)
+		private void DrawStartMultiplicity(IGraphics g, Style style)
 		{
 			string startMultiplicity = AssociationRelationship.StartMultiplicity;
 			if (startMultiplicity != null)
@@ -236,7 +236,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Connections
 			}
 		}
 
-		private void DrawEndMultiplicity(Graphics g, Style style)
+		private void DrawEndMultiplicity(IGraphics g, Style style)
 		{
 			string endMultiplicity = AssociationRelationship.EndMultiplicity;
 			if (endMultiplicity != null)
@@ -247,7 +247,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Connections
 			}
 		}
 
-		private void DrawMultiplicity(Graphics g, Style style, string text, Point firstPoint,
+		private void DrawMultiplicity(IGraphics g, Style style, string text, Point firstPoint,
 			Point secondPoint, Size capSize)
 		{
 			float angle = GetAngle(firstPoint, secondPoint);
@@ -286,7 +286,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Connections
 			g.DrawString(text, style.RelationshipTextFont, textBrush, point, stringFormat);
 		}
 
-		protected override void DrawStartCap(Graphics g, bool onScreen, Style style)
+		protected override void DrawStartCap(IGraphics g, bool onScreen, Style style)
 		{
 			linePen.Color = style.RelationshipColor;
 			linePen.Width = style.RelationshipWidth;
@@ -305,7 +305,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Connections
 			}
 		}
 
-		protected override void DrawEndCap(Graphics g, bool onScreen, Style style)
+		protected override void DrawEndCap(IGraphics g, bool onScreen, Style style)
 		{
 			if (association.Direction == Direction.Unidirectional)
 			{

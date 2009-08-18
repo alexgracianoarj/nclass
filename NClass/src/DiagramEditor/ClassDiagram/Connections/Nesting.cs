@@ -60,7 +60,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Connections
 			get { return Diameter; }
 		}
 
-		protected override void DrawStartCap(System.Drawing.Graphics g, bool onScreen, Style style)
+		protected override void DrawStartCap(IGraphics g, bool onScreen, Style style)
 		{
 			linePen.Color = style.RelationshipColor;
 			linePen.Width = style.RelationshipWidth;

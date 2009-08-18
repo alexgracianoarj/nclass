@@ -434,7 +434,10 @@ namespace NClass.DiagramEditor
 		void IDocumentVisualizer.DrawDocument(Graphics g)
 		{
 			if (HasDocument)
-				Document.Print(g, false, Style.CurrentStyle);
+			{
+				IGraphics graphics = new GdiGraphics(g);
+				Document.Print(graphics, false, Style.CurrentStyle);
+			}
 		}
 
 		private void DrawContent(Graphics g)

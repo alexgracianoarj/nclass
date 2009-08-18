@@ -349,7 +349,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Shapes
 			return memberFont;
 		}
 
-		private void DrawMember(Graphics g, Member member, Rectangle record, Style style)
+		private void DrawMember(IGraphics g, Member member, Rectangle record, Style style)
 		{
 			Font memberFont = GetMemberFont(member, style);
 
@@ -361,7 +361,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Shapes
 			if (style.UseIcons)
 			{
 				Image icon = Icons.GetImage(member);
-				g.DrawImage(icon, record.X, record.Y, icon.Width, icon.Height);
+				g.DrawImage(icon, record.X, record.Y);
 
 				Rectangle textBounds = new Rectangle(
 					record.X + IconSpacing, record.Y,
@@ -399,7 +399,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Shapes
 			}
 		}
 
-		protected override void DrawContent(Graphics g, Style style)
+		protected override void DrawContent(IGraphics g, Style style)
 		{
 			Rectangle record = new Rectangle(
 				Left + MarginSize, Top + HeaderHeight + MarginSize,

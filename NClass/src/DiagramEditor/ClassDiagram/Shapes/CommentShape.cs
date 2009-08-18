@@ -174,7 +174,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Shapes
 			return CommentShapeContextMenu.Default.GetMenuItems(diagram);
 		}
 
-		private void DrawSurface(Graphics g, bool onScreen, Style style)
+		private void DrawSurface(IGraphics g, bool onScreen, Style style)
 		{
 			// Update graphical objects
 			backgroundBrush.Color = style.CommentBackColor;
@@ -214,7 +214,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Shapes
 			path.Dispose();
 		}
 
-		private void DrawText(Graphics g, bool onScreen, Style style)
+		private void DrawText(IGraphics g, bool onScreen, Style style)
 		{
 			Rectangle textBounds = GetTextRectangle();
 
@@ -231,7 +231,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Shapes
 			}
 		}
 
-		public override void Draw(Graphics g, bool onScreen, Style style)
+		public override void Draw(IGraphics g, bool onScreen, Style style)
 		{
 			DrawSurface(g, onScreen, style);
 			DrawText(g, onScreen, style);

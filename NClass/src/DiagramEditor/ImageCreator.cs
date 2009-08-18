@@ -71,7 +71,8 @@ namespace NClass.DiagramEditor
 
 				// Draw image
 				g.Clear(Style.CurrentStyle.BackgroundColor);
-				document.Print(g, selectedOnly, Style.CurrentStyle);
+				IGraphics graphics = new GdiGraphics(g);
+				document.Print(graphics, selectedOnly, Style.CurrentStyle);
 
 				try
 				{
@@ -183,7 +184,8 @@ namespace NClass.DiagramEditor
 					g.TranslateTransform(-area.Left, -area.Top);
 
 					// Draw image
-					document.Print(g, selectedOnly, Style.CurrentStyle);
+					IGraphics graphics = new GdiGraphics(g);
+					document.Print(graphics, selectedOnly, Style.CurrentStyle);
 
 					meta.Dispose();
 				}
@@ -227,7 +229,9 @@ namespace NClass.DiagramEditor
 					// Draw image
 					if (!transparent)
 						g.Clear(Style.CurrentStyle.BackgroundColor);
-					document.Print(g, selectedOnly, Style.CurrentStyle);
+
+					IGraphics graphics = new GdiGraphics(g);
+					document.Print(graphics, selectedOnly, Style.CurrentStyle);
 
 					try
 					{
