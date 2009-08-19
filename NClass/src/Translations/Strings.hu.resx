@@ -1099,4 +1099,7 @@ Szeretné most letölteni a szükséges keretrendszert a Microsoft honlapjáról
   <data name="DeleteMemberConfirmation" xml:space="preserve">
     <value>Biztos, hogy törölni akarja a kijelölt tagot?</value>
   </data>
+  <data name="ButtonClear" xml:space="preserve">
+    <value>Törlés</value>
+  </data>
 </root>

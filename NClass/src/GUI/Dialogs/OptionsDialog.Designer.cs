@@ -39,6 +39,7 @@
 			this.cboLanguage = new System.Windows.Forms.ComboBox();
 			this.grpDiagram = new System.Windows.Forms.GroupBox();
 			this.panelClearType = new System.Windows.Forms.Panel();
+			this.chkClearTypeForImages = new System.Windows.Forms.CheckBox();
 			this.radClearTypeNever = new System.Windows.Forms.RadioButton();
 			this.radClearTypeAlways = new System.Windows.Forms.RadioButton();
 			this.radClearTypeWhenZoomed = new System.Windows.Forms.RadioButton();
@@ -57,7 +58,6 @@
 			this.btnLoad = new System.Windows.Forms.Button();
 			this.btnSave = new System.Windows.Forms.Button();
 			this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-			this.chkClearTypeForImages = new System.Windows.Forms.CheckBox();
 			this.tabOptions.SuspendLayout();
 			this.tabGeneral.SuspendLayout();
 			this.grpGeneral.SuspendLayout();
@@ -105,7 +105,7 @@
 			this.tabOptions.Multiline = true;
 			this.tabOptions.Name = "tabOptions";
 			this.tabOptions.SelectedIndex = 0;
-			this.tabOptions.Size = new System.Drawing.Size(328, 435);
+			this.tabOptions.Size = new System.Drawing.Size(328, 442);
 			this.tabOptions.TabIndex = 4;
 			// 
 			// tabGeneral
@@ -115,14 +115,15 @@
 			this.tabGeneral.Location = new System.Drawing.Point(4, 22);
 			this.tabGeneral.Name = "tabGeneral";
 			this.tabGeneral.Padding = new System.Windows.Forms.Padding(3);
-			this.tabGeneral.Size = new System.Drawing.Size(320, 409);
+			this.tabGeneral.Size = new System.Drawing.Size(320, 416);
 			this.tabGeneral.TabIndex = 0;
 			this.tabGeneral.Text = "General";
 			this.tabGeneral.UseVisualStyleBackColor = true;
 			// 
 			// grpGeneral
 			// 
-			this.grpGeneral.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+			this.grpGeneral.Anchor = ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+						| System.Windows.Forms.AnchorStyles.Left)
 						| System.Windows.Forms.AnchorStyles.Right)));
 			this.grpGeneral.Controls.Add(this.chkRememberOpenProjects);
 			this.grpGeneral.Controls.Add(this.lblRequiresRestart);
@@ -131,15 +132,16 @@
 			this.grpGeneral.Controls.Add(this.cboLanguage);
 			this.grpGeneral.Location = new System.Drawing.Point(6, 6);
 			this.grpGeneral.Name = "grpGeneral";
-			this.grpGeneral.Size = new System.Drawing.Size(308, 124);
+			this.grpGeneral.Size = new System.Drawing.Size(308, 131);
 			this.grpGeneral.TabIndex = 0;
 			this.grpGeneral.TabStop = false;
 			this.grpGeneral.Text = "General";
 			// 
 			// chkRememberOpenProjects
 			// 
+			this.chkRememberOpenProjects.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.chkRememberOpenProjects.AutoSize = true;
-			this.chkRememberOpenProjects.Location = new System.Drawing.Point(9, 67);
+			this.chkRememberOpenProjects.Location = new System.Drawing.Point(9, 74);
 			this.chkRememberOpenProjects.Name = "chkRememberOpenProjects";
 			this.chkRememberOpenProjects.Size = new System.Drawing.Size(175, 17);
 			this.chkRememberOpenProjects.TabIndex = 5;
@@ -148,13 +150,15 @@
 			// 
 			// lblRequiresRestart
 			// 
-			this.lblRequiresRestart.AutoSize = true;
+			this.lblRequiresRestart.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this.lblRequiresRestart.Enabled = false;
 			this.lblRequiresRestart.Location = new System.Drawing.Point(6, 41);
 			this.lblRequiresRestart.Name = "lblRequiresRestart";
-			this.lblRequiresRestart.Size = new System.Drawing.Size(246, 13);
+			this.lblRequiresRestart.Size = new System.Drawing.Size(296, 43);
 			this.lblRequiresRestart.TabIndex = 4;
-			this.lblRequiresRestart.Text = "Changing the language requires application restart.";
+			this.lblRequiresRestart.Text = "Changing the language requires application restart. dasd jdiasjdiodj asiodj aiodj" +
+				"aisdo o";
 			// 
 			// lblLanguage
 			// 
@@ -169,7 +173,7 @@
 			// 
 			this.btnClearRecents.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.btnClearRecents.AutoSize = true;
-			this.btnClearRecents.Location = new System.Drawing.Point(9, 90);
+			this.btnClearRecents.Location = new System.Drawing.Point(9, 97);
 			this.btnClearRecents.Name = "btnClearRecents";
 			this.btnClearRecents.Size = new System.Drawing.Size(110, 23);
 			this.btnClearRecents.TabIndex = 3;
@@ -188,13 +192,12 @@
 			// 
 			// grpDiagram
 			// 
-			this.grpDiagram.Anchor = ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-						| System.Windows.Forms.AnchorStyles.Left)
+			this.grpDiagram.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
 						| System.Windows.Forms.AnchorStyles.Right)));
 			this.grpDiagram.Controls.Add(this.panelClearType);
 			this.grpDiagram.Controls.Add(this.panelChevron);
 			this.grpDiagram.Controls.Add(this.chkUsePrecisionSnapping);
-			this.grpDiagram.Location = new System.Drawing.Point(6, 136);
+			this.grpDiagram.Location = new System.Drawing.Point(6, 143);
 			this.grpDiagram.Name = "grpDiagram";
 			this.grpDiagram.Size = new System.Drawing.Size(308, 267);
 			this.grpDiagram.TabIndex = 1;
@@ -215,6 +218,16 @@
 			this.panelClearType.Name = "panelClearType";
 			this.panelClearType.Size = new System.Drawing.Size(293, 111);
 			this.panelClearType.TabIndex = 10;
+			// 
+			// chkClearTypeForImages
+			// 
+			this.chkClearTypeForImages.AutoSize = true;
+			this.chkClearTypeForImages.Location = new System.Drawing.Point(12, 90);
+			this.chkClearTypeForImages.Name = "chkClearTypeForImages";
+			this.chkClearTypeForImages.Size = new System.Drawing.Size(226, 17);
+			this.chkClearTypeForImages.TabIndex = 13;
+			this.chkClearTypeForImages.Text = "In exported images (disables transparency)";
+			this.chkClearTypeForImages.UseVisualStyleBackColor = true;
 			// 
 			// radClearTypeNever
 			// 
@@ -329,7 +342,7 @@
 			this.tabStyle.Location = new System.Drawing.Point(4, 22);
 			this.tabStyle.Name = "tabStyle";
 			this.tabStyle.Padding = new System.Windows.Forms.Padding(3);
-			this.tabStyle.Size = new System.Drawing.Size(310, 409);
+			this.tabStyle.Size = new System.Drawing.Size(320, 409);
 			this.tabStyle.TabIndex = 1;
 			this.tabStyle.Text = "Style";
 			this.tabStyle.UseVisualStyleBackColor = true;
@@ -352,14 +365,14 @@
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel1.Size = new System.Drawing.Size(304, 403);
+			this.tableLayoutPanel1.Size = new System.Drawing.Size(314, 403);
 			this.tableLayoutPanel1.TabIndex = 6;
 			// 
 			// btnClear
 			// 
 			this.btnClear.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnClear.AutoSize = true;
-			this.btnClear.Location = new System.Drawing.Point(64, 377);
+			this.btnClear.Location = new System.Drawing.Point(74, 377);
 			this.btnClear.Name = "btnClear";
 			this.btnClear.Size = new System.Drawing.Size(75, 23);
 			this.btnClear.TabIndex = 4;
@@ -375,7 +388,7 @@
 			this.tableLayoutPanel1.SetColumnSpan(this.stylePropertyGrid, 3);
 			this.stylePropertyGrid.Location = new System.Drawing.Point(3, 3);
 			this.stylePropertyGrid.Name = "stylePropertyGrid";
-			this.stylePropertyGrid.Size = new System.Drawing.Size(298, 341);
+			this.stylePropertyGrid.Size = new System.Drawing.Size(308, 341);
 			this.stylePropertyGrid.TabIndex = 0;
 			this.stylePropertyGrid.ToolbarVisible = false;
 			this.stylePropertyGrid.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.stylePropertyGrid_PropertyValueChanged);
@@ -389,7 +402,7 @@
 			this.cboStyles.FormattingEnabled = true;
 			this.cboStyles.Location = new System.Drawing.Point(3, 350);
 			this.cboStyles.Name = "cboStyles";
-			this.cboStyles.Size = new System.Drawing.Size(298, 21);
+			this.cboStyles.Size = new System.Drawing.Size(308, 21);
 			this.cboStyles.TabIndex = 1;
 			this.cboStyles.SelectedIndexChanged += new System.EventHandler(this.cboStyles_SelectedIndexChanged);
 			// 
@@ -397,7 +410,7 @@
 			// 
 			this.btnLoad.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnLoad.AutoSize = true;
-			this.btnLoad.Location = new System.Drawing.Point(145, 377);
+			this.btnLoad.Location = new System.Drawing.Point(155, 377);
 			this.btnLoad.Name = "btnLoad";
 			this.btnLoad.Size = new System.Drawing.Size(75, 23);
 			this.btnLoad.TabIndex = 2;
@@ -409,7 +422,7 @@
 			// 
 			this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnSave.AutoSize = true;
-			this.btnSave.Location = new System.Drawing.Point(226, 377);
+			this.btnSave.Location = new System.Drawing.Point(236, 377);
 			this.btnSave.Name = "btnSave";
 			this.btnSave.Size = new System.Drawing.Size(75, 23);
 			this.btnSave.TabIndex = 3;
@@ -425,20 +438,10 @@
 			this.flowLayoutPanel1.Controls.Add(this.btnCancel);
 			this.flowLayoutPanel1.Controls.Add(this.btnOK);
 			this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
-			this.flowLayoutPanel1.Location = new System.Drawing.Point(178, 450);
+			this.flowLayoutPanel1.Location = new System.Drawing.Point(178, 457);
 			this.flowLayoutPanel1.Name = "flowLayoutPanel1";
 			this.flowLayoutPanel1.Size = new System.Drawing.Size(162, 29);
 			this.flowLayoutPanel1.TabIndex = 5;
-			// 
-			// chkClearTypeForImages
-			// 
-			this.chkClearTypeForImages.AutoSize = true;
-			this.chkClearTypeForImages.Location = new System.Drawing.Point(12, 90);
-			this.chkClearTypeForImages.Name = "chkClearTypeForImages";
-			this.chkClearTypeForImages.Size = new System.Drawing.Size(226, 17);
-			this.chkClearTypeForImages.TabIndex = 13;
-			this.chkClearTypeForImages.Text = "In exported images (disables transparency)";
-			this.chkClearTypeForImages.UseVisualStyleBackColor = true;
 			// 
 			// OptionsDialog
 			// 
@@ -446,7 +449,7 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.btnCancel;
-			this.ClientSize = new System.Drawing.Size(352, 491);
+			this.ClientSize = new System.Drawing.Size(352, 498);
 			this.Controls.Add(this.flowLayoutPanel1);
 			this.Controls.Add(this.tabOptions);
 			this.MaximizeBox = false;

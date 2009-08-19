@@ -56,6 +56,7 @@ namespace NClass.GUI.Dialogs
 			radClearTypeWhenZoomed.Text = Strings.WhenZoomed;
 			radClearTypeNever.Text = Strings.Never;
 			chkClearTypeForImages.Text = Strings.UseClearTypeForImages;
+			btnClear.Text = Strings.ButtonClear;
 			btnLoad.Text = Strings.ButtonLoad;
 			btnSave.Text = Strings.ButtonSave;
 			btnOK.Text = Strings.ButtonOK;
