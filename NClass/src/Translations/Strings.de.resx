@@ -1128,4 +1128,19 @@
   <data name="UseClearTypeForImages" xml:space="preserve">
     <value>In exportierten Bildern (keine Transparenz möglich)</value>
   </data>
+  <data name="ButtonClear" xml:space="preserve">
+    <value>Zurücksetzen</value>
+  </data>
+  <data name="DeleteElementsConfirmation" xml:space="preserve">
+    <value>Möchten Sie wirklich die selektierten Elemente löschen?</value>
+  </data>
+  <data name="DeleteMemberConfirmation" xml:space="preserve">
+    <value>Möchten Sie wirklich die selektierten Member löschen?</value>
+  </data>
+  <data name="MenuOpenFile" xml:space="preserve">
+    <value>&amp;Datei...</value>
+  </data>
+  <data name="MenuReverse" xml:space="preserve">
+    <value>&amp;Umkehren</value>
+  </data>
 </root>
