@@ -130,7 +130,7 @@
     <value>Verschachtelung</value>
   </data>
   <data name="ErrorCannotSetModifier" xml:space="preserve">
-    <value>Es ist nicht mglich den Modifikator zu ändern.</value>
+    <value>Es ist nicht möglich den Modifikator zu ändern.</value>
   </data>
   <data name="MenuComposition" xml:space="preserve">
     <value>K&amp;omposition</value>
@@ -150,9 +150,6 @@
   <data name="Association" xml:space="preserve">
     <value>Assoziation</value>
   </data>
-  <data name="ErrorCannotAddSameInterface" xml:space="preserve">
-    <value>Es ist nicht möglich das selbe Interface zu verwenden.</value>
-  </data>
   <data name="ReturnType" xml:space="preserve">
     <value>Rückgabewert:</value>
     <comment>The return type of a delegate</comment>
@@ -161,7 +158,7 @@
     <value>Es ist nicht möglich das selbe Basisinterface hinzuzufügen.</value>
   </data>
   <data name="MenuDelete" xml:space="preserve">
-    <value>&amp;Lüschen</value>
+    <value>&amp;Löschen</value>
   </data>
   <data name="ChangingToAbstractConfirmation" xml:space="preserve">
     <value>Wenn Sie den aktuellen gerbten Modifikator auf abstrakt setzen, wird die Elternklasse ebenfalls auf abstrakt umgeändert. Sind Sie sicher, dass Sie dies möchten?</value>
@@ -189,7 +186,7 @@
     <value>Nach oben</value>
   </data>
   <data name="AddNewComposition" xml:space="preserve">
-    <value>Neu Komposition</value>
+    <value>Neue Komposition</value>
   </data>
   <data name="ButtonOK" xml:space="preserve">
     <value>OK</value>
@@ -219,16 +216,16 @@
     <value>Zoom +</value>
   </data>
   <data name="MenuDelegate" xml:space="preserve">
-    <value>&amp;Delegate</value>
+    <value>&amp;Delegat</value>
   </data>
   <data name="ErrorCannotSetStatic" xml:space="preserve">
-    <value>Es ist nicht möglich einen statischen Modifikator zu �ndern.</value>
+    <value>Es ist nicht möglich einen statischen Modifikator zu ändern.</value>
   </data>
   <data name="MenuImport" xml:space="preserve">
     <value>&amp;Importieren</value>
   </data>
   <data name="ErrorMultipleBases" xml:space="preserve">
-    <value>Mehrfache Masterclassen werden nicht unterstützt.</value>
+    <value>Mehrfache Basisklassen werden nicht unterstützt.</value>
   </data>
   <data name="MenuParameters" xml:space="preserve">
     <value>&amp;Parameter</value>
@@ -240,7 +237,7 @@
     <value>Auto &amp;Zoom</value>
   </data>
   <data name="MenuCheckForUpdates" xml:space="preserve">
-    <value>überprüfe auf &amp;Updates</value>
+    <value>Überprüfe auf &amp;Updates</value>
   </data>
   <data name="ButtonModify" xml:space="preserve">
     <value>Bearbeiten</value>
@@ -255,7 +252,7 @@
     <value>Bei der erzeugung des Codes ist ein Fehler aufgetreten</value>
   </data>
   <data name="MenuCommentRelationship" xml:space="preserve">
-    <value>Ko&amp;mmentar Verbindung</value>
+    <value>Ko&amp;mmentarverbindung</value>
   </data>
   <data name="NewField" xml:space="preserve">
     <value>Neues Feld</value>
@@ -278,7 +275,7 @@
     <value>Fehler bei speichern der Einstellungen.</value>
   </data>
   <data name="MenuNesting" xml:space="preserve">
-    <value>&amp;Veschachteln</value>
+    <value>&amp;Geschachtelt</value>
   </data>
   <data name="ButtonApply" xml:space="preserve">
     <value>Übernehmen</value>
@@ -287,10 +284,10 @@
     <value>Sortieren nach Namen</value>
   </data>
   <data name="SortByKind" xml:space="preserve">
-    <value>Sortieren nach Erben</value>
+    <value>Sortieren nach Art</value>
   </data>
   <data name="UseSnapping" xml:space="preserve">
-    <value>Nutzen die möglichkeiten ihre Suche einzugrenzen.</value>
+    <value>Snapping aktivieren</value>
     <comment>When the user moves a class or relationship, they snap to each other, like in Visual Studio Winforms Designer</comment>
   </data>
   <data name="ErrorInvalidTypeName" xml:space="preserve">
@@ -316,13 +313,13 @@
     <value>Item hinzufügen</value>
   </data>
   <data name="MenuSelectAll" xml:space="preserve">
-    <value>&amp;Selektiere alles...</value>
+    <value>&amp;Alles auswählen</value>
   </data>
   <data name="MenuEditMembers" xml:space="preserve">
-    <value>&amp;Bearbeite Members...</value>
+    <value>&amp;Bearbeite Member...</value>
   </data>
   <data name="EditComment" xml:space="preserve">
-    <value>Bearbeite Kommentar</value>
+    <value>Kommentar bearbeiten</value>
     <comment>Dialog caption</comment>
   </data>
   <data name="MenuBidirectional" xml:space="preserve">
@@ -355,7 +352,7 @@
     <value>Die Datei wurde geändert, möchten Sie diese Änderungen speichern?</value>
   </data>
   <data name="EditText" xml:space="preserve">
-    <value>Bearbeite Text:</value>
+    <value>Kommentar:</value>
   </data>
   <data name="Translator" xml:space="preserve">
     <value>Translator: Jan Oliver Rüdiger</value>
@@ -374,7 +371,7 @@
     <value>Die Datei konnte nicht geladen werden.</value>
   </data>
   <data name="AddNewComment" xml:space="preserve">
-    <value>Füge neue Kommentar hinzu</value>
+    <value>Füge neuen Kommentar hinzu</value>
   </data>
   <data name="ErrorInvalidModifier" xml:space="preserve">
     <value>Fehlerhafter Modifikator</value>
@@ -399,26 +396,26 @@
     <value>&amp;Öffnen</value>
   </data>
   <data name="ImplementExplicitly" xml:space="preserve">
-    <value>Implementiere expliziet</value>
+    <value>Explizite Implementierung</value>
   </data>
   <data name="ErrorExplicitImplementationAccess" xml:space="preserve">
-    <value>In einer expliziten Implementierung können Zugriffsrechte vergeben werden.</value>
+    <value>In einer expliziten Implementierung können keine Zugriffsrechte vergeben werden.</value>
   </data>
   <data name="Access" xml:space="preserve">
     <value>Zugriff</value>
     <comment>The visibility modifier name</comment>
   </data>
   <data name="MenuParameterNames" xml:space="preserve">
-    <value>Parameter &amp;Namen</value>
+    <value>Parameter&amp;namen</value>
   </data>
   <data name="Print" xml:space="preserve">
-    <value>Drucke</value>
+    <value>Drucken...</value>
   </data>
   <data name="ErrorStaticInterfaceMember" xml:space="preserve">
     <value>Ein Interface kann nicht als static deklariert werden.</value>
   </data>
   <data name="MenuDependency" xml:space="preserve">
-    <value>&amp;Abh�ngigkeit</value>
+    <value>&amp;Abhängigkeit</value>
   </data>
   <data name="ButtonCancel" xml:space="preserve">
     <value>Abbrechen</value>
@@ -438,16 +435,16 @@
     <value>&amp;Inhalte</value>
   </data>
   <data name="ErrorCyclicNesting" xml:space="preserve">
-    <value>Zyklischer Code ist nicht möglich.</value>
+    <value>Zyklische Verschachtelungen sind nicht möglich.</value>
   </data>
   <data name="ErrorNestingNotSupported" xml:space="preserve">
-    <value>Typ zu stark verschachtelt.</value>
+    <value>Basistyp unterstützt keine Verschachtelung</value>
   </data>
   <data name="ErrorMemberTypeDoesNotExist" xml:space="preserve">
     <value>Folgende Typen exsistieren nicht {0}</value>
   </data>
   <data name="ErrorCorruptSaveFile" xml:space="preserve">
-    <value>Die Datei konnte nicht geladen werden.</value>
+    <value>Die Datei ist beschädigt und kann nicht geladen werden.</value>
   </data>
   <data name="AddNewGeneralization" xml:space="preserve">
     <value>Neue Generalisierung</value>
@@ -463,10 +460,10 @@
     <value>Neue Realisation</value>
   </data>
   <data name="ErrorCyclicBase" xml:space="preserve">
-    <value>Die Basissklasse {0} hat folgende Enkel {0}.</value>
+    <value>Die Basissklasse {0} erbt von {0}.</value>
   </data>
   <data name="ErrorNotInterfaceImplementer" xml:space="preserve">
-    <value>Implementierte Klassen können keine Inferfaces realisieren.</value>
+    <value>Implementierende Klasse kann die Schnittstelle nicht realisieren.</value>
   </data>
   <data name="ErrorStaticConstructor" xml:space="preserve">
     <value>Statische Konstruktoren müssen Parameterlos sein.</value>
@@ -493,7 +490,7 @@
     <value>Kommentar</value>
   </data>
   <data name="ErrorCannotCreateRelationship" xml:space="preserve">
-    <value>Es ist nicht möglich zwischen diesen beiden Objekten auf die gew�hlte Art eine Verbindung herzustellen.</value>
+    <value>Es ist nicht möglich zwischen diesen beiden Objekten auf die gewählte Art eine Verbindung herzustellen.</value>
   </data>
   <data name="Aggregation" xml:space="preserve">
     <value>Aggregator</value>
@@ -539,7 +536,7 @@
     <value>Komme&amp;ntar</value>
   </data>
   <data name="AddNewItem" xml:space="preserve">
-    <value>Füge neues Item hinuzu:</value>
+    <value>Füge neues Element hinuzu:</value>
   </data>
   <data name="UnknownError" xml:space="preserve">
     <value>Unbekannter Fehler</value>
@@ -554,7 +551,7 @@
     <value>Dieser Typ kann in diesem Kontext nicht verwendet werden.</value>
   </data>
   <data name="AddNewInterface" xml:space="preserve">
-    <value>Füge neues Interface hinzu</value>
+    <value>Füge neue Schnittstelle hinzu</value>
   </data>
   <data name="ErrorCouldNotSaveFile" xml:space="preserve">
     <value>Die Datei konnte nicht gespeichert werden.</value>
@@ -575,7 +572,7 @@
     <value>&amp;Hilfe</value>
   </data>
   <data name="AddNewEnum" xml:space="preserve">
-    <value>Füge neue Enumeration hinzu</value>
+    <value>Füge neue Aufzählung hinzu</value>
   </data>
   <data name="Generalization" xml:space="preserve">
     <value>Haupteinstellung</value>
@@ -585,13 +582,13 @@
     <value>Abgeleitete Typen können nicht generalisiert werden.</value>
   </data>
   <data name="MenuInterface" xml:space="preserve">
-    <value>&amp;Interface</value>
+    <value>Schn&amp;ittstelle</value>
   </data>
   <data name="ButtonBrowse" xml:space="preserve">
     <value>Browse...</value>
   </data>
   <data name="MenuGeneralization" xml:space="preserve">
-    <value>Genera&amp;lisieren</value>
+    <value>Genera&amp;lisierung</value>
   </data>
   <data name="MenuCSharpDiagram" xml:space="preserve">
     <value>&amp;C# Diagramm</value>
@@ -609,7 +606,7 @@
     <value>Der Dateiname muss angegeben werden</value>
   </data>
   <data name="InitialValue" xml:space="preserve">
-    <value>Initial Wert</value>
+    <value>Initialer Wert</value>
   </data>
   <data name="AutoZoom" xml:space="preserve">
     <value>Automatischer Zoom</value>
@@ -637,7 +634,7 @@
     <value>Grund</value>
   </data>
   <data name="OverrideMembers" xml:space="preserve">
-    <value>überschreibe Member</value>
+    <value>Member überschreiben</value>
     <comment>The name of the Override Members dialog</comment>
   </data>
   <data name="Class" xml:space="preserve">
@@ -671,7 +668,7 @@
     <value>Wählen Sie ein Verzeichniss zu erstellen des Quellcodes:</value>
   </data>
   <data name="MembersOfType" xml:space="preserve">
-    <value>Members von {0}</value>
+    <value>Member von {0}</value>
   </data>
   <data name="Dependency" xml:space="preserve">
     <value>Abhängigkeit</value>
@@ -680,10 +677,10 @@
     <value>Code style</value>
   </data>
   <data name="MenuEnum" xml:space="preserve">
-    <value>&amp;Enummeration</value>
+    <value>&amp;Aufzählung</value>
   </data>
   <data name="MenuAbout" xml:space="preserve">
-    <value>&amp;über NClass...</value>
+    <value>&amp;Über NClass...</value>
   </data>
   <data name="ErrorCannotSaveFile" xml:space="preserve">
     <value>Es ist nicht möglich die Datei zu speichern, die Pfadangabe ist nicht korrekt.</value>
@@ -692,7 +689,7 @@
     <value>Der Modifikator {0} stimm nicht mit folgendem Modifikator überein {1}.</value>
   </data>
   <data name="ErrorReservedName" xml:space="preserve">
-    <value>Sie haben einen reservierten Namen verwendet, dies ist nicht möglich.</value>
+    <value>Sie haben einen reservierten Namen verwendet; dies ist nicht möglich.</value>
   </data>
   <data name="DeleteSelectedItems" xml:space="preserve">
     <value>Gelöschte Item(s)</value>
@@ -720,7 +717,7 @@
     <comment>Realization relationship</comment>
   </data>
   <data name="ErrorRelationshipDoesNotExist" xml:space="preserve">
-    <value>Diese spezielle Relationship exsistiert nicht.</value>
+    <value>Die Assoziation exsistiert nicht.</value>
   </data>
   <data name="ErrorCouldNotLoadPlugins" xml:space="preserve">
     <value>In folgenden Plugins traten Fehler auf:\n"{0}"</value>
@@ -729,10 +726,10 @@
     <value>Füge neue Klasse hinzu</value>
   </data>
   <data name="MenuInitialValue" xml:space="preserve">
-    <value>&amp;Initial Wert</value>
+    <value>&amp;Initialer Wert</value>
   </data>
   <data name="Implementing" xml:space="preserve">
-    <value>Implementiere</value>
+    <value>Schnittstellen implementieren</value>
     <comment>The name of the Implementing dialog</comment>
   </data>
   <data name="AddNewNesting" xml:space="preserve">
@@ -751,7 +748,7 @@
     <value>Zusammenstellung</value>
   </data>
   <data name="ErrorTypeDoesNotExist" xml:space="preserve">
-    <value>{0} exsistiert als Typ nicht.</value>
+    <value>{0} exsistiert als nicht Typ.</value>
   </data>
   <data name="NewConstructor" xml:space="preserve">
     <value>Neuer Konstruktor</value>
@@ -764,7 +761,7 @@
     <comment>Second part of the ErrorCyclicBase text</comment>
   </data>
   <data name="ErrorInterfaceMemberAccess" xml:space="preserve">
-    <value>Es ist nicht m�glich Member eines Interfaces einen Zugriffsmodikator zuzuweisen.</value>
+    <value>Es ist nicht möglich Member einer Schnittstelle einen Zugriffsmodikator zuzuweisen.</value>
   </data>
   <data name="MenuCut" xml:space="preserve">
     <value>Aus&amp;schneiden</value>
@@ -773,7 +770,7 @@
     <value>Verbindung zum Server fehlgeschlagen.</value>
   </data>
   <data name="ErrorCannotCrateDelegate" xml:space="preserve">
-    <value>Es ist nicht möglich folgende Delegates zu löschen {0}.</value>
+    <value>Es ist nicht möglich folgende Delegaten zu löschen {0}.</value>
   </data>
   <data name="ErrorExplicitImplementation" xml:space="preserve">
     <value>Es ist nicht möglich explizit zu implementieren.</value>
@@ -800,13 +797,13 @@
     <value>Laden</value>
   </data>
   <data name="ErrorCannotOverride" xml:space="preserve">
-    <value>Die Methode die Sie überschreiben ist nicht als overrideble gekennzeichnet. Daher kann die Methode nicht überschrieben werden.</value>
+    <value>Die Methode die Sie überschreiben ist nicht als überschreibbar gekennzeichnet. Daher kann die Methode nicht überschrieben werden.</value>
   </data>
   <data name="ErrorOperatorMustBePublic" xml:space="preserve">
     <value>Diese Methode muss als public deklariert werden.</value>
   </data>
   <data name="AddNewDelegate" xml:space="preserve">
-    <value>Füge neues Delegate hinzu</value>
+    <value>Füge neuen Delegaten hinzu</value>
   </data>
   <data name="ClearRecentList" xml:space="preserve">
     <value>Lösche Liste zuletzt verwendeter Dateien</value>
@@ -815,7 +812,7 @@
     <value>Speichern als Bild</value>
   </data>
   <data name="NewDestructor" xml:space="preserve">
-    <value>Neuer Dekonstruktor</value>
+    <value>Neuer Destruktor</value>
   </data>
   <data name="Style" xml:space="preserve">
     <value>Style</value>
@@ -880,16 +877,16 @@
     <value>&amp;Alles ausklappen</value>
   </data>
   <data name="MenuMakeSameSize" xml:space="preserve">
-    <value>&amp;Gleiche die Größe an</value>
+    <value>&amp;Größe angleichen</value>
   </data>
   <data name="MenuSameHeight" xml:space="preserve">
-    <value>&amp;Gleiche die Höhe an</value>
+    <value>&amp;Höhe</value>
   </data>
   <data name="MenuSameSize" xml:space="preserve">
-    <value>&amp;Gleiche die Größe an (alles h*b)</value>
+    <value>&amp;Höhe und Breite</value>
   </data>
   <data name="MenuSameWidth" xml:space="preserve">
-    <value>Gleiche die Breite an</value>
+    <value>&amp;Breite</value>
   </data>
   <data name="MenuFormat" xml:space="preserve">
     <value>F&amp;ormatiere</value>
@@ -905,7 +902,7 @@
     <value>Niemals</value>
   </data>
   <data name="ShowChevron" xml:space="preserve">
-    <value>Zeige Winkel</value>
+    <value>Zeige Detail-Umschalter</value>
     <comment>The chevron button is the little arrow icon in the up-right corner of a class</comment>
   </data>
   <data name="ButtonPageSetup" xml:space="preserve">
@@ -971,17 +968,17 @@
     <value>Der Dateiname kann nicht leer sein.</value>
   </data>
   <data name="ErrorDestructorName" xml:space="preserve">
-    <value>Der Names des Destructors stimmt nicht mit dem Klassennamen überein</value>
+    <value>Der Names des Destruktors stimmt nicht mit dem Klassennamen überein</value>
   </data>
   <data name="DoubleClickToAddDiagram" xml:space="preserve">
     <value>Doppelklicken Sie hier um ein neues Diagramm zu erstellen.</value>
   </data>
   <data name="DoubleClickToAddProject" xml:space="preserve">
-    <value>? Doppelklicken sie hier um ein neues Projekt zu erstellen ?</value>
+    <value>« Doppelklicken Sie hier um ein neues Projekt zu erstellen »</value>
     <comment>Text in empty workspace</comment>
   </data>
   <data name="MenuSaveProject" xml:space="preserve">
-    <value>&amp;Speichern {0}</value>
+    <value>&amp;Speichere {0}</value>
   </data>
   <data name="MenuSaveProjectAs" xml:space="preserve">
     <value>Speichere {0} &amp;Als...</value>
@@ -1086,14 +1083,14 @@
     <comment>The Uninstall schortcut text in the Start Menu group</comment>
   </data>
   <data name="EditAssociation" xml:space="preserve">
-    <value>Bearbeitet Assoziationen</value>
+    <value>Assoziation bearbeiteten</value>
     <comment>Caption text of the Edit Association dialog</comment>
   </data>
   <data name="MenuEditAssociation" xml:space="preserve">
     <value>Bearbeiten...</value>
   </data>
   <data name="RememberOpenProjects" xml:space="preserve">
-    <value>Erinnere an offene Projekte beim Schließen</value>
+    <value>Führe eine Liste mit zuletzt geöffneten Dateien</value>
   </data>
   <data name="MenuCloseAllTabsButThis" xml:space="preserve">
     <value>Schließe alle bis auf dieses</value>
@@ -1121,5 +1118,14 @@
   <data name="Paste" xml:space="preserve">
     <value>Einfügen</value>
     <comment>Clipboard Paste</comment>
+  </data>
+  <data name="ErrorCannotAddSameInterface" xml:space="preserve">
+    <value>Es ist nicht möglich die selbe Schnittstelle zu verwenden.</value>
+  </data>
+  <data name="MenuAutoSize" xml:space="preserve">
+    <value>Automatische G&amp;rößenanpassung</value>
+  </data>
+  <data name="UseClearTypeForImages" xml:space="preserve">
+    <value>In exportierten Bildern (keine Transparenz möglich)</value>
   </data>
 </root>
