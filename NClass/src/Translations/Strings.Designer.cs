@@ -2829,7 +2829,7 @@ namespace NClass.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 2009-08-13.
+        ///   Looks up a localized string similar to 2009-08-26.
         /// </summary>
         public static string TranslationVersion {
             get {

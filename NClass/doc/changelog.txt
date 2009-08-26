@@ -1,9 +1,11 @@
-Version 2.02 [Preliminary]
+Version 2.02 (26-Aug-2009)
 --------------------------
++ Aggregation relationships can be generated in reverse engineering
 + Scroll horizontally with the mouse wheel while pressing the Shift key
 * Fixed a page margin bug when printing
 * Print dialog remembers last page settings
 * Projects and diagrams are renameable with the F2 key
+* Fixed a crash when using older version of Mono
 
 Version 2.01 (13-Aug-2009)
 --------------------------

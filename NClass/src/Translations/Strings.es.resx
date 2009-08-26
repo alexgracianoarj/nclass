@@ -791,7 +791,7 @@
     <comment>It's needed for version controlling, don't translate it</comment>
   </data>
   <data name="TranslationVersion" xml:space="preserve">
-    <value>2009-07-30</value>
+    <value>2009-08-26</value>
     <comment>It's needed for version controlling, don't translate it</comment>
   </data>
   <data name="Translator" xml:space="preserve">
@@ -1106,5 +1106,27 @@ Un log del problema y ficheros de recuperación han sido creados en el directori
   </data>
   <data name="Paste" xml:space="preserve">
     <value>Pegar</value>
+  </data>
+  <data name="MenuOpenFile" xml:space="preserve">
+    <value>&amp;Archivo...</value>
+  </data>
+  <data name="UseClearTypeForImages" xml:space="preserve">
+    <value>En imagenes exportadas (trasparencia deshabilitada)</value>
+  </data>
+  <data name="MenuReverse" xml:space="preserve">
+    <value>Invertir</value>
+    <comment>Reverse the whole association relationship</comment>
+  </data>
+  <data name="MenuAutoSize" xml:space="preserve">
+    <value>Auto ajustar &amp;tamaño</value>
+  </data>
+  <data name="DeleteMemberConfirmation" xml:space="preserve">
+    <value>¿Está seguro de que desea eliminar el miembro seleccionado?</value>
+  </data>
+  <data name="DeleteElementsConfirmation" xml:space="preserve">
+    <value>¿Está seguro de que desea eliminar los elementos seleccionados en el diagrama?</value>
+  </data>
+  <data name="ButtonClear" xml:space="preserve">
+    <value>Limpiar</value>
   </data>
 </root>
