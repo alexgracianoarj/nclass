@@ -55,7 +55,7 @@ namespace NClass.CSharp
 		
 		// System.Collections.Generic.List<List<int>[]>[]
 		internal const string GenericTypePattern2 =
-			TypeNamePattern + @"(\s*" + GenericPattern2 + ")?" + ArrayPattern;
+			TypeNamePattern + @"(\s*" + GenericPattern2 + @")?\??" + ArrayPattern;
 
 
 		// Name
