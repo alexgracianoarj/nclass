@@ -111,5 +111,16 @@ namespace NClass.DiagramEditor
 			}
 			return false;
 		}
+
+		public void Reverse()
+		{
+			LinkedListNode<T> node = First;
+			while (Last != node)
+			{
+				LinkedListNode<T> last = Last;
+				Remove(last);
+				AddBefore(node, last);
+			}
+		}
 	}
 }

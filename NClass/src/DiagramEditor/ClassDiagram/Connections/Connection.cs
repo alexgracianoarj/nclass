@@ -107,6 +107,16 @@ namespace NClass.DiagramEditor.ClassDiagram.Connections
 			get;
 		}
 
+		protected Shape StartShape
+		{
+			get { return startShape; }
+		}
+
+		protected Shape EndShape
+		{
+			get { return endShape; }
+		}
+
 		public IEnumerable<BendPoint> BendPoints
 		{
 			get { return bendPoints; }
@@ -358,6 +368,26 @@ namespace NClass.DiagramEditor.ClassDiagram.Connections
 			bendPoints.Add(endPoint);
 			startPoint.AutoPosition = true;
 			endPoint.AutoPosition = true;
+		}
+
+		protected void Reverse()
+		{
+			Shape shape = startShape;
+			startShape = endShape;
+			endShape = shape;
+
+			LineOrientation orientation = startOrientation;
+			startOrientation = endOrientation;
+			endOrientation = orientation;
+
+			bendPoints.Reverse();
+			RouteCache.Reverse();
+			foreach (BendPoint point in BendPoints)
+			{
+				point.RelativeToStartShape = !point.RelativeToStartShape;
+			}
+
+			NeedsRedraw = true;
 		}
 
 		internal void ShowPropertiesDialog()

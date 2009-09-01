@@ -134,12 +134,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Connections
 
 		private void association_Reversed(object sender, EventArgs e)
 		{
-			RouteCache.Reverse();
-			foreach (BendPoint point in BendPoints)
-			{
-				point.RelativeToStartShape = !point.RelativeToStartShape;
-			}
-			NeedsRedraw = true;
+			Reverse();
 		}
 
 		protected override bool CloneRelationship(Diagram diagram, Shape first, Shape second)
