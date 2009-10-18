@@ -466,6 +466,16 @@ namespace NClass.Translations {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The output directory is not empty, the previous files will be overwritten.
+        ///Do you still want to continue?.
+        /// </summary>
+        public static string CodeGenerationOverwriteConfirmation {
+            get {
+                return ResourceManager.GetString("CodeGenerationOverwriteConfirmation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Code style.
         /// </summary>
         public static string CodeStyle {

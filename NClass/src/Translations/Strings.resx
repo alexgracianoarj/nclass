@@ -1151,4 +1151,8 @@ Do you want to download the framework now?</value>
     <value>Clear</value>
     <comment>Clear style settings</comment>
   </data>
+  <data name="CodeGenerationOverwriteConfirmation" xml:space="preserve">
+    <value>The output directory is not empty, the previous files will be overwritten.
+Do you still want to continue?</value>
+  </data>
 </root>

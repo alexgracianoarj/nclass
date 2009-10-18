@@ -127,15 +127,12 @@ namespace NClass.CodeGenerator
 				string nextLine = reader.ReadLine();
 				foreach (ProjectGenerator generator in ProjectGenerators)
 				{
-					if (generator.ProjectLanguage == JavaLanguage.Instance)
-					{
-						string newLine = line.Replace("${ProjectFile}",
-							generator.RelativeProjectFileName);
-						newLine = newLine.Replace("${ProjectName}", generator.ProjectName);
-						
-						writer.WriteLine(newLine);
-						writer.WriteLine(nextLine);
-					}
+					string newLine = line.Replace("${ProjectFile}",
+						generator.RelativeProjectFileName);
+					newLine = newLine.Replace("${ProjectName}", generator.ProjectName);
+					
+					writer.WriteLine(newLine);
+					writer.WriteLine(nextLine);
 				}
 			}
 			else

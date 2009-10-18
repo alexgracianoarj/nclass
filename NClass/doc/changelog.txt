@@ -2,6 +2,7 @@ Version 2.03 [preliminary]
 --------------------------
 + Support for nullable types
 * Fixed a bug when reversing an association
+* Fixed a bug in solution file generation
 
 Version 2.02 (26-Aug-2009)
 --------------------------

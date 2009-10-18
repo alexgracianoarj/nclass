@@ -78,8 +78,8 @@ namespace NClass.CodeGenerator
 				if (Directory.Exists(location))
 				{
 					DialogResult result = MessageBox.Show(
-						"The output directory is not empty, the previous files will be overwritten.\nDo you still want to continue?",
-						Strings.Confirmation, MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+						Strings.CodeGenerationOverwriteConfirmation, Strings.Confirmation,
+						MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
 					if (result == DialogResult.Yes)
 						return GenerationResult.Success;
