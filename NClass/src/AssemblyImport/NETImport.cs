@@ -467,6 +467,20 @@ namespace NClass.AssemblyImport
       }
       ClassType xNewClass = diagram.AddClass();
       ReflectFields(xType, xNewClass);
+
+      if(xType.IsAbstract && xType.IsSealed)
+      {
+        xNewClass.Modifier = ClassModifier.Static;
+      }
+      else if(xType.IsAbstract)
+      {
+        xNewClass.Modifier = ClassModifier.Abstract;
+      }
+      else if(xType.IsSealed)
+      {
+        xNewClass.Modifier = ClassModifier.Sealed;
+      }
+
     }
 
     /// <summary>
@@ -500,6 +514,7 @@ namespace NClass.AssemblyImport
         return;
       }
       InterfaceType xNewInterface = diagram.AddInterface();
+      ReflectEvents(xType, xNewInterface);
       ReflectOperations(xType, xNewInterface);
     }
 
@@ -546,6 +561,43 @@ namespace NClass.AssemblyImport
     #region +++ Reflect member and types
 
     /// <summary>
+    /// Reflects all events within the type <paramref name="xType"/>. Reflected
+    /// events are added to <paramref name="fieldContainer"/>.
+    /// </summary>
+    /// <param name="xType">The events are taken from this type.</param>
+    /// <param name="fieldContainer">Reflected events are added to this FieldContainer.</param>
+    private List<string> ReflectEvents(Type xType, CompositeType fieldContainer)
+    {
+      EventInfo[] eventInfos = xType.GetEvents(STANDARD_BINDING_FLAGS);
+      List<string> events = new List<string>();
+      foreach(EventInfo eventInfo in eventInfos)
+      {
+        //Don't display derived events
+        if(eventInfo.DeclaringType != xType)
+        {
+          continue;
+        }
+        //The access modifier isn't stored at the event. So we have to take
+        //that from the corresponding add_XXX (or perhaps remove_XXX) method.
+        MethodInfo xAddMethodInfo = xType.GetMethod("add_" + eventInfo.Name, STANDARD_BINDING_FLAGS);
+        if(!importSettings.CheckImportEvent(xAddMethodInfo))
+        {
+          continue;
+        }
+        Event xNewEvent = fieldContainer.AddEvent();
+        xNewEvent.Name = eventInfo.Name;
+        if(!(fieldContainer is InterfaceType))
+        {
+          xNewEvent.AccessModifier = GetMethodAccessModifier(xAddMethodInfo);
+          xNewEvent.IsStatic = xAddMethodInfo.IsStatic;
+        }
+        xNewEvent.Type = GetTypeName(eventInfo.EventHandlerType);
+        events.Add(eventInfo.Name);
+      }
+      return events;
+    }
+
+    /// <summary>
     /// Reflects all fields within the type <paramref name="xType"/>. Reflected
     /// fields are added to <paramref name="fieldContainer"/>.
     /// </summary>
@@ -553,35 +605,7 @@ namespace NClass.AssemblyImport
     /// <param name="fieldContainer">Reflected fields are added to this FieldContainer.</param>
     private void ReflectFields(Type xType, CompositeType fieldContainer)
     {
-      #region --- Events
-
-      EventInfo[] axEvents = xType.GetEvents(STANDARD_BINDING_FLAGS);
-      List<string> astEvents = new List<string>();
-      foreach(EventInfo xEvent in axEvents)
-      {
-        //Don't display derived events
-        if(xEvent.DeclaringType != xType)
-        {
-          continue;
-        }
-        //The access modifier isn't stored at the event. So we have to take
-        //that from the corresponding add_XXX (or perhaps remove_XXX) method.
-        MethodInfo xAddMethodInfo = xType.GetMethod("add_" + xEvent.Name, STANDARD_BINDING_FLAGS);
-        if(!importSettings.CheckImportEvent(xAddMethodInfo))
-        {
-          continue;
-        }
-        Event xNewEvent = fieldContainer.AddEvent();
-        xNewEvent.Name = xEvent.Name;
-        xNewEvent.AccessModifier = GetMethodAccessModifier(xAddMethodInfo);
-        xNewEvent.IsStatic = xAddMethodInfo.IsStatic;
-        xNewEvent.Type = GetTypeName(xEvent.EventHandlerType);
-        astEvents.Add(xEvent.Name);
-      }
-
-      #endregion
-
-      #region --- Fields
+      List<string> events = ReflectEvents(xType, fieldContainer);
 
       FieldInfo[] fieldInfos = xType.GetFields(STANDARD_BINDING_FLAGS);
       foreach(FieldInfo fieldInfo in fieldInfos)
@@ -591,7 +615,7 @@ namespace NClass.AssemblyImport
           continue;
         }
         //Don't import fields belonging to events
-        if(astEvents.Contains(fieldInfo.Name))
+        if(events.Contains(fieldInfo.Name))
         {
           continue;
         }
@@ -621,8 +645,6 @@ namespace NClass.AssemblyImport
 
         fieldMap.Add(newField, fieldInfo);
       }
-
-      #endregion
 
       ReflectOperations(xType, fieldContainer);
     }

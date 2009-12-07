@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{F52A7548-E60A-485B-9C84-1D2871416DB7}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -258,6 +258,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ClassDiagram\Dialogs\AssociationDialog.resx">
       <DependentUpon>AssociationDialog.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="ClassDiagram\Dialogs\EditCommentDialog.resx">
       <DependentUpon>EditCommentDialog.cs</DependentUpon>
@@ -281,21 +282,27 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ClassDiagram\Editors\CommentEditor.resx">
       <DependentUpon>CommentEditor.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="ClassDiagram\Editors\CompositeTypeEditor.resx">
       <DependentUpon>CompositeTypeEditor.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="ClassDiagram\Editors\DelegateEditor.resx">
       <DependentUpon>DelegateEditor.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="ClassDiagram\Editors\EnumEditor.resx">
       <DependentUpon>EnumEditor.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="ClassDiagram\Editors\ItemEditor.resx">
       <DependentUpon>ItemEditor.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="ClassDiagram\Editors\MemberEditor.resx">
       <DependentUpon>MemberEditor.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <SubType>Designer</SubType>
