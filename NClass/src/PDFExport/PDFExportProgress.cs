@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -77,7 +78,10 @@ namespace PDFExport
                        IsBackground = true, 
                        Name = "PDFExporterProgressDialogShowThread"
                      };
-      showThread.Start(parent);
+
+      Point point = parent == null ? new Point(Screen.PrimaryScreen.WorkingArea.Width / 2, Screen.PrimaryScreen.WorkingArea.Height / 2) : new Point(parent.Left + parent.Width / 2, parent.Top + parent.Height / 2);
+      
+      showThread.Start(point);
     }
 
     /// <summary>
@@ -96,11 +100,13 @@ namespace PDFExport
     /// Run-method of the display thread. Shows the form and waits
     /// for the end.
     /// </summary>
-    /// <param name="parentForm">The parent form.</param>
-    private static void Run(Object parentForm)
+    /// <param name="center">The center of the form.</param>
+    private static void Run(Object center)
     {
+      Point point = (Point)center;
       PDFExportProgress progressForm = new PDFExportProgress();
-      progressForm.Show((Form)parentForm);
+      progressForm.Location = new Point(point.X - progressForm.Width / 2, point.Y - progressForm.Height / 2);
+      progressForm.Show();
 
       try
       {

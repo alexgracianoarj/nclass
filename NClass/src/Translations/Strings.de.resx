@@ -249,7 +249,7 @@
     <value>S&amp;chließen</value>
   </data>
   <data name="CodeGenerationFailed" xml:space="preserve">
-    <value>Bei der erzeugung des Codes ist ein Fehler aufgetreten</value>
+    <value>Bei der Erzeugung des Codes ist ein Fehler aufgetreten</value>
   </data>
   <data name="MenuCommentRelationship" xml:space="preserve">
     <value>Ko&amp;mmentarverbindung</value>
@@ -1142,5 +1142,8 @@
   </data>
   <data name="MenuReverse" xml:space="preserve">
     <value>&amp;Umkehren</value>
+  </data>
+  <data name="CodeGenerationOverwriteConfirmation" xml:space="preserve">
+    <value>Das Ausgabeverzeichnis ist nicht leer, die alten Dateien werden überschrieben. Möchten Sie fortfahren?</value>
   </data>
 </root>

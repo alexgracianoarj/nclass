@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Threading;
 using System.Windows.Forms;
 using NClass.GUI;
@@ -87,7 +88,16 @@ namespace PDFExport
                                     (int)new XUnit(optionsForm.PDFPadding.Right, optionsForm.Unit).Point,
                                     (int)new XUnit(optionsForm.PDFPadding.Bottom, optionsForm.Unit).Point);
 
-      PDFExportProgress.ShowAsync(null);
+      MainForm mainForm = null;
+      foreach(Form form in Application.OpenForms)
+      {
+        if(form is MainForm)
+        {
+          mainForm = (MainForm)form;
+          break;
+        }
+      }
+      PDFExportProgress.ShowAsync(mainForm);
 
       PDFExporter exporter = new PDFExporter(fileName, DocumentManager.ActiveDocument, optionsForm.SelectedOnly, padding);
       Thread exportThread = new Thread(exporter.Export)
@@ -104,6 +114,11 @@ namespace PDFExport
       exportThread.Join();
 
       PDFExportProgress.CloseAsync();
+
+      if(new PDFExportFinished().ShowDialog() == DialogResult.OK)
+      {
+        Process.Start(fileName);
+      }
     }
   }
 }

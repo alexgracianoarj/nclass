@@ -1,9 +1,11 @@
-using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 
 namespace PDFExport
 {
+  /// <summary>
+  /// Extension-Methods for the Region-Class. Not used yet.
+  /// </summary>
   public static class RegionExtend
   {
     // ========================================================================

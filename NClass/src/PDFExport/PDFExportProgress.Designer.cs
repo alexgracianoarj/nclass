@@ -96,7 +96,7 @@
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(292, 104);
+      this.ClientSize = new System.Drawing.Size(292, 132);
       this.ControlBox = false;
       this.Controls.Add(this.pictureBoxNClass);
       this.Controls.Add(this.pictureBoxPDF);
@@ -108,7 +108,7 @@
       this.Name = "PDFExportProgress";
       this.ShowIcon = false;
       this.ShowInTaskbar = false;
-      this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+      this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
       this.Text = "PDF Export...";
       this.Load += new System.EventHandler(this.PDFExportProgress_Load);
       ((System.ComponentModel.ISupportInitialize)(this.pictureBoxNClass)).EndInit();

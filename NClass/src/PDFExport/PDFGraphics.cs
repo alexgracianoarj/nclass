@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Text;
+using System.Linq;
 using NClass.DiagramEditor;
 using PdfSharp.Drawing;
 
@@ -304,37 +305,37 @@ namespace PDFExport
 
     public void DrawLine(Pen pen, int x1, int y1, int x2, int y2)
     {
-      graphics.DrawLine(pen, x1, y1, x2, y2);
+      graphics.DrawLine(PenToXPen(pen), x1, y1, x2, y2);
     }
 
     public void DrawLine(Pen pen, Point pt1, Point pt2)
     {
-      graphics.DrawLine(pen, pt1, pt2);
+      graphics.DrawLine(PenToXPen(pen), pt1, pt2);
     }
 
     public void DrawLines(Pen pen, Point[] points)
     {
-      graphics.DrawLines(pen, points);
+      graphics.DrawLines(PenToXPen(pen), points);
     }
 
     public void DrawRectangle(Pen pen, Rectangle rect)
     {
-      graphics.DrawRectangle(pen, rect);
+      graphics.DrawRectangle(PenToXPen(pen), rect);
     }
 
     public void DrawEllipse(Pen pen, int x, int y, int width, int height)
     {
-      graphics.DrawEllipse(pen, x, y, width, height);
+      graphics.DrawEllipse(PenToXPen(pen), x, y, width, height);
     }
 
     public void DrawPolygon(Pen pen, Point[] points)
     {
-      graphics.DrawPolygon(pen, points);
+      graphics.DrawPolygon(PenToXPen(pen), points);
     }
 
     public void DrawPath(Pen pen, GraphicsPath path)
     {
-      graphics.DrawPath(new XPen(pen), new XGraphicsPath(path.PathPoints, path.PathTypes, FillModeToXFillMode(path.FillMode)));
+      graphics.DrawPath(PenToXPen(pen), GraphicsPathToXGraphicsPath(path));
     }
 
     public void DrawString(string s, Font font, Brush brush, PointF point)
@@ -344,13 +345,7 @@ namespace PDFExport
 
     public void DrawString(string s, Font font, Brush brush, PointF point, StringFormat format)
     {
-      XStringFormat xFormat = new XStringFormat
-                                {
-                                  Alignment = StringAlignmentToXStringAlignment(format.Alignment),
-                                  FormatFlags = StringFormatFlagsToXStringFormatFlags(format.FormatFlags),
-                                  LineAlignment = StringAlignmentToXLineAlignment(format.LineAlignment)
-                                };
-      graphics.DrawString(s, FontToXFont(font), BrushToXBrush(brush), point, xFormat);
+      graphics.DrawString(s, FontToXFont(font), BrushToXBrush(brush), point, StringFormatToXStringFormat(format));
     }
 
     public void DrawString(string s, Font font, Brush brush, RectangleF layoutRectangle)
@@ -360,12 +355,7 @@ namespace PDFExport
 
     public void DrawString(string s, Font font, Brush brush, RectangleF layoutRectangle, StringFormat format)
     {
-      XStringFormat xFormat = new XStringFormat
-                                {
-                                  Alignment = StringAlignmentToXStringAlignment(format.Alignment),
-                                  FormatFlags = StringFormatFlagsToXStringFormatFlags(format.FormatFlags),
-                                  LineAlignment = StringAlignmentToXLineAlignment(format.LineAlignment)
-                                };
+      XStringFormat xFormat = StringFormatToXStringFormat(format);
       XFont xFont = FontToXFont(font);
       XBrush xBrush = BrushToXBrush(brush);
       if(format.FormatFlags == StringFormatFlags.NoWrap)
@@ -459,28 +449,28 @@ namespace PDFExport
 
     public void FillRectangle(Brush brush, Rectangle rect)
     {
-      graphics.DrawRectangle(new XPen(Color.Transparent), BrushToXBrush(brush), rect);
+      graphics.DrawRectangle(BrushToXBrush(brush), rect);
     }
 
     public void FillPolygon(Brush brush, Point[] points)
     {
       //If no FillMode is given for the GDI version of FillPolygon, it uses FillMode.Alternate.
-      graphics.DrawPolygon(new XPen(Color.Transparent), BrushToXBrush(brush), points, XFillMode.Alternate);
+      graphics.DrawPolygon(BrushToXBrush(brush), points, XFillMode.Alternate);
     }
 
     public void FillEllipse(Brush brush, Rectangle rect)
     {
-      graphics.DrawEllipse(new XPen(Color.Transparent), BrushToXBrush(brush), rect);
+      graphics.DrawEllipse(BrushToXBrush(brush), rect);
     }
 
     public void FillEllipse(Brush brush, int x, int y, int width, int height)
     {
-      graphics.DrawEllipse(new XPen(Color.Transparent), BrushToXBrush(brush), x, y, width, height);
+      graphics.DrawEllipse(BrushToXBrush(brush), x, y, width, height);
     }
 
     public void FillPath(Brush brush, GraphicsPath path)
     {
-      graphics.DrawPath(new XPen(Color.Transparent), BrushToXBrush(brush), new XGraphicsPath(path.PathPoints, path.PathTypes, FillModeToXFillMode(path.FillMode)));
+      graphics.DrawPath(BrushToXBrush(brush), GraphicsPathToXGraphicsPath(path));
     }
 
     #endregion
@@ -494,6 +484,36 @@ namespace PDFExport
 
     #region --- Conversion Methods
 
+    /// <summary>
+    /// Converts a GDI-GraphicsPath to a PDF-XGraphicsPath.
+    /// </summary>
+    /// <param name="path">The GDI-GraphicsPath to convert.</param>
+    /// <returns>The converted PDF-XGraphicsPath.</returns>
+    private static XGraphicsPath GraphicsPathToXGraphicsPath(GraphicsPath path)
+    {
+      return new XGraphicsPath(path.PathPoints, path.PathTypes, FillModeToXFillMode(path.FillMode));
+    }
+
+    /// <summary>
+    /// Converts a GDI-StringFormat to a PDF-XStringFormat.
+    /// </summary>
+    /// <param name="format">The GDI-StringFormat to convert.</param>
+    /// <returns>The converted PDF-XStringFormat.</returns>
+    private static XStringFormat StringFormatToXStringFormat(StringFormat format)
+    {
+      return new XStringFormat
+               {
+                 Alignment = StringAlignmentToXStringAlignment(format.Alignment),
+                 FormatFlags = StringFormatFlagsToXStringFormatFlags(format.FormatFlags),
+                 LineAlignment = StringAlignmentToXLineAlignment(format.LineAlignment)
+               };
+    }
+
+    /// <summary>
+    /// Converts a GDI-StringAlignment to a PDF-XStringAlignment.
+    /// </summary>
+    /// <param name="stringAlignment">The GDI-StringAlignment to convert.</param>
+    /// <returns>The converted PDF-XStringAlignment.</returns>
     private static XStringAlignment StringAlignmentToXStringAlignment(StringAlignment stringAlignment)
     {
       switch(stringAlignment)
@@ -509,12 +529,22 @@ namespace PDFExport
       }
     }
 
+    /// <summary>
+    /// Converts a GDI-StringFormatFlags to a PDF-XStringFormatFlags.
+    /// </summary>
+    /// <param name="stringFormatFlags">The GDI-StringFormatFlags to convert.</param>
+    /// <returns>The converted PDF-XStringFormatFlags.</returns>
     private static XStringFormatFlags StringFormatFlagsToXStringFormatFlags(StringFormatFlags stringFormatFlags)
     {
       //Nothing else is implemented...
       return XStringFormatFlags.MeasureTrailingSpaces;
     }
 
+    /// <summary>
+    /// Converts a GDI-StringAlignment to a PDF-XLineAlignment.
+    /// </summary>
+    /// <param name="stringAlignment">The GDI-StringAlignment to convert.</param>
+    /// <returns>The converted PDF-XLineAlignment.</returns>
     private static XLineAlignment StringAlignmentToXLineAlignment(StringAlignment stringAlignment)
     {
       switch(stringAlignment)
@@ -531,13 +561,13 @@ namespace PDFExport
     }
 
     /// <summary>
-    /// Translates a GDI-Brush to a XBrush.
+    /// Converts a GDI-Brush to a PDF-XBrush.
     /// </summary>
     /// <remarks>
     /// Only Solid- and LinearGradientBrushes are supported. 
     /// </remarks>
-    /// <param name="brush">The GDI-Brush.</param>
-    /// <returns>The translated XBrush.</returns>
+    /// <param name="brush">The GDI-Brush to convert.</param>
+    /// <returns>The converted PDF-XBrush.</returns>
     private static XBrush BrushToXBrush(Brush brush)
     {
       XBrush xbrush;
@@ -578,20 +608,20 @@ namespace PDFExport
     }
 
     /// <summary>
-    /// Translates a GDI-Font to a XFont.
+    /// Converts a GDI-Font to a PDF-XFont.
     /// </summary>
-    /// <param name="font">The GDI-Font.</param>
-    /// <returns>The translated XFont.</returns>
+    /// <param name="font">The GDI-Font to convert.</param>
+    /// <returns>The converted PDF-XFont.</returns>
     private XFont FontToXFont(Font font)
     {
       return new XFont(font.Name, font.SizeInPoints * ScaleFont, FontStyleToXFontStyle(font.Style));
     }
 
     /// <summary>
-    /// Translates a GDI-FontStyle to a XFontStyle.
+    /// Converts a GDI-FontStyle to a PDF-XFontStyle.
     /// </summary>
-    /// <param name="fontStyle">The GDI-FontStyle.</param>
-    /// <returns>The translated XFontStyle.</returns>
+    /// <param name="fontStyle">The GDI-FontStyle to convert.</param>
+    /// <returns>The converted PDF-XFontStyle.</returns>
     private static XFontStyle FontStyleToXFontStyle(FontStyle fontStyle)
     {
       if(fontStyle == (FontStyle.Bold | FontStyle.Italic))
@@ -616,13 +646,13 @@ namespace PDFExport
     }
 
     /// <summary>
-    /// Translates a GDI-Image to a XImage.
+    /// Converts a GDI-Image to a PDF-XImage.
     /// </summary>
     /// <remarks>
     /// The GDI-Image gets drawn on a white background.
     /// </remarks>
-    /// <param name="image">The GDI-Image.</param>
-    /// <returns>A XImage.</returns>
+    /// <param name="image">The GDI-Image to convert.</param>
+    /// <returns>The converted PDF-XImage.</returns>
     private static XImage ImageToXImage(Image image)
     {
       Image image2 = new Bitmap(image.Width, image.Height);
@@ -634,10 +664,10 @@ namespace PDFExport
     }
 
     /// <summary>
-    /// Translates a GDI-FillMode tho a XFillMode.
+    /// Converts a GDI-FillMode to a PDF-XFillMode.
     /// </summary>
-    /// <param name="fillMode">The GDI-FillMode to translate.</param>
-    /// <returns>The translated XFillMode.</returns>
+    /// <param name="fillMode">The GDI-FillMode to convert.</param>
+    /// <returns>The converted PDF-XFillMode.</returns>
     private static XFillMode FillModeToXFillMode(FillMode fillMode)
     {
       switch(fillMode)
@@ -648,6 +678,154 @@ namespace PDFExport
           return XFillMode.Winding;
         default:
           throw new ArgumentOutOfRangeException("fillMode");
+      }
+    }
+
+    /// <summary>
+    /// Converts a GDI-Pen to a PDF-XPen.
+    /// </summary>
+    /// <param name="pen">The GDI-Pen to convert.</param>
+    /// <returns>The converted PDF-XPen.</returns>
+    private static XPen PenToXPen(Pen pen)
+    {
+      XPen xPen = new XPen(pen.Color, pen.Width)
+                    {
+                      DashOffset = pen.DashOffset,
+                      DashStyle = DashStyleToXDashStyle(pen.DashStyle),
+                      LineCap = LineCapToXLineCap(pen.StartCap),
+                      LineJoin = LineJoinToXLineJoin(pen.LineJoin),
+                      MiterLimit = pen.MiterLimit
+                    };
+
+      if(pen.DashStyle == DashStyle.Custom)
+      {
+        xPen.DashPattern = FloatArrayToDoubleArray(pen.DashPattern);
+      }
+
+      return xPen;
+    }
+
+    /// <summary>
+    /// Converts an array of floats to an array of doubles.
+    /// </summary>
+    /// <param name="floats">The array of floats to convert.</param>
+    /// <returns>The converted array of doubles.</returns>
+    private static double[] FloatArrayToDoubleArray(float[] floats)
+    {
+      double[] doubles = new double[floats.Length];
+      for(int i = 0; i < floats.Length; i++)
+      {
+        doubles[i] = floats[i];
+      }
+
+      return doubles;
+    }
+
+    /// <summary>
+    /// Converts a GDI-LineJoin to a PDF-XLineJoin.
+    /// </summary>
+    /// <remarks>
+    /// PDF doesn't support LineJoin.MiterClipped so this is mapped to
+    /// XLineJoin.Miter, too.
+    /// </remarks>
+    /// <param name="lineJoin">The GDI-LineJoin to convert.</param>
+    /// <returns>The converted PDF-XLineJoin.</returns>
+    private static XLineJoin LineJoinToXLineJoin(LineJoin lineJoin)
+    {
+      switch(lineJoin)
+      {
+        case LineJoin.Miter:
+        case LineJoin.MiterClipped:
+          return XLineJoin.Miter;
+        case LineJoin.Bevel:
+          return XLineJoin.Bevel;
+        case LineJoin.Round:
+          return XLineJoin.Round;
+        default:
+          return XLineJoin.Miter;
+      }
+    }
+
+    /// <summary>
+    /// Converts a GDI-LineCap to a PDF-XLineCap.
+    /// </summary>
+    /// <remarks>
+    /// PDF only supports square, round and flat line caps. So all the
+    /// other GDI line caps gets mapped to the best PDF line caps as follows.
+    /// 
+    /// <see cref="XLineCap.Square"/>
+    /// <list type="bullet">
+    ///   <item><description><see cref="LineCap.Square"/></description></item>
+    ///   <item><description><see cref="LineCap.Triangle"/></description></item>
+    ///   <item><description><see cref="LineCap.SquareAnchor"/></description></item>
+    ///   <item><description><see cref="LineCap.DiamondAnchor"/></description></item>
+    ///   <item><description><see cref="LineCap.ArrowAnchor"/></description></item>
+    /// </list>
+    /// 
+    /// <see cref="XLineCap.Round"/>
+    /// <list type="bullet">
+    ///   <item><description><see cref="LineCap.Round"/></description></item>
+    ///   <item><description><see cref="LineCap.RoundAnchor"/></description></item>
+    /// </list>
+    /// 
+    /// <see cref="XLineCap.Flat"/>
+    /// <list type="bullet">
+    ///   <item><description><see cref="LineCap.Flat"/></description></item>
+    ///   <item><description><see cref="LineCap.NoAnchor"/></description></item>
+    ///   <item><description><see cref="LineCap.Custom"/></description></item>
+    ///   <item><description><see cref="LineCap.AnchorMask"/></description></item>
+    /// </list>
+    /// </remarks>
+    /// <param name="lineCap">The GDI-LineCap to convert.</param>
+    /// <returns>The converted PDF-XLineCap.</returns>
+    private static XLineCap LineCapToXLineCap(LineCap lineCap)
+    {
+      switch(lineCap)
+      {
+        case LineCap.Square:
+        case LineCap.Triangle:
+        case LineCap.SquareAnchor:
+        case LineCap.DiamondAnchor:
+        case LineCap.ArrowAnchor:
+          return XLineCap.Square;
+
+        case LineCap.Round:
+        case LineCap.RoundAnchor:
+          return XLineCap.Round;
+
+        case LineCap.Flat:
+        case LineCap.NoAnchor:
+        case LineCap.Custom:
+        case LineCap.AnchorMask:
+          return XLineCap.Flat;
+        default:
+          return XLineCap.Flat;
+      }
+    }
+
+    /// <summary>
+    /// Converts a GDI-DashStyle to a PDF-XDashStyle.
+    /// </summary>
+    /// <param name="dashStyle">The GDI-DashStyle to convert.</param>
+    /// <returns>The converted PDF-XDashStyle.</returns>
+    private static XDashStyle DashStyleToXDashStyle(DashStyle dashStyle)
+    {
+      switch(dashStyle)
+      {
+        case DashStyle.Solid:
+          return XDashStyle.Solid;
+        case DashStyle.Dash:
+          return XDashStyle.Dash;
+        case DashStyle.Dot:
+          return XDashStyle.Dot;
+        case DashStyle.DashDot:
+          return XDashStyle.DashDot;
+        case DashStyle.DashDotDot:
+          return XDashStyle.DashDotDot;
+        case DashStyle.Custom:
+          return XDashStyle.Custom;
+        default:
+          throw new ArgumentOutOfRangeException();
       }
     }
 

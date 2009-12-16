@@ -31,7 +31,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="PdfSharp, Version=1.3.1684.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL" />
+    <Reference Include="PdfSharp, Version=1.31.1789.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -49,6 +49,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="PDFExporter.cs" />
+    <Compile Include="PDFExportFinished.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PDFExportFinished.Designer.cs">
+      <DependentUpon>PDFExportFinished.cs</DependentUpon>
+    </Compile>
     <Compile Include="PDFExportOptions.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -91,6 +97,10 @@
     <None Include="Resources\Document-pdf-48.png" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="PDFExportFinished.resx">
+      <DependentUpon>PDFExportFinished.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="PDFExportOptions.resx">
       <DependentUpon>PDFExportOptions.cs</DependentUpon>
       <SubType>Designer</SubType>

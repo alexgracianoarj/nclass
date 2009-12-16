@@ -193,8 +193,10 @@
       // 
       // PDFExportOptions
       // 
+      this.AcceptButton = this.cmdOK;
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      this.CancelButton = this.cmdCancel;
       this.ClientSize = new System.Drawing.Size(292, 224);
       this.ControlBox = false;
       this.Controls.Add(this.cmdOK);
@@ -206,7 +208,7 @@
       this.ShowIcon = false;
       this.ShowInTaskbar = false;
       this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-      this.Text = "PDFExportOptions";
+      this.Text = "PDF Export Options";
       this.Shown += new System.EventHandler(this.PDFExportOptions_Shown);
       this.grpMargin.ResumeLayout(false);
       this.grpMargin.PerformLayout();

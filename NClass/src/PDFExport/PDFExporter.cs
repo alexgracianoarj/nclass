@@ -104,6 +104,7 @@ namespace PDFExport
         gfx.Restore();
       }
 
+      document.Options.CompressContentStreams = true;
       document.Save(fileName);
     }
 
