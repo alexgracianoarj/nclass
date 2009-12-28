@@ -1,13 +1,44 @@
 using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Windows.Forms;
 using NClass.GUI;
+using PDFExport.Properties;
 using PdfSharp.Drawing;
+using Strings=PDFExport.Lang.Strings;
 
 namespace PDFExport
 {
-  public class PDFExportPlugin : SimplePlugin
+  /// <summary>
+  /// A plugin to export a diagram to a pdf.
+  /// </summary>
+  public class PDFExportPlugin : Plugin
   {
+    // ========================================================================
+    // Attributes
+
+    #region === Attributes
+
+    /// <summary>
+    /// The menu item used to start the export.
+    /// </summary>
+    private readonly ToolStripMenuItem menuItem;
+
+    #endregion
+
+    // ========================================================================
+    // Con- / Destruction
+
+    #region === Con- / Destruction
+
+    /// <summary>
+    /// Set up the current culture for the strings.
+    /// </summary>
+    static PDFExportPlugin()
+    {
+      Strings.Culture = CultureInfo.GetCultureInfo(NClass.GUI.Settings.Default.UILanguage);
+    }
+
     /// <summary>
     /// Constructs a new instance of PDFExportPlugin.
     /// </summary>
@@ -15,7 +46,38 @@ namespace PDFExport
     public PDFExportPlugin(NClassEnvironment environment)
       : base(environment)
     {
+      menuItem = new ToolStripMenuItem
+                   {
+                     Text = Strings.MenuTitle,
+                     Image = Resources.Document_pdf_16,
+                     ToolTipText = Strings.MenuToolTip
+                   };
+      menuItem.Click += menuItem_Click;
     }
+
+    #endregion
+
+    // ========================================================================
+    // Event handling
+
+    #region === Event handling
+
+    /// <summary>
+    /// Starts the export.
+    /// </summary>
+    /// <param name="sender">The sender.</param>
+    /// <param name="e">Additional information.</param>
+    void menuItem_Click(object sender, System.EventArgs e)
+    {
+      Launch();
+    }
+
+    #endregion
+
+    // ========================================================================
+    // Properties
+
+    #region === Properties
 
     /// <summary>
     /// Gets a value indicating whether the plugin can be executed at the moment.
@@ -29,33 +91,27 @@ namespace PDFExport
     }
 
     /// <summary>
-    /// Gets the name of the plugin.
+    /// Gets the menu item used to start the plugin.
     /// </summary>
-    public override string Name
+    public override ToolStripItem MenuItem
     {
-      get { return "PDF Export"; }
+      get
+      {
+        return menuItem;
+      }
     }
 
-    /// <summary>
-    /// Gets the author of the plugin.
-    /// </summary>
-    public override string Author
-    {
-      get { return "Malte Ried"; }
-    }
+    #endregion
 
-    /// <summary>
-    /// Gets the menu text for the plugin.
-    /// </summary>
-    public override string MenuText
-    {
-      get { return "&Export as PDF..."; }
-    }
+    // ========================================================================
+    // Methods
+
+    #region === Methods
 
     /// <summary>
     /// Starts the functionality of the plugin.
     /// </summary>
-    protected override void Launch()
+    protected void Launch()
     {
       if(!Workspace.HasActiveProject)
       {
@@ -65,7 +121,8 @@ namespace PDFExport
       string fileName;
       using(SaveFileDialog dialog = new SaveFileDialog())
       {
-        dialog.Filter = "PDF-Files (*.pdf)|*.pdf";
+        dialog.Filter = Strings.SaveDialogFilter;
+        dialog.RestoreDirectory = true;
         if(dialog.ShowDialog() == DialogResult.Cancel)
         {
           return;
@@ -73,12 +130,7 @@ namespace PDFExport
         fileName = dialog.FileName;
       }
 
-      PDFExportOptions optionsForm = new PDFExportOptions
-                                       {
-                                         PDFPadding = new Padding(10),
-                                         SelectedOnly = false,
-                                         Unit = XGraphicsUnit.Point
-                                       };
+      PDFExportOptions optionsForm = new PDFExportOptions();
       if(optionsForm.ShowDialog() == DialogResult.Cancel)
       {
         return;
@@ -120,5 +172,7 @@ namespace PDFExport
         Process.Start(fileName);
       }
     }
+
+    #endregion
   }
 }

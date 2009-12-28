@@ -117,14 +117,76 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="Document_pdf_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Document-pdf-16.PNG;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="FinishedDialogText" xml:space="preserve">
+    <value>PDF-Export ist abgeschlossen. Möchten Sie die erzeugte PDF-Datei jetzt öffnen?</value>
   </data>
-  <data name="Document_pdf_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Document-pdf-48.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="FinishedDialogClose" xml:space="preserve">
+    <value>Schließen</value>
   </data>
-  <data name="NClass" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\NClass.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="FinishedDialogTitle" xml:space="preserve">
+    <value>PDF-Export abgeschlossen</value>
+  </data>
+  <data name="FinishedDialogOpen" xml:space="preserve">
+    <value>Öffnen</value>
+  </data>
+  <data name="OptionsBottom" xml:space="preserve">
+    <value>Unten</value>
+  </data>
+  <data name="OptionsLeft" xml:space="preserve">
+    <value>Links</value>
+  </data>
+  <data name="OptionsMargin" xml:space="preserve">
+    <value>Rand</value>
+  </data>
+  <data name="OptionsOnlySelected" xml:space="preserve">
+    <value>Nur selektierte Elemente exportieren</value>
+  </data>
+  <data name="OptionsRight" xml:space="preserve">
+    <value>Rechts</value>
+  </data>
+  <data name="OptionsTitle" xml:space="preserve">
+    <value>PDF-Export Optionen</value>
+  </data>
+  <data name="OptionsTop" xml:space="preserve">
+    <value>Oben</value>
+  </data>
+  <data name="OptionsUnit" xml:space="preserve">
+    <value>Einheit</value>
+  </data>
+  <data name="ProgressText" xml:space="preserve">
+    <value>Exportiere nach PDF...</value>
+  </data>
+  <data name="ProgressTitle" xml:space="preserve">
+    <value>PDF-Export...</value>
+  </data>
+  <data name="SaveDialogFilter" xml:space="preserve">
+    <value>PDF-Dateien (*.pdf)|*.pdf</value>
+  </data>
+  <data name="MenuTitle" xml:space="preserve">
+    <value>&amp;Export als PDF...</value>
+  </data>
+  <data name="MenuToolTip" xml:space="preserve">
+    <value>PDF-Export von Malte Ried</value>
+  </data>
+  <data name="OptionsCancelButton" xml:space="preserve">
+    <value>Abbrechen</value>
+  </data>
+  <data name="OptionsOKButton" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="UnitCM" xml:space="preserve">
+    <value>Zentimeter</value>
+  </data>
+  <data name="UnitDots" xml:space="preserve">
+    <value>Punkt</value>
+  </data>
+  <data name="UnitInch" xml:space="preserve">
+    <value>Zoll</value>
+  </data>
+  <data name="UnitMM" xml:space="preserve">
+    <value>Millimeter</value>
+  </data>
+  <data name="UnitPixel" xml:space="preserve">
+    <value>Pixel</value>
   </data>
 </root>

@@ -2,7 +2,6 @@
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Text;
-using System.Linq;
 using NClass.DiagramEditor;
 using PdfSharp.Drawing;
 

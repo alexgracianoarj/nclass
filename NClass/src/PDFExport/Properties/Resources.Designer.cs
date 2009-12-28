@@ -60,6 +60,13 @@ namespace PDFExport.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap Document_pdf_16 {
+            get {
+                object obj = ResourceManager.GetObject("Document_pdf_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap Document_pdf_48 {
             get {
                 object obj = ResourceManager.GetObject("Document_pdf_48", resourceCulture);

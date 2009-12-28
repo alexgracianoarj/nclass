@@ -51,12 +51,12 @@
       // 
       // lblTop
       // 
-      this.lblTop.AutoSize = true;
-      this.lblTop.Location = new System.Drawing.Point(82, 48);
+      this.lblTop.Location = new System.Drawing.Point(28, 48);
       this.lblTop.Name = "lblTop";
-      this.lblTop.Size = new System.Drawing.Size(26, 13);
+      this.lblTop.Size = new System.Drawing.Size(80, 13);
       this.lblTop.TabIndex = 0;
       this.lblTop.Text = "Top";
+      this.lblTop.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
       // 
       // chkSelectedOnly
       // 
@@ -76,10 +76,10 @@
       this.grpMargin.Controls.Add(this.numRight);
       this.grpMargin.Controls.Add(this.numLeft);
       this.grpMargin.Controls.Add(this.lblBottom);
+      this.grpMargin.Controls.Add(this.lblLeft);
       this.grpMargin.Controls.Add(this.numTop);
       this.grpMargin.Controls.Add(this.lblRight);
       this.grpMargin.Controls.Add(this.cboUnit);
-      this.grpMargin.Controls.Add(this.lblLeft);
       this.grpMargin.Controls.Add(this.lblUnit);
       this.grpMargin.Controls.Add(this.lblTop);
       this.grpMargin.Location = new System.Drawing.Point(12, 35);
@@ -98,26 +98,26 @@
       // 
       // numRight
       // 
-      this.numRight.Location = new System.Drawing.Point(214, 80);
+      this.numRight.Location = new System.Drawing.Point(204, 80);
       this.numRight.Name = "numRight";
       this.numRight.Size = new System.Drawing.Size(48, 20);
       this.numRight.TabIndex = 2;
       // 
       // numLeft
       // 
-      this.numLeft.Location = new System.Drawing.Point(41, 80);
+      this.numLeft.Location = new System.Drawing.Point(46, 80);
       this.numLeft.Name = "numLeft";
       this.numLeft.Size = new System.Drawing.Size(48, 20);
       this.numLeft.TabIndex = 2;
       // 
       // lblBottom
       // 
-      this.lblBottom.AutoSize = true;
-      this.lblBottom.Location = new System.Drawing.Point(68, 118);
+      this.lblBottom.Location = new System.Drawing.Point(28, 118);
       this.lblBottom.Name = "lblBottom";
-      this.lblBottom.Size = new System.Drawing.Size(40, 13);
+      this.lblBottom.Size = new System.Drawing.Size(80, 13);
       this.lblBottom.TabIndex = 0;
       this.lblBottom.Text = "Bottom";
+      this.lblBottom.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
       // 
       // numTop
       // 
@@ -128,12 +128,12 @@
       // 
       // lblRight
       // 
-      this.lblRight.AutoSize = true;
-      this.lblRight.Location = new System.Drawing.Point(176, 82);
+      this.lblRight.Location = new System.Drawing.Point(116, 82);
       this.lblRight.Name = "lblRight";
-      this.lblRight.Size = new System.Drawing.Size(32, 13);
+      this.lblRight.Size = new System.Drawing.Size(80, 13);
       this.lblRight.TabIndex = 0;
       this.lblRight.Text = "Right";
+      this.lblRight.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
       // 
       // cboUnit
       // 
@@ -145,28 +145,28 @@
             "dot",
             "pixel",
             "inch"});
-      this.cboUnit.Location = new System.Drawing.Point(41, 19);
+      this.cboUnit.Location = new System.Drawing.Point(173, 19);
       this.cboUnit.Name = "cboUnit";
-      this.cboUnit.Size = new System.Drawing.Size(67, 21);
+      this.cboUnit.Size = new System.Drawing.Size(89, 21);
       this.cboUnit.TabIndex = 1;
       // 
       // lblLeft
       // 
-      this.lblLeft.AutoSize = true;
-      this.lblLeft.Location = new System.Drawing.Point(10, 82);
+      this.lblLeft.Location = new System.Drawing.Point(2, 82);
       this.lblLeft.Name = "lblLeft";
-      this.lblLeft.Size = new System.Drawing.Size(25, 13);
+      this.lblLeft.Size = new System.Drawing.Size(40, 13);
       this.lblLeft.TabIndex = 0;
       this.lblLeft.Text = "Left";
+      this.lblLeft.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
       // 
       // lblUnit
       // 
-      this.lblUnit.AutoSize = true;
-      this.lblUnit.Location = new System.Drawing.Point(9, 22);
+      this.lblUnit.Location = new System.Drawing.Point(13, 22);
       this.lblUnit.Name = "lblUnit";
-      this.lblUnit.Size = new System.Drawing.Size(26, 13);
+      this.lblUnit.Size = new System.Drawing.Size(154, 13);
       this.lblUnit.TabIndex = 0;
       this.lblUnit.Text = "Unit";
+      this.lblUnit.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
       // 
       // cmdCancel
       // 
@@ -211,7 +211,6 @@
       this.Text = "PDF Export Options";
       this.Shown += new System.EventHandler(this.PDFExportOptions_Shown);
       this.grpMargin.ResumeLayout(false);
-      this.grpMargin.PerformLayout();
       ((System.ComponentModel.ISupportInitialize)(this.numBottom)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.numRight)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.numLeft)).EndInit();

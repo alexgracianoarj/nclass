@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
+using PDFExport.Lang;
 
 namespace PDFExport
 {
@@ -10,6 +11,11 @@ namespace PDFExport
   /// </summary>
   public partial class PDFExportProgress : Form
   {
+    // ========================================================================
+    // Attributes
+
+    #region === Attributes
+
     /// <summary>
     /// The x-location where the entity starts to move.
     /// </summary>
@@ -26,49 +32,45 @@ namespace PDFExport
     private int currentImageIndex;
 
     /// <summary>
+    /// A thread which shows the form itself.
+    /// </summary>
+    private static Thread showThread;
+
+    #endregion
+
+    // ========================================================================
+    // Con- / Destruction
+
+    #region === Con- / Destruction
+
+    /// <summary>
     /// Initializes a new PDFExportProgress form.
     /// </summary>
     private PDFExportProgress()
     {
       InitializeComponent();
+
+      LocalizeComponents();
     }
 
+    #endregion
+
+    // ========================================================================
+    // Methods
+
+    #region === Methods
+
     /// <summary>
-    /// Called when the timer ticks. So this method is called periodically
-    /// and updates the animation.
+    /// Displays the text for the current culture.
     /// </summary>
-    /// <param name="sender">The caller.</param>
-    /// <param name="e">Additional information.</param>
-    private void timer_Tick(object sender, EventArgs e)
+    private void LocalizeComponents()
     {
-      if(pictureBoxEntity.Left == ENTITY_END)
-      {
-        //Next run
-        pictureBoxEntity.Left = ENTITY_START;
-        currentImageIndex = (currentImageIndex + 1) % imageListEntities.Images.Count;
-        pictureBoxEntity.Image = imageListEntities.Images[currentImageIndex];
-      }
-      pictureBoxEntity.Left += 2;
+      Text = Strings.ProgressTitle;
+      lblProgress.Text = Strings.ProgressText;
     }
 
     /// <summary>
-    /// Called when the form loads. Initializes it.
-    /// </summary>
-    /// <param name="sender">The caller.</param>
-    /// <param name="e">Additional information.</param>
-    private void PDFExportProgress_Load(object sender, EventArgs e)
-    {
-      timer.Enabled = true;
-      pictureBoxEntity.Image = imageListEntities.Images[currentImageIndex];
-    }
-
-    /// <summary>
-    /// A thread which shows the form itself.
-    /// </summary>
-    private static Thread showThread;
-
-    /// <summary>
-    /// Shows the form asynchonously. To close it, call <see cref="CloseAsync"/>.
+    /// Shows the form asynchonously. To close it, call <see cref="CloseAsync()"/>.
     /// </summary>
     /// <param name="parent">The parent form.</param>
     public static void ShowAsync(Form parent)
@@ -123,5 +125,43 @@ namespace PDFExport
         progressForm.Dispose();
       }
     }
+
+    #endregion
+
+    // ========================================================================
+    // Event Handler
+
+    #region === Event Handler
+
+    /// <summary>
+    /// Called when the timer ticks. So this method is called periodically
+    /// and updates the animation.
+    /// </summary>
+    /// <param name="sender">The caller.</param>
+    /// <param name="e">Additional information.</param>
+    private void timer_Tick(object sender, EventArgs e)
+    {
+      if(pictureBoxEntity.Left == ENTITY_END)
+      {
+        //Next run
+        pictureBoxEntity.Left = ENTITY_START;
+        currentImageIndex = (currentImageIndex + 1) % imageListEntities.Images.Count;
+        pictureBoxEntity.Image = imageListEntities.Images[currentImageIndex];
+      }
+      pictureBoxEntity.Left += 2;
+    }
+
+    /// <summary>
+    /// Called when the form loads. Initializes it.
+    /// </summary>
+    /// <param name="sender">The caller.</param>
+    /// <param name="e">Additional information.</param>
+    private void PDFExportProgress_Load(object sender, EventArgs e)
+    {
+      timer.Enabled = true;
+      pictureBoxEntity.Image = imageListEntities.Images[currentImageIndex];
+    }
+
+    #endregion
   }
 }
