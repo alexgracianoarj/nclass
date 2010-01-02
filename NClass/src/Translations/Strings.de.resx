@@ -265,7 +265,6 @@
   </data>
   <data name="Author" xml:space="preserve">
     <value>Balazs Tihanyi</value>
-    <comment>#</comment>
   </data>
   <data name="ItemsSelected" xml:space="preserve">
     <value>{0} ausgewählte Items.</value>
@@ -720,7 +719,8 @@
     <value>Die Assoziation exsistiert nicht.</value>
   </data>
   <data name="ErrorCouldNotLoadPlugins" xml:space="preserve">
-    <value>In folgenden Plugins traten Fehler auf:\n"{0}"</value>
+    <value>In folgenden Plugins traten Fehler auf:
+{0}</value>
   </data>
   <data name="AddNewClass" xml:space="preserve">
     <value>Füge neue Klasse hinzu</value>
@@ -828,14 +828,14 @@
   </data>
   <data name="TranslationVersion" xml:space="preserve">
     <value>2009-08-26</value>
-    <comment>#It's needed for version controlling, don't translate it</comment>
+    <comment>It's needed for version controlling, don't translate it</comment>
   </data>
   <data name="TranslationUpdated" xml:space="preserve">
     <value>Deutsch Sprachversion wurde aktualisiert</value>
   </data>
   <data name="TranslationName" xml:space="preserve">
     <value>German</value>
-    <comment>#It's needed for version controlling, don't translate it</comment>
+    <comment>It's needed for version controlling, don't translate it</comment>
   </data>
   <data name="ErrorPrinting" xml:space="preserve">
     <value>Es ist ein Fehler bei der Ausgabe von {0} aufgetreten</value>
