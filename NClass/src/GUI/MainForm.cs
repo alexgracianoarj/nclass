@@ -174,7 +174,7 @@ namespace NClass.GUI
 			catch (Exception ex)
 			{
 				MessageBox.Show(
-					string.Format(Strings.ErrorCouldNotLoadPlugins, ex.Message),
+					string.Format(Strings.ErrorCouldNotLoadPlugins, assembly.FullName + "\n" + ex.Message),
 					Strings.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
 			}
 		}

@@ -83,14 +83,17 @@
     <ProjectReference Include="..\Core\Core.csproj">
       <Project>{8CF10505-3C2E-4E45-AB90-21613237B412}</Project>
       <Name>Core</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\DiagramEditor\DiagramEditor.csproj">
       <Project>{F52A7548-E60A-485B-9C84-1D2871416DB7}</Project>
       <Name>DiagramEditor</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\GUI\GUI.csproj">
       <Project>{A2918CE1-6894-4FC9-A864-4651769D0274}</Project>
       <Name>GUI</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -1,5 +1,7 @@
+using System;
 using System.Diagnostics;
 using System.Globalization;
+using System.Reflection;
 using System.Threading;
 using System.Windows.Forms;
 using NClass.GUI;
@@ -36,7 +38,14 @@ namespace PDFExport
     /// </summary>
     static PDFExportPlugin()
     {
-      Strings.Culture = CultureInfo.GetCultureInfo(NClass.GUI.Settings.Default.UILanguage);
+      try
+      {
+        Strings.Culture = CultureInfo.GetCultureInfo(NClass.GUI.Settings.Default.UILanguage);
+      }
+      catch(ArgumentException)
+      {
+        //Culture is not supported, maybe the setting is "default".
+      }
     }
 
     /// <summary>

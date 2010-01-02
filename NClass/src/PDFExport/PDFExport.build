@@ -7,10 +7,13 @@
 			<sources>
 				<include name="**/*.cs" />
 			</sources>
-      <resources>
-        <include name="**/*.resx" />
+      <resources dynamicprefix="true">
+        <include name="*.resx" />
         <include name="PDFExport.Properties.Resources.resources" />
         <exclude name="Properties/Resources.resx" />
+      </resources>
+      <resources dynamicprefix="true" prefix="PDFExport">
+        <include name="Lang/*.resx" />
       </resources>
       <references>
 				<include name="System.dll" />
@@ -25,5 +28,7 @@
 		</csc>
     
     <copy file="libs/PdfSharp.dll" todir="${build.dir}/Plugins/" />
+
+		<delete file="PDFExport.Properties.Resources.resources" failonerror="false" />
   </target>
 </project>

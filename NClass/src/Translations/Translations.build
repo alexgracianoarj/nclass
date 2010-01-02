@@ -1,7 +1,9 @@
 <?xml version="1.0" ?>
 <project name="NClass.Translations" default="compile">
 	<target name="compile">
-		<csc target="library" output="${build.dir}/NClass.Translations.dll" optimize="true" noconfig="true">
+    <mkdir dir="${build.dir}/Lang" />
+
+		<csc target="library" output="${build.dir}/Lang/NClass.Translations.dll" optimize="true" noconfig="true">
 			<sources>
 				<include name="**/*.cs" />
 				<include name="../CommonAssemblyInfo.cs" />

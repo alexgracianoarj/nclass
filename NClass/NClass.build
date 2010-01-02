@@ -38,11 +38,7 @@
     </target>
 
     <target name="clean-build-dir">
-        <delete>
-            <fileset>
-                <include name="${build.dir}/**/*.*" />
-            </fileset>
-        </delete>
+        <delete dir="${build.dir}" />
         <mkdir dir="${build.dir}" />
         <mkdir dir="${build.dir}/Plugins" />
     </target>
@@ -82,6 +78,7 @@
         <nant buildfile="src/DiagramEditor/DiagramEditor.build" target="compile" />
         <nant buildfile="src/GUI/GUI.build" target="compile" />
         <nant buildfile="src/AssemblyImport/AssemblyImport.build" target="compile" />
+        <nant buildfile="src/PDFExport/PDFExport.build" target="compile" />
         <copy file="src/icons/diagram.ico" tofile="bin/diagram.ico" />
         <call target="delete-common-assemblyinfo" />
     </target>

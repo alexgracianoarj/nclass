@@ -10,7 +10,7 @@
 				<include name="System.dll" />
 				<include name="System.Xml.dll" />
 				<include name="${build.dir}/NClass.Core.dll" />
-				<include name="${build.dir}/NClass.Translations.dll" />
+				<include name="${build.dir}/Lang/NClass.Translations.dll" />
 			</references>
 		</csc>
 	</target>
