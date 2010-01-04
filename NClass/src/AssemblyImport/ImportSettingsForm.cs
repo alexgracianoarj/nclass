@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-
+using NClass.AssemblyImport.Lang;
 using NClass.AssemblyImport.Properties;
 
 namespace NClass.AssemblyImport
@@ -23,40 +23,40 @@ namespace NClass.AssemblyImport
       InitializeComponent();
 
       //Localization goes here...
-      elementNameMap.Add("class", Elements.Class);
-      elementNameMap.Add("constructor", Elements.Constructor);
-      elementNameMap.Add("delegate", Elements.Delegate);
-      elementNameMap.Add("elements", Elements.Elements);
-      elementNameMap.Add("enum", Elements.Enum);
-      elementNameMap.Add("event", Elements.Event);
-      elementNameMap.Add("field", Elements.Field);
-      elementNameMap.Add("interface", Elements.Interface);
-      elementNameMap.Add("method", Elements.Method);
-      elementNameMap.Add("property", Elements.Property);
-      elementNameMap.Add("struct", Elements.Struct);
+      elementNameMap.Add(Strings.Element_Class, Elements.Class);
+      elementNameMap.Add(Strings.Element_Constructor, Elements.Constructor);
+      elementNameMap.Add(Strings.Element_Delegate, Elements.Delegate);
+      elementNameMap.Add(Strings.Element_Elements, Elements.Elements);
+      elementNameMap.Add(Strings.Element_Enum, Elements.Enum);
+      elementNameMap.Add(Strings.Element_Event, Elements.Event);
+      elementNameMap.Add(Strings.Element_Field, Elements.Field);
+      elementNameMap.Add(Strings.Element_Interface, Elements.Interface);
+      elementNameMap.Add(Strings.Element_Method, Elements.Method);
+      elementNameMap.Add(Strings.Element_Property, Elements.Property);
+      elementNameMap.Add(Strings.Element_Struct, Elements.Struct);
 
-      modifierNameMap.Add("all", Modifiers.All);
-      modifierNameMap.Add("instance", Modifiers.Instance);
-      modifierNameMap.Add("internal", Modifiers.Internal);
-      modifierNameMap.Add("private", Modifiers.Private);
-      modifierNameMap.Add("protected", Modifiers.Protected);
-      modifierNameMap.Add("protected internal", Modifiers.ProtectedInternal);
-      modifierNameMap.Add("public", Modifiers.Public);
-      modifierNameMap.Add("static", Modifiers.Static);
+      modifierNameMap.Add(Strings.Modifier_All, Modifiers.All);
+      modifierNameMap.Add(Strings.Modifier_Instance, Modifiers.Instance);
+      modifierNameMap.Add(Strings.Modifier_Internal, Modifiers.Internal);
+      modifierNameMap.Add(Strings.Modifier_Private, Modifiers.Private);
+      modifierNameMap.Add(Strings.Modifier_Protected, Modifiers.Protected);
+      modifierNameMap.Add(Strings.Modifier_ProtectedInternal, Modifiers.ProtectedInternal);
+      modifierNameMap.Add(Strings.Modifier_Public, Modifiers.Public);
+      modifierNameMap.Add(Strings.Modifier_Static, Modifiers.Static);
 
       //Build reverse maps and ComboBox-Items
-      xExceptionColumnElement.Items.Clear();
+      colExceptElement.Items.Clear();
       reverseElementNameMap.Clear();
       foreach(string stName in elementNameMap.Keys)
       {
-        xExceptionColumnElement.Items.Add(stName);
+        colExceptElement.Items.Add(stName);
         reverseElementNameMap.Add(elementNameMap[stName], stName);
       }
-      xExceptionColumnModifier.Items.Clear();
+      colExceptModifier.Items.Clear();
       reverseModifierNameMap.Clear();
       foreach(string stName in modifierNameMap.Keys)
       {
-        xExceptionColumnModifier.Items.Add(stName);
+        colExceptModifier.Items.Add(stName);
         reverseModifierNameMap.Add(modifierNameMap[stName], stName);
       }
 
@@ -69,7 +69,7 @@ namespace NClass.AssemblyImport
         Settings.Default.ImportSettingsTemplates = new TemplateList();
         ImportSettings xNewSettings = new ImportSettings
                                         {
-                                          Name = "<last used>"
+                                          Name = Strings.Settings_Template_LastUsed
                                         };
         Settings.Default.ImportSettingsTemplates.Add(xNewSettings);
       }
@@ -80,6 +80,27 @@ namespace NClass.AssemblyImport
       cboTemplate.SelectedItem = cboTemplate.Items[0];
       DisplaySettings((ImportSettings)cboTemplate.Items[0]);
 
+      LocalizeComponents();
+    }
+
+    /// <summary>
+    /// Displays the text for the current culture.
+    /// </summary>
+    private void LocalizeComponents()
+    {
+      Text = Strings.Settings_Title;
+      grpTemplate.Text = Strings.Settings_Template;
+      cmdLoadTemplate.Text = Strings.Settings_Template_LoadButton;
+      cmdStoreTemplate.Text = Strings.Settings_Template_StoreButton;
+      cmdDeleteTemplate.Text = Strings.Settings_Template_DeleteButton;
+      lblDescription.Text = Strings.Settings_ImportExcept;
+      colExceptElement.HeaderText = Strings.Settings_ImportExcept_Element;
+      colExceptModifier.HeaderText = Strings.Settings_ImportExcept_Modifier;
+      chkCreateAggregations.Text = Strings.Settings_CreateAggregations;
+      chkLabelAggregations.Text = Strings.Settings_CreateLabel;
+      chkRemoveFields.Text = Strings.Settings_RemoveFields;
+      cmdOK.Text = Strings.Settings_OKButton;
+      cmdCancel.Text = Strings.Settings_CancelButton;
     }
 
     #endregion
@@ -143,7 +164,7 @@ namespace NClass.AssemblyImport
     {
       if(cboTemplate.SelectedItem == null)
       {
-        MessageBox.Show("Please select a template first");
+        MessageBox.Show(Strings.Settings_Error_NoTemplateSelected, Strings.Error_MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
         return;
       }
       DisplaySettings((ImportSettings)cboTemplate.SelectedItem);
@@ -159,12 +180,12 @@ namespace NClass.AssemblyImport
     {
       if(string.IsNullOrEmpty(cboTemplate.Text))
       {
-        MessageBox.Show("Please enter a name");
+        MessageBox.Show(Strings.Settings_Error_NoTemplateName, Strings.Error_MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
         return;
       }
       if(cboTemplate.Text.Contains("<"))
       {
-        MessageBox.Show("'<' is not allowed");
+        MessageBox.Show(Strings.Settings_Error_AngleBracketNotAllowed, Strings.Error_MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
         return;
       }
       ImportSettings xSettings = (ImportSettings)cboTemplate.SelectedItem ?? new ImportSettings();
@@ -189,12 +210,12 @@ namespace NClass.AssemblyImport
     {
       if(cboTemplate.SelectedItem == null)
       {
-        MessageBox.Show("Please select a template first");
+        MessageBox.Show(Strings.Settings_Error_NoTemplateSelected, Strings.Error_MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
         return;
       }
       if(cboTemplate.Text.Contains("<"))
       {
-        MessageBox.Show("This template can't be deleted");
+        MessageBox.Show(Strings.Settings_Error_TemplateCantBeDeleted, Strings.Error_MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
         return;
       }
       Settings.Default.ImportSettingsTemplates.Remove(cboTemplate.SelectedItem);

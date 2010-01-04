@@ -5,6 +5,9 @@
 			<sources>
 				<include name="**/*.cs" />
 			</sources>
+			<resources dynamicprefix="true">
+				<include name="**/*.resx" />
+			</resources>
 			<references>
 				<include name="System.dll" />
 				<include name="System.Xml.dll" />

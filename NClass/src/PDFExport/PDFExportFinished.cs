@@ -23,10 +23,10 @@ namespace PDFExport
     /// </summary>
     private void LocalizeComponents()
     {
-      Text = Strings.FinishedDialogTitle;
-      lblFinished.Text = Strings.FinishedDialogText;
-      cmdOpen.Text = Strings.FinishedDialogOpen;
-      cmdClose.Text = Strings.FinishedDialogClose;
+      Text = Strings.FinishedDialog_Title;
+      lblFinished.Text = Strings.FinishedDialog_Text;
+      cmdOpen.Text = Strings.FinishedDialog_Open;
+      cmdClose.Text = Strings.FinishedDialog_Close;
     }
   }
 }

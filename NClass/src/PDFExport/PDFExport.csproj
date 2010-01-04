@@ -40,6 +40,7 @@
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Lang\Strings.cs" />
     <Compile Include="PDFExporter.cs" />
     <Compile Include="PDFExportFinished.cs">
       <SubType>Form</SubType>

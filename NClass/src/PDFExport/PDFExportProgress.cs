@@ -65,8 +65,8 @@ namespace PDFExport
     /// </summary>
     private void LocalizeComponents()
     {
-      Text = Strings.ProgressTitle;
-      lblProgress.Text = Strings.ProgressText;
+      Text = Strings.Progress_Title;
+      lblProgress.Text = Strings.Progress_Text;
     }
 
     /// <summary>

@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows.Forms;
+using NClass.AssemblyImport.Lang;
 using NClass.Core;
 using NClass.DiagramEditor.ClassDiagram;
 using NClass.DiagramEditor.ClassDiagram.Connections;
@@ -175,7 +176,7 @@ namespace NClass.AssemblyImport
     {
       if(string.IsNullOrEmpty(FileName))
       {
-        MessageBox.Show("No assembly file to import.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        MessageBox.Show(Strings.Error_NoAssembly, Strings.Error_MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
         return;
       }
       try
@@ -225,11 +226,11 @@ namespace NClass.AssemblyImport
       }
       catch(ReflectionTypeLoadException)
       {
-        MessageBox.Show("Could not open assembly due to missing referenced assemblys", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        MessageBox.Show(Strings.Error_MissingReferencedAssemblies, Strings.Error_MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
       }
       catch(BadImageFormatException)
       {
-        MessageBox.Show("Could not load assembly since it seems to be not an assembly...", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        MessageBox.Show(Strings.Error_BadImageFormat, Strings.Error_MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
       }
       finally
       {

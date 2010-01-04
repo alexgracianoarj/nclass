@@ -61,16 +61,16 @@ namespace PDFExport
     /// </summary>
     private void LocalizeComponents()
     {
-      Text = Strings.OptionsTitle;
-      chkSelectedOnly.Text = Strings.OptionsOnlySelected;
-      grpMargin.Text = Strings.OptionsMargin;
-      lblUnit.Text = Strings.OptionsUnit;
-      lblTop.Text = Strings.OptionsTop;
-      lblRight.Text = Strings.OptionsRight;
-      lblBottom.Text = Strings.OptionsBottom;
-      lblLeft.Text = Strings.OptionsLeft;
-      cmdOK.Text = Strings.OptionsOKButton;
-      cmdCancel.Text = Strings.OptionsCancelButton;
+      Text = Strings.Options_Title;
+      chkSelectedOnly.Text = Strings.Options_OnlySelected;
+      grpMargin.Text = Strings.Options_Margin;
+      lblUnit.Text = Strings.Options_Unit;
+      lblTop.Text = Strings.Options_Top;
+      lblRight.Text = Strings.Options_Right;
+      lblBottom.Text = Strings.Options_Bottom;
+      lblLeft.Text = Strings.Options_Left;
+      cmdOK.Text = Strings.Options_OKButton;
+      cmdCancel.Text = Strings.Options_CancelButton;
     }
 
     /// <summary>
@@ -105,17 +105,17 @@ namespace PDFExport
       switch(unit)
       {
         case XGraphicsUnit.Point:
-          return Strings.UnitDots;
+          return Strings.Unit_Dots;
         case XGraphicsUnit.Inch:
-          return Strings.UnitInch;
+          return Strings.Unit_Inch;
         case XGraphicsUnit.Millimeter:
-          return Strings.UnitMM;
+          return Strings.Unit_MM;
         case XGraphicsUnit.Centimeter:
-          return Strings.UnitCM;
+          return Strings.Unit_CM;
         case XGraphicsUnit.Presentation:
-          return Strings.UnitPixel;
+          return Strings.Unit_Pixel;
         default:
-          return Strings.UnitDots;
+          return Strings.Unit_Dots;
       }
     }
 

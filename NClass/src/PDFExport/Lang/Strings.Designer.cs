@@ -22,7 +22,7 @@ namespace PDFExport.Lang {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "2.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Strings {
+    internal partial class Strings {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -63,162 +63,162 @@ namespace PDFExport.Lang {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Close ähnelt.
         /// </summary>
-        internal static string FinishedDialogClose {
+        internal static string FinishedDialog_Close {
             get {
-                return ResourceManager.GetString("FinishedDialogClose", resourceCulture);
+                return ResourceManager.GetString("FinishedDialog_Close", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Open ähnelt.
         /// </summary>
-        internal static string FinishedDialogOpen {
+        internal static string FinishedDialog_Open {
             get {
-                return ResourceManager.GetString("FinishedDialogOpen", resourceCulture);
+                return ResourceManager.GetString("FinishedDialog_Open", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die PDF Export is finished. Do you want to open the exported PDF? ähnelt.
         /// </summary>
-        internal static string FinishedDialogText {
+        internal static string FinishedDialog_Text {
             get {
-                return ResourceManager.GetString("FinishedDialogText", resourceCulture);
+                return ResourceManager.GetString("FinishedDialog_Text", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die PDF Exporter finished ähnelt.
         /// </summary>
-        internal static string FinishedDialogTitle {
+        internal static string FinishedDialog_Title {
             get {
-                return ResourceManager.GetString("FinishedDialogTitle", resourceCulture);
+                return ResourceManager.GetString("FinishedDialog_Title", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die &amp;Export as PDF... ähnelt.
         /// </summary>
-        internal static string MenuTitle {
+        internal static string Menu_Title {
             get {
-                return ResourceManager.GetString("MenuTitle", resourceCulture);
+                return ResourceManager.GetString("Menu_Title", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die PDF Export by Malte Ried ähnelt.
         /// </summary>
-        internal static string MenuToolTip {
+        internal static string Menu_ToolTip {
             get {
-                return ResourceManager.GetString("MenuToolTip", resourceCulture);
+                return ResourceManager.GetString("Menu_ToolTip", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Bottom ähnelt.
         /// </summary>
-        internal static string OptionsBottom {
+        internal static string Options_Bottom {
             get {
-                return ResourceManager.GetString("OptionsBottom", resourceCulture);
+                return ResourceManager.GetString("Options_Bottom", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Cancel ähnelt.
         /// </summary>
-        internal static string OptionsCancelButton {
+        internal static string Options_CancelButton {
             get {
-                return ResourceManager.GetString("OptionsCancelButton", resourceCulture);
+                return ResourceManager.GetString("Options_CancelButton", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Left ähnelt.
         /// </summary>
-        internal static string OptionsLeft {
+        internal static string Options_Left {
             get {
-                return ResourceManager.GetString("OptionsLeft", resourceCulture);
+                return ResourceManager.GetString("Options_Left", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Margin ähnelt.
         /// </summary>
-        internal static string OptionsMargin {
+        internal static string Options_Margin {
             get {
-                return ResourceManager.GetString("OptionsMargin", resourceCulture);
+                return ResourceManager.GetString("Options_Margin", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die OK ähnelt.
         /// </summary>
-        internal static string OptionsOKButton {
+        internal static string Options_OKButton {
             get {
-                return ResourceManager.GetString("OptionsOKButton", resourceCulture);
+                return ResourceManager.GetString("Options_OKButton", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Export only selected elements ähnelt.
         /// </summary>
-        internal static string OptionsOnlySelected {
+        internal static string Options_OnlySelected {
             get {
-                return ResourceManager.GetString("OptionsOnlySelected", resourceCulture);
+                return ResourceManager.GetString("Options_OnlySelected", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Right ähnelt.
         /// </summary>
-        internal static string OptionsRight {
+        internal static string Options_Right {
             get {
-                return ResourceManager.GetString("OptionsRight", resourceCulture);
+                return ResourceManager.GetString("Options_Right", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die PDF Export Options ähnelt.
         /// </summary>
-        internal static string OptionsTitle {
+        internal static string Options_Title {
             get {
-                return ResourceManager.GetString("OptionsTitle", resourceCulture);
+                return ResourceManager.GetString("Options_Title", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Top ähnelt.
         /// </summary>
-        internal static string OptionsTop {
+        internal static string Options_Top {
             get {
-                return ResourceManager.GetString("OptionsTop", resourceCulture);
+                return ResourceManager.GetString("Options_Top", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Unit ähnelt.
         /// </summary>
-        internal static string OptionsUnit {
+        internal static string Options_Unit {
             get {
-                return ResourceManager.GetString("OptionsUnit", resourceCulture);
+                return ResourceManager.GetString("Options_Unit", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Exporting diagram to PDF... ähnelt.
         /// </summary>
-        internal static string ProgressText {
+        internal static string Progress_Text {
             get {
-                return ResourceManager.GetString("ProgressText", resourceCulture);
+                return ResourceManager.GetString("Progress_Text", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die PDF Export... ähnelt.
         /// </summary>
-        internal static string ProgressTitle {
+        internal static string Progress_Title {
             get {
-                return ResourceManager.GetString("ProgressTitle", resourceCulture);
+                return ResourceManager.GetString("Progress_Title", resourceCulture);
             }
         }
         
@@ -234,45 +234,45 @@ namespace PDFExport.Lang {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die cm ähnelt.
         /// </summary>
-        internal static string UnitCM {
+        internal static string Unit_CM {
             get {
-                return ResourceManager.GetString("UnitCM", resourceCulture);
+                return ResourceManager.GetString("Unit_CM", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die dots ähnelt.
         /// </summary>
-        internal static string UnitDots {
+        internal static string Unit_Dots {
             get {
-                return ResourceManager.GetString("UnitDots", resourceCulture);
+                return ResourceManager.GetString("Unit_Dots", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die inch ähnelt.
         /// </summary>
-        internal static string UnitInch {
+        internal static string Unit_Inch {
             get {
-                return ResourceManager.GetString("UnitInch", resourceCulture);
+                return ResourceManager.GetString("Unit_Inch", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die mm ähnelt.
         /// </summary>
-        internal static string UnitMM {
+        internal static string Unit_MM {
             get {
-                return ResourceManager.GetString("UnitMM", resourceCulture);
+                return ResourceManager.GetString("Unit_MM", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die pixel ähnelt.
         /// </summary>
-        internal static string UnitPixel {
+        internal static string Unit_Pixel {
             get {
-                return ResourceManager.GetString("UnitPixel", resourceCulture);
+                return ResourceManager.GetString("Unit_Pixel", resourceCulture);
             }
         }
     }

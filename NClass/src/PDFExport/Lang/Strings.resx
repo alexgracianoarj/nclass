@@ -117,76 +117,76 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="FinishedDialogClose" xml:space="preserve">
+  <data name="FinishedDialog_Close" xml:space="preserve">
     <value>Close</value>
   </data>
-  <data name="FinishedDialogOpen" xml:space="preserve">
+  <data name="FinishedDialog_Open" xml:space="preserve">
     <value>Open</value>
   </data>
-  <data name="FinishedDialogText" xml:space="preserve">
+  <data name="FinishedDialog_Text" xml:space="preserve">
     <value>PDF Export is finished. Do you want to open the exported PDF?</value>
   </data>
-  <data name="FinishedDialogTitle" xml:space="preserve">
+  <data name="FinishedDialog_Title" xml:space="preserve">
     <value>PDF Exporter finished</value>
   </data>
-  <data name="MenuTitle" xml:space="preserve">
+  <data name="Menu_Title" xml:space="preserve">
     <value>&amp;Export as PDF...</value>
   </data>
-  <data name="MenuToolTip" xml:space="preserve">
+  <data name="Menu_ToolTip" xml:space="preserve">
     <value>PDF Export by Malte Ried</value>
   </data>
-  <data name="OptionsBottom" xml:space="preserve">
+  <data name="Options_Bottom" xml:space="preserve">
     <value>Bottom</value>
   </data>
-  <data name="OptionsCancelButton" xml:space="preserve">
+  <data name="Options_CancelButton" xml:space="preserve">
     <value>Cancel</value>
   </data>
-  <data name="OptionsLeft" xml:space="preserve">
+  <data name="Options_Left" xml:space="preserve">
     <value>Left</value>
   </data>
-  <data name="OptionsMargin" xml:space="preserve">
+  <data name="Options_Margin" xml:space="preserve">
     <value>Margin</value>
   </data>
-  <data name="OptionsOKButton" xml:space="preserve">
+  <data name="Options_OKButton" xml:space="preserve">
     <value>OK</value>
   </data>
-  <data name="OptionsOnlySelected" xml:space="preserve">
+  <data name="Options_OnlySelected" xml:space="preserve">
     <value>Export only selected elements</value>
   </data>
-  <data name="OptionsRight" xml:space="preserve">
+  <data name="Options_Right" xml:space="preserve">
     <value>Right</value>
   </data>
-  <data name="OptionsTitle" xml:space="preserve">
+  <data name="Options_Title" xml:space="preserve">
     <value>PDF Export Options</value>
   </data>
-  <data name="OptionsTop" xml:space="preserve">
+  <data name="Options_Top" xml:space="preserve">
     <value>Top</value>
   </data>
-  <data name="OptionsUnit" xml:space="preserve">
+  <data name="Options_Unit" xml:space="preserve">
     <value>Unit</value>
   </data>
-  <data name="ProgressText" xml:space="preserve">
+  <data name="Progress_Text" xml:space="preserve">
     <value>Exporting diagram to PDF...</value>
   </data>
-  <data name="ProgressTitle" xml:space="preserve">
+  <data name="Progress_Title" xml:space="preserve">
     <value>PDF Export...</value>
   </data>
   <data name="SaveDialogFilter" xml:space="preserve">
     <value>PDF-Files (*.pdf)|*.pdf</value>
   </data>
-  <data name="UnitCM" xml:space="preserve">
+  <data name="Unit_CM" xml:space="preserve">
     <value>cm</value>
   </data>
-  <data name="UnitDots" xml:space="preserve">
+  <data name="Unit_Dots" xml:space="preserve">
     <value>dots</value>
   </data>
-  <data name="UnitInch" xml:space="preserve">
+  <data name="Unit_Inch" xml:space="preserve">
     <value>inch</value>
   </data>
-  <data name="UnitMM" xml:space="preserve">
+  <data name="Unit_MM" xml:space="preserve">
     <value>mm</value>
   </data>
-  <data name="UnitPixel" xml:space="preserve">
+  <data name="Unit_Pixel" xml:space="preserve">
     <value>pixel</value>
   </data>
 </root>

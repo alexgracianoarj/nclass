@@ -1,7 +1,6 @@
 using System;
 using System.Diagnostics;
 using System.Globalization;
-using System.Reflection;
 using System.Threading;
 using System.Windows.Forms;
 using NClass.GUI;
@@ -57,9 +56,9 @@ namespace PDFExport
     {
       menuItem = new ToolStripMenuItem
                    {
-                     Text = Strings.MenuTitle,
+                     Text = Strings.Menu_Title,
                      Image = Resources.Document_pdf_16,
-                     ToolTipText = Strings.MenuToolTip
+                     ToolTipText = Strings.Menu_ToolTip
                    };
       menuItem.Click += menuItem_Click;
     }
@@ -76,7 +75,7 @@ namespace PDFExport
     /// </summary>
     /// <param name="sender">The sender.</param>
     /// <param name="e">Additional information.</param>
-    void menuItem_Click(object sender, System.EventArgs e)
+    void menuItem_Click(object sender, EventArgs e)
     {
       Launch();
     }
@@ -95,7 +94,7 @@ namespace PDFExport
     {
       get
       {
-        return Workspace.HasActiveProject;
+        return DocumentManager.HasDocument;
       }
     }
 
@@ -122,7 +121,7 @@ namespace PDFExport
     /// </summary>
     protected void Launch()
     {
-      if(!Workspace.HasActiveProject)
+      if(!DocumentManager.HasDocument)
       {
         return;
       }

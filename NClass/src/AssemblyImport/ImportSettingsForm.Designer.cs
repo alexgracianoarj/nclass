@@ -31,8 +31,8 @@
       this.lblDescription = new System.Windows.Forms.Label();
       this.cmdOK = new System.Windows.Forms.Button();
       this.dgvExceptions = new System.Windows.Forms.DataGridView();
-      this.xExceptionColumnModifier = new System.Windows.Forms.DataGridViewComboBoxColumn();
-      this.xExceptionColumnElement = new System.Windows.Forms.DataGridViewComboBoxColumn();
+      this.colExceptModifier = new System.Windows.Forms.DataGridViewComboBoxColumn();
+      this.colExceptElement = new System.Windows.Forms.DataGridViewComboBoxColumn();
       this.grpTemplate = new System.Windows.Forms.GroupBox();
       this.cmdLoadTemplate = new System.Windows.Forms.Button();
       this.cmdDeleteTemplate = new System.Windows.Forms.Button();
@@ -79,8 +79,8 @@
       this.dgvExceptions.BackgroundColor = System.Drawing.SystemColors.Control;
       this.dgvExceptions.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
       this.dgvExceptions.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.xExceptionColumnModifier,
-            this.xExceptionColumnElement});
+            this.colExceptModifier,
+            this.colExceptElement});
       this.dgvExceptions.Location = new System.Drawing.Point(12, 81);
       this.dgvExceptions.Name = "dgvExceptions";
       this.dgvExceptions.RowHeadersVisible = false;
@@ -88,24 +88,24 @@
       this.dgvExceptions.Size = new System.Drawing.Size(412, 223);
       this.dgvExceptions.TabIndex = 4;
       // 
-      // xExceptionColumnModifier
+      // colExceptModifier
       // 
-      this.xExceptionColumnModifier.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-      this.xExceptionColumnModifier.HeaderText = "Modifier";
-      this.xExceptionColumnModifier.Items.AddRange(new object[] {
+      this.colExceptModifier.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+      this.colExceptModifier.HeaderText = "Modifier";
+      this.colExceptModifier.Items.AddRange(new object[] {
             "all",
             "public",
             "protected",
             "private",
             "internal",
             "protected internal"});
-      this.xExceptionColumnModifier.Name = "xExceptionColumnModifier";
+      this.colExceptModifier.Name = "colExceptModifier";
       // 
-      // xExceptionColumnElement
+      // colExceptElement
       // 
-      this.xExceptionColumnElement.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-      this.xExceptionColumnElement.HeaderText = "Element";
-      this.xExceptionColumnElement.Items.AddRange(new object[] {
+      this.colExceptElement.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+      this.colExceptElement.HeaderText = "Element";
+      this.colExceptElement.Items.AddRange(new object[] {
             "elements",
             "class",
             "struct",
@@ -118,8 +118,8 @@
             "field",
             "property",
             "event"});
-      this.xExceptionColumnElement.MaxDropDownItems = 12;
-      this.xExceptionColumnElement.Name = "xExceptionColumnElement";
+      this.colExceptElement.MaxDropDownItems = 12;
+      this.colExceptElement.Name = "colExceptElement";
       // 
       // grpTemplate
       // 
@@ -275,8 +275,8 @@
     private System.Windows.Forms.Button cmdDeleteTemplate;
     private System.Windows.Forms.Button cmdStoreTemplate;
     private System.Windows.Forms.ComboBox cboTemplate;
-    private System.Windows.Forms.DataGridViewComboBoxColumn xExceptionColumnModifier;
-    private System.Windows.Forms.DataGridViewComboBoxColumn xExceptionColumnElement;
+    private System.Windows.Forms.DataGridViewComboBoxColumn colExceptModifier;
+    private System.Windows.Forms.DataGridViewComboBoxColumn colExceptElement;
     private System.Windows.Forms.Button cmdCancel;
     private System.Windows.Forms.GroupBox grpAggregations;
     private System.Windows.Forms.CheckBox chkRemoveFields;
