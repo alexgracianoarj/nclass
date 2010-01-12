@@ -122,8 +122,7 @@
 			// 
 			// grpGeneral
 			// 
-			this.grpGeneral.Anchor = ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-						| System.Windows.Forms.AnchorStyles.Left)
+			this.grpGeneral.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
 						| System.Windows.Forms.AnchorStyles.Right)));
 			this.grpGeneral.Controls.Add(this.chkRememberOpenProjects);
 			this.grpGeneral.Controls.Add(this.lblRequiresRestart);
@@ -139,7 +138,6 @@
 			// 
 			// chkRememberOpenProjects
 			// 
-			this.chkRememberOpenProjects.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.chkRememberOpenProjects.AutoSize = true;
 			this.chkRememberOpenProjects.Location = new System.Drawing.Point(9, 74);
 			this.chkRememberOpenProjects.Name = "chkRememberOpenProjects";
@@ -157,8 +155,7 @@
 			this.lblRequiresRestart.Name = "lblRequiresRestart";
 			this.lblRequiresRestart.Size = new System.Drawing.Size(296, 43);
 			this.lblRequiresRestart.TabIndex = 4;
-			this.lblRequiresRestart.Text = "Changing the language requires application restart. dasd jdiasjdiodj asiodj aiodj" +
-				"aisdo o";
+			this.lblRequiresRestart.Text = "Changing the language requires application restart.";
 			// 
 			// lblLanguage
 			// 
@@ -171,7 +168,6 @@
 			// 
 			// btnClearRecents
 			// 
-			this.btnClearRecents.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.btnClearRecents.AutoSize = true;
 			this.btnClearRecents.Location = new System.Drawing.Point(9, 97);
 			this.btnClearRecents.Name = "btnClearRecents";
@@ -192,7 +188,8 @@
 			// 
 			// grpDiagram
 			// 
-			this.grpDiagram.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+			this.grpDiagram.Anchor = ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+						| System.Windows.Forms.AnchorStyles.Left)
 						| System.Windows.Forms.AnchorStyles.Right)));
 			this.grpDiagram.Controls.Add(this.panelClearType);
 			this.grpDiagram.Controls.Add(this.panelChevron);
@@ -342,7 +339,7 @@
 			this.tabStyle.Location = new System.Drawing.Point(4, 22);
 			this.tabStyle.Name = "tabStyle";
 			this.tabStyle.Padding = new System.Windows.Forms.Padding(3);
-			this.tabStyle.Size = new System.Drawing.Size(320, 409);
+			this.tabStyle.Size = new System.Drawing.Size(320, 416);
 			this.tabStyle.TabIndex = 1;
 			this.tabStyle.Text = "Style";
 			this.tabStyle.UseVisualStyleBackColor = true;
@@ -365,14 +362,14 @@
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel1.Size = new System.Drawing.Size(314, 403);
+			this.tableLayoutPanel1.Size = new System.Drawing.Size(314, 410);
 			this.tableLayoutPanel1.TabIndex = 6;
 			// 
 			// btnClear
 			// 
 			this.btnClear.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnClear.AutoSize = true;
-			this.btnClear.Location = new System.Drawing.Point(74, 377);
+			this.btnClear.Location = new System.Drawing.Point(74, 384);
 			this.btnClear.Name = "btnClear";
 			this.btnClear.Size = new System.Drawing.Size(75, 23);
 			this.btnClear.TabIndex = 4;
@@ -388,7 +385,7 @@
 			this.tableLayoutPanel1.SetColumnSpan(this.stylePropertyGrid, 3);
 			this.stylePropertyGrid.Location = new System.Drawing.Point(3, 3);
 			this.stylePropertyGrid.Name = "stylePropertyGrid";
-			this.stylePropertyGrid.Size = new System.Drawing.Size(308, 341);
+			this.stylePropertyGrid.Size = new System.Drawing.Size(308, 348);
 			this.stylePropertyGrid.TabIndex = 0;
 			this.stylePropertyGrid.ToolbarVisible = false;
 			this.stylePropertyGrid.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.stylePropertyGrid_PropertyValueChanged);
@@ -400,7 +397,7 @@
 			this.tableLayoutPanel1.SetColumnSpan(this.cboStyles, 3);
 			this.cboStyles.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.cboStyles.FormattingEnabled = true;
-			this.cboStyles.Location = new System.Drawing.Point(3, 350);
+			this.cboStyles.Location = new System.Drawing.Point(3, 357);
 			this.cboStyles.Name = "cboStyles";
 			this.cboStyles.Size = new System.Drawing.Size(308, 21);
 			this.cboStyles.TabIndex = 1;
@@ -410,7 +407,7 @@
 			// 
 			this.btnLoad.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnLoad.AutoSize = true;
-			this.btnLoad.Location = new System.Drawing.Point(155, 377);
+			this.btnLoad.Location = new System.Drawing.Point(155, 384);
 			this.btnLoad.Name = "btnLoad";
 			this.btnLoad.Size = new System.Drawing.Size(75, 23);
 			this.btnLoad.TabIndex = 2;
@@ -422,7 +419,7 @@
 			// 
 			this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnSave.AutoSize = true;
-			this.btnSave.Location = new System.Drawing.Point(236, 377);
+			this.btnSave.Location = new System.Drawing.Point(236, 384);
 			this.btnSave.Name = "btnSave";
 			this.btnSave.Size = new System.Drawing.Size(75, 23);
 			this.btnSave.TabIndex = 3;
@@ -454,7 +451,7 @@
 			this.Controls.Add(this.tabOptions);
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
-			this.MinimumSize = new System.Drawing.Size(300, 400);
+			this.MinimumSize = new System.Drawing.Size(360, 532);
 			this.Name = "OptionsDialog";
 			this.ShowIcon = false;
 			this.ShowInTaskbar = false;
