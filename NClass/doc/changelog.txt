@@ -3,6 +3,8 @@ Version 2.03 [preliminary]
 + Support for nullable types
 * Fixed a bug when reversing an association
 * Fixed a bug in solution file generation
+* Print settings are remembered
+* Fixed some UI issues in dialogs
 
 Version 2.02 (26-Aug-2009)
 --------------------------

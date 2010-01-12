@@ -59,11 +59,12 @@
 			// 
 			// chkSelectedOnly
 			// 
-			this.chkSelectedOnly.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.chkSelectedOnly.AutoSize = true;
+			this.chkSelectedOnly.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
+			this.chkSelectedOnly.AutoEllipsis = true;
 			this.chkSelectedOnly.Location = new System.Drawing.Point(288, 536);
 			this.chkSelectedOnly.Name = "chkSelectedOnly";
-			this.chkSelectedOnly.Size = new System.Drawing.Size(175, 17);
+			this.chkSelectedOnly.Size = new System.Drawing.Size(230, 18);
 			this.chkSelectedOnly.TabIndex = 9;
 			this.chkSelectedOnly.Text = "Print only the selected elements";
 			this.chkSelectedOnly.UseVisualStyleBackColor = true;
@@ -225,12 +226,12 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.btnCancel;
 			this.ClientSize = new System.Drawing.Size(692, 566);
+			this.Controls.Add(this.btnPrint);
+			this.Controls.Add(this.btnCancel);
 			this.Controls.Add(this.chkSelectedOnly);
 			this.Controls.Add(this.lblPages);
 			this.Controls.Add(this.lblStyle);
 			this.Controls.Add(this.cboStyle);
-			this.Controls.Add(this.btnCancel);
-			this.Controls.Add(this.btnPrint);
 			this.Controls.Add(this.btnPrinter);
 			this.Controls.Add(this.lblX);
 			this.Controls.Add(this.numColumns);

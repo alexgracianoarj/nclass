@@ -142,5 +142,16 @@ namespace NClass.DiagramEditor {
                 this["UseClearTypeForImages"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::NClass.DiagramEditor.ClassDiagram.Dialogs.PrintingSettings PrintingSettings {
+            get {
+                return ((global::NClass.DiagramEditor.ClassDiagram.Dialogs.PrintingSettings)(this["PrintingSettings"]));
+            }
+            set {
+                this["PrintingSettings"] = value;
+            }
+        }
     }
 }

@@ -44,7 +44,6 @@ namespace NClass.DiagramEditor.ClassDiagram
 		const int PrecisionSize = 10;
 		const int MaximalPrecisionDistance = 500;
 		const float DashSize = 3;
-		static readonly DiagramPrintDialog printDialog = new DiagramPrintDialog();
 		static readonly Size MinSize = new Size(3000, 2000);
 		public static readonly Pen SelectionPen;
 
@@ -473,8 +472,9 @@ namespace NClass.DiagramEditor.ClassDiagram
 
 		public void ShowPrintDialog()
 		{
-			printDialog.Document = this;
-			printDialog.ShowDialog();
+			DiagramPrintDialog dialog = new DiagramPrintDialog();
+			dialog.Document = this;
+			dialog.ShowDialog();
 		}
 
 		public void Print(IGraphics g)
@@ -1471,7 +1471,7 @@ namespace NClass.DiagramEditor.ClassDiagram
 			connection.SelectionChanged += new EventHandler(connection_SelectionChanged);
 			connection.RouteChanged += new EventHandler(connection_RouteChanged);
 			connection.BendPointMove += new BendPointEventHandler(connection_BendPointMove);
-			connections.AddFirst(connection);			
+			connections.AddFirst(connection);
 			RecalculateSize();
 		}
 

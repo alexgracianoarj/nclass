@@ -22,6 +22,15 @@ using NClass.Translations;
 
 namespace NClass.DiagramEditor.ClassDiagram.Dialogs
 {
+	public class PrintingSettings
+	{
+		public bool Landscape { get; set; }
+		public Margins Margins { get; set; }
+		public PaperSize PaperSize { get; set; }
+		public PaperSource PaperSource { get; set; }
+		public string PrinterName { get; set; }
+	}
+
 	public partial class DiagramPrintDialog : Form
 	{
 		IDocument document = null;
@@ -55,6 +64,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Dialogs
 			base.OnLoad(e);
 
 			UpdateTexts();
+			LoadSettings();
 			LoadStyles();
 		}
 
@@ -85,6 +95,25 @@ namespace NClass.DiagramEditor.ClassDiagram.Dialogs
 			chkSelectedOnly.Left = numRows.Right + 14;
 		}
 
+		private void LoadSettings()
+		{
+			PrintingSettings settings = Settings.Default.PrintingSettings;
+			if (settings != null)
+			{
+				printDocument.DefaultPageSettings.Landscape = settings.Landscape;
+				printDocument.DefaultPageSettings.Margins = settings.Margins;
+				printDocument.DefaultPageSettings.PaperSize = settings.PaperSize;
+				printDocument.DefaultPageSettings.PaperSource = settings.PaperSource;
+				printDocument.DefaultPageSettings.PrinterSettings.PrinterName = settings.PrinterName;
+			}
+
+			if (!pageSetupDialog.PrinterSettings.IsValid)
+			{
+				printDocument.PrinterSettings = new PrinterSettings();
+				pageSetupDialog.Document = printDocument;
+			}
+		}
+
 		private void LoadStyles()
 		{
 			cboStyle.Items.Clear();
@@ -94,6 +123,19 @@ namespace NClass.DiagramEditor.ClassDiagram.Dialogs
 				if (style == Style.CurrentStyle)
 					cboStyle.SelectedItem = style;
 			}
+		}
+
+		private void SaveSettings()
+		{
+			Settings.Default.PrintingSettings = new PrintingSettings()
+			{
+				Landscape = printDocument.DefaultPageSettings.Landscape,
+				Margins = printDocument.DefaultPageSettings.Margins,
+				PaperSize = printDocument.DefaultPageSettings.PaperSize,
+				PaperSource = printDocument.DefaultPageSettings.PaperSource,
+				PrinterName = printDocument.PrinterSettings.PrinterName
+			};
+			Settings.Default.Save();
 		}
 
 		public new DialogResult ShowDialog()
@@ -122,6 +164,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Dialogs
 			try
 			{
 				printDocument.Print();
+				SaveSettings();
 			}
 			catch (InvalidPrinterException ex)
 			{
@@ -148,7 +191,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Dialogs
 
 		private void printDocument_BeginPrint(object sender, PrintEventArgs e)
 		{
-			if (document != null)
+			if (document != null && printDocument.PrinterSettings.IsValid)
 			{
 				pageIndex = 0;
 				printingStyle = MakeShadowsOpaque(selectedStyle);
@@ -222,7 +265,11 @@ namespace NClass.DiagramEditor.ClassDiagram.Dialogs
 
 		private void printDocument_EndPrint(object sender, PrintEventArgs e)
 		{
-			printingStyle.Dispose();
+			if (printingStyle != null)
+			{
+				printingStyle.Dispose();
+				printingStyle = null;
+			}
 		}
 
 		private void printPreview_Click(object sender, EventArgs e)
@@ -256,8 +303,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Dialogs
 		{
 			Margins originalMargins = pageSetupDialog.PageSettings.Margins;
 
-			if (System.Globalization.RegionInfo.CurrentRegion.IsMetric &&
-				!MonoHelper.IsRunningOnMono)
+			if (System.Globalization.RegionInfo.CurrentRegion.IsMetric && !MonoHelper.IsRunningOnMono)
 			{
 				// This is necessary because of a bug in PageSetupDialog control.
 				// More information: http://support.microsoft.com/?id=814355
@@ -266,10 +312,10 @@ namespace NClass.DiagramEditor.ClassDiagram.Dialogs
 					PrinterUnit.Display, PrinterUnit.TenthsOfAMillimeter);
 			}
 
-			if (pageSetupDialog.ShowDialog() != DialogResult.OK)
+			if (pageSetupDialog.ShowDialog() == DialogResult.OK)
+				printPreview.InvalidatePreview();
+			else
 				pageSetupDialog.PageSettings.Margins = originalMargins;
-
-			printPreview.InvalidatePreview();
 		}
 
 		private void cboStyle_SelectedIndexChanged(object sender, EventArgs e)

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <project name="nclass" default="set-framework">
     <property name="project.name" value="NClass" />
-    <property name="project.version" value="2.0" />
+    <property name="project.version" value="2.03" />
     <property name="build.dir" value="${project::get-base-directory()}/bin" readonly="false" />
     <property name="build.number" value="${math::abs(math::floor(timespan::get-total-days(datetime::now() - datetime::parse('06/09/2006'))))}" />
     <property name="compiled" value="false" />
@@ -38,7 +38,11 @@
     </target>
 
     <target name="clean-build-dir">
-        <delete dir="${build.dir}" />
+        <delete>
+            <fileset>
+                <include name="${build.dir}/**/*.*" />
+            </fileset>
+        </delete>
         <mkdir dir="${build.dir}" />
         <mkdir dir="${build.dir}/Plugins" />
     </target>
