@@ -485,23 +485,24 @@ namespace NClass.AssemblyImport
     }
 
     /// <summary>
-    /// Reflects the delegate <paramref name="xType"/>.
+    /// Reflects the delegate <paramref name="type"/>.
     /// </summary>
-    /// <param name="xType">A type with informations about the delegate which gets reflected.</param>
-    private void ReflectDelegate(Type xType)
+    /// <param name="type">A type with informations about the delegate which gets reflected.</param>
+    private void ReflectDelegate(Type type)
     {
-      if(!importSettings.CheckImportDelegate(xType))
+      if(!importSettings.CheckImportDelegate(type))
       {
         return;
       }
-      DelegateType xNewDelegate = diagram.AddDelegate();
-      MethodInfo xMethodInfo = xType.GetMethod("Invoke");
-      xNewDelegate.ReturnType = xMethodInfo.ReturnType.Name;
-      foreach(ParameterInfo xParameter in xMethodInfo.GetParameters())
+      DelegateType newDelegate = diagram.AddDelegate();
+      MethodInfo methodInfo = type.GetMethod("Invoke");
+      newDelegate.ReturnType = methodInfo.ReturnType.Name;
+      List<string> paramDecls = GetParameterDeclarations(methodInfo);
+      foreach(string paramDecl in paramDecls)
       {
-        xNewDelegate.AddParameter(xParameter.ParameterType.Name + " " + xParameter.Name);
+        newDelegate.AddParameter(paramDecl);
       }
-      ReflectTypeBase(xType, xNewDelegate);
+      ReflectTypeBase(type, newDelegate);
     }
 
     /// <summary>
@@ -1081,48 +1082,70 @@ namespace NClass.AssemblyImport
     #region +++ string Get...
 
     /// <summary>
-    /// Returns a string describing the parameters of the method <paramref name="xMethod"/>.
+    /// Returns a string describing the parameters of the method <paramref name="methodBase"/>.
     /// The string cantains the opening and closing parenthesis. It is formated
     /// like C# code.
     /// </summary>
-    /// <param name="xMethod">The parameters string is generated for this method. </param>
+    /// <param name="methodBase">The parameters string is generated for this method. </param>
     /// <returns>The parameter string.</returns>
-    private static string GetParameterDeclarationString(MethodBase xMethod)
+    private static string GetParameterDeclarationString(MethodBase methodBase)
     {
-      ParameterInfo[] axParameters = xMethod.GetParameters();
-      StringBuilder stDeclaration = new StringBuilder("(");
-      foreach(ParameterInfo xParameter in axParameters)
+      StringBuilder declaration = new StringBuilder("(");
+      List<string> paramDecls = GetParameterDeclarations(methodBase);
+
+      foreach(string paramDecl in paramDecls)
       {
-        if(xParameter.ParameterType.Name.EndsWith("&"))
+        declaration.AppendFormat("{0}, ", paramDecl);
+      }
+      if(paramDecls.Count > 0)
+      {
+        declaration.Length -= 2;
+      }
+      declaration.Append(")");
+
+      return declaration.ToString();
+    }
+
+    /// <summary>
+    /// Returns a list of strings, each describing one parameter of <paramref name="methodBase"/>
+    /// in C# syntax.
+    /// </summary>
+    /// <param name="methodBase">The paramters of this methods are described.</param>
+    /// <returns>A list of strings describing the parameters.</returns>
+    private static List<string> GetParameterDeclarations(MethodBase methodBase)
+    {
+      ParameterInfo[] parameters = methodBase.GetParameters();
+      List<string> paramDecls = new List<string>(parameters.Length);
+      foreach(ParameterInfo parameter in parameters)
+      {
+        StringBuilder paramDecl = new StringBuilder();
+        if(parameter.ParameterType.Name.EndsWith("&"))
         {
           //This is a out or ref-Parameter
-          if(xParameter.IsOut)
+          if(parameter.IsOut)
           {
-            stDeclaration.AppendFormat("out {0} ", GetTypeName(xParameter.ParameterType.GetElementType()));
+            paramDecl.AppendFormat("out {0} ", GetTypeName(parameter.ParameterType.GetElementType()));
           }
           else
           {
-            stDeclaration.AppendFormat("ref {0} ", GetTypeName(xParameter.ParameterType.GetElementType()));
+            paramDecl.AppendFormat("ref {0} ", GetTypeName(parameter.ParameterType.GetElementType()));
           }
         }
         else
         {
-          if(HasParamterAttribute(xParameter, typeof(ParamArrayAttribute)))
+          if(HasParamterAttribute(parameter, typeof(ParamArrayAttribute)))
           {
             //This is a 'params'
-            stDeclaration.Append("params ");
+            paramDecl.Append("params ");
           }
-          stDeclaration.AppendFormat("{0} ", GetTypeName(xParameter.ParameterType));
+          paramDecl.AppendFormat("{0} ", GetTypeName(parameter.ParameterType));
         }
-        stDeclaration.AppendFormat("{0}, ", xParameter.Name);
-      }
-      if(axParameters.Length > 0)
-      {
-        stDeclaration.Length -= 2;
-      }
-      stDeclaration.Append(")");
+        paramDecl.AppendFormat("{0}", parameter.Name);
 
-      return stDeclaration.ToString();
+        paramDecls.Add(paramDecl.ToString());
+      }
+
+      return paramDecls;
     }
 
     /// <summary>

@@ -299,7 +299,7 @@
     <value>&amp;Einfügen</value>
   </data>
   <data name="IndentSize" xml:space="preserve">
-    <value>Größe:</value>
+    <value>Einrückung:</value>
     <comment>The number of spaces instead of tabs</comment>
   </data>
   <data name="AddNewCommentRelationship" xml:space="preserve">
@@ -309,7 +309,7 @@
     <value>&amp;Assoziation</value>
   </data>
   <data name="ButtonAddItem" xml:space="preserve">
-    <value>Item hinzufügen</value>
+    <value>Hinzufügen</value>
   </data>
   <data name="MenuSelectAll" xml:space="preserve">
     <value>&amp;Alles auswählen</value>
@@ -344,7 +344,7 @@
     <value>Der Typ ist bereits verschachtelt.</value>
   </data>
   <data name="Destination" xml:space="preserve">
-    <value>Zieladresse:</value>
+    <value>Ziel:</value>
     <comment>Label text for specifying the destination path</comment>
   </data>
   <data name="SaveChangesConfirmation" xml:space="preserve">
@@ -452,7 +452,7 @@
     <value>Bereit</value>
   </data>
   <data name="UseTabs" xml:space="preserve">
-    <value>Benutzen Sie Tabs zur Identifikation.</value>
+    <value>Mit Tabulatoren einrücken</value>
     <comment>Using tabs instead of spaces</comment>
   </data>
   <data name="AddNewRealization" xml:space="preserve">
@@ -664,7 +664,7 @@
     <value>&amp;Java Diagramm</value>
   </data>
   <data name="GeneratorTargetDir" xml:space="preserve">
-    <value>Wählen Sie ein Verzeichniss zu erstellen des Quellcodes:</value>
+    <value>Wählen Sie ein Verzeichniss, in dem der Quellcode generiert werden soll:</value>
   </data>
   <data name="MembersOfType" xml:space="preserve">
     <value>Member von {0}</value>
@@ -673,7 +673,7 @@
     <value>Abhängigkeit</value>
   </data>
   <data name="CodeStyle" xml:space="preserve">
-    <value>Code style</value>
+    <value>Code formatieren</value>
   </data>
   <data name="MenuEnum" xml:space="preserve">
     <value>&amp;Aufzählung</value>
@@ -754,7 +754,7 @@
     <value>Neuer Konstruktor</value>
   </data>
   <data name="ImportList" xml:space="preserve">
-    <value>Importiere Liste</value>
+    <value>Liste der Imports</value>
   </data>
   <data name="Interface" xml:space="preserve">
     <value>Interface</value>
