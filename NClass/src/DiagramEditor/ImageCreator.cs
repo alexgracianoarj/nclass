@@ -109,7 +109,7 @@ namespace NClass.DiagramEditor
 				else
 					saveAsImageDialog.Filter = DialogFilter;
 				saveAsImageDialog.FilterIndex = 4;
-				saveAsImageDialog.FileName = document.Name;
+				saveAsImageDialog.FileName = document.GetSelectedElementName() ?? document.Name;
 				if (initDir == null && document.Project != null)
 					saveAsImageDialog.InitialDirectory = document.Project.GetProjectDirectory();
 				else

@@ -282,6 +282,20 @@ namespace NClass.DiagramEditor.ClassDiagram
 			get { return selectedConnectionCount; }
 		}
 
+		public string GetSelectedElementName()
+		{
+			if (HasSelectedElement && SelectedElementCount == 1)
+			{
+				foreach (Shape shape in shapes)
+				{
+					if (shape.IsSelected)
+						return shape.Entity.Name;
+				}
+			}
+
+			return null;
+		}
+
 		public IEnumerable<Shape> GetSelectedShapes()
 		{
 			return shapes.GetSelectedElements();

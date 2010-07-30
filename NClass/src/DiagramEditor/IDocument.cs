@@ -55,6 +55,8 @@ namespace NClass.DiagramEditor
 
 		string GetShortDescription();
 
+		string GetSelectedElementName();
+
 		void MouseDown(AbsoluteMouseEventArgs e);
 
 		void MouseMove(AbsoluteMouseEventArgs e);
