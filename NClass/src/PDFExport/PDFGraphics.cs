@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Text;
+using System.Text.RegularExpressions;
 using NClass.DiagramEditor;
 using PdfSharp.Drawing;
 
@@ -93,7 +95,7 @@ namespace PDFExport
     public PDFGraphics(XGraphics graphics)
     {
       this.graphics = graphics;
-      
+
       transform = new Matrix();
 
       clippingRegion = new Region();
@@ -136,10 +138,7 @@ namespace PDFExport
 
     public Matrix Transform
     {
-      get
-      {
-        return transform.Clone();
-      }
+      get { return transform.Clone(); }
       set
       {
         RestoreInitialTransform();
@@ -174,20 +173,12 @@ namespace PDFExport
     /// <summary>
     /// Gets or sets the scale factor for all used fonts.
     /// </summary>
-    public float ScaleFont
-    {
-      get;
-      set;
-    }
+    public float ScaleFont { get; set; }
 
     /// <summary>
     /// Gets or sets the scale factor for all drawn images.
     /// </summary>
-    public float ScaleImage
-    {
-      get;
-      set;
-    }
+    public float ScaleImage { get; set; }
 
     #endregion
 
@@ -211,10 +202,7 @@ namespace PDFExport
     public Region Clip
     {
       get { return clippingRegion; }
-      set
-      {
-        SetClip(value, CombineMode.Replace);
-      }
+      set { SetClip(value, CombineMode.Replace); }
     }
 
     public RectangleF ClipBounds
@@ -243,7 +231,8 @@ namespace PDFExport
       RestoreInitialClip();
       CombineClippingRegion(combineMode, new Region(path));
 
-      graphics.IntersectClip(new XGraphicsPath(path.PathData.Points, path.PathData.Types, FillModeToXFillMode(path.FillMode)));
+      graphics.IntersectClip(new XGraphicsPath(path.PathData.Points, path.PathData.Types,
+                                               FillModeToXFillMode(path.FillMode)));
     }
 
     public void SetClip(Region region, CombineMode combineMode)
@@ -360,61 +349,21 @@ namespace PDFExport
       if(format.FormatFlags == StringFormatFlags.NoWrap)
       {
         //Single line
-        graphics.DrawString(TrimString(s, layoutRectangle, xFont, format.Trimming, xFormat), xFont, xBrush, layoutRectangle, xFormat);
+        string line = TrimString(s, layoutRectangle.Width, xFont, format.Trimming);
+        graphics.DrawString(line, xFont, xBrush, layoutRectangle, xFormat);
       }
       else
       {
-        //Do a word wrapping
-        string[] words = s.Split(' ', '\t');
-        int wordsDrawn = 0;
-        double lineHeight = xFont.GetHeight(graphics);
-        int lineCounter = 0;
-        int wordsInLine = 0;
-        StringBuilder line = new StringBuilder("");
-        do
+        //Multiline
+        int lineHeight = xFont.Height;
+        List<string> lines = SetText(s, layoutRectangle.Width, (int)(layoutRectangle.Height/lineHeight), xFont);
+
+        for(int i = 0; i < lines.Count; i++)
         {
-          line.Append(words[wordsDrawn]);
-          wordsDrawn++;
-          wordsInLine++;
-
-          bool draw = wordsDrawn == words.Length;
-
-          if(graphics.MeasureString(line.ToString(), xFont, xFormat).Width > layoutRectangle.Width)
-          {
-            if((lineCounter + 2) * lineHeight > layoutRectangle.Height)
-            {
-              //This is definitly the last line
-              for(int i = wordsDrawn; i < words.Length; i++)
-              {
-                line.Append(words[i]);
-                line.Append(" ");
-              }
-              line.Length--;
-              wordsDrawn = words.Length;
-            }
-            else if(wordsInLine > 1)
-            {
-              //To large: remove last word and draw the line.
-              line.Length -= words[wordsDrawn - 1].Length + 1; //+ 1: Space
-              wordsDrawn--;
-            }
-            draw = true;
-          }
-
-          if(draw)
-          {
-            RectangleF lineRect = new RectangleF(layoutRectangle.X, (float)(layoutRectangle.Y + lineCounter * lineHeight), layoutRectangle.Width, (float)lineHeight);
-            string trimmedLine = TrimString(line.ToString(), lineRect, xFont, wordsInLine > 1 ? StringTrimming.EllipsisWord : StringTrimming.EllipsisCharacter, xFormat);
-            graphics.DrawString(trimmedLine, xFont, xBrush, lineRect, xFormat);
-            line = new StringBuilder();
-            lineCounter++;
-            wordsInLine = 0;
-          }
-          else
-          {
-            line.Append(" ");
-          }
-        } while(wordsDrawn < words.Length);
+          RectangleF rect = new RectangleF(layoutRectangle.X, layoutRectangle.Y + i*lineHeight,
+                                           layoutRectangle.Width, lineHeight);
+          graphics.DrawString(lines[i], xFont, xBrush, rect, xFormat);
+        }
       }
     }
 
@@ -428,7 +377,7 @@ namespace PDFExport
       //What, if the ScaleImage isn't the pixel to dot scaling? That will fail.
       graphics.Save();
       graphics.ScaleTransform(ScaleImage, ScaleImage);
-      PointF point2 = new PointF(point.X / ScaleImage, point.Y / ScaleImage);
+      PointF point2 = new PointF(point.X/ScaleImage, point.Y/ScaleImage);
       graphics.DrawImage(ImageToXImage(image), point2);
       graphics.Restore();
     }
@@ -438,7 +387,7 @@ namespace PDFExport
       //See DrawImage(Image image, Point point).
       graphics.Save();
       graphics.ScaleTransform(ScaleImage, ScaleImage);
-      graphics.DrawImage(ImageToXImage(image), x / ScaleImage, y / ScaleImage);
+      graphics.DrawImage(ImageToXImage(image), x/ScaleImage, y/ScaleImage);
       graphics.Restore();
     }
 
@@ -584,9 +533,9 @@ namespace PDFExport
         //Create a "line" (start and end point) through the rectangle at the half of
         //the heigth. The two points are p1 and p2. Transform these points with the
         //matrix. The transformed points are located on the border of the rectangle.
-        PointF p1 = new PointF(lgBrush.Rectangle.Left, lgBrush.Rectangle.Top + lgBrush.Rectangle.Height / 2.0f);
-        PointF p2 = new PointF(lgBrush.Rectangle.Right, lgBrush.Rectangle.Top + lgBrush.Rectangle.Height / 2.0f);
-        PointF[] points = new[] { p1, p2 };
+        PointF p1 = new PointF(lgBrush.Rectangle.Left, lgBrush.Rectangle.Top + lgBrush.Rectangle.Height/2.0f);
+        PointF p2 = new PointF(lgBrush.Rectangle.Right, lgBrush.Rectangle.Top + lgBrush.Rectangle.Height/2.0f);
+        PointF[] points = new[] {p1, p2};
         lgBrush.Transform.TransformPoints(points);
         p1 = points[0];
         p2 = points[1];
@@ -613,7 +562,7 @@ namespace PDFExport
     /// <returns>The converted PDF-XFont.</returns>
     private XFont FontToXFont(Font font)
     {
-      return new XFont(font.Name, font.SizeInPoints * ScaleFont, FontStyleToXFontStyle(font.Style));
+      return new XFont(font.Name, font.SizeInPoints*ScaleFont, FontStyleToXFontStyle(font.Style));
     }
 
     /// <summary>
@@ -833,30 +782,172 @@ namespace PDFExport
     #region --- String helper
 
     /// <summary>
+    /// This method will take a text and do a word wrap so it fits into the given
+    /// width. If a line is wider than <paramref name="width"/>, a new line is
+    /// started. If the resulting line count is greater than <paramref name="maxLines"/>,
+    /// an ellipsis is added. The result is a list of strings where one item per
+    /// line.
+    /// </summary>
+    /// <param name="text">The text to set.</param>
+    /// <param name="width">The maximum width of the text.</param>
+    /// <param name="maxLines">The maximum count of lines.</param>
+    /// <param name="xFont">The font to use.</param>
+    /// <returns>A list of strings. One item per line.</returns>
+    private List<string> SetText(String text, float width, int maxLines, XFont xFont)
+    {
+      List<string> tokens = TokenizeString(text, "\r\n|\n\r|\n|\r|\t| ");
+      List<string> lines = new List<string>();
+      StringBuilder line = new StringBuilder();
+      int wordCount = 0;
+      for(int i = 0; i < tokens.Count; i += 2)
+      {
+        line.Append(tokens[i]);
+        wordCount++;
+        double lineWidth = graphics.MeasureString(line.ToString(), xFont).Width;
+        if(lineWidth > width)
+        {
+          //too long => wrap
+          if(lines.Count == maxLines - 1)
+          {
+            //This is the last line. Trim the line.
+            lines.Add(TrimString(line.ToString(), width, xFont,
+                                 (wordCount == 1 ? StringTrimming.EllipsisCharacter : StringTrimming.EllipsisWord)));
+            return lines;
+          }
+
+          if(wordCount == 1)
+          {
+            //single word too long => while too long: new line
+            int charsSet = 0;
+            while(lineWidth > width)
+            {
+              if(lines.Count == maxLines - 1)
+              {
+                //This is the last line. Trim the line.
+                lines.Add(TrimString(line.ToString(), width, xFont, StringTrimming.EllipsisCharacter));
+                return lines;
+              }
+              //Remove characters until the "word" fits
+              do
+              {
+                line.Length--;
+                lineWidth = graphics.MeasureString(line.ToString(), xFont).Width;
+              } while(lineWidth > width && line.Length > 0);
+              if(line.Length == 0)
+              {
+                //This can happen if the width is to small for one singel char. We set the char
+                //in this case even if it doesn't realy fit.
+                line.Append(tokens[i][charsSet]);
+              }
+              lines.Add(line.ToString());
+              charsSet += line.Length;
+              //The next line starts with the rest of the word
+              line = new StringBuilder(tokens[i].Substring(charsSet));
+              lineWidth = graphics.MeasureString(line.ToString(), xFont).Width;
+            }
+          }
+          else
+          {
+            //multiple words in line => remove last one
+            line.Length -= tokens[i].Length;
+            lines.Add(line.ToString().TrimEnd());
+            line = new StringBuilder();
+            wordCount = 0;
+            i -= 2;
+          }
+        }
+        if(lineWidth <= width)
+        {
+          if(i + 1 < tokens.Count)
+          {
+            string token = tokens[i + 1];
+            Regex regex = new Regex("\r\n|\n\r|\n|\r");
+            if(regex.IsMatch(token))
+            {
+              // A new line
+              if(lines.Count == maxLines - 1)
+              {
+                //This is the last line. Trim the line.
+                line.Append("...");
+                lines.Add(TrimString(line.ToString(), width, xFont,
+                                     (wordCount == 1 ? StringTrimming.EllipsisCharacter : StringTrimming.EllipsisWord)));
+                return lines;
+              }
+              lines.Add(line.ToString().TrimEnd());
+              line = new StringBuilder();
+              wordCount = 0;
+            }
+            else
+            {
+              line.Append(token);
+            }
+          }
+        }
+      }
+      lines.Add(line.ToString());
+      return lines;
+    }
+
+    /// <summary>
+    /// This method will devide string by a separator and return the tokens as a list.
+    /// The list will contain the text between the separators as well as the separators
+    /// itself.
+    /// </summary>
+    /// <example>
+    /// <code>
+    /// TokenizeString("Hello.World", ".");
+    /// </code>
+    /// This call will return a list with the following items:
+    /// <list type="bullet">
+    ///   <item>Hello</item>
+    ///   <item>.</item>
+    ///   <item>World</item>
+    /// </list>
+    /// </example>
+    /// <param name="text">The text to devide.</param>
+    /// <param name="separator">Teh separator to devide the text.</param>
+    /// <returns>A list of tokens.</returns>
+    private static List<string> TokenizeString(string text, string separator)
+    {
+      Regex regex = new Regex(separator);
+      MatchCollection matches = regex.Matches(text);
+      List<string> result = new List<string>();
+      int pos = 0;
+      foreach(Match match in matches)
+      {
+        result.Add(text.Substring(pos, match.Index - pos));
+        result.Add(match.Value);
+        pos = match.Index + match.Length;
+      }
+      result.Add(text.Substring(pos, text.Length - pos));
+
+      return result;
+    }
+
+    /// <summary>
     /// Trims a string so it fits into the rectangle. Only one line is trimed.
     /// </summary>
     /// <remarks>
     /// The StringTrimming.EllipsisPath is handeled as StringTrimming.EllipsisCharacter.
     /// </remarks>
     /// <param name="s">The string to trim.</param>
-    /// <param name="rectangle">A rectangle which determines the maximum width of the string.</param>
+    /// <param name="width">The maximum width of the string.</param>
     /// <param name="font">The font which is used to print the text.</param>
     /// <param name="stringTrimming">A StringTrimming which should be used. See remarks.</param>
-    /// <param name="xStringFormat">The XStringFormat which will be used when drawing the string.</param>
     /// <returns>The (possible) trimmed string.</returns>
-    private string TrimString(string s, RectangleF rectangle, XFont font, StringTrimming stringTrimming, XStringFormat xStringFormat)
+    private string TrimString(string s, float width, XFont font, StringTrimming stringTrimming)
     {
-      if(graphics.MeasureString(s, font, xStringFormat).Width <= rectangle.Width
+      if(graphics.MeasureString(s, font).Width <= width
          || stringTrimming == StringTrimming.None)
       {
         return s;
       }
 
       bool ellipsis = stringTrimming == StringTrimming.EllipsisCharacter
-                   || stringTrimming == StringTrimming.EllipsisWord
-                   || stringTrimming == StringTrimming.EllipsisPath;
+                      || stringTrimming == StringTrimming.EllipsisWord
+                      || stringTrimming == StringTrimming.EllipsisPath;
       bool word = stringTrimming == StringTrimming.Word
-               || stringTrimming == StringTrimming.EllipsisWord;
+                  || stringTrimming == StringTrimming.EllipsisWord;
 
       string result = ellipsis ? s + "..." : s;
       do
@@ -871,7 +962,7 @@ namespace PDFExport
           result = result.Substring(0, (ellipsis ? result.Length - 4 : result.Length - 1));
         }
         result = ellipsis ? result + "..." : result;
-      } while(graphics.MeasureString(result, font, xStringFormat).Width > rectangle.Width
+      } while(graphics.MeasureString(result, font).Width > width
               || s.Length <= 0);
 
       return result;

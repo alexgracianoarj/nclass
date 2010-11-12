@@ -77,12 +77,14 @@ namespace PDFExport
     {
       showThread = new Thread(Run)
                      {
-                       IsBackground = true, 
+                       IsBackground = true,
                        Name = "PDFExporterProgressDialogShowThread"
                      };
 
-      Point point = parent == null ? new Point(Screen.PrimaryScreen.WorkingArea.Width / 2, Screen.PrimaryScreen.WorkingArea.Height / 2) : new Point(parent.Left + parent.Width / 2, parent.Top + parent.Height / 2);
-      
+      Point point = parent == null
+                      ? new Point(Screen.PrimaryScreen.WorkingArea.Width/2, Screen.PrimaryScreen.WorkingArea.Height/2)
+                      : new Point(parent.Left + parent.Width/2, parent.Top + parent.Height/2);
+
       showThread.Start(point);
     }
 
@@ -107,7 +109,7 @@ namespace PDFExport
     {
       Point point = (Point)center;
       PDFExportProgress progressForm = new PDFExportProgress();
-      progressForm.Location = new Point(point.X - progressForm.Width / 2, point.Y - progressForm.Height / 2);
+      progressForm.Location = new Point(point.X - progressForm.Width/2, point.Y - progressForm.Height/2);
       progressForm.Show();
 
       try
@@ -145,7 +147,7 @@ namespace PDFExport
       {
         //Next run
         pictureBoxEntity.Left = ENTITY_START;
-        currentImageIndex = (currentImageIndex + 1) % imageListEntities.Images.Count;
+        currentImageIndex = (currentImageIndex + 1)%imageListEntities.Images.Count;
         pictureBoxEntity.Image = imageListEntities.Images[currentImageIndex];
       }
       pictureBoxEntity.Left += 2;
