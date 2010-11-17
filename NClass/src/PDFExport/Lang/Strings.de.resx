@@ -189,4 +189,11 @@
   <data name="Unit_Pixel" xml:space="preserve">
     <value>Pixel</value>
   </data>
+  <data name="ErrorDialog_Title" xml:space="preserve">
+    <value>Fehler</value>
+  </data>
+  <data name="Error_CoulNotWritePDF" xml:space="preserve">
+    <value>Konnte PDF nicht schreiben:
+{0}</value>
+  </data>
 </root>

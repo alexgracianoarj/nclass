@@ -1,12 +1,13 @@
 using System;
 using System.Diagnostics;
 using System.Globalization;
+using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
 using NClass.GUI;
 using PDFExport.Properties;
 using PdfSharp.Drawing;
-using Strings=PDFExport.Lang.Strings;
+using Strings = PDFExport.Lang.Strings;
 
 namespace PDFExport
 {
@@ -75,7 +76,7 @@ namespace PDFExport
     /// </summary>
     /// <param name="sender">The sender.</param>
     /// <param name="e">Additional information.</param>
-    void menuItem_Click(object sender, EventArgs e)
+    private void menuItem_Click(object sender, EventArgs e)
     {
       Launch();
     }
@@ -92,10 +93,7 @@ namespace PDFExport
     /// </summary>
     public override bool IsAvailable
     {
-      get
-      {
-        return DocumentManager.HasDocument;
-      }
+      get { return DocumentManager.HasDocument; }
     }
 
     /// <summary>
@@ -103,10 +101,7 @@ namespace PDFExport
     /// </summary>
     public override ToolStripItem MenuItem
     {
-      get
-      {
-        return menuItem;
-      }
+      get { return menuItem; }
     }
 
     #endregion
@@ -148,21 +143,14 @@ namespace PDFExport
                                     (int)new XUnit(optionsForm.PDFPadding.Right, optionsForm.Unit).Point,
                                     (int)new XUnit(optionsForm.PDFPadding.Bottom, optionsForm.Unit).Point);
 
-      MainForm mainForm = null;
-      foreach(Form form in Application.OpenForms)
-      {
-        if(form is MainForm)
-        {
-          mainForm = (MainForm)form;
-          break;
-        }
-      }
+      MainForm mainForm = Application.OpenForms.OfType<MainForm>().FirstOrDefault();
+
       PDFExportProgress.ShowAsync(mainForm);
 
       PDFExporter exporter = new PDFExporter(fileName, DocumentManager.ActiveDocument, optionsForm.SelectedOnly, padding);
       Thread exportThread = new Thread(exporter.Export)
                               {
-                                Name = "PDFExporterThread", 
+                                Name = "PDFExporterThread",
                                 IsBackground = true
                               };
       exportThread.Start();
@@ -175,9 +163,12 @@ namespace PDFExport
 
       PDFExportProgress.CloseAsync();
 
-      if(new PDFExportFinished().ShowDialog() == DialogResult.OK)
+      if(exporter.Successful)
       {
-        Process.Start(fileName);
+        if(new PDFExportFinished().ShowDialog(mainForm) == DialogResult.OK)
+        {
+          Process.Start(fileName);
+        }
       }
     }
 

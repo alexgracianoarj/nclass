@@ -61,6 +61,25 @@ namespace PDFExport.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Could not write PDF:
+        ///{0}.
+        /// </summary>
+        internal static string Error_CoulNotWritePDF {
+            get {
+                return ResourceManager.GetString("Error_CoulNotWritePDF", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error.
+        /// </summary>
+        internal static string ErrorDialog_Title {
+            get {
+                return ResourceManager.GetString("ErrorDialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Close.
         /// </summary>
         internal static string FinishedDialog_Close {
