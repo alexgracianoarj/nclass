@@ -134,8 +134,10 @@ namespace NClass.AssemblyImport
             Diagram diagram = new Diagram(CSharpLanguage.Instance);
             NETImport importer = new NETImport(diagram, settings);
 
-            importer.ImportAssembly(fileName);
-            Workspace.ActiveProject.Add(diagram);
+            if(importer.ImportAssembly(fileName))
+            {
+              Workspace.ActiveProject.Add(diagram);
+            }
           }
         }
       }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -17,7 +18,7 @@ namespace NClass.AssemblyImport
   /// Imports an Assembly and creates a classdiagram.
   /// </summary>
   /// - Relationships between entities
-  ///   - Done: Generalization and Realization (DONE)
+  ///   - Generalization and Realization (DONE)
   ///   - Nested types (DONE)
   ///   - Composition of fields (DONE)
   /// - Classes / Interfaces / Structs: 
@@ -56,15 +57,15 @@ namespace NClass.AssemblyImport
     #region === Construction
 
     /// <summary>
-    /// Creates a new instance of NETImort.
+    /// Creates a new instance of <see cref="NETImport"/>.
     /// </summary>
-    /// <param name="Destination">An instance of a Project to which all entities
-    ///                           are added.</param>
-    /// <param name="ImportSettings">Settings, which control what to import.</param>
-    public NETImport(Diagram Destination, ImportSettings ImportSettings)
+    /// <param name="diagram">An instance of a Project to which all entities
+    ///                       are added.</param>
+    /// <param name="importSettings">Settings, which control what to import.</param>
+    public NETImport(Diagram diagram, ImportSettings importSettings)
     {
-      diagram = Destination;
-      importSettings = ImportSettings;
+      this.diagram = diagram;
+      this.importSettings = importSettings;
 
       operatorMethodsMap.Add("op_UnaryPlus", "operator +");
       operatorMethodsMap.Add("op_UnaryNegation", "operator -");
@@ -107,6 +108,17 @@ namespace NClass.AssemblyImport
     #endregion
 
     #region === Fields
+
+    /// <summary>
+    /// The path of the assembly to import.
+    /// </summary>
+    private string path;
+
+    /// <summary>
+    /// Assemblies at the folder of the imported assembly. Only used if the imported
+    /// assembly references an assembly which can't be loaded by the CLR.
+    /// </summary>
+    private Dictionary<String, Assembly> assemblies;
 
     /// <summary>
     /// The imported entities get added to this project.
@@ -169,37 +181,47 @@ namespace NClass.AssemblyImport
     #region +++ Pass 1 - Types
 
     /// <summary>
-    /// Imports the assembly mentioned in <paramref name="FileName"/>.
+    /// Imports the assembly mentioned in <paramref name="fileName"/>.
     /// </summary>
-    /// <param name="FileName">The name of the assemblyfile to import.</param>
-    public void ImportAssembly(string FileName)
+    /// <param name="fileName">The name of the assemblyfile to import.</param>
+    /// <returns><c>True</c> if the import was successful.</returns>
+    public bool ImportAssembly(string fileName)
     {
-      if(string.IsNullOrEmpty(FileName))
+      if(string.IsNullOrEmpty(fileName))
       {
         MessageBox.Show(Strings.Error_NoAssembly, Strings.Error_MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
-        return;
+        return false;
       }
       try
       {
-//This causes the load to fail if the assembly references other assemblys (Why? Shouldn't this be the
-//reason to use the ReflectioOnly context?)
-//        Assembly xNewAssembly = Assembly.ReflectionOnlyLoadFrom(FileName);
-//        AppDomain.CurrentDomain.ReflectionOnlyAssemblyResolve += new ResolveEventHandler(CurrentDomain_ReflectionOnlyAssemblyResolve);
-        Assembly xNewAssembly = Assembly.LoadFile(FileName);
+        // Load the assembly into the ReflectionOnlyContext.
+        AppDomain.CurrentDomain.ReflectionOnlyAssemblyResolve += CurrentDomain_ReflectionOnlyAssemblyResolve;
+        Assembly xNewAssembly = Assembly.ReflectionOnlyLoadFrom(fileName);
+        path = Path.GetDirectoryName(fileName);
 
 //Not needed until loading the Assembly into a new AppDomain doesn't work...
-//         FileInfo fileInfo = new FileInfo(FileName);
+//         FileInfo fileInfo = new FileInfo(fileName);
 // 
 //         AppDomainSetup setup = new AppDomainSetup();
 //         setup.ApplicationBase = AppDomain.CurrentDomain.BaseDirectory;//fileInfo.DirectoryName;
 //         setup.PrivateBinPath = fileInfo.DirectoryName;//AppDomain.CurrentDomain.BaseDirectory;
 //         setup.ApplicationName = "AssemblyLoader";
 //         setup.ShadowCopyFiles = "true";
-//         AppDomain xNewAppDomain = AppDomain.CreateDomain("TempDomain", null, setup);
-// //        AssemblyLoader.AssemblyLoader xAssemblyLoader = (AssemblyLoader.AssemblyLoader)xNewAppDomain.CreateInstanceAndUnwrap("AssemblyLoader, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null", "AssemblyLoader.AssemblyLoader");
-//         AssemblyLoader.AssemblyLoader xAssemblyLoader = (AssemblyLoader.AssemblyLoader)xNewAppDomain.CreateInstanceAndUnwrap("AssemblyLoader", "AssemblyLoader.AssemblyLoader");
-// 
-//         Assembly xNewAssembly = xAssemblyLoader.Load(FileName);
+        // The following code creates a new AppDomain with the settings from the current domain.
+        // An instance of AssemblyReflector is created within this new domain and code can be called
+        // in this newly created domain. When trying to transfer an instance of Assembly from the new
+        // domain into this domain, a FileNotFoundException is raised. The reason is the following:
+        // While deserializing the Assembly instance, it tries to load the assembly again from disk.
+        // But this time, the CLR searches at the wrong path (the NClass startup dir) instead of the
+        // folder where the originally loaded assembly is located.
+        // The only way to fix this is to do the reflection completely in the new domain and transfer
+        // the results back to this domain. That leads to new layer.
+//        AppDomain newAppDomain = AppDomain.CreateDomain("TempDomain", null, null);
+//        String pluginDllName = Assembly.GetAssembly(typeof(NETImport)).FullName;
+//        AssemblyReflector xAssemblyLoader = (AssemblyReflector)newAppDomain.CreateInstanceAndUnwrap(pluginDllName, "NClass.AssemblyImport.AssemblyReflector", false, BindingFlags.Default, null, new object[]{fileName}, null, null, null);
+
+//        Assembly xNewAssembly = xAssemblyLoader.Assembly;
+//        xAssemblyLoader.Load(fileName);
 // 
 //         AppDomain.Unload(xNewAppDomain);
 
@@ -215,6 +237,7 @@ namespace NClass.AssemblyImport
         fieldMap = new Dictionary<Field, FieldInfo>();
 
         diagram.RedrawSuspended = true;
+        diagram.Name = Path.GetFileName(fileName);
         Type[] axTypes = xNewAssembly.GetTypes();
         ReflectTypes(axTypes);
         ArrangeTypes();
@@ -227,10 +250,12 @@ namespace NClass.AssemblyImport
       catch(ReflectionTypeLoadException)
       {
         MessageBox.Show(Strings.Error_MissingReferencedAssemblies, Strings.Error_MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+        return false;
       }
       catch(BadImageFormatException)
       {
         MessageBox.Show(Strings.Error_BadImageFormat, Strings.Error_MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+        return false;
       }
       finally
       {
@@ -240,14 +265,49 @@ namespace NClass.AssemblyImport
 //       {
 //         MessageBox.Show("Error while importing!\n\n" + ex.ToString() + "\n\nNote 1: Managed C++ assemblies are not supported (yet).\nNote 2: Assemblys which are created with a fuscator might also fail to import.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 //       }
+      return true;
     }
 
-// Only used when assemblys get reflected via the "Reflection Only Context" (which does not work
-// right now)
-//    Assembly CurrentDomain_ReflectionOnlyAssemblyResolve(object sender, ResolveEventArgs args)
-//    {
-//      return Assembly.ReflectionOnlyLoad(args.Name);
-//    }
+    /// <summary>
+    /// Find an assembly with the given full name. Called by the CLR if an assembly is
+    /// loaded into the ReflectionOnlyContext and a referenced assebmly is needed.
+    /// </summary>
+    /// <param name="sender">The source of this event.</param>
+    /// <param name="args">More information about the event.</param>
+    /// <returns>The loaded assembly.</returns>
+    private Assembly CurrentDomain_ReflectionOnlyAssemblyResolve(object sender, ResolveEventArgs args)
+    {
+      try
+      {
+        return Assembly.ReflectionOnlyLoad(args.Name);
+      }
+      catch(FileNotFoundException)
+      {
+        //No global assembly: try loading it from the current dir.
+        if(assemblies == null)
+        {
+          assemblies = new Dictionary<string, Assembly>();
+
+          // Lazily load all assemblies from the path
+          List<string> files = new List<string>();
+          files.AddRange(Directory.GetFiles(path, "*.dll", SearchOption.TopDirectoryOnly));
+          files.AddRange(Directory.GetFiles(path, "*.exe", SearchOption.TopDirectoryOnly));
+          foreach (string file in files)
+          {
+            try
+            {
+              Assembly assembly = Assembly.ReflectionOnlyLoadFrom(file);
+              assemblies.Add(assembly.FullName, assembly);
+            }
+            catch
+            {
+              // The assembly can't be loaded. Maybe this is no CLR assembly.
+            }
+          }
+        }
+        return assemblies.ContainsKey(args.Name) ? assemblies[args.Name] : null;
+      }
+    }
 
     /// <summary>
     /// Creates a nice arrangement for each entity.
@@ -286,39 +346,39 @@ namespace NClass.AssemblyImport
     /// <param name="Types">The types to reflect.</param>
     private void ReflectTypes(IEnumerable<Type> Types)
     {
-      foreach(Type xType in Types)
+      foreach(Type type in Types)
       {
         //There are some compiler generated nested classes which should not
         //be imported. All these magic classes have the CompilerGeneratedAttribute.
         //The C#-compiler of the .NET 2.0 Compact Framework creates the classes
         //but dosn't mark them with the attribute. All classes have a "<" in their name.
-        if(HasMemberCompilerGeneratedAttribute(xType) || xType.Name.Contains("<"))
+        if(HasMemberCompilerGeneratedAttribute(type) || type.Name.Contains("<"))
         {
           continue;
         }
-        if(xType.IsClass)
+        if(type.IsClass)
         {
           //Could be a delegate
-          if(xType.BaseType == typeof(MulticastDelegate))
+          if(type.BaseType == typeof(MulticastDelegate))
           {
-            ReflectDelegate(xType);
+            ReflectDelegate(type);
           }
           else
           {
-            ReflectClass(xType);
+            ReflectClass(type);
           }
         }
-        if(xType.IsInterface)
+        if(type.IsInterface)
         {
-          ReflectInterface(xType);
+          ReflectInterface(type);
         }
-        if(xType.IsEnum)
+        if(type.IsEnum)
         {
-          ReflectEnum(xType);
+          ReflectEnum(type);
         }
-        if(xType.IsValueType && !xType.IsEnum)
+        if(type.IsValueType && !type.IsEnum)
         {
-          ReflectStruct(xType);
+          ReflectStruct(type);
         }
       }
     }
@@ -535,17 +595,17 @@ namespace NClass.AssemblyImport
     }
 
     /// <summary>
-    /// Reflects the enum <paramref name="xType"/>.
+    /// Reflects the enum <paramref name="type"/>.
     /// </summary>
-    /// <param name="xType">A type with informations about the enum which gets reflected.</param>
-    private void ReflectEnum(Type xType)
+    /// <param name="type">A type with informations about the enum which gets reflected.</param>
+    private void ReflectEnum(Type type)
     {
-      if(!importSettings.CheckImportEnum(xType))
+      if(!importSettings.CheckImportEnum(type))
       {
         return;
       }
       EnumType xNewEnum = diagram.AddEnum();
-      FieldInfo[] axFields = xType.GetFields(STANDARD_BINDING_FLAGS);
+      FieldInfo[] axFields = type.GetFields(STANDARD_BINDING_FLAGS);
       foreach(FieldInfo xField in axFields)
       {
         //Sort this special field out
@@ -555,7 +615,7 @@ namespace NClass.AssemblyImport
         }
         xNewEnum.AddValue(xField.Name);
       }
-      ReflectTypeBase(xType, xNewEnum);
+      ReflectTypeBase(type, xNewEnum);
     }
 
     #endregion
@@ -873,64 +933,57 @@ namespace NClass.AssemblyImport
     }
 
     /// <summary>
-    /// Reflect the basic type <paramref name="xType"/>. All information is
+    /// Reflect the basic type <paramref name="type"/>. All information is
     /// stored in <paramref name="xTypeBase"/>. Also sets up the dictionaries
     /// used for the relationships.
     /// </summary>
-    /// <param name="xType">The information is taken from <paramref name="xType"/>.</param>
+    /// <param name="type">The information is taken from <paramref name="type"/>.</param>
     /// <param name="xTypeBase">All information is stored in this TypeBase.</param>
-    private void ReflectTypeBase(Type xType, TypeBase xTypeBase)
+    private void ReflectTypeBase(Type type, TypeBase xTypeBase)
     {
-      xTypeBase.Name = GetTypeName(xType);
+      xTypeBase.Name = GetTypeName(type);
       //Might set the wrong access modifier for nested classes. Will be
       //corrected when adding the nesting relationships.
-      xTypeBase.AccessModifier = GetTypeAccessModifier(xType);
+      xTypeBase.AccessModifier = GetTypeAccessModifier(type);
 
       //Fill up the dictionaries
-      entities.Add(xType.FullName, xTypeBase);
-      types.Add(xType.FullName, xType);
-      if(xType.IsNested)
+      entities.Add(type.FullName, xTypeBase);
+      types.Add(type.FullName, type);
+      if(type.IsNested)
       {
         //Add an entry to the nesting dictionary
-        nestings.Add(xType.FullName, xType.DeclaringType.FullName);
+        nestings.Add(type.FullName, type.DeclaringType.FullName);
       }
-      Type[] axImplementedInterfaces = xType.GetInterfaces();
+      Type[] axImplementedInterfaces = type.GetInterfaces();
       List<string> astImplementedInterfaceNames = new List<string>();
       foreach(Type xImplementedType in axImplementedInterfaces)
       {
-        //An generic interface is implemented by xType
-        if(xImplementedType.FullName == null)
-        {
-          astImplementedInterfaceNames.Add(GetTypeName(xImplementedType));
-        }
-        else
-        {
-          astImplementedInterfaceNames.Add(xImplementedType.FullName);
-        }
+        //An generic interface is implemented by type
+        astImplementedInterfaceNames.Add(xImplementedType.FullName ?? GetTypeName(xImplementedType));
       }
-      if(xType.IsInterface)
+      if(type.IsInterface)
       {
         //In NClass, interfaces are derived from (mayby more than one) interface
-        generalizations.Add(xType.FullName, astImplementedInterfaceNames);
+        generalizations.Add(type.FullName, astImplementedInterfaceNames);
       }
       else
       {
-        implementations.Add(xType.FullName, astImplementedInterfaceNames);
+        implementations.Add(type.FullName, astImplementedInterfaceNames);
       }
       //Interfaces don't have a base type
-      if(xType.BaseType != null)
+      if(type.BaseType != null)
       {
         List<string> astBaseType = new List<string>();
         // lytico: generic types have FullName == null
-        if(xType.BaseType.IsGenericType)
+        if(type.BaseType.IsGenericType)
         {
-          astBaseType.Add(xType.BaseType.Namespace + '.' + xType.BaseType.Name);
+          astBaseType.Add(type.BaseType.Namespace + '.' + type.BaseType.Name);
         }
         else
         {
-          astBaseType.Add(xType.BaseType.FullName);
+          astBaseType.Add(type.BaseType.FullName);
         }
-        generalizations.Add(xType.FullName, astBaseType);
+        generalizations.Add(type.FullName, astBaseType);
       }
     }
 
@@ -1215,14 +1268,7 @@ namespace NClass.AssemblyImport
             //stDeclaration contains already "virtual " - which is not allowed
             //in combinition with override, so get rid of it.
             // lytico: IsAbstract added; a abstract method is virtual
-            if(xMethod.IsAbstract)
-            {
-              stDeclaration.Replace("abstract", "");
-            }
-            else
-            {
-              stDeclaration.Replace("virtual", "");
-            }
+            stDeclaration.Replace(xMethod.IsAbstract ? "abstract" : "virtual", "");
           }
           if(xMethod.IsFinal)
           {
