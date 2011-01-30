@@ -25,7 +25,7 @@ namespace NClass.Java
 		/// The <paramref name="name"/> or <paramref name="type"/> 
 		/// does not fit to the syntax.
 		/// </exception>
-		internal JavaParameter(string name, string type) : base(name, type, ParameterModifier.In)
+		internal JavaParameter(string name, string type) : base(name, type, ParameterModifier.In, null)
 		{
 		}
 
@@ -45,6 +45,19 @@ namespace NClass.Java
 						Strings.ErrorInvalidParameterDeclaration);
 				}
 				base.Type = value;
+			}
+		}
+
+		public override string DefaultValue
+		{
+			get
+			{
+				return null;
+			}
+			protected set
+			{
+				if (value != null)
+					throw new BadSyntaxException(Strings.ErrorInvalidParameterDeclaration);
 			}
 		}
 

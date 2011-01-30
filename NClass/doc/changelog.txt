@@ -1,4 +1,8 @@
-Version 2.03 (30-Jul-2010])
+Version 2.04
+------------
++ Optional parameters are supported
+
+Version 2.03 (30-Jul-2010)
 --------------------------
 + PDFExport plugin by Malte Ried
 + Support for nullable types

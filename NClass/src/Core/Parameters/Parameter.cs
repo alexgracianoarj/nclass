@@ -23,17 +23,19 @@ namespace NClass.Core
 		string type;
 		string name;
 		ParameterModifier modifier;
+		string defaultValue;
 
 		/// <exception cref="BadSyntaxException">
 		/// The <paramref name="name"/> or <paramref name="type"/> 
 		/// does not fit to the syntax.
 		/// </exception>
-		protected Parameter(string name, string type, ParameterModifier modifier)
+		protected Parameter(string name, string type, ParameterModifier modifier, string defaultValue)
 		{
 			Initializing = true;
 			Name = name;
 			Type = type;
 			Modifier = modifier;
+			DefaultValue = defaultValue;
 			Initializing = false;
 		}
 
@@ -77,19 +79,42 @@ namespace NClass.Core
 			}
 		}
 
-		public ParameterModifier Modifier
+		public virtual ParameterModifier Modifier
 		{
 			get
 			{
 				return modifier;
 			}
-			private set
+			protected set
 			{
 				if (modifier != value) {
 					modifier = value;
 					Changed();
 				}
 			}
+		}
+
+		public virtual string DefaultValue
+		{
+			get
+			{
+				return defaultValue;
+			}
+			protected set
+			{
+				if (string.IsNullOrWhiteSpace(value))
+					value = null;
+
+				if (defaultValue != value) {
+					defaultValue = value;
+					Changed();
+				}
+			}
+		}
+
+		public bool IsOptional
+		{
+			get { return (DefaultValue != null); }
 		}
 
 		public abstract Language Language
@@ -108,9 +133,6 @@ namespace NClass.Core
 
 				case ParameterModifier.Params:
 					return "params";
-
-				case ParameterModifier.Optional:
-					return "optional";
 
 				default:
 					return "in";

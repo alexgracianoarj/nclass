@@ -24,10 +24,11 @@ namespace NClass.CSharp
 	{
 		// [<modifiers>] <type> <name> [,]
 		const string ParameterPattern =
-			@"\s*(?<modifier>out|ref|params)?(?(modifier)\s+|)" +
+			@"(?<modifier>out|ref|params)?(?(modifier)\s+|)" +
 			@"(?<type>" + CSharpLanguage.GenericTypePattern2 + @")\s+" +
-			@"(?<name>" + CSharpLanguage.NamePattern + @")\s*(,|$)";
-		const string ParameterStringPattern = @"^\s*(" + ParameterPattern + ")*$";
+			@"(?<name>" + CSharpLanguage.NamePattern + @")" +
+			@"(\s*=\s*(?<defval>([^,""]+|""(\\""|[^""])*"")))?";
+		const string ParameterStringPattern = @"^\s*(" + ParameterPattern + @"\s*(,\s*|$))*$";
 
 		static Regex parameterRegex =
 			new Regex(ParameterPattern, RegexOptions.ExplicitCapture);
@@ -59,12 +60,13 @@ namespace NClass.CSharp
 				Group nameGroup = match.Groups["name"];
 				Group typeGroup = match.Groups["type"];
 				Group modifierGroup = match.Groups["modifier"];
+				Group defvalGroup = match.Groups["defval"];
 
 				if (IsReservedName(nameGroup.Value))
 					throw new ReservedNameException(nameGroup.Value);
 
 				Parameter parameter = new CSharpParameter(nameGroup.Value, typeGroup.Value,
-					ParseParameterModifier(modifierGroup.Value));
+					ParseParameterModifier(modifierGroup.Value), defvalGroup.Value);
 				InnerList.Add(parameter);
 
 				return parameter;
@@ -95,12 +97,13 @@ namespace NClass.CSharp
 				Group nameGroup = match.Groups["name"];
 				Group typeGroup = match.Groups["type"];
 				Group modifierGroup = match.Groups["modifier"];
+				Group defvalGroup = match.Groups["defval"];
 
 				if (IsReservedName(nameGroup.Value, index))
 					throw new ReservedNameException(nameGroup.Value);
 
 				Parameter newParameter = new CSharpParameter(nameGroup.Value, typeGroup.Value,
-					ParseParameterModifier(modifierGroup.Value));
+					ParseParameterModifier(modifierGroup.Value), defvalGroup.Value);
 				InnerList[index] = newParameter;
 				return newParameter;
 			}
@@ -148,20 +151,27 @@ namespace NClass.CSharp
 			if (parameterStringRegex.IsMatch(declaration))
 			{
 				Clear();
+
+				bool optionalPart = false;
 				foreach (Match match in parameterRegex.Matches(declaration))
 				{
 					Group nameGroup = match.Groups["name"];
 					Group typeGroup = match.Groups["type"];
 					Group modifierGroup = match.Groups["modifier"];
+					Group defvalGroup = match.Groups["defval"];
+
+					if (defvalGroup.Success)
+						optionalPart = true;
+					else if (optionalPart)
+						throw new BadSyntaxException(Strings.ErrorInvalidParameterDeclaration);
 
 					InnerList.Add(new CSharpParameter(nameGroup.Value, typeGroup.Value,
-						ParseParameterModifier(modifierGroup.Value)));
+						ParseParameterModifier(modifierGroup.Value), defvalGroup.Value));
 				}
 			}
 			else
 			{
-				throw new BadSyntaxException(
-					Strings.ErrorInvalidParameterDeclaration);
+				throw new BadSyntaxException(Strings.ErrorInvalidParameterDeclaration);
 			}
 		}
 	}

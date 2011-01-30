@@ -22,7 +22,6 @@ namespace NClass.Core
 		In,
 		Inout,
 		Out,
-		Params,
-		Optional
+		Params
 	}
 }
