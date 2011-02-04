@@ -2,7 +2,6 @@ using System;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
-using System.Threading;
 using System.Windows.Forms;
 using NClass.GUI;
 using PDFExport.Properties;
@@ -148,18 +147,23 @@ namespace PDFExport
       PDFExportProgress.ShowAsync(mainForm);
 
       PDFExporter exporter = new PDFExporter(fileName, DocumentManager.ActiveDocument, optionsForm.SelectedOnly, padding);
-      Thread exportThread = new Thread(exporter.Export)
-                              {
-                                Name = "PDFExporterThread",
-                                IsBackground = true
-                              };
-      exportThread.Start();
-      while(exportThread.IsAlive)
-      {
-        Application.DoEvents();
-        exportThread.Join(5);
-      }
-      exportThread.Join();
+      exporter.Export();
+
+      // Running the exporter within an extra thread isn't a good idea since
+      // the exporter uses GDI+. NClass uses GDI+ also if it has to redraw the
+      // diagram. GDI+ can't be used by two threads at the same time.
+      //Thread exportThread = new Thread(exporter.Export)
+      //                        {
+      //                          Name = "PDFExporterThread",
+      //                          IsBackground = true
+      //                        };
+      //exportThread.Start();
+      //while (exportThread.IsAlive)
+      //{
+      //  Application.DoEvents();
+      //  exportThread.Join(5);
+      //}
+      //exportThread.Join();
 
       PDFExportProgress.CloseAsync();
 
