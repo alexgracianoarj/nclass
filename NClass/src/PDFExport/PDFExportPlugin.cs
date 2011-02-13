@@ -147,6 +147,7 @@ namespace PDFExport
       PDFExportProgress.ShowAsync(mainForm);
 
       PDFExporter exporter = new PDFExporter(fileName, DocumentManager.ActiveDocument, optionsForm.SelectedOnly, padding);
+	  Application.DoEvents();
       exporter.Export();
 
       // Running the exporter within an extra thread isn't a good idea since
