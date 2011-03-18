@@ -13,8 +13,6 @@
 // this program; if not, write to the Free Software Foundation, Inc., 
 // 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-using System;
-using System.Text;
 using System.Text.RegularExpressions;
 using NClass.Core;
 using NClass.Translations;
@@ -28,10 +26,9 @@ namespace NClass.CSharp
 		const string EnumItemPattern = @"^\s*" + EnumNamePattern +
 			@"(\s*=\s*(?<value>\d+))?\s*$";
 
-		const int EmptyValue = 0;
 		static Regex enumItemRegex = new Regex(EnumItemPattern, RegexOptions.ExplicitCapture);
 				
-		int initValue;
+		int? initValue;
 
 		/// <exception cref="BadSyntaxException">
 		/// The <paramref name="declaration"/> does not fit to the syntax.
@@ -40,7 +37,7 @@ namespace NClass.CSharp
 		{
 		}
 
-		public int InitValue
+		public int? InitValue
 		{
 			get { return initValue; }
 		}
@@ -60,10 +57,18 @@ namespace NClass.CSharp
 					Group valueGroup = match.Groups["value"];
 
 					Name = nameGroup.Value;
-					if (valueGroup.Success)
-						int.TryParse(valueGroup.Value, out initValue);
-					else
-						initValue = EmptyValue;
+				  if (valueGroup.Success)
+          {
+            int intValue;
+            if(int.TryParse(valueGroup.Value, out intValue))
+              initValue = intValue;
+            else
+              initValue = null;
+          }
+          else
+          {
+            initValue = null;
+          }
 				}
 				else {
 					throw new BadSyntaxException(Strings.ErrorInvalidDeclaration);
@@ -76,13 +81,12 @@ namespace NClass.CSharp
 
 		public override string GetDeclaration()
 		{
-			if (InitValue == EmptyValue)
-				return Name.ToString();
-			else
-				return Name + " = " + InitValue;
+		  if (InitValue == null)
+				return Name;
+		  return Name + " = " + InitValue;
 		}
 
-		protected override EnumValue Clone()
+	  protected override EnumValue Clone()
 		{
 			return new CSharpEnumValue(GetDeclaration());
 		}
