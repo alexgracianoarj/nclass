@@ -7,24 +7,14 @@
     <property name="compiled" value="false" />
 
     <target name="set-framework">
-        <if test="${framework::exists('net-2.0')}">
+        <if test="${framework::exists('net-4.0')}">
             <if test="${framework::sdk-exists('net-4.0')}">
                 <property name="nant.settings.currentframework" value="net-4.0" />
                 <call target="compile" />
                 <property name="compiled" value="true" />
             </if>
-            <if test="${framework::sdk-exists('net-3.5') and not compiled}">
-                <property name="nant.settings.currentframework" value="net-3.5" />
-                <call target="compile" />
-                <property name="compiled" value="true" />
-            </if>
-            <if test="${framework::sdk-exists('net-2.0') and not compiled}">
-                <property name="nant.settings.currentframework" value="net-2.0" />
-                <call target="compile" />
-                <property name="compiled" value="true" />
-            </if>
             <if test="${not compiled}">
-                <echo message="The .NET Framework SDK 2.0 or newer is not available." />
+                <echo message="The .NET Framework SDK 4.0 or newer is not available." />
             </if>
         </if>
         <if test="${not compiled and framework::exists('mono-2.0')}">
