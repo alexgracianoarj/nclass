@@ -1,8 +1,8 @@
 using System;
-using System.Collections.Generic;
-using System.Reflection;
 using System.Collections;
+using System.Collections.Generic;
 using System.Xml.Serialization;
+using NReflect.Filter;
 
 namespace NClass.AssemblyImport
 {
@@ -15,147 +15,11 @@ namespace NClass.AssemblyImport
   }
 
   /// <summary>
-  /// A collection of possible modifiers.
-  /// </summary>
-  public enum Modifiers
-  {
-    /// <summary>
-    /// Means "all modifiers"
-    /// </summary>
-    All,
-    /// <summary>
-    /// Modifier private
-    /// </summary>
-    Private,
-    /// <summary>
-    /// Modifier public
-    /// </summary>
-    Public,
-    /// <summary>
-    /// Modifier protected
-    /// </summary>
-    Protected,
-    /// <summary>
-    /// Modifier internal
-    /// </summary>
-    Internal,
-    /// <summary>
-    /// Modifier protected internal
-    /// </summary>
-    ProtectedInternal,
-    /// <summary>
-    /// static elements
-    /// </summary>
-    Static,
-    /// <summary>
-    /// elements which are not static
-    /// </summary>
-    Instance,
-  }
-
-  /// <summary>
-  /// A collection of possible elemnts
-  /// </summary>
-  public enum Elements
-  {
-    /// <summary>
-    /// Means "all ellements"
-    /// </summary>
-    Elements,
-    /// <summary>
-    /// Type class
-    /// </summary>
-    Class,
-    /// <summary>
-    /// Type struct
-    /// </summary>
-    Struct,
-    /// <summary>
-    /// Type interface
-    /// </summary>
-    Interface,
-    /// <summary>
-    /// Type enum
-    /// </summary>
-    Enum,
-    /// <summary>
-    /// Type delegate
-    /// </summary>
-    Delegate,
-    /// <summary>
-    /// Member field
-    /// </summary>
-    Field,
-    /// <summary>
-    /// Member property
-    /// </summary>
-    Property,
-    /// <summary>
-    /// Member method
-    /// </summary>
-    Method,
-    /// <summary>
-    /// Member constructor
-    /// </summary>
-    Constructor,
-    /// <summary>
-    /// Member event
-    /// </summary>
-    Event,
-  }
-
-  /// <summary>
-  /// A combination of a modifier and an element.
-  /// </summary>
-  public struct ModifierElement
-  {
-    #region === Construction
-
-    /// <summary>
-    /// Creates a new ModifierElement with the given values.
-    /// </summary>
-    /// <param name="theModifier">The Modifier for this rule.</param>
-    /// <param name="theElement">The element for this rule</param>
-    public ModifierElement(Modifiers theModifier, Elements theElement) : this()
-    {
-      Element = theElement;
-      Modifier = theModifier;
-    }
-
-    #endregion
-
-    #region === Properties
-
-    /// <summary>
-    /// Gets or sets the modifier for this rule.
-    /// </summary>
-    public Modifiers Modifier { get; set; }
-
-    /// <summary>
-    /// Gets or sets the element for this rule.
-    /// </summary>
-    public Elements Element { get; set; }
-
-    #endregion
-  }
-
-  /// <summary>
   /// The settings in this class describe what and how to import.
   /// </summary>
+  [Serializable]
   public class ImportSettings
   {
-    #region === Construction
-
-    /// <summary>
-    /// Creates a new ImportSettings.
-    /// </summary>
-    public ImportSettings()
-    {
-      Rules = new List<ModifierElement>();
-    }
-
-    #endregion
-
     #region === Properties
 
     /// <summary>
@@ -164,14 +28,39 @@ namespace NClass.AssemblyImport
     public string Name { get; set; }
 
     /// <summary>
-    /// Gets the list of import exception rules.
+    /// Gets or sets a value indicating if the rules should be used as a white list.
     /// </summary>
-    public List<ModifierElement> Rules { get; private set; }
+    public bool UseAsWhiteList { get; set; }
 
     /// <summary>
-    /// Gets a value indicating whether the to create aggregations.
+    /// Gets or sets the list of <see cref="FilterRule"/> of the settings.
     /// </summary>
-    public bool CreateAggregations { get; set; }
+    public List<FilterRule> FilterRules { get; set; }
+
+    /// <summary>
+    /// Gets or sets a value indicating whether the to create relationships.
+    /// </summary>
+    public bool CreateRelationships { get; set; }
+
+    /// <summary>
+    /// Gets or sets a value indicating whether the to create association relationships.
+    /// </summary>
+    public bool CreateAssociations { get; set; }
+
+    /// <summary>
+    /// Gets or sets a value indicating whether the to create realization relationships.
+    /// </summary>
+    public bool CreateRealizations { get; set; }
+
+    /// <summary>
+    /// Gets or sets a value indicating whether the to create generalization relationships.
+    /// </summary>
+    public bool CreateGeneralizations { get; set; }
+
+    /// <summary>
+    /// Gets or sets a value indicating whether the to create nesting relationships.
+    /// </summary>
+    public bool CreateNestings { get; set; }
 
     /// <summary>
     /// Gets a value indicating whether the fields used for an aggregation should be removed.
@@ -186,175 +75,6 @@ namespace NClass.AssemblyImport
     #endregion
 
     #region === Methods
-
-    /// <summary>
-    /// Checks if a given combination of elemts and modifiers should be imported.
-    /// </summary>
-    /// <param name="Element">The element which is tested.</param>
-    /// <param name="Instance">true if the element is an instance element.</param>
-    /// <param name="Static">true if the element is a static element.</param>
-    /// <param name="Internal">true if the element is an internal element.</param>
-    /// <param name="Private">true if the element is a private element.</param>
-    /// <param name="Protected">true if the element is a protected element.</param>
-    /// <param name="ProtectedInternal">true if the element is a protected internal element.</param>
-    /// <param name="Public">true if the element is a public element.</param>
-    /// <returns>true, if the element should be imported, false otherwise.</returns>
-    private bool CheckImport(Elements Element, bool Instance, bool Static, bool Internal, bool Private, bool Protected, bool ProtectedInternal, bool Public)
-    {
-      foreach(ModifierElement xRule in Rules)
-      {
-        if(xRule.Element == Elements.Elements || xRule.Element == Element)
-        {
-          //This rule restricts the import of this kind of ellement.
-          if(xRule.Modifier == Modifiers.All ||
-             (xRule.Modifier == Modifiers.Instance) && Instance ||
-             (xRule.Modifier == Modifiers.Internal) && Internal ||
-             (xRule.Modifier == Modifiers.Private) && Private ||
-             (xRule.Modifier == Modifiers.Protected) && Protected ||
-             (xRule.Modifier == Modifiers.ProtectedInternal) && ProtectedInternal ||
-             (xRule.Modifier == Modifiers.Public) && Public ||
-             (xRule.Modifier == Modifiers.Static) && Static)
-          {
-            return false;
-          }
-        }
-      }
-      return true;
-    }
-
-    /// <summary>
-    /// Checks, if the Type <paramref name="theType"/> should be imported.
-    /// </summary>
-    /// <param name="Element">The element which is tested.</param>
-    /// <param name="theType">The type to test.</param>
-    /// <returns>true, if the type should be imported, false otherwise.</returns>
-    private bool CheckImportType(Elements Element, Type theType)
-    {
-      if(theType.IsNested)
-      {
-        return CheckImport(Element, false, false, theType.IsNestedAssembly, theType.IsNestedPrivate, theType.IsNestedFamily, theType.IsNestedFamORAssem, theType.IsNestedPublic);
-      }
-      return CheckImport(Element, false, false, theType.IsNotPublic, false, false, false, theType.IsPublic);
-    }
-
-    /// <summary>
-    /// Checks, if the method <paramref name="theMethod"/> should be imported.
-    /// </summary>
-    /// <param name="Element">The element which is tested.</param>
-    /// <param name="theMethod">The method to test.</param>
-    /// <returns>true, if the method should be imported, false otherwise.</returns>
-    private bool CheckImportMethod(Elements Element, MethodBase theMethod)
-    {
-      return CheckImport(Element, !theMethod.IsStatic, theMethod.IsStatic, theMethod.IsAssembly, theMethod.IsPrivate, theMethod.IsFamily, theMethod.IsFamilyOrAssembly, theMethod.IsPublic);
-    }
-
-    #region --- CheckImport<Element>()
-
-    /// <summary>
-    /// Checks if the class <paramref name="theClass"/> should be imported.
-    /// </summary>
-    /// <param name="theClass">The class which is checked.</param>
-    /// <returns>true, if the class should be imported, false otherwise.</returns>
-    public bool CheckImportClass(Type theClass)
-    {
-      return CheckImportType(Elements.Class, theClass);
-    }
-
-    /// <summary>
-    /// Checks if the structure <paramref name="theStruct"/> should be imported.
-    /// </summary>
-    /// <param name="theStruct">The structure which is checked.</param>
-    /// <returns>true, if the structure should be imported, false otherwise.</returns>
-    public bool CheckImportStruct(Type theStruct)
-    {
-      return CheckImportType(Elements.Struct, theStruct);
-    }
-
-    /// <summary>
-    /// Checks if the interface <paramref name="theInterface"/> should be imported.
-    /// </summary>
-    /// <param name="theInterface">The interface which is checked.</param>
-    /// <returns>true, if the interface should be imported, false otherwise.</returns>
-    public bool CheckImportInterface(Type theInterface)
-    {
-      return CheckImportType(Elements.Interface, theInterface);
-    }
-
-    /// <summary>
-    /// Checks if the enumeration <paramref name="theEnum"/> should be imported.
-    /// </summary>
-    /// <param name="theEnum">The enumeration which is checked.</param>
-    /// <returns>true, if the enumeration should be imported, false otherwise.</returns>
-    public bool CheckImportEnum(Type theEnum)
-    {
-      return CheckImportType(Elements.Enum, theEnum);
-    }
-
-    /// <summary>
-    /// Checks if the delegate <paramref name="theDelegate"/> should be imported.
-    /// </summary>
-    /// <param name="theDelegate">The delegate which is checked.</param>
-    /// <returns>true, if the delegate should be imported, false otherwise.</returns>
-    public bool CheckImportDelegate(Type theDelegate)
-    {
-      return CheckImportType(Elements.Delegate, theDelegate);
-    }
-
-    #endregion
-
-    #region --- CheckImport<Member>()
-
-    /// <summary>
-    /// Checks if the field <paramref name="theField"/> should be imported.
-    /// </summary>
-    /// <param name="theField">The field which is checked.</param>
-    /// <returns>true, if the field should be imported, false otherwise.</returns>
-    public bool CheckImportField(FieldInfo theField)
-    {
-      return CheckImport(Elements.Field, !theField.IsStatic, theField.IsStatic, theField.IsAssembly, theField.IsPrivate, theField.IsFamily, theField.IsFamilyOrAssembly, theField.IsPublic);
-    }
-
-    /// <summary>
-    /// Checks if the constructor <paramref name="theConstructor"/> should be imported.
-    /// </summary>
-    /// <param name="theConstructor">The constructor which is checked.</param>
-    /// <returns>true, if the constructor should be imported, false otherwise.</returns>
-    public bool CheckImportConstructor(ConstructorInfo theConstructor)
-    {
-      return CheckImportMethod(Elements.Constructor, theConstructor);
-    }
-
-    /// <summary>
-    /// Checks if the property <paramref name="theProperty"/> should be imported.
-    /// </summary>
-    /// <param name="theProperty">The property which is checked.</param>
-    /// <returns>true, if the property should be imported, false otherwise.</returns>
-    public bool CheckImportProperty(MethodInfo theProperty)
-    {
-      return CheckImportMethod(Elements.Property, theProperty);
-    }
-
-    /// <summary>
-    /// Checks if the method <paramref name="theMethod"/> should be imported.
-    /// </summary>
-    /// <param name="theMethod">The method which is checked.</param>
-    /// <returns>true, if the method should be imported, false otherwise.</returns>
-    public bool CheckImportMethod(MethodInfo theMethod)
-    {
-      return CheckImportMethod(Elements.Method, theMethod);
-    }
-
-    /// <summary>
-    /// Checks if the event <paramref name="theEvent"/> should be imported.
-    /// </summary>
-    /// <param name="theEvent">The event which is checked.</param>
-    /// <returns>true, if the event should be imported, false otherwise.</returns>
-    public bool CheckImportEvent(MethodInfo theEvent)
-    {
-      return CheckImportMethod(Elements.Event, theEvent);
-    }
-
-    #endregion
 
     /// <summary>
     /// Returns the name of the ImportSettings.

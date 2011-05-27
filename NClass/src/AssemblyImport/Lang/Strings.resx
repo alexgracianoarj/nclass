@@ -112,10 +112,10 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Element_Class" xml:space="preserve">
     <value>class</value>
@@ -131,6 +131,9 @@
   </data>
   <data name="Element_Enum" xml:space="preserve">
     <value>enum</value>
+  </data>
+  <data name="Element_EnumValue" xml:space="preserve">
+    <value>Enum value</value>
   </data>
   <data name="Element_Event" xml:space="preserve">
     <value>event</value>
@@ -195,11 +198,23 @@
   <data name="Settings_CancelButton" xml:space="preserve">
     <value>Cancel</value>
   </data>
-  <data name="Settings_CreateAggregations" xml:space="preserve">
-    <value>Create Aggregations</value>
+  <data name="Settings_CreateAssociations" xml:space="preserve">
+    <value>Create Associations</value>
+  </data>
+  <data name="Settings_CreateGeneralizations" xml:space="preserve">
+    <value>Create Generalizations</value>
   </data>
   <data name="Settings_CreateLabel" xml:space="preserve">
     <value>Create a label on the side of the aggregation</value>
+  </data>
+  <data name="Settings_CreateNesting" xml:space="preserve">
+    <value>Create nesting Relationships</value>
+  </data>
+  <data name="Settings_CreateRealizations" xml:space="preserve">
+    <value>Create Realizations</value>
+  </data>
+  <data name="Settings_CreateRelationships" xml:space="preserve">
+    <value>Create Relationships</value>
   </data>
   <data name="Settings_Error_AngleBracketNotAllowed" xml:space="preserve">
     <value>'&lt;' is not allowed</value>
@@ -213,13 +228,16 @@
   <data name="Settings_Error_TemplateCantBeDeleted" xml:space="preserve">
     <value>This template can't be deleted</value>
   </data>
-  <data name="Settings_ImportExcept" xml:space="preserve">
+  <data name="Settings_Filter_GroupTitle" xml:space="preserve">
+    <value>Filter</value>
+  </data>
+  <data name="Settings_Filter_BlackList" xml:space="preserve">
     <value>Import everything except</value>
   </data>
-  <data name="Settings_ImportExcept_Element" xml:space="preserve">
+  <data name="Settings_Filter_ElementColumnTitle" xml:space="preserve">
     <value>Element</value>
   </data>
-  <data name="Settings_ImportExcept_Modifier" xml:space="preserve">
+  <data name="Settings_Filter_ModifierColumnTitle" xml:space="preserve">
     <value>Modifier</value>
   </data>
   <data name="Settings_OKButton" xml:space="preserve">
@@ -245,5 +263,33 @@
   </data>
   <data name="Settings_Title" xml:space="preserve">
     <value>Import settings</value>
+  </data>
+  <data name="Settings_Filter_WhiteList" xml:space="preserve">
+    <value>Import only the folowing</value>
+  </data>
+  <data name="Element_Constant" xml:space="preserve">
+    <value>Constant</value>
+  </data>
+  <data name="Element_Operator" xml:space="preserve">
+    <value>Operator</value>
+  </data>
+  <data name="Modifier_Default" xml:space="preserve">
+    <value>default</value>
+  </data>
+  <data name="OpenFileDialog_Filter" xml:space="preserve">
+    <value>Assemblies (*.exe, *.dll)|*.exe;*.dll</value>
+  </data>
+  <data name="Error_GeneralException" xml:space="preserve">
+    <value>Error while importing!
+
+{0}
+
+Note: Assemblys which are created with a fuscator might fail to import.</value>
+  </data>
+  <data name="UnsafeTypesPresent" xml:space="preserve">
+    <value>Some unsafe types exist at the imported assembly. Every element using such a type isn't imported.</value>
+  </data>
+  <data name="WarningTitle" xml:space="preserve">
+    <value>Warning</value>
   </data>
 </root>

@@ -112,10 +112,10 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Element_Class" xml:space="preserve">
     <value>Klasse</value>
@@ -177,9 +177,6 @@
   <data name="Settings_CancelButton" xml:space="preserve">
     <value>Abbrechen</value>
   </data>
-  <data name="Settings_CreateAggregations" xml:space="preserve">
-    <value>Erzeuge Aggregationen</value>
-  </data>
   <data name="Settings_CreateLabel" xml:space="preserve">
     <value>Erzeuge eine Beschriftung auf der Seite der Aggregation</value>
   </data>
@@ -194,15 +191,6 @@
   </data>
   <data name="Settings_Error_TemplateCantBeDeleted" xml:space="preserve">
     <value>Dieses Templat kann nicht gelöscht werden.</value>
-  </data>
-  <data name="Settings_ImportExcept" xml:space="preserve">
-    <value>Importiere alles außer</value>
-  </data>
-  <data name="Settings_ImportExcept_Element" xml:space="preserve">
-    <value>Elemente</value>
-  </data>
-  <data name="Settings_ImportExcept_Modifier" xml:space="preserve">
-    <value>Modifizierer</value>
   </data>
   <data name="Settings_OKButton" xml:space="preserve">
     <value>OK</value>
@@ -245,5 +233,63 @@
   </data>
   <data name="Error_NoAssembly" xml:space="preserve">
     <value>Keine Assembly angegeben.</value>
+  </data>
+  <data name="Element_EnumValue" xml:space="preserve">
+    <value>Aufzählungswert</value>
+  </data>
+  <data name="Settings_CreateAssociations" xml:space="preserve">
+    <value>Erzeuge Assoziationen</value>
+  </data>
+  <data name="Settings_CreateGeneralizations" xml:space="preserve">
+    <value>Erzeuge Generalisierungen</value>
+  </data>
+  <data name="Settings_CreateNesting" xml:space="preserve">
+    <value>Erzeuge Verschachtelungen</value>
+  </data>
+  <data name="Settings_CreateRealizations" xml:space="preserve">
+    <value>Erzeuge Realisationen</value>
+  </data>
+  <data name="Settings_CreateRelationships" xml:space="preserve">
+    <value>Erzeuge Beziehungen</value>
+  </data>
+  <data name="Settings_Filter_GroupTitle" xml:space="preserve">
+    <value>Filter</value>
+  </data>
+  <data name="Settings_Filter_BlackList" xml:space="preserve">
+    <value>Importiere alles außer</value>
+  </data>
+  <data name="Settings_Filter_ElementColumnTitle" xml:space="preserve">
+    <value>Element</value>
+  </data>
+  <data name="Settings_Filter_ModifierColumnTitle" xml:space="preserve">
+    <value>Modifizierer</value>
+  </data>
+  <data name="Settings_Filter_WhiteList" xml:space="preserve">
+    <value>Importiere nur folgendes</value>
+  </data>
+  <data name="Element_Constant" xml:space="preserve">
+    <value>Konstante</value>
+  </data>
+  <data name="Element_Operator" xml:space="preserve">
+    <value>Operator</value>
+  </data>
+  <data name="Modifier_Default" xml:space="preserve">
+    <value>Standard</value>
+  </data>
+  <data name="OpenFileDialog_Filter" xml:space="preserve">
+    <value>Assemblies (*.exe, *.dll)|*.exe;*.dll</value>
+  </data>
+  <data name="Error_GeneralException" xml:space="preserve">
+    <value>Es ist ein Fehler beim Import aufgetreten:
+
+{0}
+
+Hinweis: Assemblies, die mit Hilfe eines Fuscators erstellt worden sind, können unter Umständen nicht importiert werden.</value>
+  </data>
+  <data name="UnsafeTypesPresent" xml:space="preserve">
+    <value>Einige Elemente der importierten Assembly enthalten unsichere Zeiger. Diese Elemente wurden nicht importiert.</value>
+  </data>
+  <data name="WarningTitle" xml:space="preserve">
+    <value>Warnung</value>
   </data>
 </root>

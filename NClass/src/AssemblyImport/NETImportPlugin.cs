@@ -9,17 +9,17 @@ using NClass.GUI;
 namespace NClass.AssemblyImport
 {
   /// <summary>
-  /// Implements the PlugIn-Interface of NClass.
+  ///   Implements the PlugIn-Interface of NClass.
   /// </summary>
   public class NETImportPlugin : Plugin
   {
     // ========================================================================
-    // Attributes
+    // Fields
 
-    #region === Attributes
+    #region === Fields
 
     /// <summary>
-    /// The menu item used to start the export.
+    ///   The menu item used to start the export.
     /// </summary>
     private readonly ToolStripMenuItem menuItem;
 
@@ -31,7 +31,7 @@ namespace NClass.AssemblyImport
     #region === Con- / Destruction
 
     /// <summary>
-    /// Set up the current culture for the strings.
+    ///   Set up the current culture for the strings.
     /// </summary>
     static NETImportPlugin()
     {
@@ -46,17 +46,17 @@ namespace NClass.AssemblyImport
     }
 
     /// <summary>
-    /// Constructs a new instance of NETImportPlugin.
+    ///   Constructs a new instance of NETImportPlugin.
     /// </summary>
-    /// <param name="environment">An instance of NClassEnvironment.</param>
+    /// <param name = "environment">An instance of NClassEnvironment.</param>
     public NETImportPlugin(NClassEnvironment environment)
       : base(environment)
     {
       menuItem = new ToolStripMenuItem
-      {
-        Text = Strings.Menu_Title,
-        ToolTipText = Strings.Menu_ToolTip
-      };
+                   {
+                     Text = Strings.Menu_Title,
+                     ToolTipText = Strings.Menu_ToolTip
+                   };
       menuItem.Click += menuItem_Click;
     }
 
@@ -68,11 +68,11 @@ namespace NClass.AssemblyImport
     #region === Event handling
 
     /// <summary>
-    /// Starts the export.
+    ///   Starts the export.
     /// </summary>
-    /// <param name="sender">The sender.</param>
-    /// <param name="e">Additional information.</param>
-    void menuItem_Click(object sender, EventArgs e)
+    /// <param name = "sender">The sender.</param>
+    /// <param name = "e">Additional information.</param>
+    private void menuItem_Click(object sender, EventArgs e)
     {
       Launch();
     }
@@ -85,18 +85,15 @@ namespace NClass.AssemblyImport
     #region === Properties
 
     /// <summary>
-    /// Gets a value indicating whether the plugin can be executed at the moment.
+    ///   Gets a value indicating whether the plugin can be executed at the moment.
     /// </summary>
     public override bool IsAvailable
     {
-      get
-      {
-        return Workspace.HasActiveProject;
-      }
+      get { return Workspace.HasActiveProject; }
     }
 
     /// <summary>
-    /// Gets the menu item used to start the plugin.
+    ///   Gets the menu item used to start the plugin.
     /// </summary>
     public override ToolStripItem MenuItem
     {
@@ -111,17 +108,17 @@ namespace NClass.AssemblyImport
     #region === Methods
 
     /// <summary>
-    /// Starts the functionality of the plugin.
+    ///   Starts the functionality of the plugin.
     /// </summary>
     protected void Launch()
     {
       if(Workspace.HasActiveProject)
       {
         string fileName;
-        using(OpenFileDialog dialog = new OpenFileDialog())
+        using (OpenFileDialog dialog = new OpenFileDialog())
         {
-          dialog.Filter = "Assemblies (*.exe, *.dll)|*.exe;*.dll";
-          if(dialog.ShowDialog() == DialogResult.Cancel)
+          dialog.Filter = Strings.OpenFileDialog_Filter;
+          if (dialog.ShowDialog() == DialogResult.Cancel)
             return;
           fileName = dialog.FileName;
         }

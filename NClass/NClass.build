@@ -8,13 +8,18 @@
 
     <target name="set-framework">
         <if test="${framework::exists('net-2.0')}">
-            <if test="${framework::sdk-exists('net-2.0')}">
-                <property name="nant.settings.currentframework" value="net-2.0" />
+            <if test="${framework::sdk-exists('net-4.0')}">
+                <property name="nant.settings.currentframework" value="net-4.0" />
                 <call target="compile" />
                 <property name="compiled" value="true" />
             </if>
-            <if test="${framework::sdk-exists('net-3.5')}">
+            <if test="${framework::sdk-exists('net-3.5') and not compiled}">
                 <property name="nant.settings.currentframework" value="net-3.5" />
+                <call target="compile" />
+                <property name="compiled" value="true" />
+            </if>
+            <if test="${framework::sdk-exists('net-2.0') and not compiled}">
+                <property name="nant.settings.currentframework" value="net-2.0" />
                 <call target="compile" />
                 <property name="compiled" value="true" />
             </if>

@@ -1,8 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Windows.Forms;
+using NClass.AssemblyImport.Controls;
 using NClass.AssemblyImport.Lang;
 using NClass.AssemblyImport.Properties;
+using NReflect.Filter;
 
 namespace NClass.AssemblyImport
 {
@@ -17,63 +20,79 @@ namespace NClass.AssemblyImport
     /// <summary>
     /// Initializes a new ImportSettingsForm2.
     /// </summary>
-    /// <param name="theSettings">The ImportSettings which will be used for import. </param>
-    public ImportSettingsForm(ImportSettings theSettings)
+    /// <param name="settings">The <see cref="ImportSettings"/> which will be used for import. </param>
+    public ImportSettingsForm(ImportSettings settings)
     {
       InitializeComponent();
 
+      // Add the icons to the realisation check boxes.
+      chkCreateRealizations.Image = DiagramEditor.Properties.Resources.Realization;
+      chkCreateNesting.Image = DiagramEditor.Properties.Resources.Nesting;
+      chkCreateGeneralizations.Image = DiagramEditor.Properties.Resources.Generalization;
+      chkCreateAssociations.Image = DiagramEditor.Properties.Resources.Association;
+
       //Localization goes here...
-      elementNameMap.Add(Strings.Element_Class, Elements.Class);
-      elementNameMap.Add(Strings.Element_Constructor, Elements.Constructor);
-      elementNameMap.Add(Strings.Element_Delegate, Elements.Delegate);
-      elementNameMap.Add(Strings.Element_Elements, Elements.Elements);
-      elementNameMap.Add(Strings.Element_Enum, Elements.Enum);
-      elementNameMap.Add(Strings.Element_Event, Elements.Event);
-      elementNameMap.Add(Strings.Element_Field, Elements.Field);
-      elementNameMap.Add(Strings.Element_Interface, Elements.Interface);
-      elementNameMap.Add(Strings.Element_Method, Elements.Method);
-      elementNameMap.Add(Strings.Element_Property, Elements.Property);
-      elementNameMap.Add(Strings.Element_Struct, Elements.Struct);
+      colFilterElement.Items.Clear();
+      colFilterElement.ImageSize = new Size(16, 16);
+      colFilterElement.Items.Add(new ImageComboBoxItem(Strings.Element_Elements, null, FilterElements.AllElements));
+      colFilterElement.Items.Add(new ImageComboBoxItem(Strings.Element_Class, DiagramEditor.Properties.Resources.Class, FilterElements.Class));
+      colFilterElement.Items.Add(new ImageComboBoxItem(Strings.Element_Struct, DiagramEditor.Properties.Resources.Structure, FilterElements.Struct));
+      colFilterElement.Items.Add(new ImageComboBoxItem(Strings.Element_Interface, DiagramEditor.Properties.Resources.Interface32, FilterElements.Interface));
+      colFilterElement.Items.Add(new ImageComboBoxItem(Strings.Element_Delegate, DiagramEditor.Properties.Resources.Delegate, FilterElements.Delegate));
+      colFilterElement.Items.Add(new ImageComboBoxItem(Strings.Element_Enum, DiagramEditor.Properties.Resources.Enum, FilterElements.Enum));
+      colFilterElement.Items.Add(new ImageComboBoxItem(Strings.Element_EnumValue, DiagramEditor.Properties.Resources.EnumItem, FilterElements.EnumValue));
+      colFilterElement.Items.Add(new ImageComboBoxItem(Strings.Element_Constructor, DiagramEditor.Properties.Resources.Constructor, FilterElements.Constructor));
+      colFilterElement.Items.Add(new ImageComboBoxItem(Strings.Element_Field, DiagramEditor.Properties.Resources.Field, FilterElements.Field));
+      colFilterElement.Items.Add(new ImageComboBoxItem(Strings.Element_Constant, DiagramEditor.Properties.Resources.PublicConst, FilterElements.Constant));
+      colFilterElement.Items.Add(new ImageComboBoxItem(Strings.Element_Property, DiagramEditor.Properties.Resources.Property, FilterElements.Property));
+      colFilterElement.Items.Add(new ImageComboBoxItem(Strings.Element_Method, DiagramEditor.Properties.Resources.Method, FilterElements.Method));
+      colFilterElement.Items.Add(new ImageComboBoxItem(Strings.Element_Operator, DiagramEditor.Properties.Resources.PublicOperator, FilterElements.Operator));
+      colFilterElement.Items.Add(new ImageComboBoxItem(Strings.Element_Event, DiagramEditor.Properties.Resources.Event, FilterElements.Event));
 
-      modifierNameMap.Add(Strings.Modifier_All, Modifiers.All);
-      modifierNameMap.Add(Strings.Modifier_Instance, Modifiers.Instance);
-      modifierNameMap.Add(Strings.Modifier_Internal, Modifiers.Internal);
-      modifierNameMap.Add(Strings.Modifier_Private, Modifiers.Private);
-      modifierNameMap.Add(Strings.Modifier_Protected, Modifiers.Protected);
-      modifierNameMap.Add(Strings.Modifier_ProtectedInternal, Modifiers.ProtectedInternal);
-      modifierNameMap.Add(Strings.Modifier_Public, Modifiers.Public);
-      modifierNameMap.Add(Strings.Modifier_Static, Modifiers.Static);
+      colFilterModifier.Items.Clear();
+      colFilterModifier.ImageSize = new Size(16, 16);
+      colFilterModifier.Items.Add(new ImageComboBoxItem(Strings.Modifier_All, null, FilterModifiers.AllModifiers));
+      colFilterModifier.Items.Add(new ImageComboBoxItem(Strings.Modifier_Instance, null, FilterModifiers.Instance));
+      colFilterModifier.Items.Add(new ImageComboBoxItem(Strings.Modifier_Static, DiagramEditor.Properties.Resources.Static, FilterModifiers.Static));
+      colFilterModifier.Items.Add(new ImageComboBoxItem(Strings.Modifier_Default, Resources.ModifierDefault, FilterModifiers.Default));
+      colFilterModifier.Items.Add(new ImageComboBoxItem(Strings.Modifier_Public, null, FilterModifiers.Public));
+      colFilterModifier.Items.Add(new ImageComboBoxItem(Strings.Modifier_Private, Resources.ModifierPrivate, FilterModifiers.Private));
+      colFilterModifier.Items.Add(new ImageComboBoxItem(Strings.Modifier_Internal, Resources.ModifierInternal, FilterModifiers.Internal));
+      colFilterModifier.Items.Add(new ImageComboBoxItem(Strings.Modifier_Protected, Resources.ModifierProtected, FilterModifiers.Protected));
+      colFilterModifier.Items.Add(new ImageComboBoxItem(Strings.Modifier_ProtectedInternal, Resources.ModifierProtectedInternal, FilterModifiers.ProtectedInternal));
 
-      //Build reverse maps and ComboBox-Items
-      colExceptElement.Items.Clear();
+      //Build reverse maps for easy access while loading a template.
       reverseElementNameMap.Clear();
-      foreach(string stName in elementNameMap.Keys)
+      foreach (ImageComboBoxItem comboBoxItem in colFilterElement.Items)
       {
-        colExceptElement.Items.Add(stName);
-        reverseElementNameMap.Add(elementNameMap[stName], stName);
+        reverseElementNameMap.Add((FilterElements)comboBoxItem.Tag, comboBoxItem);
       }
-      colExceptModifier.Items.Clear();
       reverseModifierNameMap.Clear();
-      foreach(string stName in modifierNameMap.Keys)
+      foreach (ImageComboBoxItem comboBoxItem in colFilterModifier.Items)
       {
-        colExceptModifier.Items.Add(stName);
-        reverseModifierNameMap.Add(modifierNameMap[stName], stName);
+        reverseModifierNameMap.Add((FilterModifiers)comboBoxItem.Tag, comboBoxItem);
       }
 
-      importSettings = theSettings;
+      importSettings = settings;
 
       //Templates
       cboTemplate.Items.Clear();
-      if(Settings.Default.ImportSettingsTemplates == null)
+      if (Settings.Default.ImportSettingsTemplates == null)
       {
         Settings.Default.ImportSettingsTemplates = new TemplateList();
-        ImportSettings xNewSettings = new ImportSettings
+        ImportSettings newSettings = new ImportSettings
                                         {
-                                          Name = Strings.Settings_Template_LastUsed
+                                          Name = Strings.Settings_Template_LastUsed,
+                                          CreateAssociations = true,
+                                          CreateGeneralizations = true,
+                                          CreateNestings = true,
+                                          CreateRealizations = true,
+                                          CreateRelationships = true,
+                                          LabelAggregations = true
                                         };
-        Settings.Default.ImportSettingsTemplates.Add(xNewSettings);
+        Settings.Default.ImportSettingsTemplates.Add(newSettings);
       }
-      foreach(object xTemplate in Settings.Default.ImportSettingsTemplates)
+      foreach (object xTemplate in Settings.Default.ImportSettingsTemplates)
       {
         cboTemplate.Items.Add(xTemplate);
       }
@@ -93,12 +112,21 @@ namespace NClass.AssemblyImport
       cmdLoadTemplate.Text = Strings.Settings_Template_LoadButton;
       cmdStoreTemplate.Text = Strings.Settings_Template_StoreButton;
       cmdDeleteTemplate.Text = Strings.Settings_Template_DeleteButton;
-      lblDescription.Text = Strings.Settings_ImportExcept;
-      colExceptElement.HeaderText = Strings.Settings_ImportExcept_Element;
-      colExceptModifier.HeaderText = Strings.Settings_ImportExcept_Modifier;
-      chkCreateAggregations.Text = Strings.Settings_CreateAggregations;
-      chkLabelAggregations.Text = Strings.Settings_CreateLabel;
+
+      grpFilter.Text = Strings.Settings_Filter_GroupTitle;
+      rdoWhiteList.Text = Strings.Settings_Filter_WhiteList;
+      rdoBlackList.Text = Strings.Settings_Filter_BlackList;
+      colFilterElement.HeaderText = Strings.Settings_Filter_ElementColumnTitle;
+      colFilterModifier.HeaderText = Strings.Settings_Filter_ModifierColumnTitle;
+
+      chkCreateRelationships.Text = Strings.Settings_CreateRelationships;
+      chkCreateAssociations.Text = Strings.Settings_CreateAssociations;
+      chkLabelAssociations.Text = Strings.Settings_CreateLabel;
       chkRemoveFields.Text = Strings.Settings_RemoveFields;
+      chkCreateGeneralizations.Text = Strings.Settings_CreateGeneralizations;
+      chkCreateRealizations.Text = Strings.Settings_CreateRealizations;
+      chkCreateNesting.Text = Strings.Settings_CreateNesting;
+
       cmdOK.Text = Strings.Settings_OKButton;
       cmdCancel.Text = Strings.Settings_CancelButton;
     }
@@ -111,22 +139,22 @@ namespace NClass.AssemblyImport
     /// The settings which are used for the import
     /// </summary>
     readonly ImportSettings importSettings;
-    /// <summary>
-    /// A map from element names to the element enum.
-    /// </summary>
-    readonly Dictionary<string, Elements> elementNameMap = new Dictionary<string, Elements>();
+    ///// <summary>
+    ///// A map from element names to the element enum.
+    ///// </summary>
+    //readonly Dictionary<string, Elements> elementNameMap = new Dictionary<string, Elements>();
     /// <summary>
     /// A map from element enum to the element names.
     /// </summary>
-    readonly Dictionary<Elements, string> reverseElementNameMap = new Dictionary<Elements, string>();
-    /// <summary>
-    /// A map from the modifier names to the modifier enum.
-    /// </summary>
-    readonly Dictionary<string, Modifiers> modifierNameMap = new Dictionary<string, Modifiers>();
+    readonly Dictionary<FilterElements, ImageComboBoxItem> reverseElementNameMap = new Dictionary<FilterElements, ImageComboBoxItem>();
+    ///// <summary>
+    ///// A map from the modifier names to the modifier enum.
+    ///// </summary>
+    //readonly Dictionary<string, Modifiers> modifierNameMap = new Dictionary<string, Modifiers>();
     /// <summary>
     /// A map from the modifier enum to the modifier names.
     /// </summary>
-    readonly Dictionary<Modifiers, string> reverseModifierNameMap = new Dictionary<Modifiers, string>();
+    readonly Dictionary<FilterModifiers, ImageComboBoxItem> reverseModifierNameMap = new Dictionary<FilterModifiers, ImageComboBoxItem>();
     
     #endregion
 
@@ -152,6 +180,22 @@ namespace NClass.AssemblyImport
       StoreSettings(importSettings);
       StoreSettings((ImportSettings)Settings.Default.ImportSettingsTemplates[0]); //<last used>
       Settings.Default.Save();
+    }
+
+    /// <summary>
+    /// Gets called when a key is pressed while the dialog is opened.
+    /// Closes the dialog if the key is escape.
+    /// </summary>
+    /// <param name="sender">The sender of the event.</param>
+    /// <param name="e">Information about the event.</param>
+    private void ImportSettingsForm_KeyDown(object sender, KeyEventArgs e)
+    {
+      if(e.KeyCode == Keys.Escape)
+      {
+        DialogResult = DialogResult.Cancel;
+        Close();
+        e.Handled = true;
+      }
     }
 
     /// <summary>
@@ -188,15 +232,15 @@ namespace NClass.AssemblyImport
         MessageBox.Show(Strings.Settings_Error_AngleBracketNotAllowed, Strings.Error_MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
         return;
       }
-      ImportSettings xSettings = (ImportSettings)cboTemplate.SelectedItem ?? new ImportSettings();
-      StoreSettings(xSettings);
-      xSettings.Name = cboTemplate.Text;
+      ImportSettings settings = (ImportSettings)cboTemplate.SelectedItem ?? new ImportSettings();
+      StoreSettings(settings);
+      settings.Name = cboTemplate.Text;
       if(cboTemplate.SelectedItem == null)
       {
         //New entry
-        cboTemplate.Items.Add(xSettings);
-        cboTemplate.SelectedItem = xSettings;
-        Settings.Default.ImportSettingsTemplates.Add(xSettings);
+        cboTemplate.Items.Add(settings);
+        cboTemplate.SelectedItem = settings;
+        Settings.Default.ImportSettingsTemplates.Add(settings);
       }
     }
 
@@ -218,8 +262,24 @@ namespace NClass.AssemblyImport
         MessageBox.Show(Strings.Settings_Error_TemplateCantBeDeleted, Strings.Error_MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
         return;
       }
-      Settings.Default.ImportSettingsTemplates.Remove(cboTemplate.SelectedItem);
+      //Settings.Default.ImportSettingsTemplates.Remove(cboTemplate.SelectedItem);
       cboTemplate.Items.Remove(cboTemplate.SelectedItem);
+    }
+
+    /// <summary>
+    /// Gets called when the CreateRelationships-checkbox is (un)checked. 
+    /// Updates the user interface.
+    /// </summary>
+    /// <param name="sender">The sender of the event.</param>
+    /// <param name="e">Information about the event.</param>
+    private void chkCreateRelationships_CheckedChanged(object sender, EventArgs e)
+    {
+      chkCreateAssociations.Enabled = chkCreateRelationships.Checked;
+      chkLabelAssociations.Enabled = chkCreateRelationships.Checked && chkCreateAssociations.Checked;
+      chkRemoveFields.Enabled = chkCreateRelationships.Checked && chkCreateAssociations.Checked;
+      chkCreateGeneralizations.Enabled = chkCreateRelationships.Checked;
+      chkCreateRealizations.Enabled = chkCreateRelationships.Checked;
+      chkCreateNesting.Enabled = chkCreateRelationships.Checked;
     }
 
     /// <summary>
@@ -228,10 +288,50 @@ namespace NClass.AssemblyImport
     /// </summary>
     /// <param name="sender">The sender of the event.</param>
     /// <param name="e">Information about the event.</param>
-    private void chkCreateAggregations_CheckedChanged(object sender, EventArgs e)
+    private void chkCreateAssociations_CheckedChanged(object sender, EventArgs e)
     {
-      chkLabelAggregations.Enabled = chkCreateAggregations.Checked;
-      chkRemoveFields.Enabled = chkCreateAggregations.Checked;
+      chkLabelAssociations.Enabled = chkCreateRelationships.Checked && chkCreateAssociations.Checked;
+      chkRemoveFields.Enabled = chkCreateRelationships.Checked && chkCreateAssociations.Checked;
+    }
+
+    /// <summary>
+    /// Gets called when the data displayed at the filter list changed.
+    /// </summary>
+    /// <param name="sender">The sender of the event.</param>
+    /// <param name="e">Information about the event.</param>
+    private void dgvFilter_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+    {
+      if (e.RowIndex < 0 || e.ColumnIndex < 0)
+      {
+        return;
+      }
+      DataGridViewRow row = dgvFilter.Rows[e.RowIndex];
+      ImageComboBoxItem modifier = row.Cells[0].Value as ImageComboBoxItem;
+      ImageComboBoxItem element = row.Cells[1].Value as ImageComboBoxItem;
+      if (modifier != null && element != null)
+      {
+        if (element.Tag == null)
+        {
+          // A modifier was just selected...
+          row.Cells[1].Value = colFilterElement.Items[0];
+        }
+        if (modifier.Tag == null)
+        {
+          // An element was just selected...
+          row.Cells[0].Value = colFilterModifier.Items[0];
+        }
+        
+      }
+    }
+
+    /// <summary>
+    /// Gets called when the dirty state of a cell changed.
+    /// </summary>
+    /// <param name="sender">The sender of the event.</param>
+    /// <param name="e">Information about the event.</param>
+    private void dgvFilter_CurrentCellDirtyStateChanged(object sender, EventArgs e)
+    {
+      dgvFilter.CommitEdit(DataGridViewDataErrorContexts.Commit);
     }
 
     #endregion
@@ -241,38 +341,59 @@ namespace NClass.AssemblyImport
     /// <summary>
     /// Displays the given Settings.
     /// </summary>
-    /// <param name="theSettings">The Settings which shall be displayed.</param>
-    private void DisplaySettings(ImportSettings theSettings)
+    /// <param name="settings">The Settings which shall be displayed.</param>
+    private void DisplaySettings(ImportSettings settings)
     {
-      dgvExceptions.Rows.Clear();
-      foreach(ModifierElement xRule in theSettings.Rules)
-      {
-        dgvExceptions.Rows.Add(reverseModifierNameMap[xRule.Modifier], reverseElementNameMap[xRule.Element]);
-      }
+      dgvFilter.Rows.Clear();
 
-      chkCreateAggregations.Checked = theSettings.CreateAggregations;
-      chkLabelAggregations.Checked = theSettings.LabelAggregations;
-      chkRemoveFields.Checked = theSettings.RemoveFields;
-    }
-
-    /// <summary>
-    /// Stores the displayed settings to <paramref name="theSettings"/>
-    /// </summary>
-    /// <param name="theSettings">The destination of the store operation.</param>
-    private void StoreSettings(ImportSettings theSettings)
-    {
-      theSettings.Rules.Clear();
-      foreach(DataGridViewRow xRow in dgvExceptions.Rows)
+      rdoWhiteList.Checked = settings.UseAsWhiteList;
+      rdoBlackList.Checked = !settings.UseAsWhiteList;
+      if(settings.FilterRules != null)
       {
-        if(xRow.Cells[0].Value != null && xRow.Cells[1].Value != null)
+        foreach(FilterRule filterRule in settings.FilterRules)
         {
-          theSettings.Rules.Add(new ModifierElement(modifierNameMap[(string)xRow.Cells[0].Value], elementNameMap[(string)xRow.Cells[1].Value]));
+          dgvFilter.Rows.Add(reverseModifierNameMap[filterRule.Modifier], reverseElementNameMap[filterRule.Element]);
         }
       }
 
-      theSettings.CreateAggregations = chkCreateAggregations.Checked;
-      theSettings.LabelAggregations = chkLabelAggregations.Checked;
-      theSettings.RemoveFields = chkRemoveFields.Checked;
+      chkCreateRelationships.Checked = settings.CreateRelationships;
+      chkCreateAssociations.Checked = settings.CreateAssociations;
+      chkLabelAssociations.Checked = settings.LabelAggregations;
+      chkRemoveFields.Checked = settings.RemoveFields;
+      chkCreateGeneralizations.Checked = settings.CreateGeneralizations;
+      chkCreateRealizations.Checked = settings.CreateRealizations;
+      chkCreateNesting.Checked = settings.CreateNestings;
+    }
+
+    /// <summary>
+    /// Stores the displayed settings to <paramref name="settings"/>
+    /// </summary>
+    /// <param name="settings">The destination of the store operation.</param>
+    private void StoreSettings(ImportSettings settings)
+    {
+      settings.UseAsWhiteList = rdoWhiteList.Checked;
+      List<FilterRule> filterRules = new List<FilterRule>(dgvFilter.Rows.Count);
+      foreach (DataGridViewRow row in dgvFilter.Rows)
+      {
+        ImageComboBoxItem modifier = row.Cells[0].Value as ImageComboBoxItem;
+        ImageComboBoxItem element = row.Cells[1].Value as ImageComboBoxItem;
+        if (modifier != null && element != null)
+        {
+          if (modifier.Tag is FilterModifiers && element.Tag is FilterElements)
+          {
+            filterRules.Add(new FilterRule((FilterModifiers)modifier.Tag, (FilterElements)element.Tag));
+          }
+        }
+      }
+      settings.FilterRules = filterRules;
+
+      settings.CreateRelationships = chkCreateRelationships.Checked;
+      settings.CreateAssociations = chkCreateAssociations.Checked;
+      settings.LabelAggregations = chkLabelAssociations.Checked;
+      settings.RemoveFields = chkRemoveFields.Checked;
+      settings.CreateGeneralizations = chkCreateGeneralizations.Checked;
+      settings.CreateRealizations = chkCreateRealizations.Checked;
+      settings.CreateNestings = chkCreateNesting.Checked;
     }
 
     #endregion
