@@ -1,5 +1,5 @@
-Version 2.04
-------------
+Version 2.04 (06-Jun-2011)
+--------------------------
 + Optional parameters are supported
 + New AssemblyImporter plugin using NReflect
 * NClass sometimes eat the value 0 (zero) of enum values - fixed
