@@ -540,7 +540,6 @@ namespace NClass.GUI
 		private void mnuNewProject_Click(object sender, EventArgs e)
 		{
 			Project project = Workspace.Default.AddEmptyProject();
-			Workspace.Default.ActiveProject = project;
 		}
 
 		private void mnuNewCSharpDiagram_Click(object sender, EventArgs e)
