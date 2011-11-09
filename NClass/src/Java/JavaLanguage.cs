@@ -47,7 +47,7 @@ namespace NClass.Java
 		
 		// System.Collections.Generic.List<System.String[], System.String[]>[]
 		internal const string GenericTypePattern =
-			TypeNamePattern + @"(\s*" + GenericPattern + @")?(\s*\[\s*\])?";
+			TypeNamePattern + @"(\s*" + GenericPattern + @")?" + ArrayPattern;
 		
 		// <List<int>[], List<string>>
 		private const string GenericPattern2 =
@@ -55,7 +55,7 @@ namespace NClass.Java
 		
 		// System.Collections.Generic.List<List<int>[]>[]
 		internal const string GenericTypePattern2 =
-			TypeNamePattern + @"(\s*" + GenericPattern2 + @")?(\s*\[\s*\])?";
+			TypeNamePattern + @"(\s*" + GenericPattern2 + @")?" + ArrayPattern;
 
 
 		// Name
