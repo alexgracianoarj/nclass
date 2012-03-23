@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Reflection;
+using System.Text;
 using System.Windows.Forms;
 using NClass.AssemblyImport.Lang;
 using NClass.Core;
@@ -19,6 +20,9 @@ using NReflect.NRRelationship;
 
 namespace NClass.AssemblyImport
 {
+  /// <summary>
+  /// Imports a .net assembly into NClass.
+  /// </summary>
   public class NETImport
   {
     // ========================================================================
@@ -256,7 +260,7 @@ namespace NClass.AssemblyImport
       foreach (NRClass nrClass in classes)
       {
         ClassType classType = diagram.AddClass();
-        classType.Name = nrClass.Name;
+        classType.Name = nrClass.Name + GetGenericDefinition(nrClass);
         classType.AccessModifier = nrClass.AccessModifier.ToNClass();
         classType.Modifier = nrClass.ClassModifier.ToNClass();
 
@@ -272,6 +276,29 @@ namespace NClass.AssemblyImport
     }
 
     /// <summary>
+    /// Returns a string containing the type parameter definitions.
+    /// </summary>
+    /// <param name="generic">An instance of <see cref="IGeneric"/> to take the generic parameters from.</param>
+    /// <returns>A string containing the type parameter definitions.</returns>
+    private static string GetGenericDefinition(IGeneric generic)
+    {
+      if (!generic.IsGeneric)
+      {
+        return "";
+      }
+      IEnumerable<NRTypeParameter> nrTypeParameters = generic.GenericTypes;
+      StringBuilder result = new StringBuilder("<");
+      foreach (NRTypeParameter nrTypeParameter in nrTypeParameters)
+      {
+        result.AppendFormat("{0}, ", nrTypeParameter.Name);
+      }
+      result.Length -= 2;
+      result.Append(">");
+
+      return result.ToString();
+    }
+
+    /// <summary>
     /// Adds the submitted structs to the diagram.
     /// </summary>
     /// <param name="structs">A list of structs to add.</param>
@@ -280,7 +307,7 @@ namespace NClass.AssemblyImport
       foreach (NRStruct nrStruct in structs)
       {
         StructureType structureType = diagram.AddStructure();
-        structureType.Name = nrStruct.Name;
+        structureType.Name = nrStruct.Name + GetGenericDefinition(nrStruct);
         structureType.AccessModifier = nrStruct.AccessModifier.ToNClass();
 
         AddFields(structureType, nrStruct.Fields);
@@ -303,7 +330,7 @@ namespace NClass.AssemblyImport
       foreach (NRInterface nrInterface in interfaces)
       {
         InterfaceType interfaceType = diagram.AddInterface();
-        interfaceType.Name = nrInterface.Name;
+        interfaceType.Name = nrInterface.Name + GetGenericDefinition(nrInterface);
         interfaceType.AccessModifier = nrInterface.AccessModifier.ToNClass();
 
         AddProperties(interfaceType, nrInterface.Properties);
@@ -323,9 +350,9 @@ namespace NClass.AssemblyImport
       foreach (NRDelegate nrDelegate in delegates)
       {
         DelegateType delegateType = diagram.AddDelegate();
-        delegateType.Name = nrDelegate.Name;
+        delegateType.Name = nrDelegate.Name + GetGenericDefinition(nrDelegate);
         delegateType.AccessModifier = nrDelegate.AccessModifier.ToNClass();
-        delegateType.ReturnType = nrDelegate.ReturnType;
+        delegateType.ReturnType = nrDelegate.ReturnType.Type;
         foreach(NRParameter nrParameter in nrDelegate.Parameters)
         {
           delegateType.AddParameter(nrParameter.Declaration());

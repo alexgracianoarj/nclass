@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using NReflect;
 using NReflect.Filter;
+using NReflect.NRAttributes;
 using NReflect.NREntities;
 using NReflect.NRMembers;
 using NReflect.NRParameters;
@@ -120,7 +122,7 @@ namespace NClass.AssemblyImport
     /// </returns>
     public bool Reflect(NRDelegate nrDelegate)
     {
-      return IsUnsafePointer(nrDelegate.ReturnType) || HasUnsafeParameters(nrDelegate.Parameters) ? false : filter.Reflect(nrDelegate);
+      return IsUnsafePointer(nrDelegate.ReturnType.Type) || HasUnsafeParameters(nrDelegate.Parameters) ? false : filter.Reflect(nrDelegate);
     }
 
     /// <summary>
@@ -168,7 +170,7 @@ namespace NClass.AssemblyImport
     /// </returns>
     public bool Reflect(NRMethod nrMethod)
     {
-      return IsUnsafePointer(nrMethod.Type) || HasUnsafeParameters(nrMethod.Parameters) ? false : filter.Reflect(nrMethod);
+      return IsUnsafePointer(nrMethod.Type.Type) || HasUnsafeParameters(nrMethod.Parameters) ? false : filter.Reflect(nrMethod);
     }
 
     /// <summary>
@@ -180,7 +182,7 @@ namespace NClass.AssemblyImport
     /// </returns>
     public bool Reflect(NROperator nrOperator)
     {
-      return IsUnsafePointer(nrOperator.Type) || HasUnsafeParameters(nrOperator.Parameters) ? false : filter.Reflect(nrOperator);
+      return IsUnsafePointer(nrOperator.Type.Type) || HasUnsafeParameters(nrOperator.Parameters) ? false : filter.Reflect(nrOperator);
     }
 
     /// <summary>
@@ -204,7 +206,7 @@ namespace NClass.AssemblyImport
     /// </returns>
     public bool Reflect(NRField nrField)
     {
-      return IsUnsafePointer(nrField.Type) ? false : filter.Reflect(nrField);
+      return IsUnsafePointer(nrField.Type.Type) ? false : filter.Reflect(nrField);
     }
 
     /// <summary>
@@ -216,7 +218,31 @@ namespace NClass.AssemblyImport
     /// </returns>
     public bool Reflect(NRProperty nrProperty)
     {
-      return IsUnsafePointer(nrProperty.Type) ? false : filter.Reflect(nrProperty);
+      return IsUnsafePointer(nrProperty.Type.Type) ? false : filter.Reflect(nrProperty);
+    }
+
+    /// <summary>
+    /// Determines if an attribute will be reflected.
+    /// </summary>
+    /// <param name="nrAttribute">The attribute to test.</param>
+    /// <returns>
+    /// <c>False</c> since NClass don't know attributes.
+    /// </returns>
+    public bool Reflect(NRAttribute nrAttribute)
+    {
+        return false;
+    }
+
+    /// <summary>
+    /// Determines if a module will be reflected.
+    /// </summary>
+    /// <param name="nrModule">The module to test.</param>
+    /// <returns>
+    /// <c>False</c> since NClass don't know modules.
+    /// </returns>
+    public bool Reflect(NRModule nrModule)
+    {
+        return false;
     }
 
     /// <summary>
@@ -241,7 +267,7 @@ namespace NClass.AssemblyImport
     /// <returns><c>true</c> if the given list of parameters contains an unsafe pointer.</returns>
     private bool HasUnsafeParameters(IEnumerable<NRParameter> parameters)
     {
-      return parameters.Any(parameter => IsUnsafePointer(parameter.Type));
+      return parameters.Any(parameter => IsUnsafePointer(parameter.Type.Type));
     }
 
     #endregion

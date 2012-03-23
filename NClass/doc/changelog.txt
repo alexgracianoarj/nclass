@@ -1,6 +1,9 @@
 SVN Version
 --------------------------
 * Fixed a bug with activation of new projects
+* AssemblyImporter uses new Version of NReflect
+* Fixed a bug when importing a constant value with null assigned
+* AssemblyImporter eat generic type definitions - fixed
 
 Version 2.04 (06-Jun-2011)
 --------------------------
