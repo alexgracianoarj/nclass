@@ -71,7 +71,7 @@ namespace NClass.CSharp
 
 		// Interface.Method
 		private const string OperationNamePattern =
-			"(" + GenericTypePattern + @"(?<namedot>\.))?" + NamePattern;
+			"(" + GenericTypePattern2 + @"(?<namedot>\.))?" + NamePattern;
 
 		// Interface.Method<T>
 		internal const string GenericOperationNamePattern =
