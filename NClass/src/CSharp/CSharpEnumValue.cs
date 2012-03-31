@@ -24,11 +24,11 @@ namespace NClass.CSharp
 		// <name> [= value]
 		const string EnumNamePattern = "(?<name>" + CSharpLanguage.NamePattern + ")";
 		const string EnumItemPattern = @"^\s*" + EnumNamePattern +
-			@"(\s*=\s*(?<value>\d+))?\s*$";
+			@"(\s*=\s*(?<value>-?(0x)?\d+))?\s*$";
 
 		static Regex enumItemRegex = new Regex(EnumItemPattern, RegexOptions.ExplicitCapture);
-				
-		int? initValue;
+
+		string initValue;
 
 		/// <exception cref="BadSyntaxException">
 		/// The <paramref name="declaration"/> does not fit to the syntax.
@@ -37,7 +37,7 @@ namespace NClass.CSharp
 		{
 		}
 
-		public int? InitValue
+		public string InitValue
 		{
 			get { return initValue; }
 		}
@@ -49,44 +49,37 @@ namespace NClass.CSharp
 		{
 			Match match = enumItemRegex.Match(declaration);
 
-			try {
+			try
+			{
 				RaiseChangedEvent = false;
 
-				if (match.Success) {
+				if (match.Success)
+				{
 					Group nameGroup = match.Groups["name"];
 					Group valueGroup = match.Groups["value"];
 
 					Name = nameGroup.Value;
-				  if (valueGroup.Success)
-          {
-            int intValue;
-            if(int.TryParse(valueGroup.Value, out intValue))
-              initValue = intValue;
-            else
-              initValue = null;
-          }
-          else
-          {
-            initValue = null;
-          }
+					initValue = (valueGroup.Success ? valueGroup.Value : null);
 				}
-				else {
+				else
+				{
 					throw new BadSyntaxException(Strings.ErrorInvalidDeclaration);
 				}
 			}
-			finally {
+			finally
+			{
 				RaiseChangedEvent = true;
 			}
 		}
 
 		public override string GetDeclaration()
 		{
-		  if (InitValue == null)
+			if (InitValue == null)
 				return Name;
-		  return Name + " = " + InitValue;
+			return Name + " = " + InitValue;
 		}
 
-	  protected override EnumValue Clone()
+		protected override EnumValue Clone()
 		{
 			return new CSharpEnumValue(GetDeclaration());
 		}

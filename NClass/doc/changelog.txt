@@ -1,10 +1,11 @@
 SVN Version
 --------------------------
 * Fixed a bug with activation of new projects
-* Fixed a bug when importing a constant value with null assigned
+* Support for negative and hexa values in C# enums
 * Operations can explicitly implement interfaces with complex generic arguments
-* AssemblyImporter ate generic type definitions - fixed
-* AssemblyImporter uses new Version of NReflect
+* Fixed a bug when importing a constant value with null assigned
+* Fixed AssemblyImporter bug of string fields with initial values
+* Fixed AssemblyImporter bug with missing generic type definitions
 
 Version 2.04 (06-Jun-2011)
 --------------------------
