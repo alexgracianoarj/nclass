@@ -70,6 +70,9 @@
     <EmbeddedResource Include="Strings.es.resx">
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Strings.fr.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Strings.hu.resx">
       <SubType>Designer</SubType>
     </EmbeddedResource>

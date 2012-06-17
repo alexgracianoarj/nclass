@@ -1567,7 +1567,7 @@ namespace NClass.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &amp;Bidrectional.
+        ///   Looks up a localized string similar to &amp;Bidirectional.
         /// </summary>
         public static string MenuBidirectional {
             get {

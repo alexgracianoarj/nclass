@@ -1,5 +1,6 @@
 SVN Version
 --------------------------
++ French translation added (thanks to Jonas F.)
 * Fixed a bug with activation of new projects
 * Support for negative and hexa values in C# enums
 * Operations can explicitly implement interfaces with complex generic arguments
