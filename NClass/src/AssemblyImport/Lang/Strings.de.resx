@@ -292,4 +292,16 @@ Hinweis: Assemblies, die mit Hilfe eines Fuscators erstellt worden sind, können
   <data name="WarningTitle" xml:space="preserve">
     <value>Warnung</value>
   </data>
+  <data name="DeepGenericNestingPresent" xml:space="preserve">
+    <value>Einige Elemente der importierten Assembly enthalten eine zu tiefe Schachtelung von Generics. Diese Elemente wurden nicht importiert.</value>
+  </data>
+  <data name="ExtensionMethodsPresent" xml:space="preserve">
+    <value>Einige Methoden der importierten Assembly sind Erweiterungsmethoden. Diese wurden nicht importiert.</value>
+  </data>
+  <data name="GenericNestingPresent" xml:space="preserve">
+    <value>Einige Elemente der importierten Assembly enthalten Generics in übergeordneten Typen. Diese Elemente wurden nicht importiert.</value>
+  </data>
+  <data name="NullableAsTypeParamPresent" xml:space="preserve">
+    <value>Einige Elemente der importierten Assembly enthalten Nullable Typparameter. Diese Elemente wurden nicht importiert.</value>
+  </data>
 </root>

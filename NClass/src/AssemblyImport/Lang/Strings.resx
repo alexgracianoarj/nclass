@@ -292,4 +292,16 @@ Note: Assemblys which are created with a fuscator might fail to import.</value>
   <data name="WarningTitle" xml:space="preserve">
     <value>Warning</value>
   </data>
+  <data name="DeepGenericNestingPresent" xml:space="preserve">
+    <value>Some deeply nested generics exist at the imported assembly. Every element using such a type isn't imported.</value>
+  </data>
+  <data name="ExtensionMethodsPresent" xml:space="preserve">
+    <value>Some extension methods exist at the imported assembly. They are not imported.</value>
+  </data>
+  <data name="GenericNestingPresent" xml:space="preserve">
+    <value>Some declaring types using generics exist at the imported assembly. Every element using such a type isn't imported.</value>
+  </data>
+  <data name="NullableAsTypeParamPresent" xml:space="preserve">
+    <value>Some nullable type parameters exist at the imported assembly. Every element using such a type isn't imported.</value>
+  </data>
 </root>

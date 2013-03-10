@@ -2,6 +2,9 @@ using NClass.Core;
 
 namespace NClass.AssemblyImport
 {
+  /// <summary>
+  /// This class contains some extension methods used by the assembly importer.
+  /// </summary>
   public static class Extensions
   {
     // ========================================================================

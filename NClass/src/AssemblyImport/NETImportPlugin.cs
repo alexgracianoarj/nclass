@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.IO;
 using System.Windows.Forms;
 using NClass.AssemblyImport.Lang;
 using NClass.CSharp;
@@ -115,10 +116,10 @@ namespace NClass.AssemblyImport
       if(Workspace.HasActiveProject)
       {
         string fileName;
-        using (OpenFileDialog dialog = new OpenFileDialog())
+        using(OpenFileDialog dialog = new OpenFileDialog())
         {
           dialog.Filter = Strings.OpenFileDialog_Filter;
-          if (dialog.ShowDialog() == DialogResult.Cancel)
+          if(dialog.ShowDialog() == DialogResult.Cancel)
             return;
           fileName = dialog.FileName;
         }

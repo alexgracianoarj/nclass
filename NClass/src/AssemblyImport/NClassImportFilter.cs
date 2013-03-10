@@ -51,16 +51,27 @@ namespace NClass.AssemblyImport
 
     #region === Properties
 
-    private bool unsafeTypesPresent;
-
     /// <summary>
-    /// Gets or sets a value indicating if unsafe types where filtered out.
+    /// Gets a value indicating if unsafe types where filtered out.
     /// </summary>
-    public bool UnsafeTypesPresent
-    {
-      get { return unsafeTypesPresent; }
-      private set { unsafeTypesPresent = value; }
-    }
+    public bool UnsafeTypesPresent { get; private set; }
+    /// <summary>
+    /// Gets a value indicating if there are type usages of types which are nested
+    /// within generac types. These type usages are filtered out.
+    /// </summary>
+    public bool GenericNestingPresent { get; private set; }
+    /// <summary>
+    /// Gets a value indicating if there are nullable type parameters. These type parameters are filtered out.
+    /// </summary>
+    public bool NullableAsTypeParamPresent { get; private set; }
+    /// <summary>
+    /// Gets a value indicating if there are extension methods. These type parameters are filtered out.
+    /// </summary>
+    public bool ExtensionMethodsPresent { get; private set; }
+    /// <summary>
+    /// Gets a value indicating if there are type usages using a deep generic nesting. These type parameters are filtered out.
+    /// </summary>
+    public bool DeepGenericNestingPresent { get; private set; }
 
     #endregion
 
@@ -122,7 +133,7 @@ namespace NClass.AssemblyImport
     /// </returns>
     public bool Reflect(NRDelegate nrDelegate)
     {
-      return IsUnsafePointer(nrDelegate.ReturnType.Type) || HasUnsafeParameters(nrDelegate.Parameters) ? false : filter.Reflect(nrDelegate);
+      return filter.Reflect(nrDelegate) && CanImportParameters(nrDelegate.Parameters) && CanImportTypeUsage(nrDelegate.ReturnType);
     }
 
     /// <summary>
@@ -158,7 +169,7 @@ namespace NClass.AssemblyImport
     /// </returns>
     public bool Reflect(NRConstructor nrConstructor)
     {
-      return HasUnsafeParameters(nrConstructor.Parameters) ? false : filter.Reflect(nrConstructor);
+      return filter.Reflect(nrConstructor) && CanImportParameters(nrConstructor.Parameters);
     }
 
     /// <summary>
@@ -170,7 +181,7 @@ namespace NClass.AssemblyImport
     /// </returns>
     public bool Reflect(NRMethod nrMethod)
     {
-      return IsUnsafePointer(nrMethod.Type.Type) || HasUnsafeParameters(nrMethod.Parameters) ? false : filter.Reflect(nrMethod);
+      return filter.Reflect(nrMethod) && CanImportParameters(nrMethod.Parameters) && CanImportTypeUsage(nrMethod.Type) && !IsExtensionMethod(nrMethod);
     }
 
     /// <summary>
@@ -182,7 +193,7 @@ namespace NClass.AssemblyImport
     /// </returns>
     public bool Reflect(NROperator nrOperator)
     {
-      return IsUnsafePointer(nrOperator.Type.Type) || HasUnsafeParameters(nrOperator.Parameters) ? false : filter.Reflect(nrOperator);
+      return filter.Reflect(nrOperator) && CanImportParameters(nrOperator.Parameters) && CanImportTypeUsage(nrOperator.Type);
     }
 
     /// <summary>
@@ -194,7 +205,7 @@ namespace NClass.AssemblyImport
     /// </returns>
     public bool Reflect(NREvent nrEvent)
     {
-      return filter.Reflect(nrEvent);
+      return filter.Reflect(nrEvent) && CanImportTypeUsage(nrEvent.Type);
     }
 
     /// <summary>
@@ -206,7 +217,7 @@ namespace NClass.AssemblyImport
     /// </returns>
     public bool Reflect(NRField nrField)
     {
-      return IsUnsafePointer(nrField.Type.Type) ? false : filter.Reflect(nrField);
+      return filter.Reflect(nrField) && CanImportTypeUsage(nrField.Type);
     }
 
     /// <summary>
@@ -218,7 +229,7 @@ namespace NClass.AssemblyImport
     /// </returns>
     public bool Reflect(NRProperty nrProperty)
     {
-      return IsUnsafePointer(nrProperty.Type.Type) ? false : filter.Reflect(nrProperty);
+      return filter.Reflect(nrProperty) && CanImportTypeUsage(nrProperty.Type);
     }
 
     /// <summary>
@@ -246,13 +257,33 @@ namespace NClass.AssemblyImport
     }
 
     /// <summary>
+    /// Determines if NClass can handle a specific type usage.
+    /// </summary>
+    /// <param name="nrTypeUsage">The type usage to check.</param>
+    /// <returns><c>True</c> if the type usage can be imported to NClass.</returns>
+    private bool CanImportTypeUsage(NRTypeUsage nrTypeUsage)
+    {
+      return !IsUnsafePointer(nrTypeUsage) && !IsGenericNested(nrTypeUsage) && !IsNullableTypeParameter(nrTypeUsage) && !IsDeepGenericNesting(nrTypeUsage);
+    }
+
+    /// <summary>
+    /// Determines if NClass can handle all given parameters.
+    /// </summary>
+    /// <param name="parameters">The parameters to check.</param>
+    /// <returns><c>True</c> if the parameters can be imported to NClass.</returns>
+    private bool CanImportParameters(IEnumerable<NRParameter> parameters)
+    {
+      return !parameters.Select(p => p.Type).Any(type => IsUnsafePointer(type) || IsGenericNested(type) || IsNullableTypeParameter(type) || IsDeepGenericNesting(type));
+    }
+
+    /// <summary>
     /// Returns <c>true</c> if the given type represents an unsafe pointer.
     /// </summary>
     /// <param name="type">The type to check.</param>
     /// <returns><c>true</c> if the given type represents an unsafe pointer.</returns>
-    private bool IsUnsafePointer(string type)
+    private bool IsUnsafePointer(NRTypeUsage type)
     {
-      if (type.Contains("*"))
+      if(type != null && type.FullName  != null && type.FullName.Contains("*"))
       {
         UnsafeTypesPresent = true;
         return true;
@@ -261,13 +292,84 @@ namespace NClass.AssemblyImport
     }
 
     /// <summary>
-    /// Returns <c>true</c> if the given list of parameters contains an unsafe pointer.
+    /// Returns <c>true</c> if the given type usage is nested within a generic type.
     /// </summary>
-    /// <param name="parameters">The list of parameters to check.</param>
-    /// <returns><c>true</c> if the given list of parameters contains an unsafe pointer.</returns>
-    private bool HasUnsafeParameters(IEnumerable<NRParameter> parameters)
+    /// <param name="nrTypeUsage">The type usage to check.</param>
+    /// <returns><c>true</c> if the given type usage is nested within a generic type.</returns>
+    private bool IsGenericNested(NRTypeUsage nrTypeUsage)
     {
-      return parameters.Any(parameter => IsUnsafePointer(parameter.Type.Type));
+      if(nrTypeUsage == null)
+      {
+        return false;
+      }
+      NRTypeUsage declaringType = nrTypeUsage.DeclaringType;
+      while(declaringType != null)
+      {
+        if(declaringType.IsGeneric)
+        {
+          GenericNestingPresent = true;
+          return true;
+        }
+        declaringType = declaringType.DeclaringType;
+      }
+      return false;
+    }
+
+    /// <summary>
+    /// Returns <c>true</c> if the given type usage contains a nullable generic parameter.
+    /// </summary>
+    /// <param name="nrTypeUsage">The type usage to check.</param>
+    /// <returns><c>true</c> if the given type usage contains a nullable generic parameter.</returns>
+    private bool IsNullableTypeParameter(NRTypeUsage nrTypeUsage)
+    {
+      foreach(NRTypeUsage genericParameter in nrTypeUsage.GenericParameters)
+      {
+        if(genericParameter.IsNullable)
+        {
+          NullableAsTypeParamPresent = true;
+          return true;
+        }
+        if(IsNullableTypeParameter(genericParameter))
+        {
+          return true;
+        }
+      }
+      return false;
+    }
+
+    /// <summary>
+    /// Returns <c>true</c> if the given type usage uses deep generic nesting.
+    /// </summary>
+    /// <param name="nrTypeUsage">The type usage to check.</param>
+    /// <param name="level">The current level of nesting.</param>
+    /// <returns><c>true</c> if the given type usage uses deep generic nesting.</returns>
+    private bool IsDeepGenericNesting(NRTypeUsage nrTypeUsage, int level = 0)
+    {
+      if(nrTypeUsage.GenericParameters.Any(genericParameter => IsDeepGenericNesting(genericParameter, level + 1)))
+      {
+        return true;
+      }
+      if(level > 2)
+      {
+        DeepGenericNestingPresent = true;
+        return true;
+      }
+      return false;
+    }
+
+    /// <summary>
+    /// Returns <c>true</c> if the given method is an extension method.
+    /// </summary>
+    /// <param name="method">The method to check.</param>
+    /// <returns><c>true</c> if the given method is an extension method.</returns>
+    private bool IsExtensionMethod(NRMethod method)
+    {
+      if(method.IsExtensionMethod)
+      {
+        ExtensionMethodsPresent = true;
+        return true;
+      }
+      return false;
     }
 
     #endregion

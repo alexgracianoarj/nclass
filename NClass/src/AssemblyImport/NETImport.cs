@@ -118,6 +118,10 @@ namespace NClass.AssemblyImport
         NRAssembly nrAssembly = reflector.Reflect(fileName, ref filter);
         nClassImportFilter = (NClassImportFilter)filter;
 
+        // Configure the CSharp code provider of NReflect
+        NReflect.NRCode.CSharp.CreateAttributes = false;
+        NReflect.NRCode.CSharp.UseNamespaces = false;
+
         AddInterfaces(nrAssembly.Interfaces);
         AddClasses(nrAssembly.Classes);
         AddStrcts(nrAssembly.Structs);
@@ -137,23 +141,39 @@ namespace NClass.AssemblyImport
         {
           MessageBox.Show(null, Strings.UnsafeTypesPresent, Strings.WarningTitle, MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
+        if(nClassImportFilter.GenericNestingPresent)
+        {
+          MessageBox.Show(null, Strings.GenericNestingPresent, Strings.WarningTitle, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+        if(nClassImportFilter.NullableAsTypeParamPresent)
+        {
+          MessageBox.Show(null, Strings.NullableAsTypeParamPresent, Strings.WarningTitle, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+        if(nClassImportFilter.ExtensionMethodsPresent)
+        {
+          MessageBox.Show(null, Strings.ExtensionMethodsPresent, Strings.WarningTitle, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+        if(nClassImportFilter.DeepGenericNestingPresent)
+        {
+          MessageBox.Show(null, Strings.DeepGenericNestingPresent, Strings.WarningTitle, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
       }
-      catch (ReflectionTypeLoadException)
+      catch(ReflectionTypeLoadException)
       {
         MessageBox.Show(Strings.Error_MissingReferencedAssemblies, Strings.Error_MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
         return false;
       }
-      catch (FileLoadException)
+      catch(FileLoadException)
       {
         MessageBox.Show(Strings.Error_MissingReferencedAssemblies, Strings.Error_MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
         return false;
       }
-      catch (BadImageFormatException)
+      catch(BadImageFormatException)
       {
         MessageBox.Show(Strings.Error_BadImageFormat, Strings.Error_MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
         return false;
       }
-      catch (Exception ex)
+      catch(Exception ex)
       {
         MessageBox.Show(String.Format(Strings.Error_GeneralException, ex), Strings.Error_MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
         return false;
@@ -352,7 +372,7 @@ namespace NClass.AssemblyImport
         DelegateType delegateType = diagram.AddDelegate();
         delegateType.Name = nrDelegate.Name + GetGenericDefinition(nrDelegate);
         delegateType.AccessModifier = nrDelegate.AccessModifier.ToNClass();
-        delegateType.ReturnType = nrDelegate.ReturnType.Type;
+        delegateType.ReturnType = nrDelegate.ReturnType.Declaration();
         foreach(NRParameter nrParameter in nrDelegate.Parameters)
         {
           delegateType.AddParameter(nrParameter.Declaration());
