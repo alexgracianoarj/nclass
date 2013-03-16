@@ -149,6 +149,7 @@ namespace NClass.Core
 		public abstract string Stereotype
 		{
 			get;
+			set;
 		}
 
 		public abstract string Signature

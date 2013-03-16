@@ -58,7 +58,7 @@
 			this.txtName = new NClass.DiagramEditor.ClassDiagram.Editors.BorderedTextBox();
 			this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
 			this.toolStrip.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize) (this.errorProvider)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// toolStrip
@@ -322,10 +322,9 @@
 			this.txtName.SelectionStart = 0;
 			this.txtName.Size = new System.Drawing.Size(322, 20);
 			this.txtName.TabIndex = 5;
-			this.txtName.AcceptsTab = true;
-			this.txtName.TextChanged += new System.EventHandler(this.txtName_TextChanged);
-			this.txtName.Validating += new System.ComponentModel.CancelEventHandler(this.txtName_Validating);
+			this.txtName.TextChanged += new System.EventHandler(this.textBox_TextChanged);
 			this.txtName.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtName_KeyDown);
+			this.txtName.Validating += new System.ComponentModel.CancelEventHandler(this.txtName_Validating);
 			// 
 			// errorProvider
 			// 
@@ -339,7 +338,7 @@
 			this.Size = new System.Drawing.Size(330, 52);
 			this.toolStrip.ResumeLayout(false);
 			this.toolStrip.PerformLayout();
-			((System.ComponentModel.ISupportInitialize) (this.errorProvider)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -358,7 +357,6 @@
 		private System.Windows.Forms.ToolStripMenuItem toolSealed;
 		private System.Windows.Forms.ToolStripMenuItem toolStatic;
 		private System.Windows.Forms.ToolStripMenuItem toolDefault;
-		private BorderedTextBox txtName;
 		private System.Windows.Forms.ToolStripMenuItem toolProtint;
 		private System.Windows.Forms.ToolStripMenuItem toolProtected;
 		private System.Windows.Forms.ToolStripSplitButton toolNewMember;
@@ -375,5 +373,6 @@
 		private System.Windows.Forms.ToolStripButton toolImplementList;
 		private System.Windows.Forms.ToolStripButton toolOverrideList;
 		private System.Windows.Forms.ErrorProvider errorProvider;
+		protected BorderedTextBox txtName;
 	}
 }

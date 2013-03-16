@@ -57,6 +57,7 @@ namespace NClass.Core
 		public override string Stereotype
 		{
 			get { return "«enumeration»"; }
+			set { }
 		}
 
 		/// <exception cref="BadSyntaxException">

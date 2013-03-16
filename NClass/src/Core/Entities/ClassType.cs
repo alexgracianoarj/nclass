@@ -127,9 +127,26 @@ namespace NClass.Core
 			}
 		}
 
+		private string stereotype = null;
+
+		/// <summary>
+		/// Gets or sets the stereotype for this class.
+		/// </summary>
 		public override string Stereotype
 		{
-			get { return null; }
+			get
+			{
+				return stereotype; 
+			}
+			set
+			{
+				if (value != stereotype)
+				{
+					stereotype = value;
+					// Make sure the element knows that the stereotype has changed.
+					Changed();
+				}
+			}
 		}
 
 		/// <exception cref="RelationshipException">
@@ -219,6 +236,7 @@ namespace NClass.Core
 			base.CopyFrom(type);
 			ClassType classType = (ClassType) type;
 			modifier = classType.modifier;
+			Stereotype = classType.Stereotype;
 		}
 
 		public abstract ClassType Clone();
@@ -233,6 +251,11 @@ namespace NClass.Core
 			XmlElement child = node.OwnerDocument.CreateElement("Modifier");
 			child.InnerText = Modifier.ToString();
 			node.AppendChild(child);
+
+			// Save the stereotype.
+			XmlElement childStereotype = node.OwnerDocument.CreateElement("Stereotype");
+			childStereotype.InnerText = Stereotype;
+			node.AppendChild(childStereotype);
 		}
 
 		/// <exception cref="BadSyntaxException">
@@ -251,6 +274,20 @@ namespace NClass.Core
 			XmlElement child = node["Modifier"];
 			if (child != null)
 				Modifier = Language.TryParseClassModifier(child.InnerText);
+
+			// Load the stereotype.
+			XmlElement childStereotype = node["Stereotype"];
+			if (childStereotype != null)
+			{
+				if (string.IsNullOrEmpty(childStereotype.InnerText))
+				{
+					Stereotype = null;
+				}
+				else
+				{
+					Stereotype = childStereotype.InnerText;
+				}
+			}
 
 			base.Deserialize(node);
 			RaiseChangedEvent = true;

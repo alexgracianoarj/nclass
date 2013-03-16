@@ -25,6 +25,8 @@ namespace NClass.DiagramEditor.ClassDiagram.Shapes
 	{
 		ClassType _class;
 
+		static ClassTypeEditor typeEditor = new ClassTypeEditor();
+
 		/// <exception cref="ArgumentNullException">
 		/// <paramref name="classType"/> is null.
 		/// </exception>
@@ -43,6 +45,11 @@ namespace NClass.DiagramEditor.ClassDiagram.Shapes
 		public ClassType ClassType
 		{
 			get { return _class; }
+		}
+
+		protected override TypeEditor HeaderEditor
+		{
+			get { return typeEditor; }
 		}
 
 		protected override bool CloneEntity(Diagram diagram)

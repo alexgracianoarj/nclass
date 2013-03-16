@@ -1,6 +1,7 @@
 SVN Version
 --------------------------
 + French translation added (thanks to Jonas F.)
++ Stereotype editor for classes (thanks to Corey Brown)
 * Fixed a bug with activation of new projects
 * Support for negative and hexa values in C# enums
 * Operations can explicitly implement interfaces with complex generic arguments

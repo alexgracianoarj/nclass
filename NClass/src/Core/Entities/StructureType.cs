@@ -89,6 +89,7 @@ namespace NClass.Core
 		public override string Stereotype
 		{
 			get { return "«structure»"; }
+			set { }
 		}
 
 		/// <exception cref="InvalidOperationException">

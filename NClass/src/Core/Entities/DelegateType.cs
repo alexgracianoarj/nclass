@@ -80,6 +80,7 @@ namespace NClass.Core
 		public override string Stereotype
 		{
 			get { return "«delegate»"; }
+			set { }
 		}
 
 		protected abstract string DefaultReturnType
