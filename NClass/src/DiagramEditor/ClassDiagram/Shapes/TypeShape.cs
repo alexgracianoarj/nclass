@@ -249,8 +249,8 @@ namespace NClass.DiagramEditor.ClassDiagram.Shapes
 		private void ShowEditor(EditorWindow editor)
 		{
 			editor.Relocate(this);
-			ShowWindow(editor);
 			editor.Init(this);
+			ShowWindow(editor);
 			editor.Focus();
 			showedEditor = editor;
 		}

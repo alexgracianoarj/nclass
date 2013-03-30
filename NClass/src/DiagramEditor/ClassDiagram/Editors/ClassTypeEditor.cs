@@ -28,9 +28,6 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
 			// Set this in the constructor instead of the designer so that the designer doesn't give an error about
 			// using the parent's TextChanged method.
 			this.txtStereotype.TextChanged += new EventHandler(base.textBox_TextChanged);
-
-			CollapseAdvancedOptions();
-			ExpandAdvancedOptions();
 		}
 
 		/// <summary>
@@ -43,8 +40,6 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
 
 			CompositeType type = Shape.CompositeType;
 
-			SuspendLayout();
-
 			// If the user has entered a stereotype for this class, then expand the form to show the stereotype textbox.
 			if (type.Stereotype != null)
 			{
@@ -54,10 +49,6 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
 			{
 				CollapseAdvancedOptions();
 			}
-
-			ResumeLayout();
-
-			Refresh();
 		}
 
 		/// <summary>
