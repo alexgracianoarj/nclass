@@ -113,5 +113,89 @@ namespace NClass.CodeGenerator {
                 this["UseNotImplementedExceptions"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool UseAutomaticProperties {
+            get {
+                return ((bool)(this["UseAutomaticProperties"]));
+            }
+            set {
+                this["UseAutomaticProperties"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool GenerateNHibernateMapping {
+            get {
+                return ((bool)(this["GenerateNHibernateMapping"]));
+            }
+            set {
+                this["GenerateNHibernateMapping"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("NHibernateXml")]
+        public global::NClass.CodeGenerator.MappingType MappingType {
+            get {
+                return ((global::NClass.CodeGenerator.MappingType)(this["MappingType"]));
+            }
+            set {
+                this["MappingType"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Increment")]
+        public global::NClass.CodeGenerator.IdGeneratorType IdGeneratorType {
+            get {
+                return ((global::NClass.CodeGenerator.IdGeneratorType)(this["IdGeneratorType"]));
+            }
+            set {
+                this["IdGeneratorType"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool UseLazyLoading {
+            get {
+                return ((bool)(this["UseLazyLoading"]));
+            }
+            set {
+                this["UseLazyLoading"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool UseLowercaseAndUnderscoredWordsInDb {
+            get {
+                return ((bool)(this["UseLowercaseAndUnderscoredWordsInDb"]));
+            }
+            set {
+                this["UseLowercaseAndUnderscoredWordsInDb"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("pfx_")]
+        public string PrefixTable {
+            get {
+                return ((string)(this["PrefixTable"]));
+            }
+            set {
+                this["PrefixTable"] = value;
+            }
+        }
     }
 }

@@ -58,44 +58,12 @@ namespace NClass.CodeGenerator
 		/// </exception>
 		internal GenerationResult Generate(string location)
 		{
-			GenerationResult result = CheckDestination(location);
-			if (result != GenerationResult.Success)
-				return result;
-
 			if (!GenerateProjectFiles(location))
 				return GenerationResult.Error;
 			if (!GenerateSolutionFile(location))
 				return GenerationResult.Error;
 
 			return GenerationResult.Success;
-		}
-
-		private GenerationResult CheckDestination(string location)
-		{
-			try
-			{
-				location = Path.Combine(location, SolutionName);
-				if (Directory.Exists(location))
-				{
-					DialogResult result = MessageBox.Show(
-						Strings.CodeGenerationOverwriteConfirmation, Strings.Confirmation,
-						MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-
-					if (result == DialogResult.Yes)
-						return GenerationResult.Success;
-					else
-						return GenerationResult.Cancelled;
-				}
-				else
-				{
-					Directory.CreateDirectory(location);
-					return GenerationResult.Success;
-				}
-			}
-			catch
-			{
-				return GenerationResult.Error;
-			}
 		}
 
 		private bool GenerateProjectFiles(string location)

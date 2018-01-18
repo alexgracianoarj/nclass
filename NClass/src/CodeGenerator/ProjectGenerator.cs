@@ -100,7 +100,7 @@ namespace NClass.CodeGenerator
 
 				if (type != null && !type.IsNested)
 				{
-					SourceFileGenerator sourceFile = CreateSourceFileGenerator(type);
+                    SourceFileGenerator sourceFile = new CSharpSourceFileGenerator(type, RootNamespace, model);
 
 					try
 					{
@@ -111,13 +111,32 @@ namespace NClass.CodeGenerator
 					{
 						success = false;
 					}
+
+                    if (Settings.Default.GenerateNHibernateMapping)
+                    {
+                        if (type is ClassType)
+                        {
+                            if (Settings.Default.MappingType == MappingType.NHibernateXml)
+                            {
+                                sourceFile = new CSharpNHibernateXmlSourceFileGenerator(type, RootNamespace, model);
+                            }
+
+                            try
+                            {
+                                string fileName = sourceFile.Generate(location);
+                                fileNames.Add(fileName);
+                            }
+                            catch (FileGenerationException)
+                            {
+                                success = false;
+                            }
+                        }
+                    }
 				}
 			}
 
 			return success;
 		}
-
-		protected abstract SourceFileGenerator CreateSourceFileGenerator(TypeBase type);
 
 		protected abstract bool GenerateProjectFiles(string location);
 	}

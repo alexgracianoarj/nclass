@@ -35,11 +35,6 @@ namespace NClass.CodeGenerator
 			get { return null; }
 		}
 
-		protected override SourceFileGenerator CreateSourceFileGenerator(TypeBase type)
-		{
-			return new JavaSourceFileGenerator(type, RootNamespace);
-		}
-
 		protected override bool GenerateProjectFiles(string location)
 		{
 			return true;

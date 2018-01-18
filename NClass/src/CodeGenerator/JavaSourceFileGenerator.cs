@@ -25,8 +25,8 @@ namespace NClass.CodeGenerator
 		/// <exception cref="NullReferenceException">
 		/// <paramref name="type"/> is null.
 		/// </exception>
-		public JavaSourceFileGenerator(TypeBase type, string rootNamespace)
-			: base(type, rootNamespace)
+		public JavaSourceFileGenerator(TypeBase type, string rootNamespace, Model model)
+			: base(type, rootNamespace, model)
 		{
 		}
 

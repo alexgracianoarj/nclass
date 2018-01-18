@@ -32,5 +32,26 @@
     <Setting Name="UseNotImplementedExceptions" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
+    <Setting Name="UseAutomaticProperties" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="GenerateNHibernateMapping" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="MappingType" Type="NClass.CodeGenerator.MappingType" Scope="User">
+      <Value Profile="(Default)">NHibernateXml</Value>
+    </Setting>
+    <Setting Name="IdGeneratorType" Type="NClass.CodeGenerator.IdGeneratorType" Scope="User">
+      <Value Profile="(Default)">Increment</Value>
+    </Setting>
+    <Setting Name="UseLazyLoading" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="UseLowercaseAndUnderscoredWordsInDb" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="PrefixTable" Type="System.String" Scope="User">
+      <Value Profile="(Default)">pfx_</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

@@ -22,6 +22,8 @@ using NClass.CSharp;
 using NClass.Java;
 using NClass.Translations;
 
+using System.Threading;
+
 namespace NClass.CodeGenerator
 {
 	public partial class Dialog : Form
@@ -30,8 +32,8 @@ namespace NClass.CodeGenerator
 
 		public Dialog()
 		{
-			InitializeComponent();
-			importToolStrip.Renderer = ToolStripSimplifiedRenderer.Default;
+            InitializeComponent();
+            importToolStrip.Renderer = ToolStripSimplifiedRenderer.Default;
 		}
 
 		private void UpdateTexts()
@@ -61,8 +63,15 @@ namespace NClass.CodeGenerator
 			txtDestination.Text = Settings.Default.DestinationPath;
 			chkUseTabs.Checked = Settings.Default.UseTabsForIndents;
 			updIndentSize.Value = Settings.Default.IndentSize;
-			cboSolutionType.SelectedIndex = (int) Settings.Default.SolutionType;
+			cboSolutionType.SelectedItem = Settings.Default.SolutionType;
 			chkNotImplemented.Checked = Settings.Default.UseNotImplementedExceptions;
+            chkAutomaticProperties.Checked = Settings.Default.UseAutomaticProperties;
+            chkGenerateNHibernateMapping.Checked = Settings.Default.GenerateNHibernateMapping;
+            cboMappingType.SelectedItem = Settings.Default.MappingType;
+            cboIdGeneratorType.SelectedItem = Settings.Default.IdGeneratorType;
+            chkUseLazyLoading.Checked = Settings.Default.UseLazyLoading;
+            chkUseLowercaseUnderscoredWordsInDb.Checked = Settings.Default.UseLowercaseAndUnderscoredWordsInDb;
+            txtTextPrefix.Text = Settings.Default.PrefixTable;
 			cboLanguage.SelectedIndex = 0;
 		}
 
@@ -103,6 +112,9 @@ namespace NClass.CodeGenerator
 			this.project = project;
 
 			UpdateTexts();
+            PopulateSolutionType();
+            PopulateIdGeneratorType();
+            PopulateMappingType();
 			UpdateValues();
 			ShowDialog();
 			
@@ -111,6 +123,21 @@ namespace NClass.CodeGenerator
 			else
 				Settings.Default.Reload();
 		}
+
+        private void PopulateSolutionType()
+        {
+            cboSolutionType.DataSource = Enum.GetValues(typeof(SolutionType));
+        }
+
+        private void PopulateMappingType()
+        {
+            cboMappingType.DataSource = Enum.GetValues(typeof(MappingType));
+        }
+
+        private void PopulateIdGeneratorType()
+        {
+            cboIdGeneratorType.DataSource = Enum.GetValues(typeof(IdGeneratorType));
+        }
 
 		private void btnBrowse_Click(object sender, EventArgs e)
 		{
@@ -220,45 +247,111 @@ namespace NClass.CodeGenerator
 			{
 				ValidateSettings();
 
-				try
-				{
-					SolutionType solutionType = (SolutionType) cboSolutionType.SelectedIndex;
-					Generator generator = new Generator(project, solutionType);
-					string destination = txtDestination.Text;
+                // Initialize the dialog that will contain the progress bar
+                ProgressDialog progressDialog = new ProgressDialog();
 
-					GenerationResult result = generator.Generate(destination);
-					if (result == GenerationResult.Success)
-					{
-						MessageBox.Show(Strings.CodeGenerationCompleted,
-							Strings.CodeGeneration, MessageBoxButtons.OK,
-							MessageBoxIcon.Information);
-					}
-					else if (result == GenerationResult.Error)
-					{
-						MessageBox.Show(Strings.CodeGenerationFailed,
-							Strings.Error, MessageBoxButtons.OK,
-							MessageBoxIcon.Error);
-					}
-					else // Cancelled
-					{
-						this.DialogResult = DialogResult.None;
-					}
-				}
-				catch (Exception ex)
-				{
-					MessageBox.Show(ex.Message, Strings.UnknownError,
-						MessageBoxButtons.OK, MessageBoxIcon.Error);
-				}
+                // Set the dialog to operate in indeterminate mode
+                progressDialog.SetIndeterminate(true);
+
+                SolutionType solutionType = (SolutionType)cboSolutionType.SelectedIndex;
+                string destination = txtDestination.Text;
+
+                try
+                {
+                    Generator generator = new Generator(project, solutionType);
+                    GenerationResult result = new GenerationResult();
+
+                    Thread backgroundThread = new Thread(
+                        new ThreadStart(() =>
+                        {
+                            result = generator.Generate(destination);
+                            
+                            // Close the dialog if it hasn't been already
+                            if (progressDialog.InvokeRequired)
+                                progressDialog.BeginInvoke(new Action(() => progressDialog.Close()));
+                        }));
+
+                    result = CheckDestination(destination);
+
+                    if (result == GenerationResult.Success)
+                    {
+                        // Start the background process thread
+                        backgroundThread.Start();
+
+                        // Open the dialog
+                        progressDialog.ShowDialog();
+                    }
+
+                    if (result == GenerationResult.Success)
+                    {
+                        MessageBox.Show(Strings.CodeGenerationCompleted,
+                            Strings.CodeGeneration, MessageBoxButtons.OK,
+                            MessageBoxIcon.Information);
+                    }
+                    else if (result == GenerationResult.Error)
+                    {
+                        MessageBox.Show(Strings.CodeGenerationFailed,
+                            Strings.Error, MessageBoxButtons.OK,
+                            MessageBoxIcon.Error);
+                    }
+                    else // Cancelled
+                    {
+                        this.DialogResult = DialogResult.None;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, Strings.UnknownError,
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
 			}
 		}
+
+        private GenerationResult CheckDestination(string location)
+        {
+            try
+            {
+                location = Path.Combine(location, project.Name);
+                if (Directory.Exists(location))
+                {
+                    DialogResult result = MessageBox.Show(
+                                this,
+                                Strings.CodeGenerationOverwriteConfirmation,
+                                Strings.Confirmation,
+                                MessageBoxButtons.YesNo,
+                                MessageBoxIcon.Warning);
+
+                    if (result == DialogResult.Yes)
+                        return GenerationResult.Success;
+                    else
+                        return GenerationResult.Cancelled;
+                }
+                else
+                {
+                    Directory.CreateDirectory(location);
+                    return GenerationResult.Success;
+                }
+            }
+            catch
+            {
+                return GenerationResult.Error;
+            }
+        }
 
 		private void ValidateSettings()
 		{
 			Settings.Default.DestinationPath = txtDestination.Text;
 			Settings.Default.UseTabsForIndents = chkUseTabs.Checked;
 			Settings.Default.IndentSize = (int) updIndentSize.Value;
-			Settings.Default.SolutionType = (SolutionType) cboSolutionType.SelectedIndex;
+            Settings.Default.SolutionType = (SolutionType)cboSolutionType.SelectedItem;
 			Settings.Default.UseNotImplementedExceptions = chkNotImplemented.Checked;
-		}
+            Settings.Default.UseAutomaticProperties = chkAutomaticProperties.Checked;
+            Settings.Default.GenerateNHibernateMapping = chkGenerateNHibernateMapping.Checked;
+            Settings.Default.MappingType = (MappingType)cboMappingType.SelectedItem;
+            Settings.Default.IdGeneratorType = (IdGeneratorType)cboIdGeneratorType.SelectedItem;
+            Settings.Default.UseLazyLoading = chkUseLazyLoading.Checked;
+            Settings.Default.UseLowercaseAndUnderscoredWordsInDb = chkUseLowercaseUnderscoredWordsInDb.Checked;
+            Settings.Default.PrefixTable = txtTextPrefix.Text.Trim();
+        }
 	}
 }

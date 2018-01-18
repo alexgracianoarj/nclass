@@ -25,8 +25,8 @@ namespace NClass.CodeGenerator
 		/// <exception cref="NullReferenceException">
 		/// <paramref name="type"/> is null.
 		/// </exception>
-		public CSharpSourceFileGenerator(TypeBase type, string rootNamespace)
-			: base(type, rootNamespace)
+		public CSharpSourceFileGenerator(TypeBase type, string rootNamespace, Model model)
+			: base(type, rootNamespace, model)
 		{
 		}
 
@@ -147,32 +147,43 @@ namespace NClass.CodeGenerator
 
 		private void WriteOperation(Operation operation)
 		{
-			WriteLine(operation.GetDeclaration());
+            if (operation is Property)
+            {
+                if (Settings.Default.UseAutomaticProperties)
+                {
+                    WriteLine(string.Format("{0} {{ get; set; }}", operation.GetDeclaration()));
+                }
+                else
+                {
+                    WriteLine(operation.GetDeclaration());
+                    WriteProperty((Property)operation);
+                }
+            }
+            else
+            {
+                WriteLine(operation.GetDeclaration());
 
-			if (operation is Property)
-			{
-				WriteProperty((Property) operation);
-			}
-			else if (operation.HasBody)
-			{
-				if (operation is Event)
-				{
-					WriteLine("{");
-					IndentLevel++;
-					WriteLine("add {  }");
-					WriteLine("remove {  }");
-					IndentLevel--;
-					WriteLine("}");
-				}
-				else
-				{
-					WriteLine("{");
-					IndentLevel++;
-					WriteNotImplementedString();
-					IndentLevel--;
-					WriteLine("}");
-				}
-			}
+                if (operation.HasBody)
+                {
+                    if (operation is Event)
+                    {
+                        WriteLine("{");
+                        IndentLevel++;
+                        WriteLine("add {  }");
+                        WriteLine("remove {  }");
+                        IndentLevel--;
+                        WriteLine("}");
+                    }
+                    else
+                    {
+                        WriteLine("{");
+                        IndentLevel++;
+                        WriteNotImplementedString();
+                        IndentLevel--;
+                        WriteLine("}");
+                    }
+                }
+            }
 		}
 
 		private void WriteProperty(Property property)

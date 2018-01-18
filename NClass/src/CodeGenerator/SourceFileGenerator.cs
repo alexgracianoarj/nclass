@@ -29,18 +29,20 @@ namespace NClass.CodeGenerator
 
 		TypeBase type;
 		string rootNamespace;
+        Model model;
 		int indentLevel = 0;
 
 		/// <exception cref="ArgumentNullException">
 		/// <paramref name="type"/> is null.
 		/// </exception>
-		protected SourceFileGenerator(TypeBase type, string rootNamespace)
+		protected SourceFileGenerator(TypeBase type, string rootNamespace, Model model)
 		{
 			if (type == null)
 				throw new ArgumentNullException("type");
 
 			this.type = type;
 			this.rootNamespace = rootNamespace;
+            this.model = model;
 		}
 
 		protected TypeBase Type
@@ -48,10 +50,41 @@ namespace NClass.CodeGenerator
 			get { return type; }
 		}
 
+        public string ProjectName
+        {
+            get
+            {
+                string projectName = Model.Project.Name;
+                string modelName = Model.Name;
+
+                if (string.Equals(projectName, modelName, StringComparison.OrdinalIgnoreCase))
+                    return projectName;
+                else
+                    return projectName + "." + modelName;
+            }
+        }
+
 		protected string RootNamespace
 		{
 			get { return rootNamespace; }
 		}
+
+        protected Model Model
+        {
+            get { return model; }
+        }
+
+        protected StringBuilder CodeBuilder
+        {
+            get
+            {
+                return codeBuilder;
+            }
+            set
+            {
+                codeBuilder = value;
+            }
+        }
 
 		protected int IndentLevel
 		{
@@ -85,7 +118,7 @@ namespace NClass.CodeGenerator
 				fileName = Regex.Replace(fileName, @"\<(?<type>.+)\>", @"[${type}]");
 				string path = Path.Combine(directory, fileName);
 
-				using (StreamWriter writer = new StreamWriter(path, false))
+				using (StreamWriter writer = new StreamWriter(path, false, Encoding.Unicode))
 				{
 					WriteFileContent(writer);
 				}
@@ -155,5 +188,15 @@ namespace NClass.CodeGenerator
 
 			codeBuilder.Append(indentString);
 		}
+
+        protected string PrefixedText(string text)
+        {
+            return new PrefixedTextFormatter(Settings.Default.PrefixTable).FormatText(text);
+        }
+
+        protected string LowercaseAndUnderscoredWord(string text)
+        {
+            return new LowercaseAndUnderscoredWordTextFormatter().FormatText(text);
+        }
 	}
 }

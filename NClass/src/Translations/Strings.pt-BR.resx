@@ -112,10 +112,10 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ErrorInvalidDeclaration" xml:space="preserve">
     <value>Declaração inválido.</value>
@@ -142,7 +142,7 @@
     <value>Geral</value>
   </data>
   <data name="MenuGenerateCode" xml:space="preserve">
-    <value>&amp;Generação de  Codigo...</value>
+    <value>&amp;Geração de  Codigo...</value>
   </data>
   <data name="ErrorType" xml:space="preserve">
     <value>O tipo não pode ser  {0}.</value>
@@ -684,7 +684,7 @@ Não é possível definir o acesso modificador explícito em execução.</value>
     <value>&amp;Enum</value>
   </data>
   <data name="MenuAbout" xml:space="preserve">
-    <value>&amp;SobreNClass...</value>
+    <value>&amp;Sobre NClass...</value>
   </data>
   <data name="ErrorCannotSaveFile" xml:space="preserve">
     <value>Não pode salva um arquivos sem um caminho específico.</value>

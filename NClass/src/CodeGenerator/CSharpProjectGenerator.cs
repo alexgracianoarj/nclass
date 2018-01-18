@@ -48,11 +48,6 @@ namespace NClass.CodeGenerator
 			}
 		}
 
-		protected override SourceFileGenerator CreateSourceFileGenerator(TypeBase type)
-		{
-			return new CSharpSourceFileGenerator(type, RootNamespace);
-		}
-
 		protected override bool GenerateProjectFiles(string location)
 		{
 			try
