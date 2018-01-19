@@ -64,6 +64,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CSharpFluentNHibernateSourceFileGenerator.cs" />
+    <Compile Include="CSharpNHibernateAttributesSourceFileGenerator.cs" />
+    <Compile Include="CSharpNHibernateByCodeSourceFileGenerator.cs" />
     <Compile Include="CSharpNHibernateXmlSourceFileGenerator.cs" />
     <Compile Include="EnumExtensions.cs" />
     <Compile Include="FieldNamingConvention.cs" />

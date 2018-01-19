@@ -56,6 +56,20 @@ namespace NClass.CodeGenerator
 			get { return model; }
 		}
 
+        protected string AssemblyName
+        {
+            get
+            {
+                string projectName = Model.Project.Name;
+                string modelName = Model.Name;
+
+                if (string.Equals(projectName, modelName, StringComparison.OrdinalIgnoreCase))
+                    return projectName;
+                else
+                    return projectName + "." + modelName;
+            }
+        }
+
 		protected string RootNamespace
 		{
 			get
@@ -100,25 +114,66 @@ namespace NClass.CodeGenerator
 
 				if (type != null && !type.IsNested)
 				{
-                    SourceFileGenerator sourceFile = new CSharpSourceFileGenerator(type, RootNamespace, model);
+                    SourceFileGenerator sourceFile = null;
 
-					try
-					{
-						string fileName = sourceFile.Generate(location);
-						fileNames.Add(fileName);
-					}
-					catch (FileGenerationException)
-					{
-						success = false;
-					}
-
-                    if (Settings.Default.GenerateNHibernateMapping)
+                    if(!Settings.Default.GenerateNHibernateMapping)
                     {
-                        if (type is ClassType)
+                        sourceFile = new CSharpSourceFileGenerator(type, RootNamespace, model);
+
+                        try
+                        {
+                            string fileName = sourceFile.Generate(location);
+                            fileNames.Add(fileName);
+                        }
+                        catch (FileGenerationException)
+                        {
+                            success = false;
+                        }
+                    }
+                    else
+                    {
+                        if(Settings.Default.MappingType == MappingType.NHibernateAttributes)
+                        {
+                            sourceFile = new CSharpNHibernateAttributesSourceFileGenerator(type, RootNamespace, model);
+
+                            try
+                            {
+                                string fileName = sourceFile.Generate(location);
+                                fileNames.Add(fileName);
+                            }
+                            catch (FileGenerationException)
+                            {
+                                success = false;
+                            }
+
+                            continue;
+                        }
+
+                        sourceFile = new CSharpSourceFileGenerator(type, RootNamespace, model);
+
+                        try
+                        {
+                            string fileName = sourceFile.Generate(location);
+                            fileNames.Add(fileName);
+                        }
+                        catch (FileGenerationException)
+                        {
+                            success = false;
+                        }
+
+                        if(type is ClassType)
                         {
                             if (Settings.Default.MappingType == MappingType.NHibernateXml)
                             {
                                 sourceFile = new CSharpNHibernateXmlSourceFileGenerator(type, RootNamespace, model);
+                            }
+                            else if (Settings.Default.MappingType == MappingType.FluentNHibernate)
+                            {
+                                sourceFile = new CSharpFluentNHibernateSourceFileGenerator(type, RootNamespace, model);
+                            }
+                            else if (Settings.Default.MappingType == MappingType.NHibernateByCode)
+                            {
+                                sourceFile = new CSharpNHibernateByCodeSourceFileGenerator(type, RootNamespace, model);
                             }
 
                             try

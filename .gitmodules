@@ -1,0 +1,3 @@
+[submodule "lib/dbschemareader"]
+	path = lib/dbschemareader
+	url = https://github.com/martinjw/dbschemareader.git
