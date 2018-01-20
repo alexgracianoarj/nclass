@@ -918,5 +918,15 @@ namespace NClass.GUI
 		}
 
 		#endregion
+
+        private void mnuFromDatabase_Click(object sender, EventArgs e)
+        {
+            var connectionDialog = new ConnectionDialog();
+
+            if (connectionDialog.ShowDialog() == DialogResult.OK)
+            {
+
+            }
+        }
 	}
 }

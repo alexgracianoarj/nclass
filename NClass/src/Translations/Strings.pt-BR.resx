@@ -705,7 +705,7 @@ Não é possível definir o acesso modificador explícito em execução.</value>
     <value>Salvar &amp;Como...</value>
   </data>
   <data name="Untitled" xml:space="preserve">
-    <value>sem Título</value>
+    <value>Sem Título</value>
   </data>
   <data name="ErrorLackOfInitialization" xml:space="preserve">
     <value>As variáveis constantes devem ser inicializadas.</value>
