@@ -30,6 +30,8 @@ using NClass.DiagramEditor.ClassDiagram;
 using NClass.GUI.Dialogs;
 using NClass.Translations;
 
+using System.Threading;
+
 namespace NClass.GUI
 {
 	public sealed partial class MainForm : Form
@@ -925,7 +927,59 @@ namespace NClass.GUI
 
             if (connectionDialog.ShowDialog() == DialogResult.OK)
             {
+                // Initialize the dialog that will contain the progress bar
+                ProgressDialog progressDialog = new ProgressDialog();
 
+                // Set the dialog to operate in indeterminate mode
+                progressDialog.SetIndeterminate(true);
+
+                DatabaseCSharpDiagramGenerator databaseDiagram = null;
+                bool hasErrors = false;
+
+                // Initialize the thread that will handle the background process
+                Thread backgroundThread = new Thread(
+                    new ThreadStart(() =>
+                    {
+                        try
+                        {
+                            databaseDiagram = new DatabaseCSharpDiagramGenerator(connectionDialog.Connection);
+                            databaseDiagram.Generate();
+
+                            Thread.Sleep(500);
+                        }
+                        catch (Exception ex)
+                        {
+                            hasErrors = true;
+
+                            Invoke(new MethodInvoker(() =>
+                            {
+                                MessageBox.Show(
+                                    this,
+                                    ex.Message,
+                                    Translations.Strings.Error,
+                                    MessageBoxButtons.OK,
+                                    MessageBoxIcon.Error);
+                            }));
+                        }
+                        finally
+                        {
+                            // Close the dialog if it hasn't been already
+                            if (progressDialog.InvokeRequired)
+                                progressDialog.BeginInvoke(new Action(() => progressDialog.Close()));
+                        }
+                    }));
+
+                // Sets to single thread apartment (STA) mode before OLE calls
+                backgroundThread.SetApartmentState(ApartmentState.STA);
+
+                // Start the background process thread
+                backgroundThread.Start();
+
+                // Open the dialog
+                progressDialog.ShowDialog();
+
+                if (!hasErrors)
+                    Workspace.Default.AddProject(databaseDiagram.ProjectGenerated);
             }
         }
 	}

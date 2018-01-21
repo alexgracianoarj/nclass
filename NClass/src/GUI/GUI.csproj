@@ -87,6 +87,7 @@
       <DependentUpon>ConnectionDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="CrashHandler.cs" />
+    <Compile Include="DatabaseCSharpDiagramGenerator.cs" />
     <Compile Include="DataConnectionConfiguration.cs" />
     <Compile Include="IDataConnectionConfiguration.cs" />
     <Compile Include="ProgressDialog.cs">
