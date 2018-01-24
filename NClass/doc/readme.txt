@@ -1,4 +1,4 @@
-NClass 2.02
+NClass 2.05
 ===========
 
 Overview
@@ -15,6 +15,16 @@ help you to create professional looking diagrams, just like in Visual Studio or
 other commercial products. Furthermore, you can generate code from your models or 
 you can also import classes from existing .NET assemblies.
 
+New Features
+--------
+- Automatic properties;
+- NHibernate mapping source code generation:
+	- NHibernate XML;
+	- Fluent NHibernate;
+	- NHibernate Attributes;
+	- NHibernate ByCode.
+- Model creating from database.
+- Template engine with Liquid.
 
 Features
 --------
@@ -30,18 +40,18 @@ Features
 
 Requirements
 ------------
-To run this software, the Microsoft .NET Framework 2.0 must be installed on your computer.
+To run this software, the Microsoft .NET Framework 4.5 must be installed on your computer.
 
 If you are a Linux/Mac user, you can alternatively use the Mono framework.
 Please always use the latest version of Mono as there may be little compatibility 
 issues with WinForms.
 
-To compile the project, you will need either Visual Studio 2008 or the latest version of NAnt.
+To compile the project, you will need either Visual Studio 2013 or the latest version of NAnt.
 
 
 Support
 -------
-Author: Balazs Tihanyi (btihanyi@users.sourceforge.net)
+Author: Alex Graciano (alexgracianoarj@gmail.com)
 Homepage: http://nclass.sourceforge.net
 SourceForge foundry: http://sourceforge.net/projects/nclass/
 

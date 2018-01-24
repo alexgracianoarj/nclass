@@ -53,5 +53,8 @@
     <Setting Name="PrefixTable" Type="System.String" Scope="User">
       <Value Profile="(Default)">pfx_</Value>
     </Setting>
+    <Setting Name="GenerateCodeFromTemplates" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

@@ -197,5 +197,17 @@ namespace NClass.CodeGenerator {
                 this["PrefixTable"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool GenerateCodeFromTemplates {
+            get {
+                return ((bool)(this["GenerateCodeFromTemplates"]));
+            }
+            set {
+                this["GenerateCodeFromTemplates"] = value;
+            }
+        }
     }
 }

@@ -982,5 +982,18 @@ namespace NClass.GUI
                     Workspace.Default.AddProject(databaseDiagram.ProjectGenerated);
             }
         }
+
+        TemplateEditor templateEditor = new TemplateEditor();
+
+        private void mnuTemplateEditor_Click(object sender, EventArgs e)
+        {
+            if (!templateEditor.IsHandleCreated)
+            {
+                templateEditor = new TemplateEditor();
+                templateEditor.Show();
+            }
+            else
+                templateEditor.Focus();
+        }
 	}
 }

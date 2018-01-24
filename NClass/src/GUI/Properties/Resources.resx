@@ -176,7 +176,7 @@
     <value>..\Resources\project.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="MailAddress" xml:space="preserve">
-    <value>btihanyi@users.sourceforge.net</value>
+    <value>alexgracianoarj@gmail.com</value>
   </data>
   <data name="Help" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\help.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -198,5 +198,71 @@
   </data>
   <data name="CodeGenerator" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\code_generator1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="backward0_16x16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\backward0_16x16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="binocular" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\binocular.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="box" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\box.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="check" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\check.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="class_libraries" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\class_libraries.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="clock" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\clock.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="code_class" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\code-class.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="code_context" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\code-context.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="code_function" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\code-function.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="edit_padding_top" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\edit-padding-top.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="folding_lines" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\folding_lines.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="forward_16x16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\forward_16x16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="layer_minus" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\layer_minus.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="layer_plus" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\layer_plus.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="lightning" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\lightning.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="property" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\property.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="redo_16x16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\redo_16x16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="replace" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\replace.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="uncheck" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\uncheck.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="undo_16x16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\undo_16x16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="nclass" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\nclass.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Author" xml:space="preserve">
+    <value>Alex Graciano</value>
   </data>
 </root>

@@ -72,6 +72,7 @@ namespace NClass.CodeGenerator
             chkUseLazyLoading.Checked = Settings.Default.UseLazyLoading;
             chkUseLowercaseUnderscoredWordsInDb.Checked = Settings.Default.UseLowercaseAndUnderscoredWordsInDb;
             txtTextPrefix.Text = Settings.Default.PrefixTable;
+            chkGenerateCodeFromTemplates.Checked = Settings.Default.GenerateCodeFromTemplates;
 			cboLanguage.SelectedIndex = 0;
 		}
 
@@ -347,11 +348,12 @@ namespace NClass.CodeGenerator
 			Settings.Default.UseNotImplementedExceptions = chkNotImplemented.Checked;
             Settings.Default.UseAutomaticProperties = chkAutomaticProperties.Checked;
             Settings.Default.GenerateNHibernateMapping = chkGenerateNHibernateMapping.Checked;
-            Settings.Default.MappingType = (MappingType)cboMappingType.SelectedItem;
+            Settings.Default.MappingType = (MappingType) cboMappingType.SelectedItem;
             Settings.Default.IdGeneratorType = (IdGeneratorType)cboIdGeneratorType.SelectedItem;
             Settings.Default.UseLazyLoading = chkUseLazyLoading.Checked;
             Settings.Default.UseLowercaseAndUnderscoredWordsInDb = chkUseLowercaseUnderscoredWordsInDb.Checked;
             Settings.Default.PrefixTable = txtTextPrefix.Text.Trim();
+            Settings.Default.GenerateCodeFromTemplates = chkGenerateCodeFromTemplates.Checked;
         }
 	}
 }

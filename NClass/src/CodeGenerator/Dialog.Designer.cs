@@ -60,11 +60,14 @@
             this.cboIdGeneratorType = new System.Windows.Forms.ComboBox();
             this.lblUsePrefixTables = new System.Windows.Forms.Label();
             this.txtTextPrefix = new System.Windows.Forms.TextBox();
+            this.chkGenerateCodeFromTemplates = new System.Windows.Forms.CheckBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
             ((System.ComponentModel.ISupportInitialize)(this.updIndentSize)).BeginInit();
             this.importToolStrip.SuspendLayout();
             this.grpCodeStyle.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.gpbNHibernate.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // chkUseTabs
@@ -133,7 +136,7 @@
             this.lstImportList.FormattingEnabled = true;
             this.lstImportList.Location = new System.Drawing.Point(12, 90);
             this.lstImportList.Name = "lstImportList";
-            this.lstImportList.Size = new System.Drawing.Size(285, 290);
+            this.lstImportList.Size = new System.Drawing.Size(285, 238);
             this.lstImportList.TabIndex = 4;
             this.lstImportList.SelectedValueChanged += new System.EventHandler(this.lstImportList_SelectedValueChanged);
             this.lstImportList.Leave += new System.EventHandler(this.lstImportList_Leave);
@@ -201,7 +204,7 @@
             // 
             // txtNewImport
             // 
-            this.txtNewImport.Location = new System.Drawing.Point(12, 386);
+            this.txtNewImport.Location = new System.Drawing.Point(12, 335);
             this.txtNewImport.Name = "txtNewImport";
             this.txtNewImport.Size = new System.Drawing.Size(204, 20);
             this.txtNewImport.TabIndex = 5;
@@ -211,7 +214,7 @@
             // btnAddItem
             // 
             this.btnAddItem.Enabled = false;
-            this.btnAddItem.Location = new System.Drawing.Point(222, 383);
+            this.btnAddItem.Location = new System.Drawing.Point(222, 333);
             this.btnAddItem.Name = "btnAddItem";
             this.btnAddItem.Size = new System.Drawing.Size(75, 23);
             this.btnAddItem.TabIndex = 6;
@@ -441,11 +444,32 @@
             this.txtTextPrefix.TabIndex = 13;
             this.txtTextPrefix.Text = "pfx_";
             // 
+            // chkGenerateCodeFromTemplates
+            // 
+            this.chkGenerateCodeFromTemplates.AutoSize = true;
+            this.chkGenerateCodeFromTemplates.Location = new System.Drawing.Point(13, 19);
+            this.chkGenerateCodeFromTemplates.Name = "chkGenerateCodeFromTemplates";
+            this.chkGenerateCodeFromTemplates.Size = new System.Drawing.Size(168, 17);
+            this.chkGenerateCodeFromTemplates.TabIndex = 16;
+            this.chkGenerateCodeFromTemplates.Text = "Generate code from templates";
+            this.chkGenerateCodeFromTemplates.UseVisualStyleBackColor = true;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.chkGenerateCodeFromTemplates);
+            this.groupBox1.Location = new System.Drawing.Point(12, 361);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(285, 45);
+            this.groupBox1.TabIndex = 18;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Templates";
+            // 
             // Dialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(594, 451);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.cboLanguage);
             this.Controls.Add(this.cboSolutionType);
@@ -477,6 +501,8 @@
             this.tableLayoutPanel1.PerformLayout();
             this.gpbNHibernate.ResumeLayout(false);
             this.gpbNHibernate.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -515,6 +541,8 @@
         private System.Windows.Forms.GroupBox gpbNHibernate;
         private System.Windows.Forms.TextBox txtTextPrefix;
         private System.Windows.Forms.Label lblUsePrefixTables;
+        private System.Windows.Forms.CheckBox chkGenerateCodeFromTemplates;
+        private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label lblIdGeneratorType;
         private System.Windows.Forms.ComboBox cboIdGeneratorType;
 	}

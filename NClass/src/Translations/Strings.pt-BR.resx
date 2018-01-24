@@ -1016,7 +1016,7 @@ Um crash log e recuperação ficheiros foram criados no diretório Application D
     <value>&amp;Ver</value>
   </data>
   <data name="AskSaveChanges" xml:space="preserve">
-    <value>alve as alterações para os seguintes projetos?</value>
+    <value>Salvar as alterações para os seguintes projetos?</value>
     <comment>MessageBox question when closing one/more projects</comment>
   </data>
   <data name="RequiresRestart" xml:space="preserve">

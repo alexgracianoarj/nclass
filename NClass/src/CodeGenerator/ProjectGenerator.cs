@@ -107,6 +107,8 @@ namespace NClass.CodeGenerator
 			bool success = true;
 			location = Path.Combine(location, ProjectName);
 
+            CSharpTemplateFileSourceGenerator templatesSourceFiles = null;
+
 			fileNames.Clear();
 			foreach (IEntity entity in model.Entities)
 			{
@@ -187,8 +189,39 @@ namespace NClass.CodeGenerator
                             }
                         }
                     }
+
+                    if (Settings.Default.GenerateCodeFromTemplates)
+                    {
+                        templatesSourceFiles = new CSharpTemplateFileSourceGenerator(type, RootNamespace, model);
+
+                        try
+                        {
+                            List<string> files = templatesSourceFiles.GenerateFiles(location, true);
+                            fileNames.AddRange(files);
+                        }
+                        catch (FileGenerationException)
+                        {
+                            success = false;
+                        }
+                    }
 				}
 			}
+
+            if (Settings.Default.GenerateCodeFromTemplates)
+            {
+                if(templatesSourceFiles != null)
+                {
+                    try
+                    {
+                        List<string> files = templatesSourceFiles.GenerateFiles(location, false);
+                        fileNames.AddRange(files);
+                    }
+                    catch (FileGenerationException)
+                    {
+                        success = false;
+                    }
+                }
+            }
 
 			return success;
 		}

@@ -1,3 +1,6 @@
 [submodule "lib/dbschemareader"]
 	path = lib/dbschemareader
 	url = https://github.com/martinjw/dbschemareader.git
+[submodule "lib/Liquid.NET"]
+	path = lib/Liquid.NET
+	url = https://github.com/mikebridge/Liquid.NET.git
