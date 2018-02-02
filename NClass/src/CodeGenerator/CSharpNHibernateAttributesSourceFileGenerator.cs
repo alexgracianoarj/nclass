@@ -55,6 +55,7 @@ namespace NClass.CodeGenerator
             useLowercaseUnderscored = Settings.Default.UseLowercaseAndUnderscoredWordsInDb;
             idGeneratorType = EnumExtensions.GetDescription(Settings.Default.IdGeneratorType);
 
+            WriteHeader();
             WriteUsings();
             OpenNamespace();
             WriteType(Type);
@@ -84,6 +85,8 @@ namespace NClass.CodeGenerator
 
         private void WriteType(TypeBase type)
         {
+            WriteXmlComments(type);
+
             if (type is CompositeType)
                 WriteCompositeType((CompositeType)type);
             else if (type is EnumType)
@@ -231,9 +234,7 @@ namespace NClass.CodeGenerator
         private void WriteEquals(List<Property> compositeId)
         {
             AddBlankLine();
-            WriteLine("/// <summary>");
-            WriteLine("/// Needs this for composite id.");
-            WriteLine("/// </summary>");
+            WriteLine("// Needs this for composite id.");
             WriteLine("public override bool Equals(object obj)");
             WriteLine("{");
             IndentLevel++;
@@ -257,9 +258,7 @@ namespace NClass.CodeGenerator
         private void WriteGetHashCode(List<Property> compositeId)
         {
             AddBlankLine();
-            WriteLine("/// <summary>");
-            WriteLine("/// Needs this for composite id.");
-            WriteLine("/// </summary>");
+            WriteLine("// Needs this for composite id.");
             WriteLine("public override int GetHashCode()");
             WriteLine("{");
             IndentLevel++;
@@ -327,6 +326,8 @@ namespace NClass.CodeGenerator
             int valuesRemained = _enum.ValueCount;
             foreach (EnumValue value in _enum.Values)
             {
+                WriteXmlComments(value);
+
                 if (--valuesRemained > 0)
                     WriteLine(value.GetDeclaration() + ",");
                 else
@@ -345,11 +346,15 @@ namespace NClass.CodeGenerator
 
         private void WriteField(Field field)
         {
+            WriteXmlComments(field);
+
             WriteLine(field.GetDeclaration());
         }
 
         private void WriteOperation(Operation operation)
         {
+            WriteXmlComments(operation);
+
 			if (operation is Property)
 			{
                 WriteNHibernateAttributesProperty(operation);

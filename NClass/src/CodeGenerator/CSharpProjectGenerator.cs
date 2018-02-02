@@ -69,7 +69,7 @@ namespace NClass.CodeGenerator
 
 						if (line.Contains("${VS2005:"))
 						{
-							if (solutionType == SolutionType.VisualStudio2005)
+							if (solutionType == SolutionType.VisualStudio2010)
 								line = Regex.Replace(line, @"\${VS2005:(?<content>.+?)}", "${content}");
 							else
 								line = Regex.Replace(line, @"\${VS2005:(?<content>.+?)}", "");
@@ -79,7 +79,7 @@ namespace NClass.CodeGenerator
 						}
 						if (line.Contains("${VS2008:"))
 						{
-							if (solutionType == SolutionType.VisualStudio2008)
+							if (solutionType == SolutionType.VisualStudio2013)
 								line = Regex.Replace(line, @"\${VS2008:(?<content>.+?)}", "${content}");
 							else
 								line = Regex.Replace(line, @"\${VS2008:(?<content>.+?)}", "");

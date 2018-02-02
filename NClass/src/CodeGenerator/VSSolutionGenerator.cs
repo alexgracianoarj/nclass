@@ -26,7 +26,7 @@ namespace NClass.CodeGenerator
 {
 	internal sealed class VSSolutionGenerator : SolutionGenerator
 	{
-		SolutionType version = SolutionType.VisualStudio2008;
+		SolutionType version = SolutionType.VisualStudio2013;
 
 		/// <exception cref="ArgumentNullException">
 		/// <paramref name="project"/> is null.
@@ -44,8 +44,8 @@ namespace NClass.CodeGenerator
 			}
 			set
 			{
-				if (value == SolutionType.VisualStudio2005 ||
-					value == SolutionType.VisualStudio2008)
+				if (value == SolutionType.VisualStudio2010 ||
+					value == SolutionType.VisualStudio2013)
 				{
 					version = value;
 				}
@@ -56,10 +56,10 @@ namespace NClass.CodeGenerator
 		{
 			get
 			{
-				if (Version == SolutionType.VisualStudio2005)
-					return "9.00";
+				if (Version == SolutionType.VisualStudio2010)
+					return "11.00";
 				else
-					return "10.00";
+					return "12.00";
 			}
 		}
 
@@ -67,10 +67,10 @@ namespace NClass.CodeGenerator
 		{
 			get
 			{
-				if (Version == SolutionType.VisualStudio2005)
-					return "Visual Studio 2005";
+				if (Version == SolutionType.VisualStudio2010)
+					return "Visual Studio 2010";
 				else
-					return "Visual Studio 2008";
+					return "Visual Studio 2013";
 			}
 		}
 

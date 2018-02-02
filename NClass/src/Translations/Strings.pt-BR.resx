@@ -598,7 +598,7 @@ Não é possível definir o acesso modificador explícito em execução.</value>
     <value>&amp;C# diagrama</value>
   </data>
   <data name="Language" xml:space="preserve">
-    <value>Língua</value>
+    <value>Linguagem</value>
   </data>
   <data name="AddNewAssociation" xml:space="preserve">
     <value>Adicionar Nova Associação</value>
@@ -1098,7 +1098,7 @@ Do you want to download the framework now?</value>
     <value>Remember open projects on close</value>
   </data>
   <data name="MenuCloseAllTabsButThis" xml:space="preserve">
-    <value>Fechar todos mas Este</value>
+    <value>Fechar todos menos este</value>
     <comment>Close all tabs but the active one</comment>
   </data>
   <data name="MenuCloseAllTabs" xml:space="preserve">

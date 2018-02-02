@@ -18,6 +18,7 @@ you can also import classes from existing .NET assemblies.
 New Features
 --------
 - Automatic properties;
+- C# source code documentation with XML comments.
 - NHibernate mapping source code generation:
 	- NHibernate XML;
 	- Fluent NHibernate;
@@ -52,8 +53,7 @@ To compile the project, you will need either Visual Studio 2013 or the latest ve
 Support
 -------
 Author: Alex Graciano (alexgracianoarj@gmail.com)
-Homepage: http://nclass.sourceforge.net
-SourceForge foundry: http://sourceforge.net/projects/nclass/
+Homepage: https://alexgracianoarj.github.io/nclass
 
 The latest version with full source code is always available at SourceForge.
 You can submit bug reports, feature requests or other suggestions on the SourceForge 

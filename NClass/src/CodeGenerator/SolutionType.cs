@@ -17,7 +17,7 @@ namespace NClass.CodeGenerator
 {
 	public enum SolutionType
 	{
-		VisualStudio2005,
-		VisualStudio2008
+		VisualStudio2010,
+		VisualStudio2013
 	}
 }

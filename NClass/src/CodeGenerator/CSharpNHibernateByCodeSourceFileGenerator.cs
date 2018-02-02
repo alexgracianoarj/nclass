@@ -55,6 +55,7 @@ namespace NClass.CodeGenerator
             if (idGeneratorType == "HiLo")
                 idGeneratorType = "HighLow";
 
+            WriteHeader();
             WriteUsings();
             OpenNamespace();
             WriteClass(_class);

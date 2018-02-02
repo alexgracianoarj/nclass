@@ -80,18 +80,6 @@ namespace NClass.CodeGenerator {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("VisualStudio2008")]
-        public global::NClass.CodeGenerator.SolutionType SolutionType {
-            get {
-                return ((global::NClass.CodeGenerator.SolutionType)(this["SolutionType"]));
-            }
-            set {
-                this["SolutionType"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string DestinationPath {
             get {
@@ -207,6 +195,18 @@ namespace NClass.CodeGenerator {
             }
             set {
                 this["GenerateCodeFromTemplates"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("VisualStudio2010")]
+        public global::NClass.CodeGenerator.SolutionType SolutionType {
+            get {
+                return ((global::NClass.CodeGenerator.SolutionType)(this["SolutionType"]));
+            }
+            set {
+                this["SolutionType"] = value;
             }
         }
     }

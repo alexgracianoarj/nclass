@@ -52,6 +52,7 @@ namespace NClass.CodeGenerator
             useLowercaseUnderscored = Settings.Default.UseLowercaseAndUnderscoredWordsInDb;
             idGeneratorType = Enum.GetName(typeof(IdGeneratorType), Settings.Default.IdGeneratorType);
 
+            WriteHeader();
             WriteUsings();
             OpenNamespace();
             WriteClass(_class);

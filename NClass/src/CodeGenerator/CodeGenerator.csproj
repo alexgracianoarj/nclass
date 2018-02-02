@@ -85,6 +85,7 @@
     <Compile Include="ProgressDialog.designer.cs">
       <DependentUpon>ProgressDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TemplatesSettings.cs" />
     <Compile Include="TextFormatter.cs" />
     <Compile Include="ToolStripSimplifiedRenderer.cs" />
