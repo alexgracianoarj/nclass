@@ -118,6 +118,21 @@ namespace NClass.CodeGenerator
 				{
                     SourceFileGenerator sourceFile = null;
 
+                    if (Settings.Default.GenerateCodeFromTemplates)
+                    {
+                        templatesSourceFiles = new CSharpTemplateFileSourceGenerator(type, RootNamespace, model);
+
+                        try
+                        {
+                            List<string> files = templatesSourceFiles.GenerateFiles(location, true);
+                            fileNames.AddRange(files);
+                        }
+                        catch (FileGenerationException)
+                        {
+                            success = false;
+                        }
+                    }
+
                     if(!Settings.Default.GenerateNHibernateMapping)
                     {
                         sourceFile = new CSharpSourceFileGenerator(type, RootNamespace, model);
@@ -187,21 +202,6 @@ namespace NClass.CodeGenerator
                             {
                                 success = false;
                             }
-                        }
-                    }
-
-                    if (Settings.Default.GenerateCodeFromTemplates)
-                    {
-                        templatesSourceFiles = new CSharpTemplateFileSourceGenerator(type, RootNamespace, model);
-
-                        try
-                        {
-                            List<string> files = templatesSourceFiles.GenerateFiles(location, true);
-                            fileNames.AddRange(files);
-                        }
-                        catch (FileGenerationException)
-                        {
-                            success = false;
                         }
                     }
 				}

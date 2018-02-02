@@ -4,6 +4,8 @@ using System.Collections.Specialized;
 using NClass.Core;
 using NClass.CSharp;
 
+using System.Linq;
+
 namespace NClass.CodeGenerator
 {
     internal sealed class CSharpNHibernateAttributesSourceFileGenerator 
@@ -94,7 +96,8 @@ namespace NClass.CodeGenerator
         {
             if (type is ClassType)
             {
-                WriteLine(string.Format("[Class(Table = \"`{0}`\", Lazy = {1})]",
+                WriteLine(string.Format(
+                    "[Class(Table = \"{0}\", Lazy = {1})]",
                     PrefixedText(
                     useLowercaseUnderscored
                     ? LowercaseAndUnderscoredWord(type.Name)
@@ -128,16 +131,148 @@ namespace NClass.CodeGenerator
 
             bool needBlankLine = (type.FieldCount > 0 && type.OperationCount > 0);
 
-            foreach (Operation operation in type.Operations)
+            int index = 0;
+
+            List<Property> compositeId = new List<Property>();
+
+            if (Type is ClassType)
+            {
+                ClassType _class = (ClassType)Type;
+
+                if (entities.Contains(_class.Operations.ToList()[0].Type))
+                {
+                    for (; index <= (_class.Operations.Count() - 1); index++)
+                    {
+                        if (_class.Operations.ToList()[index] is Property)
+                        {
+                            Property property = (Property)_class.Operations.ToList()[index];
+
+                            if (entities.Contains(property.Type))
+                            {
+                                compositeId.Add(property);
+                            }
+                            else
+                            {
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                if (compositeId.Count > 1)
+                {
+                    if (needBlankLine)
+                        AddBlankLine();
+
+                    WriteNHibernateAttributesCompositeId(compositeId);
+                }
+                else
+                {
+                    index = 0;
+                }
+            }
+
+            for (; index <= (type.Operations.Count() - 1); index++)
             {
                 if (needBlankLine)
                     AddBlankLine();
                 needBlankLine = true;
-                
-                WriteOperation(operation);
+
+                WriteOperation(type.Operations.ToList()[index]);
+            }
+
+            if (compositeId.Count > 1)
+            {
+                WriteEquals(compositeId);
+                WriteGetHashCode(compositeId);
             }
 
             // Writing closing bracket of the type block
+            IndentLevel--;
+            WriteLine("}");
+        }
+
+        private void WriteNHibernateAttributesCompositeId(List<Property> compositeId)
+        {
+            WriteLine("[CompositeId(0)]");
+            
+            int position = 1;
+            foreach (var id in compositeId)
+            {
+                WriteLine(
+                    string.Format(
+                    "[KeyManyToOne({0}, Name = \"{1}\", Column = \"{2}\", Class = \"{3}\", ClassType = typeof({4}))]",
+                    position,
+                    id.Name,
+                    useLowercaseUnderscored
+                    ? LowercaseAndUnderscoredWord(id.Name)
+                    : id.Name,
+                    id.Type,
+                    id.Type));
+                position++;
+            }
+
+            foreach (var id in compositeId)
+            {
+                if (Settings.Default.UseAutomaticProperties)
+                {
+                    WriteLine(string.Format("{0} {{ get; set; }}", id.GetDeclaration()));
+                }
+                else
+                {
+                    WriteLine(id.GetDeclaration());
+                    WriteProperty(id);
+                }
+
+                AddBlankLine();
+            }
+        }
+
+        private void WriteEquals(List<Property> compositeId)
+        {
+            AddBlankLine();
+            WriteLine("/// <summary>");
+            WriteLine("/// Needs this for composite id.");
+            WriteLine("/// </summary>");
+            WriteLine("public override bool Equals(object obj)");
+            WriteLine("{");
+            IndentLevel++;
+            WriteLine("if (obj == null) return false;");
+            WriteLine(string.Format("var t = obj as {0};", Type.Name));
+            WriteLine("if (t == null) return false;");
+            Write("return ");
+            foreach (var id in compositeId)
+            {
+                Write(string.Format("{0} == t.{0}", id.Name), false);
+                if (id != compositeId.Last())
+                    Write(" && ", false);
+                else
+                    Write(";", false);
+            }
+            WriteLine("", false);
+            IndentLevel--;
+            WriteLine("}");
+        }
+
+        private void WriteGetHashCode(List<Property> compositeId)
+        {
+            AddBlankLine();
+            WriteLine("/// <summary>");
+            WriteLine("/// Needs this for composite id.");
+            WriteLine("/// </summary>");
+            WriteLine("public override int GetHashCode()");
+            WriteLine("{");
+            IndentLevel++;
+            Write("return (");
+            foreach (var id in compositeId)
+            {
+                Write(id.Name, false);
+                if (id != compositeId.Last())
+                    Write(" + \"|\" + ", false);
+                else
+                    Write(").GetHashCode();", false);
+            }
+            WriteLine("", false);
             IndentLevel--;
             WriteLine("}");
         }
@@ -148,7 +283,7 @@ namespace NClass.CodeGenerator
             {
                 WriteLine(
                     string.Format(
-                    "[Id(0, Name = \"{0}\", Column = \"`{1}`\")]",
+                    "[Id(0, Name = \"{0}\", Column = \"{1}\")]",
                     operation.Name,
                     useLowercaseUnderscored
                     ? LowercaseAndUnderscoredWord(operation.Name)
@@ -162,18 +297,19 @@ namespace NClass.CodeGenerator
             {
                 WriteLine(
                     string.Format(
-                    "[ManyToOne(0, Name = \"{0}\", Column = \"`{1}`\", NotNull = true)]", 
+                    "[ManyToOne(0, Name = \"{0}\", Column = \"{1}\", NotNull = true, ClassType = typeof({2}))]", 
                     operation.Name,
                     useLowercaseUnderscored
                     ? LowercaseAndUnderscoredWord(operation.Name)
-                    : operation.Name));
+                    : operation.Name,
+                    operation.Type));
                 WriteLine("[Key(1)]");
             }
             else
             {
                 WriteLine(
                     string.Format(
-                    "[Property(Name = \"{0}\", Column = \"`{1}`\", NotNull = true)]", 
+                    "[Property(Name = \"{0}\", Column = \"{1}\", NotNull = true)]", 
                     operation.Name,
                     useLowercaseUnderscored
                     ? LowercaseAndUnderscoredWord(operation.Name)

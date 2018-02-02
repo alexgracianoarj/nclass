@@ -4,6 +4,8 @@ using System.Collections.Specialized;
 using NClass.Core;
 using NClass.CSharp;
 
+using System.Linq;
+
 namespace NClass.CodeGenerator
 {
     internal sealed class CSharpNHibernateByCodeSourceFileGenerator 
@@ -92,7 +94,7 @@ namespace NClass.CodeGenerator
             WriteLine("{");
             IndentLevel++;
 
-            WriteLine(string.Format("Table(\"`{0}`\");",
+            WriteLine(string.Format("Table(\"{0}\");",
                 PrefixedText(
                 useLowercaseUnderscored
                 ? LowercaseAndUnderscoredWord(_class.Name)
@@ -103,10 +105,46 @@ namespace NClass.CodeGenerator
                 ? "true"
                 : "false"));
 
-            foreach (Operation operation in _class.Operations)
+            List<Property> compositeId = new List<Property>();
+
+            int index = 0;
+
+            if (entities.Contains(_class.Operations.ToList()[0].Type))
             {
-                if (operation is Property)
-                    WriteProperty((Property)operation);
+                for (; index <= (_class.Operations.Count() - 1); index++)
+                {
+                    if (_class.Operations.ToList()[index] is Property)
+                    {
+                        Property property = (Property)_class.Operations.ToList()[index];
+
+                        if (entities.Contains(property.Type))
+                        {
+                            compositeId.Add(property);
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+                }
+            }
+
+            if (compositeId.Count > 1)
+            {
+                WriteCompositeId(compositeId);
+            }
+            else
+            {
+                index = 0;
+            }
+
+            for (; index <= (_class.Operations.Count() - 1); index++)
+            {
+                if (_class.Operations.ToList()[index] is Property)
+                {
+                    Property property = (Property)_class.Operations.ToList()[index];
+                    WriteProperty(property);
+                }
             }
 
             // Writing closing bracket of the type block
@@ -118,13 +156,32 @@ namespace NClass.CodeGenerator
             WriteLine("}");
         }
 
+        private void WriteCompositeId(List<Property> compositeId)
+        {
+            WriteLine("ComposedId(map => { ");
+            IndentLevel++;
+            foreach (var id in compositeId)
+            {
+                WriteLine(
+                    string.Format(
+                    "map.ManyToOne(x => x.{0}, m => {{ m.Class(typeof({1})); m.Column(\"{2}\"); }}); ",
+                    id.Name,
+                    id.Type,
+                    (useLowercaseUnderscored)
+                    ? LowercaseAndUnderscoredWord(id.Name)
+                    : id.Name));
+            }
+            IndentLevel--;
+            WriteLine("});");
+        }
+
         private void WriteProperty(Property property)
         {
             if (property.Name == properties[0])
             {
                 WriteLine(
                     string.Format(
-                    "Id(x => x.{0}, map => {{ map.Column(\"`{1}`\"); map.Generator(Generators.{2}); }});", 
+                    "Id(x => x.{0}, map => {{ map.Column(\"{1}\"); map.Generator(Generators.{2}); }});", 
                     property.Name, 
                     useLowercaseUnderscored
                     ? LowercaseAndUnderscoredWord(property.Name)
@@ -136,7 +193,7 @@ namespace NClass.CodeGenerator
             {
                 WriteLine(
                     string.Format(
-                    "ManyToOne(x => x.{0}, map => {{ map.Class(typeof({1})); map.Column(\"`{2}`\"); }});",
+                    "ManyToOne(x => x.{0}, map => {{ map.Class(typeof({1})); map.Column(\"{2}\"); }});",
                     property.Name, 
                     property.Type,
                     useLowercaseUnderscored
@@ -148,7 +205,7 @@ namespace NClass.CodeGenerator
             {
                 WriteLine(
                     string.Format(
-                    "Property(x => x.{0}, map => {{ map.Column(\"`{1}`\"); map.NotNullable(true); }});", 
+                    "Property(x => x.{0}, map => {{ map.Column(\"{1}\"); map.NotNullable(true); }});", 
                     property.Name, 
                     useLowercaseUnderscored
                     ? LowercaseAndUnderscoredWord(property.Name)

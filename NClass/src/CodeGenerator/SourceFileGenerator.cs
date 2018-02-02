@@ -166,6 +166,18 @@ namespace NClass.CodeGenerator
 			codeBuilder.AppendLine();
 		}
 
+        protected void Write(string text)
+        {
+            Write(text, true);
+        }
+
+        protected void Write(string text, bool indentation)
+        {
+            if (indentation)
+                AddIndent();
+            codeBuilder.Append(text);
+        }
+
 		protected void WriteLine(string text)
 		{
 			WriteLine(text, true);

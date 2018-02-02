@@ -5,6 +5,8 @@ using NClass.Core;
 using NClass.CSharp;
 using System.Xml;
 
+using System.Linq;
+
 namespace NClass.CodeGenerator
 {
     internal sealed class CSharpNHibernateXmlSourceFileGenerator 
@@ -61,7 +63,7 @@ namespace NClass.CodeGenerator
                 xml.WriteStartElement("class");
                 xml.WriteAttributeString("name", _class.Name);
                 xml.WriteAttributeString("table", 
-                    string.Format("`{0}`",
+                    string.Format("{0}",
                     PrefixedText(
                     delByUnderscore 
                     ? LowercaseAndUnderscoredWord(_class.Name) 
@@ -72,18 +74,64 @@ namespace NClass.CodeGenerator
                     ? "true" 
                     : "false");
 
-                foreach (Operation operation in _class.Operations)
+                List<Property> compositeId = new List<Property>();
+                
+                int index = 0;
+
+                if (entities.Contains(_class.Operations.ToList()[0].Type))
                 {
-                    if (operation is Property)
+                    for (; index <= (_class.Operations.Count() - 1); index++)
                     {
-                        Property property = (Property)operation;
+                        if (_class.Operations.ToList()[index] is Property)
+                        {
+                            Property property = (Property)_class.Operations.ToList()[index];
+
+                            if (entities.Contains(property.Type))
+                            {
+                                compositeId.Add(property);
+                            }
+                            else
+                            {
+                                break;
+                            }
+                        }
+                    }                
+                }
+
+                if(compositeId.Count > 1)
+                {
+                    xml.WriteStartElement("composite-id");
+                    foreach (var id in compositeId)
+                    {
+                        xml.WriteStartElement("key-many-to-one");
+                        xml.WriteAttributeString("name", id.Name);
+                        xml.WriteAttributeString("column",
+                            string.Format("{0}",
+                            delByUnderscore
+                            ? LowercaseAndUnderscoredWord(id.Name)
+                            : id.Name));
+                        xml.WriteAttributeString("class", id.Type);
+                        xml.WriteEndElement();
+                    }
+                    xml.WriteEndElement();
+                }
+                else
+                {
+                    index = 0;
+                }
+
+                for (; index <= (_class.Operations.Count() - 1); index++)
+                {
+                    if (_class.Operations.ToList()[index] is Property)
+                    {
+                        Property property = (Property)_class.Operations.ToList()[index];
 
                         if (property.Name == properties[0])
                         {
                             xml.WriteStartElement("id");
                             xml.WriteAttributeString("name", property.Name);
                             xml.WriteAttributeString("column",
-                                string.Format("`{0}`",
+                                string.Format("{0}",
                                 delByUnderscore
                                 ? LowercaseAndUnderscoredWord(property.Name)
                                 : property.Name));
@@ -97,7 +145,7 @@ namespace NClass.CodeGenerator
                             xml.WriteAttributeString("name", property.Name);
                             xml.WriteAttributeString("class", property.Type);
                             xml.WriteAttributeString("column",
-                                string.Format("`{0}`",
+                                string.Format("{0}",
                                 delByUnderscore
                                 ? LowercaseAndUnderscoredWord(property.Name)
                                 : property.Name));
@@ -109,7 +157,7 @@ namespace NClass.CodeGenerator
                             xml.WriteStartElement("property");
                             xml.WriteAttributeString("name", property.Name);
                             xml.WriteAttributeString("column",
-                                string.Format("`{0}`",
+                                string.Format("{0}",
                                 delByUnderscore
                                 ? LowercaseAndUnderscoredWord(property.Name)
                                 : property.Name));

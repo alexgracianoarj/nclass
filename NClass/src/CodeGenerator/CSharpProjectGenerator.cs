@@ -65,7 +65,7 @@ namespace NClass.CodeGenerator
 						string line = reader.ReadLine();
 
 						line = line.Replace("${RootNamespace}", RootNamespace);
-						line = line.Replace("${AssemblyName}", ProjectName);
+                        line = line.Replace("${AssemblyName}", AssemblyName);
 
 						if (line.Contains("${VS2005:"))
 						{
@@ -92,10 +92,24 @@ namespace NClass.CodeGenerator
 						{
 							foreach (string fileName in FileNames)
 							{
-								string newLine = line.Replace("${SourceFile}", fileName);
-								writer.WriteLine(newLine);
+                                if ((new Regex(@"\.cs$").IsMatch(fileName)))
+                                {
+								    string newLine = line.Replace("${SourceFile}", fileName);
+								    writer.WriteLine(newLine);
+                                }
 							}
 						}
+                        else if (line.Contains("${XmlFile}"))
+                        {
+                            foreach (string fileName in FileNames)
+                            {
+                                if ((new Regex(@"\.xml$").IsMatch(fileName)))
+                                {
+                                    string newLine = line.Replace("${XmlFile}", fileName);
+                                    writer.WriteLine(newLine);
+                                }
+                            }
+                        }
 						else
 						{
 							writer.WriteLine(line);

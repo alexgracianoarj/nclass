@@ -14,9 +14,12 @@
 // 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using NClass.Core;
 using NClass.CSharp;
+
+using System.Linq;
 
 namespace NClass.CodeGenerator
 {
@@ -42,6 +45,104 @@ namespace NClass.CodeGenerator
 			WriteType(Type);
 			CloseNamespace();
 		}
+
+        private void WriteCompositeId()
+        {
+            if(Type is ClassType)
+            {
+                List<string> entities = new List<string>();
+                foreach (IEntity entity in Model.Entities)
+                {
+                    entities.Add(entity.Name);
+                }
+
+                ClassType _class = (ClassType)Type;
+
+                List<string> properties = new List<string>();
+                foreach (Operation operation in _class.Operations)
+                {
+                    if (operation is Property)
+                        properties.Add(operation.Name);
+                }
+
+                List<Property> compositeId = new List<Property>();
+
+                if (entities.Contains(_class.Operations.ToList()[0].Type))
+                {
+                    for (int index = 0; index <= (_class.Operations.Count() - 1); index++)
+                    {
+                        if (_class.Operations.ToList()[index] is Property)
+                        {
+                            Property property = (Property)_class.Operations.ToList()[index];
+
+                            if (entities.Contains(property.Type))
+                            {
+                                compositeId.Add(property);
+                            }
+                            else
+                            {
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                if (compositeId.Count > 1)
+                {
+                    WriteEquals(compositeId);
+                    WriteGetHashCode(compositeId);
+                }
+            }
+        }
+
+        private void WriteEquals(List<Property> compositeId)
+        {
+            AddBlankLine();
+            WriteLine("/// <summary>");
+            WriteLine("/// Needs this for composite id.");
+            WriteLine("/// </summary>");
+            WriteLine("public override bool Equals(object obj)");
+            WriteLine("{");
+            IndentLevel++;
+            WriteLine("if (obj == null) return false;");
+            WriteLine(string.Format("var t = obj as {0};", Type.Name));
+            WriteLine("if (t == null) return false;");
+            Write("return ");
+            foreach(var id in compositeId)
+            {
+                Write(string.Format("{0} == t.{0}", id.Name), false);
+                if(id != compositeId.Last())
+                    Write(" && ", false);
+                else
+                    Write(";", false);
+            }
+            WriteLine("", false);
+            IndentLevel--;
+            WriteLine("}");
+        }
+
+        private void WriteGetHashCode(List<Property> compositeId)
+        {
+            AddBlankLine();
+            WriteLine("/// <summary>");
+            WriteLine("/// Needs this for composite id.");
+            WriteLine("/// </summary>");
+            WriteLine("public override int GetHashCode()");
+            WriteLine("{");
+            IndentLevel++;
+            Write("return (");
+            foreach (var id in compositeId)
+            {
+                Write(id.Name, false);
+                if (id != compositeId.Last())
+                    Write(" + \"|\" + ", false);
+                else
+                    Write(").GetHashCode();", false);
+            }
+            WriteLine("", false);
+            IndentLevel--;
+            WriteLine("}");
+        }
 
 		private void WriteUsings()
 		{
@@ -108,6 +209,9 @@ namespace NClass.CodeGenerator
 
 				WriteOperation(operation);
 			}
+
+            if(Settings.Default.GenerateNHibernateMapping)
+                WriteCompositeId();
 
 			// Writing closing bracket of the type block
 			IndentLevel--;

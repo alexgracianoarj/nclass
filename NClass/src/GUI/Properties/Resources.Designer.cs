@@ -509,7 +509,7 @@ namespace NClass.GUI.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to http://nclass.sourceforge.net/.
+        ///   Looks up a localized string similar to https://alexgracianoarj.github.io/nclass.
         /// </summary>
         internal static string WebAddress {
             get {

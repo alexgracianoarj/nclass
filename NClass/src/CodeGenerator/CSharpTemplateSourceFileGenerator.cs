@@ -31,11 +31,6 @@ namespace NClass.CodeGenerator
             get { return ".cs"; }
         }
 
-        private void Write(string text)
-        {
-            CodeBuilder.Append(text);
-        }
-
         /// <exception cref="FileGenerationException">
         /// An error has occured while generating the source file.
         /// </exception>
@@ -104,14 +99,14 @@ namespace NClass.CodeGenerator
                 var entityMeta = GenerateEntityMeta();
                 string code = TemplateRender("entity", entityMeta, tmpltSettings.Code);
                 code = (new Regex("\n").Replace(code, "\r\n"));
-                Write(code);
+                CodeBuilder.Append(code);
             }
             else
             {
                 var modelMeta = GenerateModelMeta();
                 string code = TemplateRender("model", modelMeta, tmpltSettings.Code);
                 code = (new Regex("\n").Replace(code, "\r\n"));
-                Write(code);
+                CodeBuilder.Append(code);
             }
 
             if (CodeBuilder.Length == 0)
