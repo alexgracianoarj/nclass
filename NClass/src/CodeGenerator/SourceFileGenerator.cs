@@ -37,15 +37,30 @@ namespace NClass.CodeGenerator
 		/// <exception cref="ArgumentNullException">
 		/// <paramref name="type"/> is null.
 		/// </exception>
-		protected SourceFileGenerator(TypeBase type, string rootNamespace, Model model)
+		protected SourceFileGenerator(TypeBase type, string rootNamespace)
 		{
 			if (type == null)
 				throw new ArgumentNullException("type");
 
 			this.type = type;
 			this.rootNamespace = rootNamespace;
-            this.model = model;
 		}
+
+        protected SourceFileGenerator(TypeBase type, string rootNamespace, Model model)
+        {
+            if (type == null)
+                throw new ArgumentNullException("type");
+
+            this.type = type;
+            this.rootNamespace = rootNamespace;
+            this.model = model;
+        }
+
+        protected SourceFileGenerator(string rootNamespace, Model model)
+        {
+            this.rootNamespace = rootNamespace;
+            this.model = model;
+        }
 
 		protected TypeBase Type
 		{
@@ -109,7 +124,7 @@ namespace NClass.CodeGenerator
 		/// <exception cref="FileGenerationException">
 		/// An error has occured while generating the source file.
 		/// </exception>
-		public string Generate(string directory)
+		public virtual string Generate(string directory)
 		{
 			try
 			{
@@ -138,7 +153,7 @@ namespace NClass.CodeGenerator
 		/// <exception cref="ObjectDisposedException">
 		/// The <see cref="TextWriter"/> is closed.
 		/// </exception>
-		private void WriteFileContent(TextWriter writer)
+		protected void WriteFileContent(TextWriter writer)
 		{
 			if (codeBuilder == null)
 				codeBuilder = new StringBuilder(DefaultBuilderCapacity);

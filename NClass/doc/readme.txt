@@ -26,6 +26,7 @@ New Features
 	- NHibernate ByCode.
 - Model creating from database.
 - Template engine with Liquid.
+- SQL code generation.
 
 Features
 --------

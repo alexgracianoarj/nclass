@@ -18,6 +18,9 @@ using System.IO;
 using System.Collections.Generic;
 using NClass.Core;
 
+using NClass.CSharp;
+using NClass.Java;
+
 namespace NClass.CodeGenerator
 {
 	public abstract class ProjectGenerator
@@ -107,8 +110,6 @@ namespace NClass.CodeGenerator
 			bool success = true;
 			location = Path.Combine(location, ProjectName);
 
-            CSharpTemplateFileSourceGenerator templatesSourceFiles = null;
-
 			fileNames.Clear();
 			foreach (IEntity entity in model.Entities)
 			{
@@ -118,24 +119,9 @@ namespace NClass.CodeGenerator
 				{
                     SourceFileGenerator sourceFile = null;
 
-                    if (Settings.Default.GenerateCodeFromTemplates)
+                    if (model.Language == JavaLanguage.Instance)
                     {
-                        templatesSourceFiles = new CSharpTemplateFileSourceGenerator(type, RootNamespace, model);
-
-                        try
-                        {
-                            List<string> files = templatesSourceFiles.GenerateFiles(location, true);
-                            fileNames.AddRange(files);
-                        }
-                        catch (FileGenerationException)
-                        {
-                            success = false;
-                        }
-                    }
-
-                    if(!Settings.Default.GenerateNHibernateMapping)
-                    {
-                        sourceFile = new CSharpSourceFileGenerator(type, RootNamespace, model);
+                        sourceFile = new JavaSourceFileGenerator(type, RootNamespace);
 
                         try
                         {
@@ -147,11 +133,58 @@ namespace NClass.CodeGenerator
                             success = false;
                         }
                     }
-                    else
+
+                    if (model.Language == CSharpLanguage.Instance)
                     {
-                        if(Settings.Default.MappingType == MappingType.NHibernateAttributes)
+                        if (Settings.Default.GenerateCodeFromTemplates)
                         {
-                            sourceFile = new CSharpNHibernateAttributesSourceFileGenerator(type, RootNamespace, model);
+                            CSharpTemplateSourceFileGenerator templatesSourceFiles = new CSharpTemplateSourceFileGenerator(type, RootNamespace, model);
+
+                            try
+                            {
+                                List<string> files = templatesSourceFiles.GenerateFiles(location, true);
+                                fileNames.AddRange(files);
+                            }
+                            catch (FileGenerationException)
+                            {
+                                success = false;
+                            }
+                        }
+
+                        if(!Settings.Default.GenerateNHibernateMapping)
+                        {
+                            sourceFile = new CSharpSourceFileGenerator(type, RootNamespace, model);
+                        
+                            try
+                            {
+                                string fileName = sourceFile.Generate(location);
+                                fileNames.Add(fileName);
+                            }
+                            catch (FileGenerationException)
+                            {
+                                success = false;
+                            }
+                        }
+                        else
+                        {
+                            if(Settings.Default.MappingType == MappingType.NHibernateAttributes)
+                            {
+                                sourceFile = new CSharpNHibernateAttributesSourceFileGenerator(type, RootNamespace, model);
+
+                                try
+                                {
+                                    string fileName = sourceFile.Generate(location);
+                                    fileNames.Add(fileName);
+                                }
+                                catch (FileGenerationException)
+                                {
+                                    success = false;
+                                }
+
+                                continue;
+                            }
+
+                            sourceFile = new CSharpSourceFileGenerator(type, RootNamespace, model);
 
                             try
                             {
@@ -163,54 +196,42 @@ namespace NClass.CodeGenerator
                                 success = false;
                             }
 
-                            continue;
-                        }
+                            if(type is ClassType)
+                            {
+                                if (Settings.Default.MappingType == MappingType.NHibernateXml)
+                                {
+                                    sourceFile = new CSharpNHibernateXmlSourceFileGenerator(type, RootNamespace, model);
+                                }
+                                else if (Settings.Default.MappingType == MappingType.FluentNHibernate)
+                                {
+                                    sourceFile = new CSharpFluentNHibernateSourceFileGenerator(type, RootNamespace, model);
+                                }
+                                else if (Settings.Default.MappingType == MappingType.NHibernateByCode)
+                                {
+                                    sourceFile = new CSharpNHibernateByCodeSourceFileGenerator(type, RootNamespace, model);
+                                }
 
-                        sourceFile = new CSharpSourceFileGenerator(type, RootNamespace, model);
-
-                        try
-                        {
-                            string fileName = sourceFile.Generate(location);
-                            fileNames.Add(fileName);
-                        }
-                        catch (FileGenerationException)
-                        {
-                            success = false;
-                        }
-
-                        if(type is ClassType)
-                        {
-                            if (Settings.Default.MappingType == MappingType.NHibernateXml)
-                            {
-                                sourceFile = new CSharpNHibernateXmlSourceFileGenerator(type, RootNamespace, model);
-                            }
-                            else if (Settings.Default.MappingType == MappingType.FluentNHibernate)
-                            {
-                                sourceFile = new CSharpFluentNHibernateSourceFileGenerator(type, RootNamespace, model);
-                            }
-                            else if (Settings.Default.MappingType == MappingType.NHibernateByCode)
-                            {
-                                sourceFile = new CSharpNHibernateByCodeSourceFileGenerator(type, RootNamespace, model);
-                            }
-
-                            try
-                            {
-                                string fileName = sourceFile.Generate(location);
-                                fileNames.Add(fileName);
-                            }
-                            catch (FileGenerationException)
-                            {
-                                success = false;
+                                try
+                                {
+                                    string fileName = sourceFile.Generate(location);
+                                    fileNames.Add(fileName);
+                                }
+                                catch (FileGenerationException)
+                                {
+                                    success = false;
+                                }
                             }
                         }
                     }
 				}
 			}
 
-            if (Settings.Default.GenerateCodeFromTemplates)
-            {
-                if(templatesSourceFiles != null)
+            //if (model.Language == CSharpLanguage.Instance)
+            //{
+                if (Settings.Default.GenerateCodeFromTemplates)
                 {
+                    CSharpTemplateSourceFileGenerator templatesSourceFiles = new CSharpTemplateSourceFileGenerator(RootNamespace, model);
+
                     try
                     {
                         List<string> files = templatesSourceFiles.GenerateFiles(location, false);
@@ -221,7 +242,13 @@ namespace NClass.CodeGenerator
                         success = false;
                     }
                 }
-            }
+
+                if(Settings.Default.GenerateSQLCode)
+                {
+                    SourceFileGenerator sqlSourceFile = new CSharpSQLSourceFileGenerator(RootNamespace, model);
+                    sqlSourceFile.Generate(location);
+                }
+            //}
 
 			return success;
 		}

@@ -56,5 +56,11 @@
     <Setting Name="SolutionType" Type="NClass.CodeGenerator.SolutionType" Scope="User">
       <Value Profile="(Default)">VisualStudio2010</Value>
     </Setting>
+    <Setting Name="GenerateSQLCode" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="SQLToServerType" Type="DatabaseSchemaReader.DataSchema.SqlType" Scope="User">
+      <Value Profile="(Default)">SqlServer</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

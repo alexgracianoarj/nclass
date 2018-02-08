@@ -24,6 +24,8 @@ using NClass.Translations;
 
 using System.Threading;
 
+using DatabaseSchemaReader.DataSchema;
+
 namespace NClass.CodeGenerator
 {
 	public partial class Dialog : Form
@@ -73,7 +75,9 @@ namespace NClass.CodeGenerator
             chkUseLowercaseUnderscoredWordsInDb.Checked = Settings.Default.UseLowercaseAndUnderscoredWordsInDb;
             txtTextPrefix.Text = Settings.Default.PrefixTable;
             chkGenerateCodeFromTemplates.Checked = Settings.Default.GenerateCodeFromTemplates;
-			cboLanguage.SelectedIndex = 0;
+            chkGenerateSqlCode.Checked = Settings.Default.GenerateSQLCode;
+            cboSqlToServerType.SelectedItem = Settings.Default.SQLToServerType;
+            cboLanguage.SelectedIndex = 0;
 		}
 
 		private void UpdateImportList()
@@ -116,6 +120,7 @@ namespace NClass.CodeGenerator
             PopulateSolutionType();
             PopulateIdGeneratorType();
             PopulateMappingType();
+            PopulateSqlToServerType();
 			UpdateValues();
 			ShowDialog();
 			
@@ -138,6 +143,11 @@ namespace NClass.CodeGenerator
         private void PopulateIdGeneratorType()
         {
             cboIdGeneratorType.DataSource = Enum.GetValues(typeof(IdGeneratorType));
+        }
+
+        private void PopulateSqlToServerType()
+        {
+            cboSqlToServerType.DataSource = Enum.GetValues(typeof(SqlType));
         }
 
 		private void btnBrowse_Click(object sender, EventArgs e)
@@ -354,6 +364,8 @@ namespace NClass.CodeGenerator
             Settings.Default.UseLowercaseAndUnderscoredWordsInDb = chkUseLowercaseUnderscoredWordsInDb.Checked;
             Settings.Default.PrefixTable = txtTextPrefix.Text.Trim();
             Settings.Default.GenerateCodeFromTemplates = chkGenerateCodeFromTemplates.Checked;
+            Settings.Default.GenerateSQLCode = chkGenerateSqlCode.Checked;
+            Settings.Default.SQLToServerType = (SqlType)cboSqlToServerType.SelectedItem;
         }
 	}
 }

@@ -62,12 +62,16 @@
             this.txtTextPrefix = new System.Windows.Forms.TextBox();
             this.chkGenerateCodeFromTemplates = new System.Windows.Forms.CheckBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.chkGenerateSqlCode = new System.Windows.Forms.CheckBox();
+            this.cboSqlToServerType = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.updIndentSize)).BeginInit();
             this.importToolStrip.SuspendLayout();
             this.grpCodeStyle.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.gpbNHibernate.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // chkUseTabs
@@ -136,7 +140,7 @@
             this.lstImportList.FormattingEnabled = true;
             this.lstImportList.Location = new System.Drawing.Point(12, 90);
             this.lstImportList.Name = "lstImportList";
-            this.lstImportList.Size = new System.Drawing.Size(285, 238);
+            this.lstImportList.Size = new System.Drawing.Size(285, 186);
             this.lstImportList.TabIndex = 4;
             this.lstImportList.SelectedValueChanged += new System.EventHandler(this.lstImportList_SelectedValueChanged);
             this.lstImportList.Leave += new System.EventHandler(this.lstImportList_Leave);
@@ -204,7 +208,7 @@
             // 
             // txtNewImport
             // 
-            this.txtNewImport.Location = new System.Drawing.Point(12, 335);
+            this.txtNewImport.Location = new System.Drawing.Point(12, 284);
             this.txtNewImport.Name = "txtNewImport";
             this.txtNewImport.Size = new System.Drawing.Size(204, 20);
             this.txtNewImport.TabIndex = 5;
@@ -214,7 +218,7 @@
             // btnAddItem
             // 
             this.btnAddItem.Enabled = false;
-            this.btnAddItem.Location = new System.Drawing.Point(222, 333);
+            this.btnAddItem.Location = new System.Drawing.Point(222, 282);
             this.btnAddItem.Name = "btnAddItem";
             this.btnAddItem.Size = new System.Drawing.Size(75, 23);
             this.btnAddItem.TabIndex = 6;
@@ -464,11 +468,42 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Templates";
             // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.chkGenerateSqlCode);
+            this.groupBox2.Controls.Add(this.cboSqlToServerType);
+            this.groupBox2.Location = new System.Drawing.Point(12, 310);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(285, 45);
+            this.groupBox2.TabIndex = 19;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "SQL";
+            // 
+            // chkGenerateSqlCode
+            // 
+            this.chkGenerateSqlCode.AutoSize = true;
+            this.chkGenerateSqlCode.Location = new System.Drawing.Point(13, 19);
+            this.chkGenerateSqlCode.Name = "chkGenerateSqlCode";
+            this.chkGenerateSqlCode.Size = new System.Drawing.Size(136, 17);
+            this.chkGenerateSqlCode.TabIndex = 2;
+            this.chkGenerateSqlCode.Text = "Generate SQL code to:";
+            this.chkGenerateSqlCode.UseVisualStyleBackColor = true;
+            // 
+            // cboSqlToServerType
+            // 
+            this.cboSqlToServerType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboSqlToServerType.FormattingEnabled = true;
+            this.cboSqlToServerType.Location = new System.Drawing.Point(158, 17);
+            this.cboSqlToServerType.Name = "cboSqlToServerType";
+            this.cboSqlToServerType.Size = new System.Drawing.Size(121, 21);
+            this.cboSqlToServerType.TabIndex = 1;
+            // 
             // Dialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(594, 451);
+            this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.cboLanguage);
@@ -503,6 +538,8 @@
             this.gpbNHibernate.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -545,5 +582,8 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label lblIdGeneratorType;
         private System.Windows.Forms.ComboBox cboIdGeneratorType;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.CheckBox chkGenerateSqlCode;
+        private System.Windows.Forms.ComboBox cboSqlToServerType;
 	}
 }

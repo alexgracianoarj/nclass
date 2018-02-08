@@ -209,5 +209,29 @@ namespace NClass.CodeGenerator {
                 this["SolutionType"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool GenerateSQLCode {
+            get {
+                return ((bool)(this["GenerateSQLCode"]));
+            }
+            set {
+                this["GenerateSQLCode"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("SqlServer")]
+        public global::DatabaseSchemaReader.DataSchema.SqlType SQLToServerType {
+            get {
+                return ((global::DatabaseSchemaReader.DataSchema.SqlType)(this["SQLToServerType"]));
+            }
+            set {
+                this["SQLToServerType"] = value;
+            }
+        }
     }
 }

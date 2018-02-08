@@ -58,11 +58,16 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DatabaseSchemaReader, Version=2.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>libs\DatabaseSchemaReader.dll</HintPath>
+    </Reference>
     <Reference Include="Liquid.NET, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>libs\Liquid.NET.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
@@ -72,6 +77,7 @@
     <Compile Include="CSharpNHibernateAttributesSourceFileGenerator.cs" />
     <Compile Include="CSharpNHibernateByCodeSourceFileGenerator.cs" />
     <Compile Include="CSharpNHibernateXmlSourceFileGenerator.cs" />
+    <Compile Include="CSharpSQLSourceFileGenerator.cs" />
     <Compile Include="CSharpTemplateSourceFileGenerator.cs" />
     <Compile Include="EnumExtensions.cs" />
     <Compile Include="FieldNamingConvention.cs" />
@@ -182,6 +188,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="libs\Antlr4.Runtime.net45.dll" />
+    <Content Include="libs\DatabaseSchemaReader.dll" />
     <Content Include="libs\Liquid.NET.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

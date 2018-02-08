@@ -16,13 +16,18 @@ using System.Linq;
 
 namespace NClass.CodeGenerator
 {
-    internal sealed class CSharpTemplateFileSourceGenerator 
+    internal sealed class CSharpTemplateSourceFileGenerator 
         : SourceFileGenerator
     {
-        public CSharpTemplateFileSourceGenerator
+        public CSharpTemplateSourceFileGenerator
             (TypeBase type, string rootNamespace, Model model)
             : base(type, rootNamespace, model)
         {}
+
+        public CSharpTemplateSourceFileGenerator
+            (string rootNamespace, Model model)
+            : base(rootNamespace, model)
+        { }
 
         const int DefaultBuilderCapacity = 10240; // 10 KB
 

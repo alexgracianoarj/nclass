@@ -1,6 +1,6 @@
 # NClass
 
-Original project [NClass 2.04](http://nclass.sourceforge.net/).
+Original project [NClass v2.04](http://nclass.sourceforge.net/).
 
 NClass is a free tool to easily create UML class diagrams with full C# and Java language support. The user interface is designed to be simple and user-friendly for easy and fast development. Properties, enums, delegates and other language specific elements are fully supported with strict syntactical and semantical verification.
 
@@ -18,7 +18,7 @@ Design your application with just a few clicks - the main goal is to provide a s
 * Multilingual user interface;
 * Mono support for non-Windows users.
 
-## New Features (2.05)
+## New Features (v2.05)
 
 * Automatic properties in the C# source code generation;
 * C# source code documentation with XML comments.
@@ -38,7 +38,12 @@ Design your application with just a few clicks - the main goal is to provide a s
 		* Fluent NHibernate;
 		* NHibernate Mapping Attributes;
 		* NHibernate ByCode.	
-* Template engine with [Liquid.NET](https://github.com/mikebridge/Liquid.NET).
+* Template engine with [Liquid.NET](https://github.com/mikebridge/Liquid.NET);
+* SQL code generation from C# class diagram model using DatabaseSchemaReader.
+
+## Installation
+
+Download the install file in the latest [release](https://github.com/alexgracianoarj/nclass/releases), run it, and follow the steps.
 
 ## Donation
 
