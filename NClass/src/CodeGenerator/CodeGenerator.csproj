@@ -190,6 +190,9 @@
     <Content Include="libs\Antlr4.Runtime.net45.dll" />
     <Content Include="libs\DatabaseSchemaReader.dll" />
     <Content Include="libs\Liquid.NET.dll" />
+    <Content Include="Templates\templates.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
