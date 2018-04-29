@@ -100,7 +100,7 @@ namespace NClass.CodeGenerator
             if (type is ClassType)
             {
                 WriteLine(string.Format(
-                    "[Class(Table = \"{0}\", Lazy = {1})]",
+                    "[Class(Table = \"`{0}`\", Lazy = {1})]",
                     PrefixedText(
                     useLowercaseUnderscored
                     ? LowercaseAndUnderscoredWord(type.Name)
@@ -204,7 +204,7 @@ namespace NClass.CodeGenerator
             {
                 WriteLine(
                     string.Format(
-                    "[KeyManyToOne({0}, Name = \"{1}\", Column = \"{2}\", Class = \"{3}\", ClassType = typeof({4}))]",
+                    "[KeyManyToOne({0}, Name = \"{1}\", Column = \"`{2}`\", Class = \"{3}\", ClassType = typeof({4}))]",
                     position,
                     id.Name,
                     useLowercaseUnderscored
@@ -282,7 +282,7 @@ namespace NClass.CodeGenerator
             {
                 WriteLine(
                     string.Format(
-                    "[Id(0, Name = \"{0}\", Column = \"{1}\")]",
+                    "[Id(0, Name = \"{0}\", Column = \"`{1}`\")]",
                     operation.Name,
                     useLowercaseUnderscored
                     ? LowercaseAndUnderscoredWord(operation.Name)
@@ -296,7 +296,7 @@ namespace NClass.CodeGenerator
             {
                 WriteLine(
                     string.Format(
-                    "[ManyToOne(0, Name = \"{0}\", Column = \"{1}\", NotNull = true, ClassType = typeof({2}))]", 
+                    "[ManyToOne(0, Name = \"{0}\", Column = \"`{1}`\", NotNull = true, ClassType = typeof({2}))]", 
                     operation.Name,
                     useLowercaseUnderscored
                     ? LowercaseAndUnderscoredWord(operation.Name)
@@ -308,7 +308,7 @@ namespace NClass.CodeGenerator
             {
                 WriteLine(
                     string.Format(
-                    "[Property(Name = \"{0}\", Column = \"{1}\", NotNull = true)]", 
+                    "[Property(Name = \"{0}\", Column = \"`{1}`\", NotNull = true)]", 
                     operation.Name,
                     useLowercaseUnderscored
                     ? LowercaseAndUnderscoredWord(operation.Name)
