@@ -68,7 +68,7 @@ namespace NClass.CodeGenerator
                 xml.WriteStartElement("class");
                 xml.WriteAttributeString("name", _class.Name);
                 xml.WriteAttributeString("table", 
-                    string.Format("{0}",
+                    string.Format("`{0}`",
                     PrefixedText(
                     delByUnderscore 
                     ? LowercaseAndUnderscoredWord(_class.Name) 
@@ -111,7 +111,7 @@ namespace NClass.CodeGenerator
                         xml.WriteStartElement("key-many-to-one");
                         xml.WriteAttributeString("name", id.Name);
                         xml.WriteAttributeString("column",
-                            string.Format("{0}",
+                            string.Format("`{0}`",
                             delByUnderscore
                             ? LowercaseAndUnderscoredWord(id.Name)
                             : id.Name));
@@ -136,7 +136,7 @@ namespace NClass.CodeGenerator
                             xml.WriteStartElement("id");
                             xml.WriteAttributeString("name", property.Name);
                             xml.WriteAttributeString("column",
-                                string.Format("{0}",
+                                string.Format("`{0}`",
                                 delByUnderscore
                                 ? LowercaseAndUnderscoredWord(property.Name)
                                 : property.Name));
@@ -150,7 +150,7 @@ namespace NClass.CodeGenerator
                             xml.WriteAttributeString("name", property.Name);
                             xml.WriteAttributeString("class", property.Type);
                             xml.WriteAttributeString("column",
-                                string.Format("{0}",
+                                string.Format("`{0}`",
                                 delByUnderscore
                                 ? LowercaseAndUnderscoredWord(property.Name)
                                 : property.Name));
@@ -162,7 +162,7 @@ namespace NClass.CodeGenerator
                             xml.WriteStartElement("property");
                             xml.WriteAttributeString("name", property.Name);
                             xml.WriteAttributeString("column",
-                                string.Format("{0}",
+                                string.Format("`{0}`",
                                 delByUnderscore
                                 ? LowercaseAndUnderscoredWord(property.Name)
                                 : property.Name));

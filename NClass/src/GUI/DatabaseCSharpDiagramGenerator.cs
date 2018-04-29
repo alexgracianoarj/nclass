@@ -24,9 +24,38 @@ namespace NClass.GUI
         private ConnectionSettings connSettings;
         private DatabaseReader metadataReader;
         private IList<DatabaseTable> tables;
+        private IList<DatabaseView> views;
         private Project project;
         private Diagram diagram;
         private ITextFormatter textFormatter;
+
+        public virtual bool ConvertToPascalCase { get; set; }
+
+        public IList<DatabaseTable> Tables
+        {
+            get
+            {
+                return tables;
+            }
+
+            set
+            {
+                tables = value;
+            }
+        }
+
+        public IList<DatabaseView> Views
+        {
+            get
+            {
+                return views;
+            }
+
+            set
+            {
+                views = value;
+            }
+        }
 
         public Project ProjectGenerated
         {
@@ -43,8 +72,9 @@ namespace NClass.GUI
 
             metadataReader = new DatabaseReader(connSettings.ConnectionString, connSettings.ServerType);
             metadataReader.Owner = connSettings.Schema;
-            textFormatter = new  PascalCaseTextFormatter();
-            textFormatter.PrefixRemoval = connSettings.PrefixRemoval;
+
+            tables = metadataReader.AllTables();
+            views = metadataReader.AllViews();
         }
 
         private void CreateAssociation(ClassType first, ClassType second)
@@ -89,8 +119,8 @@ namespace NClass.GUI
         private string CreateProperty(DatabaseColumn column, ClassType classType)
         {
             string property = null;
-            
-            if(column.IsForeignKey
+
+            if (column.IsForeignKey
                 && !string.IsNullOrEmpty(column.ForeignKeyTableName))
             {
                 property = string.Format(
@@ -107,21 +137,31 @@ namespace NClass.GUI
                     column.DataType.NetDataTypeCSharpName,
                     textFormatter.FormatText(column.Name));
             }
-            
+
             return property;
         }
 
         public void Generate()
         {
+            if (ConvertToPascalCase)
+                textFormatter = new PascalCaseTextFormatter();
+            else
+                textFormatter = new UnformattedTextFormatter();
+
+            textFormatter.PrefixRemoval = connSettings.PrefixRemoval;
+
             project = new Project(Strings.Untitled);
 
             diagram = new Diagram(Strings.Untitled, CSharpLanguage.Instance);
 
-            tables = metadataReader.AllTables();
-
             foreach (var table in tables)
             {
                 CreateClass(table);
+            }
+
+            foreach (var view in views)
+            {
+                CreateClass(view);
             }
 
             ArrangeTypes();

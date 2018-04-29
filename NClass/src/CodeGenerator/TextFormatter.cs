@@ -1,5 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
 using System.Text.RegularExpressions;
 
 namespace NClass.CodeGenerator
@@ -7,9 +11,6 @@ namespace NClass.CodeGenerator
     public interface ITextFormatter
     {
         string FormatText(string text);
-        string FormatSingular(string text);
-        string FormatPlural(string text);
-        
         string PrefixRemoval { get; set; }
     }
 
@@ -25,11 +26,9 @@ namespace NClass.CodeGenerator
             // Cannot have class or property with not allowed chars
             result = result.Replace("%", "").Replace("á", "a").Replace("é", "e").Replace("í", "i").Replace("ó", "o").Replace("ú", "u");
 
-            // Split by capitals to preserve pascal/camelcasing in original text value. Preserves TLAs. See http://stackoverflow.com/a/1098039
-            result = Regex.Replace(result, "((?<=[a-z])[A-Z]|[A-Z](?=[a-z]))", " $1").Trim();
+            result = result.Replace(" ", "_");
 
             // Omit any chars except letters and numbers in class or properties.
-            // result = result.Replace(" ", "_");
             result = Regex.Replace(result, "[^a-zA-Z0-9_]", string.Empty); //And Underscore
 
             if (result.Length != 0 && char.IsNumber(result.ToCharArray(0, 1)[0]))
@@ -37,17 +36,8 @@ namespace NClass.CodeGenerator
                 // Cannot start class or property with a number
                 result = "_" + result;
             }
+
             return result;
-        }
-
-        public string FormatSingular(string text)
-        {
-            return FormatText(text).MakeSingular();
-        }
-
-        public string FormatPlural(string text)
-        {
-            return FormatText(text).MakePlural();
         }
 
         private string RemovePrefix(string original)
@@ -55,24 +45,17 @@ namespace NClass.CodeGenerator
             if (PrefixRemoval == null || string.IsNullOrEmpty(PrefixRemoval) || string.IsNullOrEmpty(original))
                 return original;
 
-            if (original.ToLower().StartsWith(PrefixRemoval.ToLower()))
-            {
-                return original.Remove(0, PrefixRemoval.Length);
-            }
-
-            return original;
+            return Regex.Replace(original, "^" + PrefixRemoval, string.Empty, RegexOptions.IgnoreCase);
         }
 
         public string PrefixRemoval { get; set; }
-    }   
+    }
 
-    public class UnformattedTextFormatter : AbstractTextFormatter { }
-
-    public class CamelCaseTextFormatter : AbstractTextFormatter
+    public class UnformattedTextFormatter : AbstractTextFormatter
     {
         public override string FormatText(string text)
         {
-            return base.FormatText(text).ToCamelCase();
+            return base.FormatText(text);
         }
     }
 
@@ -80,7 +63,20 @@ namespace NClass.CodeGenerator
     {
         public override string FormatText(string text)
         {
-            return base.FormatText(text).ToPascalCase();
+            if ((new Regex("^[A-Z][a-z]+(?:[A-Z][a-z]+)*$").IsMatch(text)))
+                return text;
+
+            if (String.IsNullOrEmpty(text))
+                return text;
+
+            var result = "";
+
+            string[] words = base.FormatText(new LowercaseAndUnderscoredWordTextFormatter().FormatText(text)).Split('_');
+
+            foreach (string word in words)
+                result += char.ToUpper(word[0]) + word.Substring(1);
+
+            return result;
         }
     }
 
@@ -88,7 +84,13 @@ namespace NClass.CodeGenerator
     {
         public override string FormatText(string text)
         {
-            return base.FormatText(text).AddUnderscores();
+            return Regex.Replace(
+                        Regex.Replace(
+                            Regex.Replace(base.FormatText(text),
+                                @"([A-Z]+)([A-Z][a-z])", "$1_$2"
+                                    ), @"([a-z\d])([A-Z])", "$1_$2"
+                                        ), @"[-\s]"
+                                        , "_").ToLower();
         }
     }
 
@@ -104,38 +106,6 @@ namespace NClass.CodeGenerator
         public override string FormatText(string text)
         {
             return Prefix + base.FormatText(text);
-        }
-    }
-
-    public static class TextFormatterFactory
-    {
-        public static ITextFormatter GetTextFormatter(FieldNamingConvention fieldNamingConvention)
-        {
-            ITextFormatter formatter;
-            switch (fieldNamingConvention)
-            {
-                case FieldNamingConvention.SameAsDatabase:
-                    formatter = new UnformattedTextFormatter();
-                    break;
-                case FieldNamingConvention.CamelCase:
-                    formatter = new CamelCaseTextFormatter();
-                    break;
-                case FieldNamingConvention.PascalCase:
-                    formatter = new PascalCaseTextFormatter();
-                    break;
-                case FieldNamingConvention.Prefixed:
-                    formatter = new PrefixedTextFormatter("pfx_");
-                    break;
-                case FieldNamingConvention.LowercaseAndUnderscoredWord:
-                    formatter = new LowercaseAndUnderscoredWordTextFormatter();
-                    break;
-                default:
-                    throw new Exception("Invalid or unsupported field naming convention.");
-            }
-
-            formatter.PrefixRemoval = "pfx_";
-
-            return formatter;
         }
     }
 }

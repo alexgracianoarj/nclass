@@ -90,7 +90,7 @@ namespace NClass.CodeGenerator
             WriteLine("{");
             IndentLevel++;
 
-            WriteLine(string.Format("Table(\"{0}\");",
+            WriteLine(string.Format("Table(\"`{0}`\");",
                 PrefixedText(
                 useLowercaseUnderscored
                 ? LowercaseAndUnderscoredWord(_class.Name)
@@ -161,7 +161,7 @@ namespace NClass.CodeGenerator
             {
                 Write(
                     string.Format(
-                    ".KeyReference(x => x.{0}, \"{1}\")",
+                    ".KeyReference(x => x.{0}, \"`{1}`\")",
                     id.Name,
                     (useLowercaseUnderscored)
                     ? LowercaseAndUnderscoredWord(id.Name)
@@ -181,7 +181,7 @@ namespace NClass.CodeGenerator
             {
                 WriteLine(
                     string.Format(
-                    "Id(x => x.{0}).Column(\"{1}\").GeneratedBy.{2}();", 
+                    "Id(x => x.{0}).Column(\"`{1}`\").GeneratedBy.{2}();", 
                     property.Name, 
                     (useLowercaseUnderscored)
                     ? LowercaseAndUnderscoredWord(property.Name)
@@ -192,7 +192,7 @@ namespace NClass.CodeGenerator
             {
                 WriteLine(
                     string.Format(
-                    "References(x => x.{0}).Column(\"{1}\").Not.Nullable();",
+                    "References(x => x.{0}).Column(\"`{1}`\").Not.Nullable();",
                     property.Name,
                     (useLowercaseUnderscored)
                     ? LowercaseAndUnderscoredWord(property.Name)
@@ -202,7 +202,7 @@ namespace NClass.CodeGenerator
             {
                 WriteLine(
                     string.Format(
-                    "Map(x => x.{0}).Column(\"{1}\").Not.Nullable();",
+                    "Map(x => x.{0}).Column(\"`{1}`\").Not.Nullable();",
                     property.Name,
                     (useLowercaseUnderscored)
                     ? LowercaseAndUnderscoredWord(property.Name)

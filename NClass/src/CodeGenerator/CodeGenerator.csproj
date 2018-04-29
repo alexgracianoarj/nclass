@@ -83,7 +83,6 @@
     <Compile Include="FieldNamingConvention.cs" />
     <Compile Include="GenerationResult.cs" />
     <Compile Include="IdGeneratorType.cs" />
-    <Compile Include="Inflector.cs" />
     <Compile Include="MappingType.cs" />
     <Compile Include="ProgressDialog.cs">
       <SubType>Form</SubType>

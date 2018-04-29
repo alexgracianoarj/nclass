@@ -95,7 +95,7 @@ namespace NClass.CodeGenerator
             WriteLine("{");
             IndentLevel++;
 
-            WriteLine(string.Format("Table(\"{0}\");",
+            WriteLine(string.Format("Table(\"`{0}`\");",
                 PrefixedText(
                 useLowercaseUnderscored
                 ? LowercaseAndUnderscoredWord(_class.Name)
@@ -165,7 +165,7 @@ namespace NClass.CodeGenerator
             {
                 WriteLine(
                     string.Format(
-                    "map.ManyToOne(x => x.{0}, m => {{ m.Class(typeof({1})); m.Column(\"{2}\"); }}); ",
+                    "map.ManyToOne(x => x.{0}, m => {{ m.Class(typeof({1})); m.Column(\"`{2}`\"); }}); ",
                     id.Name,
                     id.Type,
                     (useLowercaseUnderscored)
@@ -182,7 +182,7 @@ namespace NClass.CodeGenerator
             {
                 WriteLine(
                     string.Format(
-                    "Id(x => x.{0}, map => {{ map.Column(\"{1}\"); map.Generator(Generators.{2}); }});", 
+                    "Id(x => x.{0}, map => {{ map.Column(\"`{1}`\"); map.Generator(Generators.{2}); }});", 
                     property.Name, 
                     useLowercaseUnderscored
                     ? LowercaseAndUnderscoredWord(property.Name)
@@ -194,7 +194,7 @@ namespace NClass.CodeGenerator
             {
                 WriteLine(
                     string.Format(
-                    "ManyToOne(x => x.{0}, map => {{ map.Class(typeof({1})); map.Column(\"{2}\"); }});",
+                    "ManyToOne(x => x.{0}, map => {{ map.Class(typeof({1})); map.Column(\"`{2}`\"); }});",
                     property.Name, 
                     property.Type,
                     useLowercaseUnderscored
@@ -206,7 +206,7 @@ namespace NClass.CodeGenerator
             {
                 WriteLine(
                     string.Format(
-                    "Property(x => x.{0}, map => {{ map.Column(\"{1}\"); map.NotNullable(true); }});", 
+                    "Property(x => x.{0}, map => {{ map.Column(\"`{1}`\"); map.NotNullable(true); }});", 
                     property.Name, 
                     useLowercaseUnderscored
                     ? LowercaseAndUnderscoredWord(property.Name)
