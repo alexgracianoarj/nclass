@@ -26,7 +26,7 @@ namespace NClass.GUI
             InitializeComponent();
         }
 
-        public virtual bool ConvertToPascalCase { get; set; }
+        public bool ConvertToPascalCase { get; set; }
 
         public IList<DatabaseTable> Tables
         {

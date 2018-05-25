@@ -48,8 +48,9 @@
             // 
             // cancelButton
             // 
+            this.cancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cancelButton.Location = new System.Drawing.Point(466, 88);
+            this.cancelButton.Location = new System.Drawing.Point(506, 88);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(75, 23);
             this.cancelButton.TabIndex = 0;
@@ -59,7 +60,7 @@
             // saveButton
             // 
             this.saveButton.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.saveButton.Location = new System.Drawing.Point(348, 88);
+            this.saveButton.Location = new System.Drawing.Point(304, 88);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(112, 23);
             this.saveButton.TabIndex = 1;
@@ -72,9 +73,9 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(12, 13);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(38, 13);
+            this.label1.Size = new System.Drawing.Size(96, 13);
             this.label1.TabIndex = 2;
-            this.label1.Text = "Name:";
+            this.label1.Text = "Name && Database:";
             // 
             // label2
             // 
@@ -90,9 +91,9 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(12, 65);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(83, 13);
+            this.label3.Size = new System.Drawing.Size(98, 13);
             this.label3.TabIndex = 2;
-            this.label3.Text = "Database Type:";
+            this.label3.Text = "Database Schema:";
             // 
             // nameTextBox
             // 
@@ -107,21 +108,21 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.connectionStringTextBox.Location = new System.Drawing.Point(122, 36);
             this.connectionStringTextBox.Name = "connectionStringTextBox";
-            this.connectionStringTextBox.Size = new System.Drawing.Size(387, 20);
+            this.connectionStringTextBox.Size = new System.Drawing.Size(427, 20);
             this.connectionStringTextBox.TabIndex = 3;
             // 
             // serverTypeComboBox
             // 
             this.serverTypeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.serverTypeComboBox.FormattingEnabled = true;
-            this.serverTypeComboBox.Location = new System.Drawing.Point(122, 62);
+            this.serverTypeComboBox.Location = new System.Drawing.Point(380, 10);
             this.serverTypeComboBox.Name = "serverTypeComboBox";
             this.serverTypeComboBox.Size = new System.Drawing.Size(122, 21);
             this.serverTypeComboBox.TabIndex = 16;
             // 
             // deleteButton
             // 
-            this.deleteButton.Location = new System.Drawing.Point(461, 8);
+            this.deleteButton.Location = new System.Drawing.Point(422, 88);
             this.deleteButton.Name = "deleteButton";
             this.deleteButton.Size = new System.Drawing.Size(80, 23);
             this.deleteButton.TabIndex = 1;
@@ -131,7 +132,8 @@
             // 
             // addButton
             // 
-            this.addButton.Location = new System.Drawing.Point(380, 8);
+            this.addButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.addButton.Location = new System.Drawing.Point(506, 8);
             this.addButton.Name = "addButton";
             this.addButton.Size = new System.Drawing.Size(75, 23);
             this.addButton.TabIndex = 17;
@@ -141,7 +143,8 @@
             // 
             // connectionStringButton
             // 
-            this.connectionStringButton.Location = new System.Drawing.Point(514, 34);
+            this.connectionStringButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.connectionStringButton.Location = new System.Drawing.Point(554, 34);
             this.connectionStringButton.Name = "connectionStringButton";
             this.connectionStringButton.Size = new System.Drawing.Size(27, 23);
             this.connectionStringButton.TabIndex = 18;
@@ -151,9 +154,9 @@
             // 
             // btnConnect
             // 
-            this.btnConnect.Location = new System.Drawing.Point(250, 60);
+            this.btnConnect.Location = new System.Drawing.Point(122, 60);
             this.btnConnect.Name = "btnConnect";
-            this.btnConnect.Size = new System.Drawing.Size(137, 23);
+            this.btnConnect.Size = new System.Drawing.Size(122, 23);
             this.btnConnect.TabIndex = 19;
             this.btnConnect.Text = "Connect for schema:";
             this.btnConnect.UseVisualStyleBackColor = true;
@@ -161,11 +164,12 @@
             // 
             // cboSchema
             // 
+            this.cboSchema.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.cboSchema.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboSchema.FormattingEnabled = true;
-            this.cboSchema.Location = new System.Drawing.Point(393, 62);
+            this.cboSchema.Location = new System.Drawing.Point(249, 62);
             this.cboSchema.Name = "cboSchema";
-            this.cboSchema.Size = new System.Drawing.Size(148, 21);
+            this.cboSchema.Size = new System.Drawing.Size(178, 21);
             this.cboSchema.TabIndex = 21;
             // 
             // cboConnection
@@ -181,7 +185,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(12, 93);
+            this.label4.Location = new System.Drawing.Point(433, 65);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(81, 13);
             this.label4.TabIndex = 23;
@@ -189,7 +193,7 @@
             // 
             // txtTextPrefix
             // 
-            this.txtTextPrefix.Location = new System.Drawing.Point(122, 90);
+            this.txtTextPrefix.Location = new System.Drawing.Point(520, 62);
             this.txtTextPrefix.Name = "txtTextPrefix";
             this.txtTextPrefix.Size = new System.Drawing.Size(61, 20);
             this.txtTextPrefix.TabIndex = 24;
@@ -200,7 +204,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cancelButton;
-            this.ClientSize = new System.Drawing.Size(553, 122);
+            this.ClientSize = new System.Drawing.Size(593, 122);
             this.Controls.Add(this.txtTextPrefix);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.cboConnection);

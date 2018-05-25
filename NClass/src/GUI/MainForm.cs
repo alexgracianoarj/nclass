@@ -839,20 +839,19 @@ namespace NClass.GUI
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        ProgressDialog progressDownload;
-
         private void mnuCheckForUpdates_Click(object sender, EventArgs e)
         {
             System.Threading.Tasks.Task<IReadOnlyList<Octokit.Release>> releases;
             Octokit.Release latest = null;
 
-            progressDownload = new ProgressDialog();
+            ProgressDialog progressDownload = new ProgressDialog();
 
             Thread thread = new Thread(() =>
             {
                 Octokit.GitHubClient client = new Octokit.GitHubClient(new Octokit.ProductHeaderValue("alexgracianoarj"));
                 releases = client.Repository.Release.GetAll("alexgracianoarj", "nclass");
                 latest = releases.Result[0];
+                Console.Write(latest.Name);
 
                 if (progressDownload.InvokeRequired)
                     progressDownload.BeginInvoke(new Action(() => progressDownload.Close()));
@@ -876,8 +875,32 @@ namespace NClass.GUI
                     thread = new Thread(() =>
                     {
                         WebClient wc = new WebClient();
-                        wc.DownloadProgressChanged += new DownloadProgressChangedEventHandler(client_DownloadProgressChanged);
-                        wc.DownloadFileCompleted += new AsyncCompletedEventHandler(client_DownloadFileCompleted);
+
+                        wc.DownloadProgressChanged += new DownloadProgressChangedEventHandler((sen, env) =>
+                        {
+                            double bytesIn = double.Parse(env.BytesReceived.ToString());
+                            double totalBytes = double.Parse(env.TotalBytesToReceive.ToString());
+                            double percentage = bytesIn / totalBytes * 100;
+
+                            if (progressDownload.InvokeRequired)
+                                progressDownload.BeginInvoke(new Action(() => progressDownload.lblPleaseWait.Text = "Downloaded " + Convert.ToInt32(percentage) + "% - " + (env.BytesReceived / 1024) + " KB of " + (env.TotalBytesToReceive / 1024) + " KB"));
+
+                            if (progressDownload.InvokeRequired)
+                                progressDownload.BeginInvoke(new Action(() => progressDownload.progressBar1.Value = Convert.ToInt32(percentage)));
+
+                        });
+
+                        wc.DownloadFileCompleted += new AsyncCompletedEventHandler((sen, env) =>
+                        {
+                            // Close the dialog if it hasn't been already
+                            if (progressDownload.InvokeRequired)
+                                progressDownload.BeginInvoke(new Action(() => progressDownload.Close()));
+
+                            System.Diagnostics.Process.Start(Path.GetTempPath() + "NClass_Update.exe");
+
+                            Application.Exit();
+                        });
+
                         wc.DownloadFileAsync(new Uri(latest.Assets[0].BrowserDownloadUrl), Path.GetTempPath() + "NClass_Update.exe");
                     });
 
@@ -894,30 +917,6 @@ namespace NClass.GUI
             {
                 MessageBox.Show("NClass already is updated.", "NClass", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-        }
-
-        private void client_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
-        {
-            double bytesIn = double.Parse(e.BytesReceived.ToString());
-            double totalBytes = double.Parse(e.TotalBytesToReceive.ToString());
-            double percentage = bytesIn / totalBytes * 100;
-
-            if (progressDownload.InvokeRequired)
-                progressDownload.BeginInvoke(new Action(() => progressDownload.lblPleaseWait.Text = "Downloaded " + Convert.ToInt32(percentage) + "% - " + (e.BytesReceived / 1024) + " KB of " + (e.TotalBytesToReceive / 1024) + " KB"));
-
-            if (progressDownload.InvokeRequired)
-                progressDownload.BeginInvoke(new Action(() => progressDownload.progressBar1.Value = Convert.ToInt32(percentage)));
-        }
-
-        private void client_DownloadFileCompleted(object sender, AsyncCompletedEventArgs e)
-        {
-            // Close the dialog if it hasn't been already
-            if (progressDownload.InvokeRequired)
-                progressDownload.BeginInvoke(new Action(() => progressDownload.Close()));
-
-            System.Diagnostics.Process.Start(Path.GetTempPath() + "NClass_Update.exe");
-            
-            Application.Exit();
         }
 
         private void mnuAbout_Click(object sender, EventArgs e)
@@ -1011,6 +1010,7 @@ namespace NClass.GUI
                 progressDialog.SetIndeterminate(true);
 
                 DatabaseCSharpDiagramGenerator databaseDiagram = null;
+                DatabaseObjects chooseObjects = null;
                 bool hasErrors = false;
 
                 // Initialize the thread that will handle the background process
@@ -1054,61 +1054,61 @@ namespace NClass.GUI
                 // Open the dialog
                 progressDialog.ShowDialog();
 
-                DatabaseObjects chooseObjects = new DatabaseObjects(databaseDiagram.Tables, databaseDiagram.Views);
-
-                if (chooseObjects.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                if(!hasErrors)
                 {
-                    databaseDiagram.Tables = chooseObjects.Tables;
-                    databaseDiagram.Views = chooseObjects.Views;
-                    databaseDiagram.ConvertToPascalCase = chooseObjects.ConvertToPascalCase;
-                }
-                else
-                {
-                    return;
-                }
+                    chooseObjects = new DatabaseObjects(databaseDiagram.Tables, databaseDiagram.Views);
 
-                progressDialog = new ProgressDialog();
-
-                progressDialog.SetIndeterminate(true);
-
-                backgroundThread = new Thread(
-                    new ThreadStart(() =>
+                    if (chooseObjects.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                     {
-                        try
-                        {
-                            databaseDiagram.Generate();
+                        databaseDiagram.Tables = chooseObjects.Tables;
+                        databaseDiagram.Views = chooseObjects.Views;
+                        databaseDiagram.ConvertToPascalCase = chooseObjects.ConvertToPascalCase;
+                    }
+                    else
+                    {
+                        return;
+                    }
 
-                            Thread.Sleep(500);
-                        }
-                        catch (Exception ex)
-                        {
-                            hasErrors = true;
+                    progressDialog = new ProgressDialog();
 
-                            Invoke(new MethodInvoker(() =>
+                    progressDialog.SetIndeterminate(true);
+
+                    backgroundThread = new Thread(
+                        new ThreadStart(() =>
+                        {
+                            try
                             {
-                                MessageBox.Show(
-                                    this,
-                                    ex.Message,
-                                    Translations.Strings.Error,
-                                    MessageBoxButtons.OK,
-                                    MessageBoxIcon.Error);
-                            }));
-                        }
-                        finally
-                        {
-                            if (progressDialog.InvokeRequired)
-                                progressDialog.BeginInvoke(new Action(() => progressDialog.Close()));
-                        }
-                    }));
+                                databaseDiagram.Generate();
 
-                backgroundThread.SetApartmentState(ApartmentState.STA);
+                                Thread.Sleep(500);
+                            }
+                            catch (Exception ex)
+                            {
+                                Invoke(new MethodInvoker(() =>
+                                {
+                                    MessageBox.Show(
+                                        this,
+                                        ex.Message,
+                                        Translations.Strings.Error,
+                                        MessageBoxButtons.OK,
+                                        MessageBoxIcon.Error);
+                                }));
+                            }
+                            finally
+                            {
+                                if (progressDialog.InvokeRequired)
+                                    progressDialog.BeginInvoke(new Action(() => progressDialog.Close()));
+                            }
+                        }));
 
-                backgroundThread.Start();
+                    backgroundThread.SetApartmentState(ApartmentState.STA);
 
-                progressDialog.ShowDialog();
+                    backgroundThread.Start();
 
-                if (!hasErrors)
+                    progressDialog.ShowDialog();
+
                     Workspace.Default.AddProject(databaseDiagram.ProjectGenerated);
+                }
             }
         }
 
