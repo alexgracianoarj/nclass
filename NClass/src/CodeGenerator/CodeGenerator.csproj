@@ -190,7 +190,7 @@
     <Content Include="libs\DatabaseSchemaReader.dll" />
     <Content Include="libs\Liquid.NET.dll" />
     <Content Include="Templates\templates.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

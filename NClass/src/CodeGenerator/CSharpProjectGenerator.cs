@@ -99,13 +99,13 @@ namespace NClass.CodeGenerator
                                 }
 							}
 						}
-                        else if (line.Contains("${XmlFile}"))
+                        else if (line.Contains("${HbmXmlFile}"))
                         {
                             foreach (string fileName in FileNames)
                             {
-                                if ((new Regex(@"\.xml$").IsMatch(fileName)))
+                                if ((new Regex(@"\.hbm\.xml$").IsMatch(fileName)))
                                 {
-                                    string newLine = line.Replace("${XmlFile}", fileName);
+                                    string newLine = line.Replace("${HbmXmlFile}", fileName);
                                     writer.WriteLine(newLine);
                                 }
                             }

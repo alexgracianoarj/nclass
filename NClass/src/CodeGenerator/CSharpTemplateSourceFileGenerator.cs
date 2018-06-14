@@ -33,7 +33,7 @@ namespace NClass.CodeGenerator
 
         protected override string Extension
         {
-            get { return ".cs"; }
+            get { return ""; }
         }
 
         /// <exception cref="FileGenerationException">

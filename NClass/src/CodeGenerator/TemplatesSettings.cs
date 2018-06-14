@@ -18,6 +18,7 @@ namespace NClass.CodeGenerator
         public bool PerEntity { get; set; }
         public string FileName { get; set; }
         public string Code { get; set; }
+        public string Language { get; set; }
     }
 
     public class TemplatesSettings
@@ -71,6 +72,7 @@ namespace NClass.CodeGenerator
                 tmplt.PerEntity = template.PerEntity;
                 tmplt.FileName = template.FileName;
                 tmplt.Code = template.Code;
+                tmplt.Language = template.Language;
             }
 
             Save();

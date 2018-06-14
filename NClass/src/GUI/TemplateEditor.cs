@@ -90,7 +90,11 @@ namespace NClass.GUI
             toolStripButton11.Checked = template.PerEntity;
             toolStripTextBox2.Text = template.FileName;
             fctbCode.Text = template.Code;
-
+            fctbCode.ClearStylesBuffer();
+            fctbCode.Range.ClearStyle(StyleIndex.All);
+            fctbCode.AddStyle(sameWordsStyle);
+            fctbCode.Language = (Language)Enum.Parse(typeof(Language), template.Language);
+            fctbCode.OnSyntaxHighlight(new TextChangedEventArgs(fctbCode.Range));
             fctbCode.ClearUndo();
         }
 
@@ -387,11 +391,6 @@ namespace NClass.GUI
         private void replaceToolStripMenuItem_Click(object sender, EventArgs e)
         {
             fctbCode.ShowReplaceDialog();
-        }
-
-        private void PowerfulCSharpEditor_FormClosing(object sender, FormClosingEventArgs e)
-        {
-
         }
 
         private void dgvObjectExplorer_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
@@ -740,7 +739,8 @@ namespace NClass.GUI
                 Enabled = true,
                 PerEntity = true,
                 FileName = "Eg{{ model.name }}{{ entity.name }}",
-                Code = ""
+                Code = "",
+                Language = Language.CSharp.ToString()
             };
 
             BindData();
@@ -756,6 +756,8 @@ namespace NClass.GUI
 
         private void toolStripButton3_Click(object sender, EventArgs e)
         {
+            ofdMain.Filter = "C# File|*.cs|XML File|*.xml|All Files|*.*";
+
             if (ofdMain.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 try
@@ -777,6 +779,7 @@ namespace NClass.GUI
             template.PerEntity = toolStripButton11.Checked;
             template.FileName = toolStripTextBox2.Text.Trim();
             template.Code = fctbCode.Text;
+            template.Language = fctbCode.Language.ToString();
 
             return templates.SaveOrUpdateTemplate(template);
         }
@@ -1178,6 +1181,30 @@ namespace NClass.GUI
 }
 ";
             fctbCode.Text = entity;
+        }
+
+        private void cSharpToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            fctbCode.ClearStylesBuffer();
+            fctbCode.Range.ClearStyle(StyleIndex.All);
+            fctbCode.AddStyle(sameWordsStyle);
+            fctbCode.Language = Language.CSharp;
+            fctbCode.OnSyntaxHighlight(new TextChangedEventArgs(fctbCode.Range));
+        }
+
+        private void xMLToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            fctbCode.ClearStylesBuffer();
+            fctbCode.Range.ClearStyle(StyleIndex.All);
+            fctbCode.AddStyle(sameWordsStyle);
+            fctbCode.Language = Language.XML;
+            fctbCode.OnSyntaxHighlight(new TextChangedEventArgs(fctbCode.Range));
+        }
+
+        private void menuLanguage_DropDownOpening(object sender, EventArgs e)
+        {
+            foreach (ToolStripMenuItem mi in menuLanguage.DropDownItems)
+                mi.Checked = mi.Text == fctbCode.Language.ToString();
         }
     }
 

@@ -69,7 +69,6 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.splitter1 = new System.Windows.Forms.Splitter();
-            this.sfdMain = new System.Windows.Forms.SaveFileDialog();
             this.ofdMain = new System.Windows.Forms.OpenFileDialog();
             this.cmMain = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.cutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -101,6 +100,9 @@
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton11 = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
+            this.menuLanguage = new System.Windows.Forms.ToolStripDropDownButton();
+            this.cSharpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.xMLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
@@ -244,8 +246,8 @@
             // toolStripLabel4
             // 
             this.toolStripLabel4.Name = "toolStripLabel4";
-            this.toolStripLabel4.Size = new System.Drawing.Size(61, 22);
-            this.toolStripLabel4.Text = "File name:";
+            this.toolStripLabel4.Size = new System.Drawing.Size(59, 22);
+            this.toolStripLabel4.Text = "File && Ext:";
             // 
             // toolStripTextBox2
             // 
@@ -480,16 +482,6 @@
             this.splitter1.TabIndex = 5;
             this.splitter1.TabStop = false;
             // 
-            // sfdMain
-            // 
-            this.sfdMain.DefaultExt = "cs";
-            this.sfdMain.Filter = "C# file(*.cs)|*.cs";
-            // 
-            // ofdMain
-            // 
-            this.ofdMain.DefaultExt = "cs";
-            this.ofdMain.Filter = "C# file(*.cs)|*.cs";
-            // 
             // cmMain
             // 
             this.cmMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -691,6 +683,7 @@
             this.toolStripButton1,
             this.toolStripButton11,
             this.toolStripSeparator7,
+            this.menuLanguage,
             this.toolStripButton2,
             this.toolStripButton3,
             this.toolStripButton4,
@@ -755,6 +748,33 @@
             // 
             this.toolStripSeparator7.Name = "toolStripSeparator7";
             this.toolStripSeparator7.Size = new System.Drawing.Size(6, 25);
+            // 
+            // menuLanguage
+            // 
+            this.menuLanguage.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.menuLanguage.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.cSharpToolStripMenuItem,
+            this.xMLToolStripMenuItem});
+            this.menuLanguage.Image = ((System.Drawing.Image)(resources.GetObject("menuLanguage.Image")));
+            this.menuLanguage.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.menuLanguage.Name = "menuLanguage";
+            this.menuLanguage.Size = new System.Drawing.Size(72, 22);
+            this.menuLanguage.Text = "Language";
+            this.menuLanguage.DropDownOpening += new System.EventHandler(this.menuLanguage_DropDownOpening);
+            // 
+            // cSharpToolStripMenuItem
+            // 
+            this.cSharpToolStripMenuItem.Name = "cSharpToolStripMenuItem";
+            this.cSharpToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
+            this.cSharpToolStripMenuItem.Text = "CSharp";
+            this.cSharpToolStripMenuItem.Click += new System.EventHandler(this.cSharpToolStripMenuItem_Click);
+            // 
+            // xMLToolStripMenuItem
+            // 
+            this.xMLToolStripMenuItem.Name = "xMLToolStripMenuItem";
+            this.xMLToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
+            this.xMLToolStripMenuItem.Text = "XML";
+            this.xMLToolStripMenuItem.Click += new System.EventHandler(this.xMLToolStripMenuItem_Click);
             // 
             // toolStripButton2
             // 
@@ -843,14 +863,14 @@
             // 
             this.toolStripMenuItem5.Image = global::NClass.GUI.Properties.Resources.SearchWeb;
             this.toolStripMenuItem5.Name = "toolStripMenuItem5";
-            this.toolStripMenuItem5.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItem5.Size = new System.Drawing.Size(115, 22);
             this.toolStripMenuItem5.Text = "Liquid";
             this.toolStripMenuItem5.Click += new System.EventHandler(this.toolStripMenuItem5_Click);
             // 
             // toolStripSeparator9
             // 
             this.toolStripSeparator9.Name = "toolStripSeparator9";
-            this.toolStripSeparator9.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator9.Size = new System.Drawing.Size(112, 6);
             // 
             // mnuContext
             // 
@@ -859,14 +879,14 @@
             this.toolStripMenuItem13});
             this.mnuContext.Image = global::NClass.GUI.Properties.Resources.code_context;
             this.mnuContext.Name = "mnuContext";
-            this.mnuContext.Size = new System.Drawing.Size(152, 22);
+            this.mnuContext.Size = new System.Drawing.Size(115, 22);
             this.mnuContext.Text = "Context";
             // 
             // toolStripMenuItem12
             // 
             this.toolStripMenuItem12.Image = global::NClass.GUI.Properties.Resources.code_class;
             this.toolStripMenuItem12.Name = "toolStripMenuItem12";
-            this.toolStripMenuItem12.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItem12.Size = new System.Drawing.Size(108, 22);
             this.toolStripMenuItem12.Text = "model";
             this.toolStripMenuItem12.Click += new System.EventHandler(this.toolStripMenuItem12_Click);
             // 
@@ -874,7 +894,7 @@
             // 
             this.toolStripMenuItem13.Image = global::NClass.GUI.Properties.Resources.code_function;
             this.toolStripMenuItem13.Name = "toolStripMenuItem13";
-            this.toolStripMenuItem13.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItem13.Size = new System.Drawing.Size(108, 22);
             this.toolStripMenuItem13.Text = "entity";
             this.toolStripMenuItem13.Click += new System.EventHandler(this.toolStripMenuItem13_Click);
             // 
@@ -919,10 +939,10 @@
             this.Controls.Add(this.tsMain);
             this.Controls.Add(this.ssMain);
             this.Controls.Add(this.toolStrip1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "TemplateEditor";
             this.Text = "Template Editor";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.PowerfulCSharpEditor_FormClosing);
             this.ssMain.ResumeLayout(false);
             this.ssMain.PerformLayout();
             this.tsMain.ResumeLayout(false);
@@ -942,7 +962,6 @@
         private System.Windows.Forms.StatusStrip ssMain;
         private System.Windows.Forms.ToolStrip tsMain;
         private System.Windows.Forms.Splitter splitter1;
-        private System.Windows.Forms.SaveFileDialog sfdMain;
         private System.Windows.Forms.OpenFileDialog ofdMain;
         private System.Windows.Forms.ContextMenuStrip cmMain;
         private System.Windows.Forms.ToolStripMenuItem cutToolStripMenuItem;
@@ -1025,5 +1044,8 @@
         private FastColoredTextBoxNS.FastColoredTextBox fctbCode;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem12;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem13;
+        private System.Windows.Forms.ToolStripDropDownButton menuLanguage;
+        private System.Windows.Forms.ToolStripMenuItem cSharpToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem xMLToolStripMenuItem;
     }
 }

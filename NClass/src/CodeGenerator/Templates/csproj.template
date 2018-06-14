@@ -34,7 +34,7 @@
     <Compile Include="${SourceFile}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="${XmlFile}" />
+    <EmbeddedResource Include="${HbmXmlFile}" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
