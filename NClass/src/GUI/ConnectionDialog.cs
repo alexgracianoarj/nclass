@@ -4,7 +4,7 @@ using Microsoft.Data.ConnectionUI;
 
 using System.IO;
 using System.Linq;
-using System.Xml.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Collections.Generic;
 
 using System.Threading;
@@ -73,19 +73,23 @@ namespace NClass.GUI
             connectionsSettings.DeleteConnection(Connection);
 
             PopulateConnections();
+
+            if (connectionsSettings.Connections.Count == 0)
+            {
+                Connection = CreateNewConnection();
+                BindData();
+            }
         }
 
         private void OnAddButtonClick(object sender, EventArgs e)
         {
-            //Connection = CreateNewConnection();
+            Connection = CreateNewConnection();
 
-            int index = connectionsSettings.SaveOrUpdateConnection(CreateNewConnection());
+            int index = connectionsSettings.SaveConnection(Connection);
 
             PopulateConnections();
 
             cboConnection.SelectedIndex = index;
-
-            //BindData();
         }
 
         private void OnServerTypeSelectedIndexChanged(object sender, EventArgs e)
@@ -167,7 +171,7 @@ namespace NClass.GUI
 
             connectionsSettings.LastUsedConnection = Connection.Id;
 
-            connectionsSettings.SaveOrUpdateConnection(Connection);
+            connectionsSettings.SaveConnection(Connection);
         }
 
         private void PopulateConnections()
@@ -289,8 +293,6 @@ namespace NClass.GUI
             // Start the background process thread
             backgroundThread.Start();
 
-            //progressBar1.Visible = true;
-
             // Open the dialog
             progressDialog.ShowDialog();
         }
@@ -303,6 +305,7 @@ namespace NClass.GUI
 
     }
 
+    [Serializable]
     public class ConnectionSettings
     {
         public Guid Id { get; set; }
@@ -313,10 +316,12 @@ namespace NClass.GUI
         public string PrefixRemoval { get; set; }
     }
 
+    [Serializable]
     public class ConnectionsSettings
     {
+        [NonSerialized]
+        private static string pathFile = Application.StartupPath + @"\Connections\connections.bin";
         public Guid? LastUsedConnection { get; set; }
-
         public List<ConnectionSettings> Connections { get; set; }
 
         public ConnectionsSettings()
@@ -326,11 +331,9 @@ namespace NClass.GUI
 
         public void Save()
         {
-            var streamWriter = new StreamWriter(Application.StartupPath + @"\Connections\connections.xml", false);
-            using (streamWriter)
+            using (var fileStream = new FileStream(pathFile, FileMode.Create))
             {
-                var xmlSerializer = new XmlSerializer(typeof(ConnectionsSettings));
-                xmlSerializer.Serialize(streamWriter, this);
+                new BinaryFormatter().Serialize(fileStream, this);
             }
         }
 
@@ -338,20 +341,18 @@ namespace NClass.GUI
         {
             ConnectionsSettings connectionsSettings = new ConnectionsSettings();
 
-            var xmlSerializer = new XmlSerializer(typeof(ConnectionsSettings));
-            var fi = new FileInfo(Application.StartupPath + @"\Connections\connections.xml");
-            if (fi.Exists)
+            if (File.Exists(pathFile))
             {
-                using (FileStream fileStream = fi.OpenRead())
+                using (var fileStream = new FileStream(pathFile, FileMode.Open))
                 {
-                    connectionsSettings = (ConnectionsSettings)xmlSerializer.Deserialize(fileStream);
+                    connectionsSettings = (ConnectionsSettings)new BinaryFormatter().Deserialize(fileStream);
                 }
             }
 
             return connectionsSettings;
         }
 
-        public int SaveOrUpdateConnection(ConnectionSettings connection)
+        public int SaveConnection(ConnectionSettings connection)
         {
             var connItem = Connections.SingleOrDefault(x => x.Id.Equals(connection.Id));
 

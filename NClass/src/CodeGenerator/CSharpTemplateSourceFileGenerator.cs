@@ -48,38 +48,42 @@ namespace NClass.CodeGenerator
             if (!Directory.Exists(directory))
                 Directory.CreateDirectory(directory);
 
-            foreach (var tmpltSettings in tmpltsSettings.Templates.Where(x => x.Enabled && x.PerEntity == perEntity))
+            foreach (var group in tmpltsSettings.Groups.Where(x => x.Enabled))
             {
-                try
+                foreach (var tmpltSettings in group.Templates.Where(x => x.Enabled && x.PerEntity == perEntity))
                 {
-                    string fileName = null;
+                    try
+                    {
+                        string fileName = null;
 
-                    if(tmpltSettings.PerEntity)
-                    {
-                        var entityMeta = GenerateEntityMeta();
-                        fileName = TemplateRender("entity", entityMeta, tmpltSettings.FileName) + Extension;
-                    }
-                    else
-                    {
-                        fileName = tmpltSettings.FileName + Extension;
-                    }
-                    
-                    fileName = Regex.Replace(fileName, @"\<(?<type>.+)\>", @"[${type}]");
-                    string path = Path.Combine(directory, fileName);
-
-                    if(WriteFileContent(tmpltSettings))
-                    {
-                        using (StreamWriter writer = new StreamWriter(path, false, Encoding.Unicode))
+                        if (tmpltSettings.PerEntity)
                         {
-                            writer.Write(CodeBuilder.ToString());
+                            var entityMeta = GenerateEntityMeta();
+                            fileName = TemplateRender("entity", entityMeta, tmpltSettings.FileExt);
+                        }
+                        else
+                        {
+                            var modelMeta = GenerateModelMeta();
+                            fileName = TemplateRender("model", modelMeta, tmpltSettings.FileExt);
                         }
 
-                        files.Add(fileName);
+                        fileName = Regex.Replace(fileName, @"\<(?<type>.+)\>", @"[${type}]");
+                        string path = Path.Combine(directory, fileName);
+
+                        if (WriteFileContent(tmpltSettings))
+                        {
+                            using (StreamWriter writer = new StreamWriter(path, false, Encoding.Unicode))
+                            {
+                                writer.Write(CodeBuilder.ToString());
+                            }
+
+                            files.Add(fileName);
+                        }
                     }
-                }
-                catch (Exception ex)
-                {
-                    throw new FileGenerationException(directory, ex);
+                    catch (Exception ex)
+                    {
+                        throw new FileGenerationException(directory, ex);
+                    }
                 }
             }
 
@@ -103,14 +107,12 @@ namespace NClass.CodeGenerator
             {
                 var entityMeta = GenerateEntityMeta();
                 string code = TemplateRender("entity", entityMeta, tmpltSettings.Code);
-                code = (new Regex("\n").Replace(code, "\r\n"));
                 CodeBuilder.Append(code);
             }
             else
             {
                 var modelMeta = GenerateModelMeta();
                 string code = TemplateRender("model", modelMeta, tmpltSettings.Code);
-                code = (new Regex("\n").Replace(code, "\r\n"));
                 CodeBuilder.Append(code);
             }
 

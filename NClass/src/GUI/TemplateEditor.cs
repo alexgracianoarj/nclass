@@ -30,6 +30,7 @@ namespace NClass.GUI
         Color currentLineColor = Color.FromArgb(100, 210, 210, 255);
         Color changedLineColor = Color.FromArgb(255, 230, 230, 255);
 
+        GroupTemplates group;
         TemplateSettings template;
         TemplatesSettings templates;
 
@@ -73,22 +74,44 @@ namespace NClass.GUI
             cutToolStripMenuItem.Image = global::NClass.GUI.Properties.Resources.Cut;
             pasteToolStripMenuItem.Image = global::NClass.GUI.Properties.Resources.Paste;
 
+            PopulateGroups();
             PopulateTemplates();
+        }
+
+        private void PopulateGroups()
+        {
+            templates = TemplatesSettings.Load();
+            toolStripComboBox2.ComboBox.DataSource = templates.Groups;
+            toolStripComboBox2.ComboBox.DisplayMember = "Name";
         }
 
         private void PopulateTemplates()
         {
-            templates = TemplatesSettings.Load();
-            toolStripComboBox1.ComboBox.DataSource = templates.Templates;
-            toolStripComboBox1.ComboBox.DisplayMember = "Name";
+            if(templates.Groups.Count > 0)
+            {
+                group = (GroupTemplates)toolStripComboBox2.SelectedItem;
+                toolStripComboBox1.ComboBox.DataSource = group.Templates;
+                toolStripComboBox1.ComboBox.DisplayMember = "Name";
+            }
+            else
+            {
+                toolStripComboBox1.ComboBox.DataSource = new List<TemplateSettings>();
+                toolStripComboBox1.ComboBox.DisplayMember = "Name";
+            }
         }
 
-        private void BindData()
+        private void BindDataGroup()
+        {
+            toolStripTextBox3.Text = group.Name;
+            toolStripButton13.Checked = group.Enabled;
+        }
+
+        private void BindDataTemplate()
         {
             toolStripTextBox1.Text = template.Name;
             toolStripButton1.Checked = template.Enabled;
             toolStripButton11.Checked = template.PerEntity;
-            toolStripTextBox2.Text = template.FileName;
+            toolStripTextBox2.Text = template.FileExt;
             fctbCode.Text = template.Code;
             fctbCode.ClearStylesBuffer();
             fctbCode.Range.ClearStyle(StyleIndex.All);
@@ -364,23 +387,11 @@ namespace NClass.GUI
 
         private void tmUpdateInterface_Tick(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(fctbCode.Text))
-            {
-                undoStripButton.Enabled = undoToolStripMenuItem.Enabled = fctbCode.UndoEnabled;
-                redoStripButton.Enabled = redoToolStripMenuItem.Enabled = fctbCode.RedoEnabled;
-                cutToolStripButton.Enabled = cutToolStripMenuItem.Enabled =
-                copyToolStripButton.Enabled = copyToolStripMenuItem.Enabled = !fctbCode.Selection.IsEmpty;
-                toolStripButton5.Enabled = true;
-            }
-            else
-            {
-                undoStripButton.Enabled = undoToolStripMenuItem.Enabled = false;
-                redoStripButton.Enabled = redoToolStripMenuItem.Enabled = false;
-                cutToolStripButton.Enabled = cutToolStripMenuItem.Enabled =
-                copyToolStripButton.Enabled = copyToolStripMenuItem.Enabled = false;
-                toolStripButton5.Enabled = false;
-                dgvObjectExplorer.RowCount = 0;
-            }
+            undoStripButton.Enabled = undoToolStripMenuItem.Enabled = fctbCode.UndoEnabled;
+            redoStripButton.Enabled = redoToolStripMenuItem.Enabled = fctbCode.RedoEnabled;
+            cutToolStripButton.Enabled = cutToolStripMenuItem.Enabled =
+            copyToolStripButton.Enabled = copyToolStripMenuItem.Enabled = !fctbCode.Selection.IsEmpty;
+            toolStripButton5.Enabled = !string.IsNullOrEmpty(fctbCode.Text);
         }
         
         private void findToolStripMenuItem_Click(object sender, EventArgs e)
@@ -730,26 +741,54 @@ namespace NClass.GUI
             NewTemplate();
         }
 
+        private void NewGroup()
+        {
+            group = new GroupTemplates
+            {
+                Id = Guid.NewGuid(),
+                Name = Translations.Strings.Untitled,
+                Enabled = true,
+                Templates = new List<TemplateSettings>()
+            };
+
+            BindDataGroup();
+
+            int index = SaveGroup();
+
+            PopulateGroups();
+
+            toolStripComboBox2.ComboBox.SelectedIndex = index;
+
+            toolStripTextBox3.Focus();
+        }
+
         private void NewTemplate()
         {
+            if(templates.Groups.Count == 0)
+            {
+                NewGroup();
+            }
+
             template = new TemplateSettings
             {
                 Id = Guid.NewGuid(),
                 Name = Translations.Strings.Untitled,
                 Enabled = true,
                 PerEntity = true,
-                FileName = "Eg{{ model.name }}{{ entity.name }}",
-                Code = "",
+                FileExt = "Eg{{ model.name }}{{ entity.name }}.cs",
+                Code = string.Empty,
                 Language = Language.CSharp.ToString()
             };
 
-            BindData();
+            BindDataTemplate();
 
-            int index = SaveTemplate();
+            int indexT = SaveTemplate();
+            int indexG = toolStripComboBox2.ComboBox.SelectedIndex;
 
-            PopulateTemplates();
+            PopulateGroups();
 
-            toolStripComboBox1.ComboBox.SelectedIndex = index;
+            toolStripComboBox2.ComboBox.SelectedIndex = indexG;
+            toolStripComboBox1.ComboBox.SelectedIndex = indexT;
             
             toolStripTextBox1.Focus();
         }
@@ -772,31 +811,46 @@ namespace NClass.GUI
             }
         }
 
+        private int SaveGroup()
+        {
+            group.Name = toolStripTextBox3.Text.Trim();
+            group.Enabled = toolStripButton13.Checked;
+
+            return templates.SaveGroup(group);
+        }
+
         private int SaveTemplate()
         {
             template.Name = toolStripTextBox1.Text.Trim();
             template.Enabled = toolStripButton1.Checked;
             template.PerEntity = toolStripButton11.Checked;
-            template.FileName = toolStripTextBox2.Text.Trim();
+            template.FileExt = toolStripTextBox2.Text.Trim();
             template.Code = fctbCode.Text;
             template.Language = fctbCode.Language.ToString();
 
-            return templates.SaveOrUpdateTemplate(template);
+            return templates.SaveTemplate(group, template);
         }
 
         private void toolStripButton4_Click(object sender, EventArgs e)
         {
-            if (template.Name != toolStripTextBox1.Text.Trim())
+            if(templates.Groups.Count > 0)
             {
-                int index = SaveTemplate();
+                if (template.Name != toolStripTextBox1.Text.Trim())
+                {
+                    int indexT = SaveTemplate();
+                    int indexG = toolStripComboBox2.ComboBox.SelectedIndex;
 
-                PopulateTemplates();
+                    PopulateGroups();
 
-                toolStripComboBox1.ComboBox.SelectedIndex = index;
-            }
-            else
-            {
-                SaveTemplate();
+                    toolStripComboBox2.ComboBox.SelectedIndex = indexG;
+                    toolStripComboBox1.ComboBox.SelectedIndex = indexT;
+                }
+                else
+                {
+                    SaveTemplate();
+                }
+
+                fctbCode.ClearUndo();
             }
         }
 
@@ -825,20 +879,25 @@ namespace NClass.GUI
         {
             template = (TemplateSettings)toolStripComboBox1.SelectedItem;
 
-            BindData();
+            BindDataTemplate();
 
             fctbCode.Focus();
         }
 
         private void toolStripButton7_Click(object sender, EventArgs e)
         {
-            templates.DeleteTemplate(template);
+            if(templates.Groups.Count > 0)
+            {
+                templates.DeleteTemplate(group, template);
 
-            toolStripTextBox1.Clear();
-            toolStripTextBox2.Clear();
-            fctbCode.Clear();
+                int index = toolStripComboBox2.ComboBox.SelectedIndex;
 
-            PopulateTemplates();
+                PopulateGroups();
+
+                toolStripComboBox2.ComboBox.SelectedIndex = index;
+
+                BindDataGroup();
+            }
         }
 
         private void toolStripButton6_Click(object sender, EventArgs e)
@@ -870,14 +929,6 @@ namespace NClass.GUI
             else
             {
                 toolStripButton11.Image = global::NClass.GUI.Properties.Resources.uncheck;
-            }
-        }
-
-        private void fctbCode_LostFocus(object sender, EventArgs e)
-        {
-            if (toolStripButton12.Checked)
-            {
-                SaveTemplate();
             }
         }
 
@@ -1205,6 +1256,95 @@ namespace NClass.GUI
         {
             foreach (ToolStripMenuItem mi in menuLanguage.DropDownItems)
                 mi.Checked = mi.Text == fctbCode.Language.ToString();
+        }
+
+        private void toolStripButton14_Click(object sender, EventArgs e)
+        {
+            NewGroup();
+        }
+
+        private void toolStripButton15_Click(object sender, EventArgs e)
+        {
+            if(templates.Groups.Count > 0)
+            {
+                if (group.Name != toolStripTextBox3.Text.Trim())
+                {
+                    int indexG = SaveGroup();
+                    int indexT = toolStripComboBox1.ComboBox.SelectedIndex;
+
+                    PopulateGroups();
+
+                    toolStripComboBox2.ComboBox.SelectedIndex = indexG;
+                    toolStripComboBox1.ComboBox.SelectedIndex = indexT;
+                }
+                else
+                {
+                    SaveGroup();
+                }
+            }
+        }
+
+        private void toolStripButton16_Click(object sender, EventArgs e)
+        {
+            templates.DeleteGroup(group);
+
+            group = new GroupTemplates
+            {
+                Enabled = false
+            };
+
+            PopulateGroups();
+
+            BindDataGroup();
+
+            if(group.Templates.Count == 0)
+            {
+                template = new TemplateSettings
+                {
+                    Enabled = false,
+                    PerEntity = false,
+                    Code = string.Empty,
+                    Language = Language.CSharp.ToString()
+                };
+
+                PopulateTemplates();
+
+                BindDataTemplate();
+            }
+        }
+
+        private void toolStripComboBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            group = (GroupTemplates)toolStripComboBox2.SelectedItem;
+
+            BindDataGroup();
+
+            if(group.Templates.Count == 0)
+            {
+                template = new TemplateSettings
+                {
+                    Enabled = false,
+                    PerEntity = false,
+                    Code = string.Empty,
+                    Language = Language.CSharp.ToString()
+                };
+            }
+
+            PopulateTemplates();
+
+            BindDataTemplate();
+        }
+
+        private void toolStripButton13_CheckedChanged(object sender, EventArgs e)
+        {
+            if (toolStripButton13.Checked)
+            {
+                toolStripButton13.Image = global::NClass.GUI.Properties.Resources.check;
+            }
+            else
+            {
+                toolStripButton13.Image = global::NClass.GUI.Properties.Resources.uncheck;
+            }
         }
     }
 

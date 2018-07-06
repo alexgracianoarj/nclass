@@ -167,6 +167,9 @@
     <None Include="Templates\sln.template">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Templates\templates.bin">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
@@ -189,9 +192,6 @@
     <Content Include="libs\Antlr4.Runtime.net45.dll" />
     <Content Include="libs\DatabaseSchemaReader.dll" />
     <Content Include="libs\Liquid.NET.dll" />
-    <Content Include="Templates\templates.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
