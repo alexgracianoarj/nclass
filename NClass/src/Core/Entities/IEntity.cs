@@ -29,5 +29,11 @@ namespace NClass.Core
 		{
 			get;
 		}
+
+        string HbmTableName 
+        { 
+            get; 
+            set; 
+        }
 	}
 }

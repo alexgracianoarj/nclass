@@ -445,7 +445,11 @@ namespace NClass.Core
 			foreach (Operation operation in OperationList)
 			{
 				XmlElement child = node.OwnerDocument.CreateElement("Member");
-				child.SetAttribute("type", operation.MemberType.ToString());
+                child.SetAttribute("type", operation.MemberType.ToString());
+
+                if (operation.MemberType.ToString() == "Property")
+                    child.SetAttribute("hbmColumnName", operation.HbmColumnName);
+
 				child.InnerText = operation.ToString();
 				node.AppendChild(child);
 			}
@@ -466,7 +470,7 @@ namespace NClass.Core
 
 			foreach (XmlElement childNode in node.SelectNodes("Member|Field|Operation")) // old file format
 			{
-				string type = childNode.GetAttribute("type");
+                string type = childNode.GetAttribute("type");
 
 				if (type == "Field" || type == "CSharpField" || type == "JavaField")
 				{
@@ -483,6 +487,9 @@ namespace NClass.Core
 							Strings.ErrorCorruptSaveFormat);
 					}
 					operation.InitFromString(childNode.InnerText);
+                    
+                    if (type == "Property")
+                        operation.HbmColumnName = childNode.GetAttribute("hbmColumnName");
 				}
 			}
 

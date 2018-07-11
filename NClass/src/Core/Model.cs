@@ -658,6 +658,10 @@ namespace NClass.Core
 					string type = node.GetAttribute("type");
 
 					IEntity entity = GetEntity(type);
+
+                    if (type == "Class")
+                        entity.HbmTableName = node.GetAttribute("hbmTableName");
+ 
 					entity.Deserialize(node);
 				}
 				catch (BadSyntaxException ex)
@@ -803,8 +807,12 @@ namespace NClass.Core
 				XmlElement child = node.OwnerDocument.CreateElement("Entity");
 
 				entity.Serialize(child);
-				child.SetAttribute("type", entity.EntityType.ToString());
-				entitiesChild.AppendChild(child);
+                child.SetAttribute("type", entity.EntityType.ToString());
+                
+                if (entity.EntityType.ToString() == "Class")
+                    child.SetAttribute("hbmTableName", entity.HbmTableName);
+				
+                entitiesChild.AppendChild(child);
 			}
 			node.AppendChild(entitiesChild);
 		}

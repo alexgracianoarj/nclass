@@ -266,9 +266,10 @@
             this.chkUseLowercaseUnderscoredWordsInDb.AutoSize = true;
             this.chkUseLowercaseUnderscoredWordsInDb.Location = new System.Drawing.Point(13, 105);
             this.chkUseLowercaseUnderscoredWordsInDb.Name = "chkUseLowercaseUnderscoredWordsInDb";
-            this.chkUseLowercaseUnderscoredWordsInDb.Size = new System.Drawing.Size(213, 30);
+            this.chkUseLowercaseUnderscoredWordsInDb.Size = new System.Drawing.Size(253, 30);
             this.chkUseLowercaseUnderscoredWordsInDb.TabIndex = 10;
-            this.chkUseLowercaseUnderscoredWordsInDb.Text = "Use lowercase and underscored words \r\nin the database";
+            this.chkUseLowercaseUnderscoredWordsInDb.Text = "Use lowercase and underscored words \r\nin the database (or the same as in the data" +
+    "base)";
             this.chkUseLowercaseUnderscoredWordsInDb.UseVisualStyleBackColor = true;
             // 
             // chkUseLazyLoading

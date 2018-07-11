@@ -793,24 +793,6 @@ namespace NClass.GUI
             toolStripTextBox1.Focus();
         }
 
-        private void toolStripButton3_Click(object sender, EventArgs e)
-        {
-            ofdMain.Filter = "C# File|*.cs|XML File|*.xml|All Files|*.*";
-
-            if (ofdMain.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                try
-                {
-                    fctbCode.OpenFile(ofdMain.FileName);
-                    fctbCode.Focus();
-                }
-                catch(Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-        }
-
         private int SaveGroup()
         {
             group.Name = toolStripTextBox3.Text.Trim();
@@ -1344,6 +1326,24 @@ namespace NClass.GUI
             else
             {
                 toolStripButton13.Image = global::NClass.GUI.Properties.Resources.uncheck;
+            }
+        }
+
+        private void toolStripButton12_Click(object sender, EventArgs e)
+        {
+            ofdMain.Filter = "C# File|*.cs|XML File|*.xml|All Files|*.*";
+
+            if (ofdMain.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                try
+                {
+                    fctbCode.OpenFile(ofdMain.FileName);
+                    fctbCode.Focus();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
     }

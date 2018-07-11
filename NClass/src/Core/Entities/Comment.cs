@@ -143,5 +143,7 @@ namespace NClass.Core
 				return '"' + Text + '"';
 			}
 		}
+
+        public string HbmTableName { get; set; }
 	}
 }

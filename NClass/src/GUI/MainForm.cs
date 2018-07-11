@@ -851,7 +851,6 @@ namespace NClass.GUI
                 Octokit.GitHubClient client = new Octokit.GitHubClient(new Octokit.ProductHeaderValue("alexgracianoarj"));
                 releases = client.Repository.Release.GetAll("alexgracianoarj", "nclass");
                 latest = releases.Result[0];
-                Console.Write(latest.Name);
 
                 if (progressDownload.InvokeRequired)
                     progressDownload.BeginInvoke(new Action(() => progressDownload.Close()));
@@ -866,7 +865,7 @@ namespace NClass.GUI
             progressDownload.ShowDialog();
 
             double latestVersion = Convert.ToDouble(latest.TagName.Replace("v", ""), System.Globalization.CultureInfo.InvariantCulture);
-            double programVersion = Convert.ToDouble(Program.GetVersionString().Split(' ')[1], System.Globalization.CultureInfo.InvariantCulture);
+            double programVersion = Convert.ToDouble(Program.CurrentVersion.ToString(2), System.Globalization.CultureInfo.InvariantCulture);
 
             if (latestVersion > programVersion)
             {

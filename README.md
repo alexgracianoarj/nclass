@@ -18,7 +18,7 @@ Design your application with just a few clicks - the main goal is to provide a s
 * Multilingual user interface;
 * Mono support for non-Windows users.
 
-## New Features (v2.09)
+## New Features (v2.10)
 
 * Automatic properties in the C# source code generation;
 * C# source code documentation with XML comments.

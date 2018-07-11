@@ -97,10 +97,13 @@ namespace NClass.GUI
             classType.AccessModifier = AccessModifier.Public;
             classType.Modifier = ClassModifier.None;
             classType.Name = name;
+            classType.HbmTableName = table.Name;
 
             foreach (var column in table.Columns)
             {
-                classType.AddProperty().InitFromString(CreateProperty(column, classType));
+                Property property = classType.AddProperty();
+                property.InitFromString(CreateProperty(column, classType));
+                property.HbmColumnName = column.Name;
             }
 
             return classType;

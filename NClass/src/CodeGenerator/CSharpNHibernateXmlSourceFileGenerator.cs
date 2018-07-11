@@ -15,6 +15,10 @@ namespace NClass.CodeGenerator
         List<string> entities;
         List<string> properties;
 
+        bool useLazyLoading;
+        bool useLowercaseUnderscored;
+        string idGeneratorType;
+
 		/// <exception cref="NullReferenceException">
 		/// <paramref name="type"/> is null.
 		/// </exception>
@@ -45,9 +49,9 @@ namespace NClass.CodeGenerator
                     properties.Add(operation.Name);
             }
 
-            bool useLazyLoading = Settings.Default.UseLazyLoading;
-            bool delByUnderscore = Settings.Default.UseLowercaseAndUnderscoredWordsInDb;
-            string idGeneratorType = EnumExtensions.GetDescription(Settings.Default.IdGeneratorType);
+            useLazyLoading = Settings.Default.UseLazyLoading;
+            useLowercaseUnderscored = Settings.Default.UseLowercaseAndUnderscoredWordsInDb;
+            idGeneratorType = EnumExtensions.GetDescription(Settings.Default.IdGeneratorType);
 
             XmlWriterSettings settings = new XmlWriterSettings();
             settings.Indent = true;
@@ -70,9 +74,11 @@ namespace NClass.CodeGenerator
                 xml.WriteAttributeString("table", 
                     string.Format("`{0}`",
                     PrefixedText(
-                    delByUnderscore 
-                    ? LowercaseAndUnderscoredWord(_class.Name) 
-                    : _class.Name
+                        useLowercaseUnderscored 
+                        ? LowercaseAndUnderscoredWord(_class.Name) 
+                        : string.IsNullOrEmpty(_class.HbmTableName)
+                        ? _class.Name
+                        : _class.HbmTableName
                     )));
                 xml.WriteAttributeString("lazy", 
                     useLazyLoading 
@@ -112,9 +118,12 @@ namespace NClass.CodeGenerator
                         xml.WriteAttributeString("name", id.Name);
                         xml.WriteAttributeString("column",
                             string.Format("`{0}`",
-                            delByUnderscore
-                            ? LowercaseAndUnderscoredWord(id.Name)
-                            : id.Name));
+                                useLowercaseUnderscored
+                                ? LowercaseAndUnderscoredWord(id.Name)
+                                : string.IsNullOrEmpty(id.HbmColumnName)
+                                ? id.Name
+                                : id.HbmColumnName
+                            ));
                         xml.WriteAttributeString("class", id.Type);
                         xml.WriteEndElement();
                     }
@@ -137,9 +146,12 @@ namespace NClass.CodeGenerator
                             xml.WriteAttributeString("name", property.Name);
                             xml.WriteAttributeString("column",
                                 string.Format("`{0}`",
-                                delByUnderscore
-                                ? LowercaseAndUnderscoredWord(property.Name)
-                                : property.Name));
+                                    useLowercaseUnderscored
+                                    ? LowercaseAndUnderscoredWord(property.Name)
+                                    : string.IsNullOrEmpty(property.HbmColumnName)
+                                    ? property.Name
+                                    : property.HbmColumnName
+                                ));
                             xml.WriteAttributeString("type", property.Type);
                             xml.WriteAttributeString("generator", idGeneratorType);
                             xml.WriteEndElement();
@@ -151,9 +163,12 @@ namespace NClass.CodeGenerator
                             xml.WriteAttributeString("class", property.Type);
                             xml.WriteAttributeString("column",
                                 string.Format("`{0}`",
-                                delByUnderscore
-                                ? LowercaseAndUnderscoredWord(property.Name)
-                                : property.Name));
+                                    useLowercaseUnderscored
+                                    ? LowercaseAndUnderscoredWord(property.Name)
+                                    : string.IsNullOrEmpty(property.HbmColumnName)
+                                    ? property.Name
+                                    : property.HbmColumnName
+                                ));
                             xml.WriteAttributeString("not-null", "true");
                             xml.WriteEndElement();
                         }
@@ -163,9 +178,12 @@ namespace NClass.CodeGenerator
                             xml.WriteAttributeString("name", property.Name);
                             xml.WriteAttributeString("column",
                                 string.Format("`{0}`",
-                                delByUnderscore
-                                ? LowercaseAndUnderscoredWord(property.Name)
-                                : property.Name));
+                                    useLowercaseUnderscored
+                                    ? LowercaseAndUnderscoredWord(property.Name)
+                                    : string.IsNullOrEmpty(property.HbmColumnName)
+                                    ? property.Name
+                                    : property.HbmColumnName
+                                ));
                             xml.WriteAttributeString("type", property.Type);
                             xml.WriteAttributeString("not-null", "true");
                             xml.WriteEndElement();

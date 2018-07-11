@@ -283,5 +283,7 @@ namespace NClass.Core
 		{
 			return Name + ": " + Signature;
 		}
+
+        public string HbmTableName { get; set; }
 	}
 }

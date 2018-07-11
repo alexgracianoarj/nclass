@@ -105,7 +105,7 @@ namespace NClass.CodeGenerator
 
         public override string FormatText(string text)
         {
-            return Prefix + base.FormatText(text);
+            return Prefix + text;
         }
     }
 }

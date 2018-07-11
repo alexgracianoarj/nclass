@@ -95,16 +95,25 @@ namespace NClass.CodeGenerator
             WriteLine("{");
             IndentLevel++;
 
-            WriteLine(string.Format("Table(\"`{0}`\");",
-                PrefixedText(
-                useLowercaseUnderscored
-                ? LowercaseAndUnderscoredWord(_class.Name)
-                : _class.Name
-                )));
-            WriteLine(string.Format("Lazy({0});", 
-                useLazyLoading
-                ? "true"
-                : "false"));
+            WriteLine(
+                string.Format(
+                    "Table(\"`{0}`\");",
+                    PrefixedText(
+                        useLowercaseUnderscored
+                        ? LowercaseAndUnderscoredWord(_class.Name)
+                        : string.IsNullOrEmpty(_class.HbmTableName)
+                        ? _class.Name
+                        : _class.HbmTableName
+                    )
+                ));
+
+            WriteLine(
+                string.Format(
+                    "Lazy({0});", 
+                    useLazyLoading
+                    ? "true"
+                    : "false"
+                ));
 
             List<Property> compositeId = new List<Property>();
 
@@ -165,12 +174,15 @@ namespace NClass.CodeGenerator
             {
                 WriteLine(
                     string.Format(
-                    "map.ManyToOne(x => x.{0}, m => {{ m.Class(typeof({1})); m.Column(\"`{2}`\"); }}); ",
-                    id.Name,
-                    id.Type,
-                    (useLowercaseUnderscored)
-                    ? LowercaseAndUnderscoredWord(id.Name)
-                    : id.Name));
+                        "map.ManyToOne(x => x.{0}, m => {{ m.Class(typeof({1})); m.Column(\"`{2}`\"); }}); ",
+                        id.Name,
+                        id.Type,
+                        useLowercaseUnderscored
+                        ? LowercaseAndUnderscoredWord(id.Name)
+                        : string.IsNullOrEmpty(id.HbmColumnName)
+                        ? id.Name
+                        : id.HbmColumnName
+                    ));
             }
             IndentLevel--;
             WriteLine("});");
@@ -182,35 +194,41 @@ namespace NClass.CodeGenerator
             {
                 WriteLine(
                     string.Format(
-                    "Id(x => x.{0}, map => {{ map.Column(\"`{1}`\"); map.Generator(Generators.{2}); }});", 
-                    property.Name, 
-                    useLowercaseUnderscored
-                    ? LowercaseAndUnderscoredWord(property.Name)
-                    : property.Name,
-                    idGeneratorType
+                        "Id(x => x.{0}, map => {{ map.Column(\"`{1}`\"); map.Generator(Generators.{2}); }});", 
+                        property.Name, 
+                        useLowercaseUnderscored
+                        ? LowercaseAndUnderscoredWord(property.Name)
+                        : string.IsNullOrEmpty(property.HbmColumnName)
+                        ? property.Name
+                        : property.HbmColumnName,
+                        idGeneratorType
                     ));
             }
             else if (entities.Contains(property.Type))
             {
                 WriteLine(
                     string.Format(
-                    "ManyToOne(x => x.{0}, map => {{ map.Class(typeof({1})); map.Column(\"`{2}`\"); }});",
-                    property.Name, 
-                    property.Type,
-                    useLowercaseUnderscored
-                    ? LowercaseAndUnderscoredWord(property.Name)
-                    : property.Name
+                        "ManyToOne(x => x.{0}, map => {{ map.Class(typeof({1})); map.Column(\"`{2}`\"); }});",
+                        property.Name, 
+                        property.Type,
+                        useLowercaseUnderscored
+                        ? LowercaseAndUnderscoredWord(property.Name)
+                        : string.IsNullOrEmpty(property.HbmColumnName)
+                        ? property.Name
+                        : property.HbmColumnName
                     ));
             }
             else
             {
                 WriteLine(
                     string.Format(
-                    "Property(x => x.{0}, map => {{ map.Column(\"`{1}`\"); map.NotNullable(true); }});", 
-                    property.Name, 
-                    useLowercaseUnderscored
-                    ? LowercaseAndUnderscoredWord(property.Name)
-                    : property.Name
+                        "Property(x => x.{0}, map => {{ map.Column(\"`{1}`\"); map.NotNullable(true); }});", 
+                        property.Name, 
+                        useLowercaseUnderscored
+                        ? LowercaseAndUnderscoredWord(property.Name)
+                        : string.IsNullOrEmpty(property.HbmColumnName)
+                        ? property.Name
+                        : property.HbmColumnName
                     ));
             }
         }

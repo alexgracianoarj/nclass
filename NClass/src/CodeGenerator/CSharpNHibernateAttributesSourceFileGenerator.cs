@@ -99,16 +99,19 @@ namespace NClass.CodeGenerator
         {
             if (type is ClassType)
             {
-                WriteLine(string.Format(
-                    "[Class(Table = \"`{0}`\", Lazy = {1})]",
-                    PrefixedText(
-                    useLowercaseUnderscored
-                    ? LowercaseAndUnderscoredWord(type.Name)
-                    : type.Name
-                    ),
-                    useLazyLoading
-                    ? "true"
-                    : "false"
+                WriteLine(
+                    string.Format(
+                        "[Class(Table = \"`{0}`\", Lazy = {1})]",
+                        PrefixedText(
+                            useLowercaseUnderscored
+                            ? LowercaseAndUnderscoredWord(type.Name)
+                            : string.IsNullOrEmpty(type.HbmTableName)
+                            ? type.Name
+                            : type.HbmTableName
+                        ),
+                        useLazyLoading
+                        ? "true"
+                        : "false"
                     ));
             }
 
@@ -204,14 +207,17 @@ namespace NClass.CodeGenerator
             {
                 WriteLine(
                     string.Format(
-                    "[KeyManyToOne({0}, Name = \"{1}\", Column = \"`{2}`\", Class = \"{3}\", ClassType = typeof({4}))]",
-                    position,
-                    id.Name,
-                    useLowercaseUnderscored
-                    ? LowercaseAndUnderscoredWord(id.Name)
-                    : id.Name,
-                    id.Type,
-                    id.Type));
+                        "[KeyManyToOne({0}, Name = \"{1}\", Column = \"`{2}`\", Class = \"{3}\", ClassType = typeof({4}))]",
+                        position,
+                        id.Name,
+                        useLowercaseUnderscored
+                        ? LowercaseAndUnderscoredWord(id.Name)
+                        : string.IsNullOrEmpty(id.HbmColumnName)
+                        ? id.Name
+                        : id.HbmColumnName,
+                        id.Type,
+                        id.Type
+                    ));
                 position++;
             }
 
@@ -282,37 +288,48 @@ namespace NClass.CodeGenerator
             {
                 WriteLine(
                     string.Format(
-                    "[Id(0, Name = \"{0}\", Column = \"`{1}`\")]",
-                    operation.Name,
-                    useLowercaseUnderscored
-                    ? LowercaseAndUnderscoredWord(operation.Name)
-                    : operation.Name));
+                        "[Id(0, Name = \"{0}\", Column = \"`{1}`\")]",
+                        operation.Name,
+                        useLowercaseUnderscored
+                        ? LowercaseAndUnderscoredWord(operation.Name)
+                        : string.IsNullOrEmpty(operation.HbmColumnName)
+                        ? operation.Name
+                        : operation.HbmColumnName
+                    ));
+
                 WriteLine(
                     string.Format(
-                    "[Generator(1, Class = \"{0}\")]",
-                    idGeneratorType));
+                        "[Generator(1, Class = \"{0}\")]",
+                        idGeneratorType
+                    ));
             }
             else if (entities.Contains(operation.Type))
             {
                 WriteLine(
                     string.Format(
-                    "[ManyToOne(0, Name = \"{0}\", Column = \"`{1}`\", NotNull = true, ClassType = typeof({2}))]", 
-                    operation.Name,
-                    useLowercaseUnderscored
-                    ? LowercaseAndUnderscoredWord(operation.Name)
-                    : operation.Name,
-                    operation.Type));
+                        "[ManyToOne(0, Name = \"{0}\", Column = \"`{1}`\", NotNull = true, ClassType = typeof({2}))]", 
+                        operation.Name,
+                        useLowercaseUnderscored
+                        ? LowercaseAndUnderscoredWord(operation.Name)
+                        : string.IsNullOrEmpty(operation.HbmColumnName)
+                        ? operation.Name
+                        : operation.HbmColumnName,
+                        operation.Type
+                    ));
                 WriteLine("[Key(1)]");
             }
             else
             {
                 WriteLine(
                     string.Format(
-                    "[Property(Name = \"{0}\", Column = \"`{1}`\", NotNull = true)]", 
-                    operation.Name,
-                    useLowercaseUnderscored
-                    ? LowercaseAndUnderscoredWord(operation.Name)
-                    : operation.Name));
+                        "[Property(Name = \"{0}\", Column = \"`{1}`\", NotNull = true)]", 
+                        operation.Name,
+                        useLowercaseUnderscored
+                        ? LowercaseAndUnderscoredWord(operation.Name)
+                        : string.IsNullOrEmpty(operation.HbmColumnName)
+                        ? operation.Name
+                        : operation.HbmColumnName
+                    ));
             }
         }
 
