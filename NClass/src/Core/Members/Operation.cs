@@ -344,11 +344,5 @@ namespace NClass.Core
 
 			return true;
 		}
-
-        public string HbmColumnName 
-        { 
-            get; 
-            set; 
-        }
 	}
 }

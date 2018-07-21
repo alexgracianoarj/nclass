@@ -18,7 +18,7 @@ Design your application with just a few clicks - the main goal is to provide a s
 * Multilingual user interface;
 * Mono support for non-Windows users.
 
-## New Features (v2.10)
+## New Features (v2.11)
 
 * Automatic properties in the C# source code generation;
 * C# source code documentation with XML comments.
@@ -43,6 +43,18 @@ Design your application with just a few clicks - the main goal is to provide a s
 ## Installation
 
 Download the install file in the latest [release](https://github.com/alexgracianoarj/nclass/releases), run it, and follow the steps.
+
+## Screenshots
+
+![image](./screenshots/connection.png)
+![image](./screenshots/database_objects.png)
+![image](./screenshots/northwind.png)
+![image](./screenshots/northwind_2.png)
+![image](./screenshots/class_editor.png)
+![image](./screenshots/member_editor_1.png)
+![image](./screenshots/member_editor_2.png)
+![image](./screenshots/template_editor.png)
+![image](./screenshots/generate_code.png)
 
 ## Donation
 

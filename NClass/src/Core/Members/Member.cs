@@ -244,6 +244,35 @@ namespace NClass.Core
 			name = member.name;
 			type = member.type;
 			access = member.access;
+            hbmColumnName = member.hbmColumnName;
 		}
-	}
+
+        private string hbmColumnName;
+
+        /// <exception cref="BadSyntaxException">
+        /// The <paramref name="value"/> does not fit to the syntax.
+        /// </exception>
+        public virtual string HbmColumnName
+        {
+            get
+            {
+                return hbmColumnName;
+            }
+            set
+            {
+                if((new System.Text.RegularExpressions.Regex("[^a-zA-Z0-9_ ]").IsMatch(value)))
+                {
+                    throw new BadSyntaxException("Invalid HBM Column Name");
+                }
+                else
+                {
+                    if (hbmColumnName != value)
+                    {
+                        hbmColumnName = value;
+                        Changed();
+                    }
+                }
+            }
+        }
+    }
 }

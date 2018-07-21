@@ -27,7 +27,8 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
 
 			// Set this in the constructor instead of the designer so that the designer doesn't give an error about
 			// using the parent's TextChanged method.
-			this.txtStereotype.TextChanged += new EventHandler(base.textBox_TextChanged);
+            this.txtStereotype.TextChanged += new EventHandler(base.textBox_TextChanged);
+            this.txtHbmTableName.TextChanged += new EventHandler(base.textBox_TextChanged);
 		}
 
 		/// <summary>
@@ -72,9 +73,11 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
 
 			CompositeType type = Shape.CompositeType;
 
-			int cursorPosition = txtStereotype.SelectionStart;
+            int cursorPositionStereotype = txtStereotype.SelectionStart;
+            int cursorPositionHbmTable = txtHbmTableName.SelectionStart;
 
-			txtStereotype.Text = type.Stereotype;
+            txtStereotype.Text = type.Stereotype;
+            txtHbmTableName.Text = type.HbmTableName;
 
 			// Remove the angled characters when the stereotype is displayed in the editor.
 			if (!string.IsNullOrEmpty(txtStereotype.Text))
@@ -82,7 +85,8 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
 				txtStereotype.Text = txtStereotype.Text.Replace("«", "").Replace("»", "");
 			}
 
-			txtStereotype.SelectionStart = cursorPosition;
+            txtStereotype.SelectionStart = cursorPositionStereotype;
+            txtHbmTableName.SelectionStart = cursorPositionHbmTable;
 
 			ResumeLayout();
 		}
@@ -95,6 +99,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
 			base.ValidateData();
 
 			ValidateStereotype();
+            ValidateHbmTableName();
 
 			SetError(null);
 		}
@@ -154,11 +159,11 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
 		/// </summary>
 		private void ExpandAdvancedOptions()
 		{
-			this.Height = pnlAdvancedOptions.Bottom + pnlAdvancedOptions.Margin.Bottom;
+            this.Height = pnlAdvancedOptionsHbmTable.Bottom + pnlAdvancedOptionsHbmTable.Margin.Bottom;
 
 			toolAdvancedOptions.Image = Properties.Resources.CollapseSingle;
-
-			isAdvancedOptionsExpanded = true;
+			
+            isAdvancedOptionsExpanded = true;
 		}
 
 		/// <summary>
@@ -191,5 +196,47 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
 
 			Refresh();
 		}
+
+        private void borderedTextBox1_Validating(object sender, CancelEventArgs e)
+        {
+            ValidateHbmTableName();
+        }
+
+        /// <summary>
+        /// Validates the stereotype that has been entered into the stereotype textbox.
+        /// </summary>
+        /// <returns>True if the stereotype is valid, false if it is not.</returns>
+        private bool ValidateHbmTableName()
+        {
+            if (NeedValidation)
+            {
+                try
+                {
+                    if (string.IsNullOrEmpty(txtHbmTableName.Text))
+                    {
+                        Shape.CompositeType.HbmTableName = null;
+                    }
+                    else
+                    {
+                        if ((new System.Text.RegularExpressions.Regex("[^a-zA-Z0-9_ ]").IsMatch(txtHbmTableName.Text)))
+                            throw new BadSyntaxException("Invalid HBM Table Name");
+
+                        Shape.CompositeType.HbmTableName = txtHbmTableName.Text;
+                    }
+                    RefreshValues();
+                }
+                catch (BadSyntaxException ex)
+                {
+                    SetError(ex.Message);
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        private void borderedTextBox1_KeyDown(object sender, KeyEventArgs e)
+        {
+            HandleCompositeTypeTextBoxKeyDown(ValidateHbmTableName, e.KeyCode, e.Modifiers);
+        }
 	}
 }

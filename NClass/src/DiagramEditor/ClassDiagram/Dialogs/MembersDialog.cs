@@ -304,6 +304,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Dialogs
 			cboType.Enabled = (member != null && !member.IsTypeReadonly);
 			cboAccess.Enabled = (member != null && member.IsAccessModifiable);
 			txtInitialValue.Enabled = (member is Field);
+            txtHbmColumnName.Enabled = (member is Property);
 			toolSortByKind.Enabled = true;
 			toolSortByAccess.Enabled = true;
 			toolSortByName.Enabled = true;
@@ -317,6 +318,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Dialogs
 			txtSyntax.Text = member.ToString();
 			txtName.Text = member.Name;
 			cboType.Text = member.Type;
+            txtHbmColumnName.Text = member.HbmColumnName;
 
 			// Access selection
 			cboAccess.SelectedItem = member.Language.ValidAccessModifiers[member.AccessModifier];
@@ -358,7 +360,8 @@ namespace NClass.DiagramEditor.ClassDiagram.Dialogs
 			errorProvider.SetError(txtSyntax, null);
 			errorProvider.SetError(txtName, null);
 			errorProvider.SetError(cboType, null);
-			errorProvider.SetError(cboAccess, null);
+            errorProvider.SetError(cboAccess, null);
+            errorProvider.SetError(txtHbmColumnName, null);
 			error = false;
 		}
 
@@ -1062,8 +1065,29 @@ namespace NClass.DiagramEditor.ClassDiagram.Dialogs
 			this.Close();
 		}
 
-		private void txtSyntax_KeyDown(object sender, KeyEventArgs e)
-		{
-		}
+        private void txtHbmColumnName_Validating(object sender, CancelEventArgs e)
+        {
+            if (!locked && member != null)
+            {
+                try
+                {
+                    string oldValue = member.HbmColumnName;
+
+                    member.HbmColumnName = txtHbmColumnName.Text;
+                    errorProvider.SetError(txtHbmColumnName, null);
+                    error = false;
+
+                    RefreshValues();
+                    if (oldValue != txtHbmColumnName.Text)
+                        OnContentsChanged(EventArgs.Empty);
+                }
+                catch (BadSyntaxException ex)
+                {
+                    e.Cancel = true;
+                    errorProvider.SetError(txtHbmColumnName, ex.Message);
+                    error = true;
+                }
+            }
+        }
 	}
 }

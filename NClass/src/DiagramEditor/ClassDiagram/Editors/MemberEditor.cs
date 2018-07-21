@@ -66,6 +66,10 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
 			if (shape.ActiveMember != null)
 			{
 				Member member = shape.ActiveMember;
+
+                lblHbmColumnName.Enabled = (member is Property);
+                txtHbmColumnName.Enabled = (member is Property);
+
 				SuspendLayout();
 				RefreshModifiers();
 				Language language = shape.CompositeType.Language;
@@ -74,6 +78,10 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
 				txtDeclaration.Text = member.ToString();
 				txtDeclaration.SelectionStart = cursorPosition;
 				txtDeclaration.ReadOnly = (member.MemberType == MemberType.Destructor);
+
+                int cursorPositionHbmColumn = txtHbmColumnName.SelectionStart;
+                txtHbmColumnName.Text = member.HbmColumnName;
+                txtHbmColumnName.SelectionStart = cursorPositionHbmColumn;
 				
 				SetError(null);
 				needValidation = false;
@@ -501,6 +509,24 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
 			return true;
 		}
 
+        private bool ValidateHbmColumnName()
+        {
+            if (needValidation && shape.ActiveMember != null)
+            {
+                try
+                {
+                    shape.ActiveMember.HbmColumnName = txtHbmColumnName.Text;
+                    RefreshValues();
+                }
+                catch (BadSyntaxException ex)
+                {
+                    SetError(ex.Message);
+                    return false;
+                }
+            }
+            return true;
+        }
+
 		private void SetError(string message)
 		{
 			if (MonoHelper.IsRunningOnMono && MonoHelper.IsOlderVersionThan("2.4"))
@@ -600,7 +626,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
 
 		private void SelectPrevious()
 		{
-			if (ValidateDeclarationLine())
+            if (ValidateDeclarationLine() && ValidateHbmColumnName())
 			{
 				shape.SelectPrevious();
 			}
@@ -608,7 +634,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
 
 		private void SelectNext()
 		{
-			if (ValidateDeclarationLine())
+            if (ValidateDeclarationLine() && ValidateHbmColumnName())
 			{
 				shape.SelectNext();
 			}
@@ -616,7 +642,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
 
 		private void MoveUp()
 		{
-			if (ValidateDeclarationLine())
+			if (ValidateDeclarationLine() && ValidateHbmColumnName())
 			{
 				shape.MoveUp();
 			}
@@ -624,7 +650,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
 
 		private void MoveDown()
 		{
-			if (ValidateDeclarationLine())
+            if (ValidateDeclarationLine() && ValidateHbmColumnName())
 			{
 				shape.MoveDown();
 			}
@@ -706,6 +732,76 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
 			}
 		}
 
+        private void txtHbmColumnName_KeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                case Keys.Enter:
+                    if (e.Modifiers == Keys.Control || e.Modifiers == Keys.Shift)
+                        OpenNewMemberDropDown();
+                    else
+                        ValidateHbmColumnName();
+                    e.Handled = true;
+                    break;
+
+                case Keys.Escape:
+                    needValidation = false;
+                    shape.HideEditor();
+                    e.Handled = true;
+                    break;
+
+                case Keys.Up:
+                    if (e.Shift || e.Control)
+                        MoveUp();
+                    else
+                        SelectPrevious();
+                    e.Handled = true;
+                    break;
+
+                case Keys.Down:
+                    if (e.Shift || e.Control)
+                        MoveDown();
+                    else
+                        SelectNext();
+                    e.Handled = true;
+                    break;
+            }
+
+            if (e.Modifiers == (Keys.Control | Keys.Shift))
+            {
+                switch (e.KeyCode)
+                {
+                    case Keys.A:
+                        AddNewMember();
+                        break;
+
+                    case Keys.F:
+                        AddNewMember(MemberType.Field);
+                        break;
+
+                    case Keys.M:
+                        AddNewMember(MemberType.Method);
+                        break;
+
+                    case Keys.C:
+                        AddNewMember(MemberType.Constructor);
+                        break;
+
+                    case Keys.D:
+                        AddNewMember(MemberType.Destructor);
+                        break;
+
+                    case Keys.P:
+                        AddNewMember(MemberType.Property);
+                        break;
+
+                    case Keys.E:
+                        AddNewMember(MemberType.Event);
+                        break;
+                }
+            }
+        }
+
 		private void OpenNewMemberDropDown()
 		{
 			toolNewMember.ShowDropDown();
@@ -747,6 +843,16 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
 		{
 			ValidateDeclarationLine();
 		}
+
+        private void txtHbmColumnName_TextChanged(object sender, EventArgs e)
+        {
+            needValidation = true;
+        }
+
+        private void txtHbmColumnName_Validating(object sender, CancelEventArgs e)
+        {
+            ValidateHbmColumnName();
+        }
 
 		private void toolPublic_Click(object sender, EventArgs e)
 		{

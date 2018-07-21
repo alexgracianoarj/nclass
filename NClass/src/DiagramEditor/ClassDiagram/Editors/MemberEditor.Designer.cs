@@ -66,7 +66,9 @@
 			this.toolNewEvent = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolNewConstructor = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolNewDestructor = new System.Windows.Forms.ToolStripMenuItem();
-			this.txtDeclaration = new NClass.DiagramEditor.ClassDiagram.Editors.BorderedTextBox();
+            this.txtDeclaration = new NClass.DiagramEditor.ClassDiagram.Editors.BorderedTextBox();
+            this.lblHbmColumnName = new System.Windows.Forms.Label();
+            this.txtHbmColumnName = new NClass.DiagramEditor.ClassDiagram.Editors.BorderedTextBox();
 			this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
 			this.toolStrip.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize) (this.errorProvider)).BeginInit();
@@ -429,9 +431,7 @@
 			// 
 			// txtDeclaration
 			// 
-			this.txtDeclaration.AcceptsTab = true;
-			this.txtDeclaration.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
+			this.txtDeclaration.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left))));
 			this.txtDeclaration.Location = new System.Drawing.Point(4, 28);
 			this.txtDeclaration.Name = "txtDeclaration";
 			this.txtDeclaration.Padding = new System.Windows.Forms.Padding(1);
@@ -442,6 +442,29 @@
 			this.txtDeclaration.TextChanged += new System.EventHandler(this.txtDeclaration_TextChanged);
 			this.txtDeclaration.Validating += new System.ComponentModel.CancelEventHandler(this.txtDeclaration_Validating);
 			this.txtDeclaration.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtDeclaration_KeyDown);
+            // 
+            // lblHbmColumnName
+            // 
+            this.lblHbmColumnName.AutoSize = true;
+            this.lblHbmColumnName.Location = new System.Drawing.Point(2, 58);
+            this.lblHbmColumnName.Name = "lblHbmColumnName";
+            this.lblHbmColumnName.Size = new System.Drawing.Size(64, 13);
+            this.lblHbmColumnName.TabIndex = 10;
+            this.lblHbmColumnName.Text = "HBM Column:";
+            // 
+            // txtHbmColumnName
+            // 
+            this.txtHbmColumnName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left))));
+            this.txtHbmColumnName.Location = new System.Drawing.Point(74, 55);
+            this.txtHbmColumnName.Name = "txtHbmColumnName";
+            this.txtHbmColumnName.Padding = new System.Windows.Forms.Padding(1);
+            this.txtHbmColumnName.ReadOnly = false;
+            this.txtHbmColumnName.SelectionStart = 0;
+            this.txtHbmColumnName.Size = new System.Drawing.Size(252, 20);
+            this.txtHbmColumnName.TabIndex = 4;
+            this.txtHbmColumnName.TextChanged += new System.EventHandler(this.txtHbmColumnName_TextChanged);
+            this.txtHbmColumnName.Validating += new System.ComponentModel.CancelEventHandler(this.txtHbmColumnName_Validating);
+            this.txtHbmColumnName.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtHbmColumnName_KeyDown);
 			// 
 			// errorProvider
 			// 
@@ -449,10 +472,12 @@
 			// 
 			// MemberEditor
 			// 
-			this.Controls.Add(this.txtDeclaration);
+            this.Controls.Add(this.txtDeclaration);
+            this.Controls.Add(this.lblHbmColumnName);
+            this.Controls.Add(this.txtHbmColumnName);
 			this.Controls.Add(this.toolStrip);
 			this.Name = "MemberEditor";
-			this.Size = new System.Drawing.Size(330, 52);
+			this.Size = new System.Drawing.Size(330, 80);
 			this.toolStrip.ResumeLayout(false);
 			this.toolStrip.PerformLayout();
 			((System.ComponentModel.ISupportInitialize) (this.errorProvider)).EndInit();
@@ -491,7 +516,9 @@
 		private System.Windows.Forms.ToolStripMenuItem toolNewMethod;
 		private System.Windows.Forms.ToolStripMenuItem toolNewField;
 		private System.Windows.Forms.ToolStripMenuItem toolNewProperty;
-		private BorderedTextBox txtDeclaration;
+        private BorderedTextBox txtDeclaration;
+        private System.Windows.Forms.Label lblHbmColumnName;
+        private BorderedTextBox txtHbmColumnName;
 		private System.Windows.Forms.ToolStripMenuItem toolDefault;
 		private System.Windows.Forms.ToolStripDropDownButton toolFieldModifiers;
 		private System.Windows.Forms.ToolStripMenuItem toolFieldNone;
