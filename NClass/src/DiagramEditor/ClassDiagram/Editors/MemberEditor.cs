@@ -67,8 +67,10 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
 			{
 				Member member = shape.ActiveMember;
 
-                lblHbmColumnName.Enabled = (member is Property);
-                txtHbmColumnName.Enabled = (member is Property);
+                lblNHMColumnName.Enabled = (member is Property);
+                txtNHMColumnName.Enabled = (member is Property);
+                chkIsPrimaryKey.Enabled = (member is Property);
+                chkIsNotNull.Enabled = (member is Property);
 
 				SuspendLayout();
 				RefreshModifiers();
@@ -79,9 +81,12 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
 				txtDeclaration.SelectionStart = cursorPosition;
 				txtDeclaration.ReadOnly = (member.MemberType == MemberType.Destructor);
 
-                int cursorPositionHbmColumn = txtHbmColumnName.SelectionStart;
-                txtHbmColumnName.Text = member.HbmColumnName;
-                txtHbmColumnName.SelectionStart = cursorPositionHbmColumn;
+                int cursorPositionHbmColumn = txtNHMColumnName.SelectionStart;
+                txtNHMColumnName.Text = member.NHMColumnName;
+                txtNHMColumnName.SelectionStart = cursorPositionHbmColumn;
+
+                chkIsPrimaryKey.Checked = member.IsPrimaryKey;
+                chkIsNotNull.Checked = member.IsNotNull;
 				
 				SetError(null);
 				needValidation = false;
@@ -488,6 +493,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
 		public override void ValidateData()
 		{
 			ValidateDeclarationLine();
+            ValidateNHMColumnName();
 			SetError(null);
 		}
 
@@ -509,13 +515,13 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
 			return true;
 		}
 
-        private bool ValidateHbmColumnName()
+        private bool ValidateNHMColumnName()
         {
             if (needValidation && shape.ActiveMember != null)
             {
                 try
                 {
-                    shape.ActiveMember.HbmColumnName = txtHbmColumnName.Text;
+                    shape.ActiveMember.NHMColumnName = txtNHMColumnName.Text;
                     RefreshValues();
                 }
                 catch (BadSyntaxException ex)
@@ -626,7 +632,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
 
 		private void SelectPrevious()
 		{
-            if (ValidateDeclarationLine() && ValidateHbmColumnName())
+            if (ValidateDeclarationLine() && ValidateNHMColumnName())
 			{
 				shape.SelectPrevious();
 			}
@@ -634,7 +640,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
 
 		private void SelectNext()
 		{
-            if (ValidateDeclarationLine() && ValidateHbmColumnName())
+            if (ValidateDeclarationLine() && ValidateNHMColumnName())
 			{
 				shape.SelectNext();
 			}
@@ -642,7 +648,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
 
 		private void MoveUp()
 		{
-			if (ValidateDeclarationLine() && ValidateHbmColumnName())
+			if (ValidateDeclarationLine() && ValidateNHMColumnName())
 			{
 				shape.MoveUp();
 			}
@@ -650,7 +656,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
 
 		private void MoveDown()
 		{
-            if (ValidateDeclarationLine() && ValidateHbmColumnName())
+            if (ValidateDeclarationLine() && ValidateNHMColumnName())
 			{
 				shape.MoveDown();
 			}
@@ -732,7 +738,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
 			}
 		}
 
-        private void txtHbmColumnName_KeyDown(object sender, KeyEventArgs e)
+        private void txtNHMColumnName_KeyDown(object sender, KeyEventArgs e)
         {
             switch (e.KeyCode)
             {
@@ -740,7 +746,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
                     if (e.Modifiers == Keys.Control || e.Modifiers == Keys.Shift)
                         OpenNewMemberDropDown();
                     else
-                        ValidateHbmColumnName();
+                        ValidateNHMColumnName();
                     e.Handled = true;
                     break;
 
@@ -844,14 +850,34 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
 			ValidateDeclarationLine();
 		}
 
-        private void txtHbmColumnName_TextChanged(object sender, EventArgs e)
+        private void txtNHMColumnName_TextChanged(object sender, EventArgs e)
         {
             needValidation = true;
         }
 
-        private void txtHbmColumnName_Validating(object sender, CancelEventArgs e)
+        private void txtNHMColumnName_Validating(object sender, CancelEventArgs e)
         {
-            ValidateHbmColumnName();
+            ValidateNHMColumnName();
+        }
+
+        private void chkIsPrimaryKey_CheckedChanged(object sender, EventArgs e)
+        {
+            if (shape.ActiveMember != null)
+            {
+                shape.ActiveMember.IsPrimaryKey = chkIsPrimaryKey.Checked;
+                RefreshValues();
+                txtNHMColumnName.Focus();
+            }
+        }
+
+        private void chkIsNotNull_CheckedChanged(object sender, EventArgs e)
+        {
+            if (shape.ActiveMember != null)
+            {
+                shape.ActiveMember.IsNotNull = chkIsNotNull.Checked;
+                RefreshValues();
+                txtNHMColumnName.Focus();
+            }
         }
 
 		private void toolPublic_Click(object sender, EventArgs e)

@@ -67,9 +67,11 @@
 			this.toolNewConstructor = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolNewDestructor = new System.Windows.Forms.ToolStripMenuItem();
             this.txtDeclaration = new NClass.DiagramEditor.ClassDiagram.Editors.BorderedTextBox();
-            this.lblHbmColumnName = new System.Windows.Forms.Label();
-            this.txtHbmColumnName = new NClass.DiagramEditor.ClassDiagram.Editors.BorderedTextBox();
-			this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
+            this.lblNHMColumnName = new System.Windows.Forms.Label();
+            this.txtNHMColumnName = new NClass.DiagramEditor.ClassDiagram.Editors.BorderedTextBox();
+            this.chkIsPrimaryKey = new System.Windows.Forms.CheckBox();
+            this.chkIsNotNull = new System.Windows.Forms.CheckBox();
+            this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
 			this.toolStrip.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize) (this.errorProvider)).BeginInit();
 			this.SuspendLayout();
@@ -93,7 +95,7 @@
 			this.toolStrip.Name = "toolStrip";
 			this.toolStrip.Padding = new System.Windows.Forms.Padding(5, 0, 1, 0);
 			this.toolStrip.Size = new System.Drawing.Size(330, 25);
-			this.toolStrip.TabIndex = 3;
+			this.toolStrip.TabIndex = 0;
 			this.toolStrip.Text = "toolStrip1";
 			// 
 			// toolVisibility
@@ -438,34 +440,55 @@
 			this.txtDeclaration.ReadOnly = false;
 			this.txtDeclaration.SelectionStart = 0;
 			this.txtDeclaration.Size = new System.Drawing.Size(322, 20);
-			this.txtDeclaration.TabIndex = 4;
+			this.txtDeclaration.TabIndex = 1;
 			this.txtDeclaration.TextChanged += new System.EventHandler(this.txtDeclaration_TextChanged);
 			this.txtDeclaration.Validating += new System.ComponentModel.CancelEventHandler(this.txtDeclaration_Validating);
 			this.txtDeclaration.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtDeclaration_KeyDown);
             // 
-            // lblHbmColumnName
+            // lblNHMColumnName
             // 
-            this.lblHbmColumnName.AutoSize = true;
-            this.lblHbmColumnName.Location = new System.Drawing.Point(2, 58);
-            this.lblHbmColumnName.Name = "lblHbmColumnName";
-            this.lblHbmColumnName.Size = new System.Drawing.Size(64, 13);
-            this.lblHbmColumnName.TabIndex = 10;
-            this.lblHbmColumnName.Text = "HBM Column:";
+            this.lblNHMColumnName.AutoSize = true;
+            this.lblNHMColumnName.Location = new System.Drawing.Point(1, 58);
+            this.lblNHMColumnName.Name = "lblNHMColumnName";
+            this.lblNHMColumnName.Size = new System.Drawing.Size(64, 13);
+            this.lblNHMColumnName.Text = "NHM Column:";
             // 
-            // txtHbmColumnName
+            // txtNHMColumnName
             // 
-            this.txtHbmColumnName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left))));
-            this.txtHbmColumnName.Location = new System.Drawing.Point(74, 55);
-            this.txtHbmColumnName.Name = "txtHbmColumnName";
-            this.txtHbmColumnName.Padding = new System.Windows.Forms.Padding(1);
-            this.txtHbmColumnName.ReadOnly = false;
-            this.txtHbmColumnName.SelectionStart = 0;
-            this.txtHbmColumnName.Size = new System.Drawing.Size(252, 20);
-            this.txtHbmColumnName.TabIndex = 4;
-            this.txtHbmColumnName.TextChanged += new System.EventHandler(this.txtHbmColumnName_TextChanged);
-            this.txtHbmColumnName.Validating += new System.ComponentModel.CancelEventHandler(this.txtHbmColumnName_Validating);
-            this.txtHbmColumnName.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtHbmColumnName_KeyDown);
-			// 
+            this.txtNHMColumnName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left))));
+            this.txtNHMColumnName.Location = new System.Drawing.Point(74, 55);
+            this.txtNHMColumnName.Name = "txtNHMColumnName";
+            this.txtNHMColumnName.Padding = new System.Windows.Forms.Padding(1);
+            this.txtNHMColumnName.ReadOnly = false;
+            this.txtNHMColumnName.SelectionStart = 0;
+            this.txtNHMColumnName.Size = new System.Drawing.Size(252, 20);
+            this.txtNHMColumnName.TabIndex = 2;
+            this.txtNHMColumnName.TextChanged += new System.EventHandler(this.txtNHMColumnName_TextChanged);
+            this.txtNHMColumnName.Validating += new System.ComponentModel.CancelEventHandler(this.txtNHMColumnName_Validating);
+            this.txtNHMColumnName.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtNHMColumnName_KeyDown);
+            // 
+            // chkIsPrimaryKey
+            //
+            this.chkIsPrimaryKey.AutoSize = true;
+            this.chkIsPrimaryKey.Location = new System.Drawing.Point(75, 80);
+            this.chkIsPrimaryKey.Name = "chkPrimaryKey";
+            this.chkIsPrimaryKey.Size = new System.Drawing.Size(60, 17);
+            this.chkIsPrimaryKey.TabIndex = 3;
+            this.chkIsPrimaryKey.Text = "Primary Key";
+            this.chkIsPrimaryKey.UseVisualStyleBackColor = true;
+            this.chkIsPrimaryKey.CheckedChanged += new System.EventHandler(this.chkIsPrimaryKey_CheckedChanged);
+            // 
+            // chkIsNotNull
+            // 
+            this.chkIsNotNull.AutoSize = true;
+            this.chkIsNotNull.Location = new System.Drawing.Point(160, 80);
+            this.chkIsNotNull.Name = "chkNotNull";
+            this.chkIsNotNull.Size = new System.Drawing.Size(60, 17);
+            this.chkIsNotNull.TabIndex = 4;
+            this.chkIsNotNull.Text = "Not Null";
+            this.chkIsNotNull.UseVisualStyleBackColor = true;
+            this.chkIsNotNull.CheckedChanged += new System.EventHandler(this.chkIsNotNull_CheckedChanged);
+            // 
 			// errorProvider
 			// 
 			this.errorProvider.ContainerControl = this;
@@ -473,11 +496,13 @@
 			// MemberEditor
 			// 
             this.Controls.Add(this.txtDeclaration);
-            this.Controls.Add(this.lblHbmColumnName);
-            this.Controls.Add(this.txtHbmColumnName);
+            this.Controls.Add(this.lblNHMColumnName);
+            this.Controls.Add(this.txtNHMColumnName);
+            this.Controls.Add(this.chkIsPrimaryKey);
+            this.Controls.Add(this.chkIsNotNull);
 			this.Controls.Add(this.toolStrip);
 			this.Name = "MemberEditor";
-			this.Size = new System.Drawing.Size(330, 80);
+			this.Size = new System.Drawing.Size(340, 100);
 			this.toolStrip.ResumeLayout(false);
 			this.toolStrip.PerformLayout();
 			((System.ComponentModel.ISupportInitialize) (this.errorProvider)).EndInit();
@@ -517,8 +542,10 @@
 		private System.Windows.Forms.ToolStripMenuItem toolNewField;
 		private System.Windows.Forms.ToolStripMenuItem toolNewProperty;
         private BorderedTextBox txtDeclaration;
-        private System.Windows.Forms.Label lblHbmColumnName;
-        private BorderedTextBox txtHbmColumnName;
+        private System.Windows.Forms.Label lblNHMColumnName;
+        private BorderedTextBox txtNHMColumnName;
+        private System.Windows.Forms.CheckBox chkIsPrimaryKey;
+        private System.Windows.Forms.CheckBox chkIsNotNull;
 		private System.Windows.Forms.ToolStripMenuItem toolDefault;
 		private System.Windows.Forms.ToolStripDropDownButton toolFieldModifiers;
 		private System.Windows.Forms.ToolStripMenuItem toolFieldNone;

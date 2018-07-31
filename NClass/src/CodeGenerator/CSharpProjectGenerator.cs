@@ -110,6 +110,17 @@ namespace NClass.CodeGenerator
                                 }
                             }
                         }
+                        else if (line.Contains("${Others}"))
+                        {
+                            foreach (string fileName in FileNames)
+                            {
+                                if (!(new Regex(@"\.hbm\.xml$|\.cs$").IsMatch(fileName)))
+                                {
+                                    string newLine = line.Replace("${Others}", fileName);
+                                    writer.WriteLine(newLine);
+                                }
+                            }
+                        }
 						else
 						{
 							writer.WriteLine(line);

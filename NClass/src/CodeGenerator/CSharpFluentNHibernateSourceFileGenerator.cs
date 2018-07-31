@@ -11,9 +11,6 @@ namespace NClass.CodeGenerator
     internal sealed class CSharpFluentNHibernateSourceFileGenerator 
         : SourceFileGenerator
     {
-        List<string> entities;
-        List<string> properties;
-
         bool useLazyLoading;
         bool useLowercaseUnderscored;
         string idGeneratorType;
@@ -33,21 +30,6 @@ namespace NClass.CodeGenerator
 
         protected override void WriteFileContent()
         {
-            entities = new List<string>();
-            foreach (IEntity entity in Model.Entities)
-            {
-                entities.Add(entity.Name);
-            }
-
-            ClassType _class = (ClassType)Type;
-
-            properties = new List<string>();
-            foreach (Operation operation in _class.Operations)
-            {
-                if (operation is Property)
-                    properties.Add(operation.Name);
-            }
-
             useLazyLoading = Settings.Default.UseLazyLoading;
             useLowercaseUnderscored = Settings.Default.UseLowercaseAndUnderscoredWordsInDb;
             idGeneratorType = Enum.GetName(typeof(IdGeneratorType), Settings.Default.IdGeneratorType);
@@ -55,7 +37,7 @@ namespace NClass.CodeGenerator
             WriteHeader();
             WriteUsings();
             OpenNamespace();
-            WriteClass(_class);
+            WriteClass((ClassType)Type);
             CloseNamespace();
         }
 
@@ -94,56 +76,24 @@ namespace NClass.CodeGenerator
                 PrefixedText(
                     useLowercaseUnderscored
                     ? LowercaseAndUnderscoredWord(_class.Name)
-                    : string.IsNullOrEmpty(_class.HbmTableName)
+                    : string.IsNullOrEmpty(_class.NHMTableName)
                     ? _class.Name
-                    : _class.HbmTableName
+                    : _class.NHMTableName
                 )));
 
             WriteLine(
                 useLazyLoading
                 ? "LazyLoad();"
-                : "Not.LazyLoad();");
+                : "Not.LazyLoad();"
+                );
 
-            List<Property> compositeId = new List<Property>();
+            List<Operation> ids = _class.Operations.Where(o => o is Property && o.IsPrimaryKey).ToList<Operation>();
 
-            int index = 0;
+            WriteIds(ids);
 
-            if (entities.Contains(_class.Operations.ToList()[0].Type))
+            foreach (var property in _class.Operations.Where(o => o is Property && !o.IsPrimaryKey).ToList<Operation>())
             {
-                for (; index <= (_class.Operations.Count() - 1); index++)
-                {
-                    if (_class.Operations.ToList()[index] is Property)
-                    {
-                        Property property = (Property)_class.Operations.ToList()[index];
-
-                        if (entities.Contains(property.Type))
-                        {
-                            compositeId.Add(property);
-                        }
-                        else
-                        {
-                            break;
-                        }
-                    }
-                }
-            }
-
-            if (compositeId.Count > 1)
-            {
-                WriteCompositeId(compositeId);
-            }
-            else
-            {
-                index = 0;
-            }
-
-            for (; index <= (_class.Operations.Count() - 1); index++)
-            {
-                if (_class.Operations.ToList()[index] is Property)
-                {
-                    Property property = (Property)_class.Operations.ToList()[index];
-                    WriteProperty(property);
-                }
+                WriteProperty((Property)property);
             }
 
             // Writing closing bracket of the type block
@@ -155,71 +105,96 @@ namespace NClass.CodeGenerator
             WriteLine("}");
         }
 
-        private void WriteCompositeId(List<Property> compositeId)
+        private void WriteIds(List<Operation> ids)
         {
-            WriteLine("CompositeId()");
-            IndentLevel++;
-            foreach (var id in compositeId)
+            if (ids.Count > 1)
             {
-                Write(
-                    string.Format(
-                        ".KeyReference(x => x.{0}, \"`{1}`\")",
-                        id.Name,
-                        useLowercaseUnderscored
-                        ? LowercaseAndUnderscoredWord(id.Name)
-                        : string.IsNullOrEmpty(id.HbmColumnName)
-                        ? id.Name
-                        : id.HbmColumnName
-                    ));
+                WriteLine("CompositeId()");
+                IndentLevel++;
+                foreach (var id in ids)
+                {
+                    if (Model.Entities.Where(e => e.Name == id.Type).Count() > 0)
+                    {
+                        Write(
+                            string.Format(
+                                ".KeyReference(x => x.{0}, \"`{1}`\")",
+                                id.Name,
+                                useLowercaseUnderscored
+                                ? LowercaseAndUnderscoredWord(id.Name)
+                                : string.IsNullOrEmpty(id.NHMColumnName)
+                                ? id.Name
+                                : id.NHMColumnName
+                            ));
+                    }
+                    else
+                    {
+                        Write(
+                            string.Format(
+                                ".KeyProperty(x => x.{0}, \"`{1}`\")",
+                                id.Name,
+                                useLowercaseUnderscored
+                                ? LowercaseAndUnderscoredWord(id.Name)
+                                : string.IsNullOrEmpty(id.NHMColumnName)
+                                ? id.Name
+                                : id.NHMColumnName
+                            ));
+                    }
 
-                if (id != compositeId.Last())
-                    WriteLine("", false);
-                else
-                    WriteLine(";", false);
+                    if (id != ids.Last())
+                        WriteLine("", false);
+                    else
+                        WriteLine(";", false);
+                }
+                IndentLevel--;
             }
-            IndentLevel--;
+            else
+            {
+                WriteLine(
+                    string.Format(
+                        "Id(x => x.{0}).Column(\"`{1}`\").GeneratedBy.{2}();",
+                        ids[0].Name,
+                        useLowercaseUnderscored
+                        ? LowercaseAndUnderscoredWord(ids[0].Name)
+                        : string.IsNullOrEmpty(ids[0].NHMColumnName)
+                        ? ids[0].Name
+                        : ids[0].NHMColumnName,
+                        idGeneratorType
+                    ));
+            }
         }
 
         private void WriteProperty(Property property)
         {
-            if(property.Name == properties[0])
+            if (Model.Entities.Where(e => e.Name == property.Type).Count() > 0)
             {
                 WriteLine(
                     string.Format(
-                        "Id(x => x.{0}).Column(\"`{1}`\").GeneratedBy.{2}();", 
-                        property.Name, 
-                        useLowercaseUnderscored
-                        ? LowercaseAndUnderscoredWord(property.Name)
-                        : string.IsNullOrEmpty(property.HbmColumnName)
-                        ? property.Name
-                        : property.HbmColumnName,
-                        idGeneratorType
-                    ));
-            }
-            else if(entities.Contains(property.Type))
-            {
-                WriteLine(
-                    string.Format(
-                        "References(x => x.{0}).Column(\"`{1}`\").Not.Nullable();",
+                        "References(x => x.{0}).Column(\"`{1}`\"){2}.Nullable();",
                         property.Name,
                         useLowercaseUnderscored
                         ? LowercaseAndUnderscoredWord(property.Name)
-                        : string.IsNullOrEmpty(property.HbmColumnName)
+                        : string.IsNullOrEmpty(property.NHMColumnName)
                         ? property.Name
-                        : property.HbmColumnName
+                        : property.NHMColumnName,
+                        property.IsNotNull
+                        ? ".Not"
+                        : ""
                     ));
             }
             else
             {
                 WriteLine(
                     string.Format(
-                        "Map(x => x.{0}).Column(\"`{1}`\").Not.Nullable();",
+                        "Map(x => x.{0}).Column(\"`{1}`\"){2}.Nullable();",
                         property.Name,
                         useLowercaseUnderscored
                         ? LowercaseAndUnderscoredWord(property.Name)
-                        : string.IsNullOrEmpty(property.HbmColumnName)
+                        : string.IsNullOrEmpty(property.NHMColumnName)
                         ? property.Name
-                        : property.HbmColumnName
+                        : property.NHMColumnName,
+                        property.IsNotNull
+                        ? ".Not"
+                        : ""
                     ));
             }
         }

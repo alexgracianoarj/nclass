@@ -304,7 +304,9 @@ namespace NClass.DiagramEditor.ClassDiagram.Dialogs
 			cboType.Enabled = (member != null && !member.IsTypeReadonly);
 			cboAccess.Enabled = (member != null && member.IsAccessModifiable);
 			txtInitialValue.Enabled = (member is Field);
-            txtHbmColumnName.Enabled = (member is Property);
+            txtNHMColumnName.Enabled = (member is Property);
+            chkIsPrimaryKey.Enabled = (member is Property);
+            chkIsNotNull.Enabled = (member is Property);
 			toolSortByKind.Enabled = true;
 			toolSortByAccess.Enabled = true;
 			toolSortByName.Enabled = true;
@@ -318,7 +320,9 @@ namespace NClass.DiagramEditor.ClassDiagram.Dialogs
 			txtSyntax.Text = member.ToString();
 			txtName.Text = member.Name;
 			cboType.Text = member.Type;
-            txtHbmColumnName.Text = member.HbmColumnName;
+            txtNHMColumnName.Text = member.NHMColumnName;
+            chkIsPrimaryKey.Checked = member.IsPrimaryKey;
+            chkIsNotNull.Checked = member.IsNotNull;
 
 			// Access selection
 			cboAccess.SelectedItem = member.Language.ValidAccessModifiers[member.AccessModifier];
@@ -361,7 +365,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Dialogs
 			errorProvider.SetError(txtName, null);
 			errorProvider.SetError(cboType, null);
             errorProvider.SetError(cboAccess, null);
-            errorProvider.SetError(txtHbmColumnName, null);
+            errorProvider.SetError(txtNHMColumnName, null);
 			error = false;
 		}
 
@@ -401,12 +405,18 @@ namespace NClass.DiagramEditor.ClassDiagram.Dialogs
 			cboType.Text = null;
 			cboAccess.Text = null;
 			txtInitialValue.Text = null;
+            txtNHMColumnName.Text = null;
+            chkIsPrimaryKey.Checked = false;
+            chkIsNotNull.Checked = false;
 
 			txtSyntax.Enabled = false;
 			txtName.Enabled = false;
 			cboType.Enabled = false;
 			cboAccess.Enabled = false;
 			txtInitialValue.Enabled = false;
+            txtNHMColumnName.Enabled = false;
+            chkIsPrimaryKey.Enabled = false;
+            chkIsNotNull.Enabled = false;
 
 			grpFieldModifiers.Enabled = false;
 			grpOperationModifiers.Enabled = false;
@@ -1065,28 +1075,46 @@ namespace NClass.DiagramEditor.ClassDiagram.Dialogs
 			this.Close();
 		}
 
-        private void txtHbmColumnName_Validating(object sender, CancelEventArgs e)
+        private void txtNHMColumnName_Validating(object sender, CancelEventArgs e)
         {
             if (!locked && member != null)
             {
                 try
                 {
-                    string oldValue = member.HbmColumnName;
+                    string oldValue = member.NHMColumnName;
 
-                    member.HbmColumnName = txtHbmColumnName.Text;
-                    errorProvider.SetError(txtHbmColumnName, null);
+                    member.NHMColumnName = txtNHMColumnName.Text;
+                    errorProvider.SetError(txtNHMColumnName, null);
                     error = false;
 
                     RefreshValues();
-                    if (oldValue != txtHbmColumnName.Text)
+                    if (oldValue != txtNHMColumnName.Text)
                         OnContentsChanged(EventArgs.Empty);
                 }
                 catch (BadSyntaxException ex)
                 {
                     e.Cancel = true;
-                    errorProvider.SetError(txtHbmColumnName, ex.Message);
+                    errorProvider.SetError(txtNHMColumnName, ex.Message);
                     error = true;
                 }
+            }
+        }
+
+        private void chkIsPrimaryKey_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!locked && member is Property)
+            {
+                member.IsPrimaryKey = chkIsPrimaryKey.Checked;
+                OnContentsChanged(EventArgs.Empty);
+            }
+        }
+
+        private void chkIsNotNull_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!locked && member is Property)
+            {
+                member.IsNotNull = chkIsNotNull.Checked;
+                OnContentsChanged(EventArgs.Empty);
             }
         }
 	}

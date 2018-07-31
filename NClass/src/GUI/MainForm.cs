@@ -882,6 +882,9 @@ namespace NClass.GUI
                             double percentage = bytesIn / totalBytes * 100;
 
                             if (progressDownload.InvokeRequired)
+                                progressDownload.BeginInvoke(new Action(() => progressDownload.SetIndeterminate(false)));
+
+                            if (progressDownload.InvokeRequired)
                                 progressDownload.BeginInvoke(new Action(() => progressDownload.lblPleaseWait.Text = "Downloaded " + Convert.ToInt32(percentage) + "% - " + (env.BytesReceived / 1024) + " KB of " + (env.TotalBytesToReceive / 1024) + " KB"));
 
                             if (progressDownload.InvokeRequired)
@@ -905,16 +908,14 @@ namespace NClass.GUI
 
                     thread.Start();
 
-                    progressDownload.Text = "Update";
                     progressDownload.lblPleaseWait.Text = "Downloading...";
-                    progressDownload.SetIndeterminate(false);
 
                     progressDownload.ShowDialog();
                 }
             }
             else
             {
-                MessageBox.Show("NClass already is updated.", "NClass", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("NClass is already updated.", "NClass", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 

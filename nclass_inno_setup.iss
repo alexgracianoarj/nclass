@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "NClass"
-#define MyAppVersion "2.11"
+#define MyAppVersion "2.12"
 #define MyAppPublisher "Alex Graciano"
 #define MyAppURL "alexgracianoarj@gmail.com"
 #define MyAppExeName "NClass.exe"
@@ -11,7 +11,7 @@
 ; NOTE: The value of AppId uniquely identifies this application.
 ; Do not use the same AppId value in installers for other applications.
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
-AppId={{089B9889-2528-46CC-8B69-799DED45457C}}
+AppId={{8E3A3D2E-D6B7-4A6A-AD95-B165276D9B82}}
 AppName={#MyAppName}
 AppVersion={#MyAppVersion}
 AppVerName={#MyAppName} {#MyAppVersion}
@@ -62,7 +62,7 @@ Source: ".\NClass\src\GUI\bin\Release\hu\*"; DestDir: "{app}\Lang\hu"
 Source: ".\NClass\src\GUI\bin\Release\pt-BR\*"; DestDir: "{app}\Lang\pt-BR"
 Source: ".\NClass\src\GUI\bin\Release\ru\*"; DestDir: "{app}\Lang\ru"
 Source: ".\NClass\src\GUI\bin\Release\zh-CN\*"; DestDir: "{app}\Lang\zh-CN"
-Source: ".\NClass\examples\shapes.ncp"; DestDir: "{app}\examples"; Permissions: users-modify
+Source: ".\NClass\examples\*.ncp"; DestDir: "{app}\examples"; Permissions: users-modify
 Source: ".\NClass\styles\*"; DestDir: "{app}\styles"; Permissions: users-modify
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
@@ -72,7 +72,7 @@ Name: "{group}\{cm:UninstallProgram,{#MyAppName}}"; Filename: "{uninstallexe}"
 Name: "{commondesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon
 
 [Run]
-Filename: {app}\{#MyAppExeName}; Parameters: """{app}\examples\shapes.ncp"""; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
+Filename: {app}\{#MyAppExeName}; Parameters: """{app}\examples\shapes.ncp"" ""{app}\examples\Northwind.ncp"""; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
 
 [Registry]
 

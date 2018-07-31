@@ -226,8 +226,8 @@ namespace NClass.CodeGenerator
 				}
 			}
 
-            //if (model.Language == CSharpLanguage.Instance)
-            //{
+            if (model.Language == CSharpLanguage.Instance)
+            {
                 if (Settings.Default.GenerateCodeFromTemplates)
                 {
                     CSharpTemplateSourceFileGenerator templatesSourceFiles = new CSharpTemplateSourceFileGenerator(RootNamespace, model);
@@ -246,9 +246,10 @@ namespace NClass.CodeGenerator
                 if(Settings.Default.GenerateSQLCode)
                 {
                     SourceFileGenerator sqlSourceFile = new CSharpSQLSourceFileGenerator(RootNamespace, model);
-                    sqlSourceFile.Generate(location);
+                    string fileName = sqlSourceFile.Generate(location);
+                    fileNames.Add(fileName);
                 }
-            //}
+            }
 
 			return success;
 		}

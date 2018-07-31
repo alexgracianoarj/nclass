@@ -36,5 +36,8 @@
   <ItemGroup>
     <EmbeddedResource Include="${HbmXmlFile}" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="${Others}" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

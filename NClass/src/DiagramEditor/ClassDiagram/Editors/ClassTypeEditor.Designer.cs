@@ -33,8 +33,8 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
             this.pnlAdvancedOptions = new System.Windows.Forms.Panel();
             this.toolStripAdvancedOptions = new System.Windows.Forms.ToolStrip();
             this.toolAdvancedOptions = new System.Windows.Forms.ToolStripButton();
-            this.lblHbmTableName = new System.Windows.Forms.Label();
-            this.txtHbmTableName = new NClass.DiagramEditor.ClassDiagram.Editors.BorderedTextBox();
+            this.lblNHMTableName = new System.Windows.Forms.Label();
+            this.txtNHMTableName = new NClass.DiagramEditor.ClassDiagram.Editors.BorderedTextBox();
             this.pnlAdvancedOptionsHbmTable = new System.Windows.Forms.Panel();
             this.pnlAdvancedOptions.SuspendLayout();
             this.toolStripAdvancedOptions.SuspendLayout();
@@ -97,31 +97,31 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
             this.toolAdvancedOptions.Size = new System.Drawing.Size(23, 22);
             this.toolAdvancedOptions.Click += new System.EventHandler(this.toolAdvancedOptions_Click);
             // 
-            // lblHbmTableName
+            // lblNHMTableName
             // 
-            this.lblHbmTableName.AutoSize = true;
-            this.lblHbmTableName.Location = new System.Drawing.Point(-2, 4);
-            this.lblHbmTableName.Name = "lblHbmTableName";
-            this.lblHbmTableName.Size = new System.Drawing.Size(64, 13);
-            this.lblHbmTableName.TabIndex = 10;
-            this.lblHbmTableName.Text = "HBM Table:";
+            this.lblNHMTableName.AutoSize = true;
+            this.lblNHMTableName.Location = new System.Drawing.Point(-2, 4);
+            this.lblNHMTableName.Name = "lblNHMTableName";
+            this.lblNHMTableName.Size = new System.Drawing.Size(65, 13);
+            this.lblNHMTableName.TabIndex = 10;
+            this.lblNHMTableName.Text = "NHM Table:";
             // 
-            // txtHbmTableName
+            // txtNHMTableName
             // 
-            this.txtHbmTableName.Location = new System.Drawing.Point(59, 1);
-            this.txtHbmTableName.Name = "txtHbmTableName";
-            this.txtHbmTableName.Padding = new System.Windows.Forms.Padding(1);
-            this.txtHbmTableName.ReadOnly = false;
-            this.txtHbmTableName.SelectionStart = 0;
-            this.txtHbmTableName.Size = new System.Drawing.Size(240, 20);
-            this.txtHbmTableName.TabIndex = 10;
-            this.txtHbmTableName.KeyDown += new System.Windows.Forms.KeyEventHandler(this.borderedTextBox1_KeyDown);
-            this.txtHbmTableName.Validating += new System.ComponentModel.CancelEventHandler(this.borderedTextBox1_Validating);
+            this.txtNHMTableName.Location = new System.Drawing.Point(59, 1);
+            this.txtNHMTableName.Name = "txtNHMTableName";
+            this.txtNHMTableName.Padding = new System.Windows.Forms.Padding(1);
+            this.txtNHMTableName.ReadOnly = false;
+            this.txtNHMTableName.SelectionStart = 0;
+            this.txtNHMTableName.Size = new System.Drawing.Size(240, 20);
+            this.txtNHMTableName.TabIndex = 10;
+            this.txtNHMTableName.KeyDown += new System.Windows.Forms.KeyEventHandler(this.borderedTextBox1_KeyDown);
+            this.txtNHMTableName.Validating += new System.ComponentModel.CancelEventHandler(this.borderedTextBox1_Validating);
             // 
             // pnlAdvancedOptionsHbmTable
             // 
-            this.pnlAdvancedOptionsHbmTable.Controls.Add(this.txtHbmTableName);
-            this.pnlAdvancedOptionsHbmTable.Controls.Add(this.lblHbmTableName);
+            this.pnlAdvancedOptionsHbmTable.Controls.Add(this.txtNHMTableName);
+            this.pnlAdvancedOptionsHbmTable.Controls.Add(this.lblNHMTableName);
             this.pnlAdvancedOptionsHbmTable.Location = new System.Drawing.Point(3, 79);
             this.pnlAdvancedOptionsHbmTable.Name = "pnlAdvancedOptionsHbmTable";
             this.pnlAdvancedOptionsHbmTable.Size = new System.Drawing.Size(321, 23);
@@ -158,8 +158,8 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
 		private System.Windows.Forms.Panel pnlAdvancedOptions;
 		private System.Windows.Forms.ToolStrip toolStripAdvancedOptions;
 		private System.Windows.Forms.ToolStripButton toolAdvancedOptions;
-        private System.Windows.Forms.Label lblHbmTableName;
-        private BorderedTextBox txtHbmTableName;
+        private System.Windows.Forms.Label lblNHMTableName;
+        private BorderedTextBox txtNHMTableName;
         private System.Windows.Forms.Panel pnlAdvancedOptionsHbmTable;
 	}
 }

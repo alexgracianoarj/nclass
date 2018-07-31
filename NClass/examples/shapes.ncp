@@ -4,7 +4,7 @@
     <Name>Shapes</Name>
     <Language>CSharp</Language>
     <Entities>
-      <Entity type="Class">
+      <Entity type="Class" nhmTableName="">
         <Name>Shape</Name>
         <Access>Public</Access>
         <Location left="175" top="20" />
@@ -12,36 +12,36 @@
         <Collapsed>False</Collapsed>
         <Member type="Field">Color color</Member>
         <Member type="Field">PointF location</Member>
-        <Member type="Property">public Color Color { get; set; }</Member>
-        <Member type="Property">public PointF Location { get; set; }</Member>
+        <Member type="Property" nhmColumnName="" isPrimaryKey="False" isNotNull="False">public Color Color { get; set; }</Member>
+        <Member type="Property" nhmColumnName="" isPrimaryKey="False" isNotNull="False">public PointF Location { get; set; }</Member>
         <Member type="Constructor">protected Shape()</Member>
         <Member type="Method">public abstract void Draw(Graphics g)</Member>
         <Modifier>Abstract</Modifier>
         <Stereotype>
         </Stereotype>
       </Entity>
-      <Entity type="Class">
+      <Entity type="Class" nhmTableName="">
         <Name>Circle</Name>
         <Access>Public</Access>
         <Location left="33" top="312" />
         <Size width="169" height="216" />
         <Collapsed>False</Collapsed>
         <Member type="Field">float radius</Member>
-        <Member type="Property">public float Radius { get; set; }</Member>
+        <Member type="Property" nhmColumnName="" isPrimaryKey="False" isNotNull="False">public float Radius { get; set; }</Member>
         <Member type="Constructor">public Circle(float radius)</Member>
         <Member type="Method">public override void Draw(Graphics g)</Member>
         <Modifier>None</Modifier>
         <Stereotype>
         </Stereotype>
       </Entity>
-      <Entity type="Class">
+      <Entity type="Class" nhmTableName="">
         <Name>Square</Name>
         <Access>Public</Access>
         <Location left="318" top="312" />
         <Size width="169" height="216" />
         <Collapsed>False</Collapsed>
         <Member type="Field">float size</Member>
-        <Member type="Property">public float Size { get; set; }</Member>
+        <Member type="Property" nhmColumnName="" isPrimaryKey="False" isNotNull="False">public float Size { get; set; }</Member>
         <Member type="Constructor">public Square(float size)</Member>
         <Member type="Method">public override void Draw(Graphics g)</Member>
         <Modifier>None</Modifier>
@@ -56,33 +56,6 @@
         <Collapsed>False</Collapsed>
         <Member type="Method">void Draw(Graphics g)</Member>
       </Entity>
-      <Entity type="Class">
-        <Name>Category</Name>
-        <Access>Public</Access>
-        <Location left="662" top="612" />
-        <Size width="218" height="216" />
-        <Collapsed>False</Collapsed>
-        <Member type="Property">public virtual int Id { get; set; }</Member>
-        <Member type="Property">public virtual string Name { get; set; }</Member>
-        <Member type="Property">public virtual Category Subcategory { get; set; }</Member>
-        <Modifier>None</Modifier>
-        <Stereotype>
-        </Stereotype>
-      </Entity>
-      <Entity type="Class">
-        <Name>Product</Name>
-        <Access>Public</Access>
-        <Location left="541" top="312" />
-        <Size width="197" height="216" />
-        <Collapsed>False</Collapsed>
-        <Member type="Property">public virtual int Id { get; set; }</Member>
-        <Member type="Property">public virtual Category Category { get; set; }</Member>
-        <Member type="Property">public virtual string Name { get; set; }</Member>
-        <Member type="Property">public virtual decimal Price { get; set; }</Member>
-        <Modifier>None</Modifier>
-        <Stereotype>
-        </Stereotype>
-      </Entity>
     </Entities>
     <Relationships>
       <Relationship type="Generalization" first="1" second="0">
@@ -96,22 +69,6 @@
       <Relationship type="Realization" first="0" second="3">
         <StartOrientation>Horizontal</StartOrientation>
         <EndOrientation>Horizontal</EndOrientation>
-      </Relationship>
-      <Relationship type="Association" first="4" second="4">
-        <Label>
-        </Label>
-        <StartOrientation>Horizontal</StartOrientation>
-        <EndOrientation>Vertical</EndOrientation>
-        <Direction>Unidirectional</Direction>
-        <AssociationType>Association</AssociationType>
-      </Relationship>
-      <Relationship type="Association" first="4" second="5">
-        <Label>
-        </Label>
-        <StartOrientation>Vertical</StartOrientation>
-        <EndOrientation>Vertical</EndOrientation>
-        <Direction>Unidirectional</Direction>
-        <AssociationType>Association</AssociationType>
       </Relationship>
     </Relationships>
   </ProjectItem>

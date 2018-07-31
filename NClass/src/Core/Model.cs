@@ -659,8 +659,8 @@ namespace NClass.Core
 
 					IEntity entity = GetEntity(type);
 
-                    if (type == "Class")
-                        entity.HbmTableName = node.GetAttribute("hbmTableName");
+                    if (entity is ClassType)
+                        entity.NHMTableName = node.GetAttribute("nhmTableName");
  
 					entity.Deserialize(node);
 				}
@@ -809,8 +809,8 @@ namespace NClass.Core
 				entity.Serialize(child);
                 child.SetAttribute("type", entity.EntityType.ToString());
                 
-                if (entity.EntityType.ToString() == "Class")
-                    child.SetAttribute("hbmTableName", entity.HbmTableName);
+                if (entity is ClassType)
+                    child.SetAttribute("nhmTableName", entity.NHMTableName);
 				
                 entitiesChild.AppendChild(child);
 			}

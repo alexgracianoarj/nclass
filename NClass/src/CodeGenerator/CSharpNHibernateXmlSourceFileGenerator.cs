@@ -12,9 +12,6 @@ namespace NClass.CodeGenerator
     internal sealed class CSharpNHibernateXmlSourceFileGenerator 
         : SourceFileGenerator
     {
-        List<string> entities;
-        List<string> properties;
-
         bool useLazyLoading;
         bool useLowercaseUnderscored;
         string idGeneratorType;
@@ -34,21 +31,6 @@ namespace NClass.CodeGenerator
 
         protected override void WriteFileContent()
         {
-            entities = new List<string>();
-            foreach (IEntity entity in Model.Entities)
-            {
-                entities.Add(entity.Name);
-            }
-
-            ClassType _class = (ClassType)Type;
-
-            properties = new List<string>();
-            foreach (Operation operation in _class.Operations)
-            {
-                if (operation is Property)
-                    properties.Add(operation.Name);
-            }
-
             useLazyLoading = Settings.Default.UseLazyLoading;
             useLowercaseUnderscored = Settings.Default.UseLowercaseAndUnderscoredWordsInDb;
             idGeneratorType = EnumExtensions.GetDescription(Settings.Default.IdGeneratorType);
@@ -58,6 +40,8 @@ namespace NClass.CodeGenerator
             settings.NewLineOnAttributes = true;
             settings.Encoding = System.Text.Encoding.Unicode;
 
+            ClassType _class = (ClassType)Type;
+            
             using (XmlWriter xml = XmlWriter.Create(CodeBuilder, settings))
             {
                 xml.WriteStartDocument();
@@ -76,118 +60,102 @@ namespace NClass.CodeGenerator
                     PrefixedText(
                         useLowercaseUnderscored 
                         ? LowercaseAndUnderscoredWord(_class.Name) 
-                        : string.IsNullOrEmpty(_class.HbmTableName)
+                        : string.IsNullOrEmpty(_class.NHMTableName)
                         ? _class.Name
-                        : _class.HbmTableName
+                        : _class.NHMTableName
                     )));
-                xml.WriteAttributeString("lazy", 
-                    useLazyLoading 
-                    ? "true" 
-                    : "false");
+                xml.WriteAttributeString("lazy", useLazyLoading.ToString().ToLower());
 
-                List<Property> compositeId = new List<Property>();
-                
-                int index = 0;
+                List<Operation> ids = _class.Operations.Where(o => o is Property && o.IsPrimaryKey).ToList<Operation>();
 
-                if (entities.Contains(_class.Operations.ToList()[0].Type))
-                {
-                    for (; index <= (_class.Operations.Count() - 1); index++)
-                    {
-                        if (_class.Operations.ToList()[index] is Property)
-                        {
-                            Property property = (Property)_class.Operations.ToList()[index];
-
-                            if (entities.Contains(property.Type))
-                            {
-                                compositeId.Add(property);
-                            }
-                            else
-                            {
-                                break;
-                            }
-                        }
-                    }                
-                }
-
-                if(compositeId.Count > 1)
+                if(ids.Count > 1)
                 {
                     xml.WriteStartElement("composite-id");
-                    foreach (var id in compositeId)
+                    foreach (var id in ids)
                     {
-                        xml.WriteStartElement("key-many-to-one");
-                        xml.WriteAttributeString("name", id.Name);
-                        xml.WriteAttributeString("column",
-                            string.Format("`{0}`",
-                                useLowercaseUnderscored
-                                ? LowercaseAndUnderscoredWord(id.Name)
-                                : string.IsNullOrEmpty(id.HbmColumnName)
-                                ? id.Name
-                                : id.HbmColumnName
-                            ));
-                        xml.WriteAttributeString("class", id.Type);
-                        xml.WriteEndElement();
+                        if(Model.Entities.Where(e => e.Name == id.Type).Count() > 0)
+                        {
+                            xml.WriteStartElement("key-many-to-one");
+                            xml.WriteAttributeString("name", id.Name);
+                            xml.WriteAttributeString("column",
+                                string.Format("`{0}`",
+                                    useLowercaseUnderscored
+                                    ? LowercaseAndUnderscoredWord(id.Name)
+                                    : string.IsNullOrEmpty(id.NHMColumnName)
+                                    ? id.Name
+                                    : id.NHMColumnName
+                                ));
+                            xml.WriteAttributeString("class", id.Type);
+                            xml.WriteEndElement();
+                        }
+                        else
+                        {
+                            xml.WriteStartElement("key-property");
+                            xml.WriteAttributeString("name", id.Name);
+                            xml.WriteAttributeString("column",
+                                string.Format("`{0}`",
+                                    useLowercaseUnderscored
+                                    ? LowercaseAndUnderscoredWord(id.Name)
+                                    : string.IsNullOrEmpty(id.NHMColumnName)
+                                    ? id.Name
+                                    : id.NHMColumnName
+                                ));
+                            xml.WriteAttributeString("type", id.Type);
+                            xml.WriteEndElement();
+                        }
                     }
                     xml.WriteEndElement();
                 }
                 else
                 {
-                    index = 0;
+                    xml.WriteStartElement("id");
+                    xml.WriteAttributeString("name", ids[0].Name);
+                    xml.WriteAttributeString("column",
+                        string.Format("`{0}`",
+                            useLowercaseUnderscored
+                            ? LowercaseAndUnderscoredWord(ids[0].Name)
+                            : string.IsNullOrEmpty(ids[0].NHMColumnName)
+                            ? ids[0].Name
+                            : ids[0].NHMColumnName
+                        ));
+                    xml.WriteAttributeString("type", ids[0].Type);
+                    xml.WriteAttributeString("generator", idGeneratorType);
+                    xml.WriteEndElement();
                 }
 
-                for (; index <= (_class.Operations.Count() - 1); index++)
+                foreach (var property in _class.Operations.Where(o => o is Property && !o.IsPrimaryKey).ToList<Operation>())
                 {
-                    if (_class.Operations.ToList()[index] is Property)
+                    if (Model.Entities.Where(e => e.Name == property.Type).Count() > 0)
                     {
-                        Property property = (Property)_class.Operations.ToList()[index];
-
-                        if (property.Name == properties[0])
-                        {
-                            xml.WriteStartElement("id");
-                            xml.WriteAttributeString("name", property.Name);
-                            xml.WriteAttributeString("column",
-                                string.Format("`{0}`",
-                                    useLowercaseUnderscored
-                                    ? LowercaseAndUnderscoredWord(property.Name)
-                                    : string.IsNullOrEmpty(property.HbmColumnName)
-                                    ? property.Name
-                                    : property.HbmColumnName
-                                ));
-                            xml.WriteAttributeString("type", property.Type);
-                            xml.WriteAttributeString("generator", idGeneratorType);
-                            xml.WriteEndElement();
-                        }
-                        else if (entities.Contains(property.Type))
-                        {
-                            xml.WriteStartElement("many-to-one");
-                            xml.WriteAttributeString("name", property.Name);
-                            xml.WriteAttributeString("class", property.Type);
-                            xml.WriteAttributeString("column",
-                                string.Format("`{0}`",
-                                    useLowercaseUnderscored
-                                    ? LowercaseAndUnderscoredWord(property.Name)
-                                    : string.IsNullOrEmpty(property.HbmColumnName)
-                                    ? property.Name
-                                    : property.HbmColumnName
-                                ));
-                            xml.WriteAttributeString("not-null", "true");
-                            xml.WriteEndElement();
-                        }
-                        else
-                        {
-                            xml.WriteStartElement("property");
-                            xml.WriteAttributeString("name", property.Name);
-                            xml.WriteAttributeString("column",
-                                string.Format("`{0}`",
-                                    useLowercaseUnderscored
-                                    ? LowercaseAndUnderscoredWord(property.Name)
-                                    : string.IsNullOrEmpty(property.HbmColumnName)
-                                    ? property.Name
-                                    : property.HbmColumnName
-                                ));
-                            xml.WriteAttributeString("type", property.Type);
-                            xml.WriteAttributeString("not-null", "true");
-                            xml.WriteEndElement();
-                        }
+                        xml.WriteStartElement("many-to-one");
+                        xml.WriteAttributeString("name", property.Name);
+                        xml.WriteAttributeString("class", property.Type);
+                        xml.WriteAttributeString("column",
+                            string.Format("`{0}`",
+                                useLowercaseUnderscored
+                                ? LowercaseAndUnderscoredWord(property.Name)
+                                : string.IsNullOrEmpty(property.NHMColumnName)
+                                ? property.Name
+                                : property.NHMColumnName
+                            ));
+                        xml.WriteAttributeString("not-null", property.IsNotNull.ToString().ToLower());
+                        xml.WriteEndElement();
+                    }
+                    else
+                    {
+                        xml.WriteStartElement("property");
+                        xml.WriteAttributeString("name", property.Name);
+                        xml.WriteAttributeString("column",
+                            string.Format("`{0}`",
+                                useLowercaseUnderscored
+                                ? LowercaseAndUnderscoredWord(property.Name)
+                                : string.IsNullOrEmpty(property.NHMColumnName)
+                                ? property.Name
+                                : property.NHMColumnName
+                            ));
+                        xml.WriteAttributeString("type", property.Type);
+                        xml.WriteAttributeString("not-null", property.IsNotNull.ToString().ToLower());
+                        xml.WriteEndElement();
                     }
                 }
 

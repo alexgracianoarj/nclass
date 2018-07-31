@@ -149,28 +149,6 @@ namespace NClass.Core
 			}
 		}
 
-        private string hbmTableName = null;
-
-        /// <summary>
-        /// Gets or sets the hbmTableName for this class.
-        /// </summary>
-        public override string HbmTableName
-        {
-            get
-            {
-                return hbmTableName;
-            }
-            set
-            {
-                if (value != hbmTableName)
-                {
-                    hbmTableName = value;
-                    // Make sure the element knows that the stereotype has changed.
-                    Changed();
-                }
-            }
-        }
-
 		/// <exception cref="RelationshipException">
 		/// The base and derived types do not equal.-or-
 		/// The <paramref name="value"/> is descendant of the type.
@@ -259,7 +237,7 @@ namespace NClass.Core
 			ClassType classType = (ClassType) type;
 			modifier = classType.modifier;
 			Stereotype = classType.Stereotype;
-            HbmTableName = classType.HbmTableName;
+            NHMTableName = classType.NHMTableName;
 		}
 
 		public abstract ClassType Clone();
@@ -315,5 +293,26 @@ namespace NClass.Core
 			base.Deserialize(node);
 			RaiseChangedEvent = true;
 		}
+
+        string nhmTableName;
+
+        /// <summary>
+        /// Gets or sets the nhmTableName for this class.
+        /// </summary>
+        public override string NHMTableName
+        {
+            get
+            {
+                return nhmTableName;
+            }
+            set
+            {
+                if (value != nhmTableName)
+                {
+                    nhmTableName = value;
+                    Changed();
+                }
+            }
+        }
 	}
 }

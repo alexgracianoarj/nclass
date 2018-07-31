@@ -20,9 +20,6 @@ namespace NClass.CodeGenerator
     internal sealed class CSharpSQLSourceFileGenerator 
         : SourceFileGenerator
     {
-        List<string> entities;
-        List<string> properties;
-
         bool useLowercaseUnderscored;
 
         DatabaseSchema schema;
@@ -39,25 +36,15 @@ namespace NClass.CodeGenerator
 
         protected override void WriteFileContent()
         {
-            entities = new List<string>();
-            foreach (IEntity entity in Model.Entities)
-            {
-                entities.Add(entity.Name);
-            }
-
             useLowercaseUnderscored = Settings.Default.UseLowercaseAndUnderscoredWordsInDb;
             var sqlToServerType = Settings.Default.SQLToServerType;
 
             schema = new DatabaseSchema(null, sqlToServerType);
 
-            foreach (IEntity entity in Model.Entities)
+            foreach (IEntity entity in Model.Entities.Where(e => e is ClassType).ToList<IEntity>())
             {
-                if(entity is ClassType)
-                {
-                    var _class = entity as ClassType;
-                    if(_class.Operations.Where(x => x is Property).Count() > 0)
-                        CreateTable(_class);
-                }
+                if(((ClassType)entity).Operations.Where(x => x is Property).Count() > 0)
+                    CreateTable((ClassType)entity);
             }
 
             var ddlTables = new DdlGeneratorFactory(sqlToServerType).AllTablesGenerator(schema);
@@ -79,73 +66,49 @@ namespace NClass.CodeGenerator
             if (table != null)
                 return table;
 
-            properties = new List<string>();
-            foreach (Operation operation in _class.Operations)
-            {
-                if (operation is Property)
-                    properties.Add(operation.Name);
-            }
-
-            List<Property> compositeKey = new List<Property>();
-
-            int index = 0;
-
-            if (entities.Contains(_class.Operations.ToList()[0].Type))
-            {
-                for (; index <= (_class.Operations.Count() - 1); index++)
-                {
-                    if (_class.Operations.ToList()[index] is Property)
-                    {
-                        Property property = (Property)_class.Operations.ToList()[index];
-
-                        if (entities.Contains(property.Type))
-                        {
-                            compositeKey.Add(property);
-                        }
-                        else
-                        {
-                            break;
-                        }
-                    }
-                }
-            }
+            List<Operation> keys = _class.Operations.Where(o => o is Property && o.IsPrimaryKey).ToList<Operation>();
 
             table = schema.AddTable(name);
 
-            if (compositeKey.Count > 1)
+            foreach(var key in keys)
             {
-                foreach(var key in compositeKey)
+                if (Model.Entities.Where(e => e.Name == key.Type).Count() > 0)
                 {
-                    table.AddColumn(key.Name, GetTypeFromString(key.Type))
+                    table.AddColumn(
+                        useLowercaseUnderscored
+                        ? LowercaseAndUnderscoredWord(key.Name)
+                        : key.Name,
+                        GetTypeFromString(key.Type))
                         .AddForeignKey(CreateTable(GetClassByName(key.Type)).Name)
                         .AddLength(255)
                         .AddPrimaryKey();
                 }
-            }
-            else
-            {
-                index = 0;
+                else
+                {
+                    table.AddColumn(
+                        useLowercaseUnderscored
+                        ? LowercaseAndUnderscoredWord(key.Name)
+                        : key.Name,
+                        GetTypeFromString(key.Type))
+                        .AddLength(255)
+                        .AddPrimaryKey();
+                }
             }
 
-            for (; index <= (_class.Operations.Count() - 1); index++)
+            foreach (var property in _class.Operations.Where(o => o is Property && !o.IsPrimaryKey).ToList<Operation>())
             {
-                if (_class.Operations.ToList()[index] is Property)
+                try
                 {
-                    Property property = (Property)_class.Operations.ToList()[index];
-                    
-                    try
-                    {
-                        CreateColumn(ref table, property);
-                    }
-                    catch (ArgumentException e)
-                    {
-                        System.Windows.Forms.MessageBox.Show(
-                            string.Format("{0}, {1} - {2}", _class.Name, property.Name, e.Message),
-                            "Error",
-                            System.Windows.Forms.MessageBoxButtons.OK,
-                            System.Windows.Forms.MessageBoxIcon.Error);
-                        throw;
-                    }
+                    CreateColumn(ref table, (Property)property);
+                }
+                catch (ArgumentException e)
+                {
+                    System.Windows.Forms.MessageBox.Show(
+                        string.Format("{0}, {1} - {2}", _class.Name, property.Name, e.Message),
+                        "Error",
+                        System.Windows.Forms.MessageBoxButtons.OK,
+                        System.Windows.Forms.MessageBoxIcon.Error);
+                    throw;
                 }
             }
 
@@ -154,17 +117,7 @@ namespace NClass.CodeGenerator
 
         private void CreateColumn(ref DatabaseTable table, Property property)
         {
-            if (property.Name == properties[0])
-            {
-                table.AddColumn(
-                    useLowercaseUnderscored
-                    ? LowercaseAndUnderscoredWord(property.Name)
-                    : property.Name,
-                    GetTypeFromString(property.Type))
-                    .AddLength(255)
-                    .AddPrimaryKey();
-            }
-            else if (entities.Contains(property.Type))
+            if (Model.Entities.Where(e => e.Name == property.Type).Count() > 0)
             {
                 table.AddColumn(
                     useLowercaseUnderscored
@@ -238,7 +191,7 @@ namespace NClass.CodeGenerator
                 { "object", typeof(object) }
             };
 
-            if(entities.Contains(_type))
+            if (Model.Entities.Where(e => e.Name == _type).Count() > 0)
             {
                 var _class = Model.Entities.SingleOrDefault(x => x is ClassType && x.Name == _type) as ClassType;
                 var properties = _class.Operations.Where(x => x is Property).ToList();
@@ -252,7 +205,8 @@ namespace NClass.CodeGenerator
             else
                 t = System.Type.GetType("System." + _type);
 
-            if (t == null) throw new ArgumentException(string.Format("Cannot map type \"{0}\" to a database type.", _type));
+            if (t == null) 
+                throw new ArgumentException(string.Format("Cannot map type \"{0}\" to a database type.", _type));
 
             return t;
         }

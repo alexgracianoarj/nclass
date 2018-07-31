@@ -153,6 +153,10 @@ namespace NClass.Core
 			isWriteonly = property.isWriteonly;
 			readAccess = property.readAccess;
 			writeAccess = property.writeAccess;
+
+            NHMColumnName = property.NHMColumnName;
+            IsPrimaryKey = property.IsPrimaryKey;
+            IsNotNull = property.IsNotNull;
 		}
 	}
 }

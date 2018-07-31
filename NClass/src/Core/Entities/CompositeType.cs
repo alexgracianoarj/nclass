@@ -447,8 +447,12 @@ namespace NClass.Core
 				XmlElement child = node.OwnerDocument.CreateElement("Member");
                 child.SetAttribute("type", operation.MemberType.ToString());
 
-                if (operation.MemberType.ToString() == "Property")
-                    child.SetAttribute("hbmColumnName", operation.HbmColumnName);
+                if (operation is Property)
+                {
+                    child.SetAttribute("nhmColumnName", operation.NHMColumnName);
+                    child.SetAttribute("isPrimaryKey", operation.IsPrimaryKey.ToString());
+                    child.SetAttribute("isNotNull", operation.IsNotNull.ToString());
+                }
 
 				child.InnerText = operation.ToString();
 				node.AppendChild(child);
@@ -488,8 +492,12 @@ namespace NClass.Core
 					}
 					operation.InitFromString(childNode.InnerText);
                     
-                    if (type == "Property")
-                        operation.HbmColumnName = childNode.GetAttribute("hbmColumnName");
+                    if (operation is Property)
+                    {
+                        operation.NHMColumnName = childNode.GetAttribute("nhmColumnName");
+                        operation.IsPrimaryKey = (childNode.GetAttribute("isPrimaryKey") == "True") ? true : false;
+                        operation.IsNotNull = (childNode.GetAttribute("isNotNull") == "True") ? true : false;
+                    }
 				}
 			}
 

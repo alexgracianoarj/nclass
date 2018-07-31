@@ -77,8 +77,10 @@
             this.chkSealed = new System.Windows.Forms.CheckBox();
             this.chkOperationHider = new System.Windows.Forms.CheckBox();
             this.grpOperationModifiers = new System.Windows.Forms.GroupBox();
-            this.lblHbmColumnName = new System.Windows.Forms.Label();
-            this.txtHbmColumnName = new System.Windows.Forms.TextBox();
+            this.lblNHMColumnName = new System.Windows.Forms.Label();
+            this.txtNHMColumnName = new System.Windows.Forms.TextBox();
+            this.chkIsPrimaryKey = new System.Windows.Forms.CheckBox();
+            this.chkIsNotNull = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
             this.toolStrip.SuspendLayout();
             this.grpFieldModifiers.SuspendLayout();
@@ -199,7 +201,7 @@
             this.lstMembers.FullRowSelect = true;
             this.lstMembers.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.lstMembers.HideSelection = false;
-            this.lstMembers.Location = new System.Drawing.Point(12, 214);
+            this.lstMembers.Location = new System.Drawing.Point(12, 234);
             this.lstMembers.MultiSelect = false;
             this.lstMembers.Name = "lstMembers";
             this.lstMembers.ShowGroups = false;
@@ -253,7 +255,7 @@
             // 
             this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnClose.Location = new System.Drawing.Point(382, 475);
+            this.btnClose.Location = new System.Drawing.Point(382, 495);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(75, 23);
             this.btnClose.TabIndex = 8;
@@ -287,7 +289,7 @@
             this.toolSepAddNew,
             this.toolOverrideList,
             this.toolImplementList});
-            this.toolStrip.Location = new System.Drawing.Point(12, 189);
+            this.toolStrip.Location = new System.Drawing.Point(12, 209);
             this.toolStrip.Name = "toolStrip";
             this.toolStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
             this.toolStrip.Size = new System.Drawing.Size(445, 25);
@@ -611,33 +613,57 @@
             this.grpOperationModifiers.Text = "Modifiers";
             this.grpOperationModifiers.Validated += new System.EventHandler(this.grpOperationModifiers_Validated);
             // 
-            // lblHbmColumnName
+            // lblNHMColumnName
             // 
-            this.lblHbmColumnName.AutoSize = true;
-            this.lblHbmColumnName.Location = new System.Drawing.Point(0, 163);
-            this.lblHbmColumnName.Name = "lblHbmColumnName";
-            this.lblHbmColumnName.Size = new System.Drawing.Size(69, 13);
-            this.lblHbmColumnName.TabIndex = 15;
-            this.lblHbmColumnName.Text = "HBM Column";
+            this.lblNHMColumnName.AutoSize = true;
+            this.lblNHMColumnName.Location = new System.Drawing.Point(0, 163);
+            this.lblNHMColumnName.Name = "lblNHMColumnName";
+            this.lblNHMColumnName.Size = new System.Drawing.Size(70, 13);
+            this.lblNHMColumnName.TabIndex = 15;
+            this.lblNHMColumnName.Text = "NHM Column";
             // 
-            // txtHbmColumnName
+            // txtNHMColumnName
             // 
-            this.txtHbmColumnName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.txtNHMColumnName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtHbmColumnName.Location = new System.Drawing.Point(71, 160);
-            this.txtHbmColumnName.Name = "txtHbmColumnName";
-            this.txtHbmColumnName.Size = new System.Drawing.Size(367, 20);
-            this.txtHbmColumnName.TabIndex = 5;
-            this.txtHbmColumnName.Validating += new System.ComponentModel.CancelEventHandler(this.txtHbmColumnName_Validating);
+            this.txtNHMColumnName.Location = new System.Drawing.Point(71, 160);
+            this.txtNHMColumnName.Name = "txtNHMColumnName";
+            this.txtNHMColumnName.Size = new System.Drawing.Size(367, 20);
+            this.txtNHMColumnName.TabIndex = 5;
+            this.txtNHMColumnName.Validating += new System.ComponentModel.CancelEventHandler(this.txtNHMColumnName_Validating);
+            // 
+            // chkIsPrimaryKey
+            // 
+            this.chkIsPrimaryKey.AutoSize = true;
+            this.chkIsPrimaryKey.Location = new System.Drawing.Point(71, 186);
+            this.chkIsPrimaryKey.Name = "chkIsPrimaryKey";
+            this.chkIsPrimaryKey.Size = new System.Drawing.Size(81, 17);
+            this.chkIsPrimaryKey.TabIndex = 16;
+            this.chkIsPrimaryKey.Text = "Primary Key";
+            this.chkIsPrimaryKey.UseVisualStyleBackColor = true;
+            this.chkIsPrimaryKey.CheckedChanged += new System.EventHandler(this.chkIsPrimaryKey_CheckedChanged);
+            // 
+            // chkIsNotNull
+            // 
+            this.chkIsNotNull.AutoSize = true;
+            this.chkIsNotNull.Location = new System.Drawing.Point(158, 186);
+            this.chkIsNotNull.Name = "chkIsNotNull";
+            this.chkIsNotNull.Size = new System.Drawing.Size(64, 17);
+            this.chkIsNotNull.TabIndex = 17;
+            this.chkIsNotNull.Text = "Not Null";
+            this.chkIsNotNull.UseVisualStyleBackColor = true;
+            this.chkIsNotNull.CheckedChanged += new System.EventHandler(this.chkIsNotNull_CheckedChanged);
             // 
             // MembersDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CausesValidation = false;
-            this.ClientSize = new System.Drawing.Size(469, 510);
-            this.Controls.Add(this.txtHbmColumnName);
-            this.Controls.Add(this.lblHbmColumnName);
+            this.ClientSize = new System.Drawing.Size(469, 530);
+            this.Controls.Add(this.txtNHMColumnName);
+            this.Controls.Add(this.chkIsNotNull);
+            this.Controls.Add(this.chkIsPrimaryKey);
+            this.Controls.Add(this.lblNHMColumnName);
             this.Controls.Add(this.lstMembers);
             this.Controls.Add(this.toolStrip);
             this.Controls.Add(this.btnClose);
@@ -727,8 +753,10 @@
 		private System.Windows.Forms.CheckBox chkAbstract;
 		private System.Windows.Forms.CheckBox chkVirtual;
 		private System.Windows.Forms.CheckBox chkOperationStatic;
-        private System.Windows.Forms.TextBox txtHbmColumnName;
-        private System.Windows.Forms.Label lblHbmColumnName;
+        private System.Windows.Forms.TextBox txtNHMColumnName;
+        private System.Windows.Forms.Label lblNHMColumnName;
+        private System.Windows.Forms.CheckBox chkIsNotNull;
+        private System.Windows.Forms.CheckBox chkIsPrimaryKey;
 	}
 }
 

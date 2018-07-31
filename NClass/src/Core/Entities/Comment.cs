@@ -144,6 +144,6 @@ namespace NClass.Core
 			}
 		}
 
-        public string HbmTableName { get; set; }
+        public string NHMTableName { get; set; }
 	}
 }

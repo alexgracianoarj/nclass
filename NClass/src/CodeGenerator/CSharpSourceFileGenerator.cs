@@ -47,53 +47,20 @@ namespace NClass.CodeGenerator
 			CloseNamespace();
 		}
 
-        private void WriteCompositeId()
+        private void WriteIds()
         {
-            List<string> entities = new List<string>();
-            foreach (IEntity entity in Model.Entities)
-            {
-                entities.Add(entity.Name);
-            }
-
             ClassType _class = (ClassType)Type;
 
-            List<string> properties = new List<string>();
-            foreach (Operation operation in _class.Operations)
+            List<Operation> ids = _class.Operations.Where(o => o is Property && o.IsPrimaryKey).ToList<Operation>();
+
+            if (ids.Count > 1)
             {
-                if (operation is Property)
-                    properties.Add(operation.Name);
-            }
-
-            List<Property> compositeId = new List<Property>();
-
-            if (entities.Contains(_class.Operations.ToList()[0].Type))
-            {
-                for (int index = 0; index <= (_class.Operations.Count() - 1); index++)
-                {
-                    if (_class.Operations.ToList()[index] is Property)
-                    {
-                        Property property = (Property)_class.Operations.ToList()[index];
-
-                        if (entities.Contains(property.Type))
-                        {
-                            compositeId.Add(property);
-                        }
-                        else
-                        {
-                            break;
-                        }
-                    }
-                }
-            }
-
-            if (compositeId.Count > 1)
-            {
-                WriteEquals(compositeId);
-                WriteGetHashCode(compositeId);
+                WriteEquals(ids);
+                WriteGetHashCode(ids);
             }
         }
 
-        private void WriteEquals(List<Property> compositeId)
+        private void WriteEquals(List<Operation> ids)
         {
             AddBlankLine();
             WriteLine("// Needs this for composite id.");
@@ -104,10 +71,10 @@ namespace NClass.CodeGenerator
             WriteLine(string.Format("var t = obj as {0};", Type.Name));
             WriteLine("if (t == null) return false;");
             Write("return ");
-            foreach(var id in compositeId)
+            foreach(var id in ids)
             {
                 Write(string.Format("{0} == t.{0}", id.Name), false);
-                if(id != compositeId.Last())
+                if(id != ids.Last())
                     Write(" && ", false);
                 else
                     Write(";", false);
@@ -117,7 +84,7 @@ namespace NClass.CodeGenerator
             WriteLine("}");
         }
 
-        private void WriteGetHashCode(List<Property> compositeId)
+        private void WriteGetHashCode(List<Operation> ids)
         {
             AddBlankLine();
             WriteLine("// Needs this for composite id.");
@@ -125,10 +92,10 @@ namespace NClass.CodeGenerator
             WriteLine("{");
             IndentLevel++;
             Write("return (");
-            foreach (var id in compositeId)
+            foreach (var id in ids)
             {
                 Write(id.Name, false);
-                if (id != compositeId.Last())
+                if (id != ids.Last())
                     Write(" + \"|\" + ", false);
                 else
                     Write(").GetHashCode();", false);
@@ -208,7 +175,7 @@ namespace NClass.CodeGenerator
 
             if(Settings.Default.GenerateNHibernateMapping
                 && Type is ClassType)
-                WriteCompositeId();
+                WriteIds();
 
 			// Writing closing bracket of the type block
 			IndentLevel--;

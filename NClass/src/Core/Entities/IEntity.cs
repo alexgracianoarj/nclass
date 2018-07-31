@@ -30,7 +30,7 @@ namespace NClass.Core
 			get;
 		}
 
-        string HbmTableName 
+        string NHMTableName 
         { 
             get; 
             set; 

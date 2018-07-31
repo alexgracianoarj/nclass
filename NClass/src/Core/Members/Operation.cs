@@ -344,5 +344,69 @@ namespace NClass.Core
 
 			return true;
 		}
+
+        string nhmColumnName;
+
+        /// <exception cref="BadSyntaxException">
+        /// The <paramref name="value"/> does not fit to the syntax.
+        /// </exception>
+        public override string NHMColumnName
+        {
+            get
+            {
+                return nhmColumnName;
+            }
+            set
+            {
+                if ((new System.Text.RegularExpressions.Regex("[^a-zA-Z0-9_ ]").IsMatch(value)))
+                {
+                    throw new BadSyntaxException("Invalid HBM Column Name");
+                }
+                else
+                {
+                    if (nhmColumnName != value)
+                    {
+                        nhmColumnName = value;
+                        Changed();
+                    }
+                }
+            }
+        }
+
+        bool isPrimaryKey;
+
+        public override bool IsPrimaryKey
+        {
+            get
+            {
+                return isPrimaryKey;
+            }
+            set
+            {
+                if(isPrimaryKey != value)
+                {
+                    isPrimaryKey = value;
+                    Changed();
+                }
+            }
+        }
+
+        bool isNotNull;
+
+        public override bool IsNotNull
+        {
+            get
+            {
+                return isNotNull;
+            }
+            set
+            {
+                if(isNotNull != value)
+                {
+                    isNotNull = value;
+                    Changed();
+                }
+            }
+        }
 	}
 }
