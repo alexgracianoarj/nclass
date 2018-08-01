@@ -106,7 +106,7 @@ namespace NClass.CodeGenerator
                     }
                     xml.WriteEndElement();
                 }
-                else
+                else if (ids.Count == 1)
                 {
                     xml.WriteStartElement("id");
                     xml.WriteAttributeString("name", ids[0].Name);

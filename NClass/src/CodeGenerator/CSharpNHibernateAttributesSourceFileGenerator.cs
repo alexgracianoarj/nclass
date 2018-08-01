@@ -200,7 +200,7 @@ namespace NClass.CodeGenerator
                     AddBlankLine();
                 }
             }
-            else
+            else if (ids.Count == 1)
             {
                 WriteLine(
                     string.Format(
