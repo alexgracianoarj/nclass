@@ -167,7 +167,7 @@ namespace NClass.CodeGenerator
                         }
                         else
                         {
-                            if(Settings.Default.MappingType == MappingType.NHibernateAttributes)
+                            if(Settings.Default.DefaultMapping == MappingType.NHibernateAttributes)
                             {
                                 sourceFile = new CSharpNHibernateAttributesSourceFileGenerator(type, RootNamespace, model);
 
@@ -198,15 +198,15 @@ namespace NClass.CodeGenerator
 
                             if(type is ClassType)
                             {
-                                if (Settings.Default.MappingType == MappingType.NHibernateXml)
+                                if (Settings.Default.DefaultMapping == MappingType.NHibernateXml)
                                 {
                                     sourceFile = new CSharpNHibernateXmlSourceFileGenerator(type, RootNamespace, model);
                                 }
-                                else if (Settings.Default.MappingType == MappingType.FluentNHibernate)
+                                else if (Settings.Default.DefaultMapping == MappingType.FluentNHibernate)
                                 {
                                     sourceFile = new CSharpFluentNHibernateSourceFileGenerator(type, RootNamespace, model);
                                 }
-                                else if (Settings.Default.MappingType == MappingType.NHibernateByCode)
+                                else if (Settings.Default.DefaultMapping == MappingType.NHibernateByCode)
                                 {
                                     sourceFile = new CSharpNHibernateByCodeSourceFileGenerator(type, RootNamespace, model);
                                 }

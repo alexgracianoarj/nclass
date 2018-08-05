@@ -30,9 +30,13 @@ namespace NClass.CodeGenerator
 
         protected override void WriteFileContent()
         {
-            useLazyLoading = Settings.Default.UseLazyLoading;
+            useLazyLoading = Settings.Default.DefaultLazyFetching;
             useLowercaseUnderscored = Settings.Default.UseLowercaseAndUnderscoredWordsInDb;
-            idGeneratorType = EnumExtensions.GetDescription(Settings.Default.IdGeneratorType);
+
+            if (Type.IdGenerator == null)
+                idGeneratorType = EnumExtensions.GetDescription(Settings.Default.DefaultIdGenerator);
+            else
+                idGeneratorType = EnumExtensions.GetDescription((IdGeneratorType)Enum.Parse(typeof(IdGeneratorType), Type.IdGenerator));
 
             WriteHeader();
             WriteUsings();

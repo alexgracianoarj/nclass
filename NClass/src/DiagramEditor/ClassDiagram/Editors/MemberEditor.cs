@@ -81,9 +81,9 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
 				txtDeclaration.SelectionStart = cursorPosition;
 				txtDeclaration.ReadOnly = (member.MemberType == MemberType.Destructor);
 
-                int cursorPositionHbmColumn = txtNHMColumnName.SelectionStart;
+                int cursorPositionNHMColumn = txtNHMColumnName.SelectionStart;
                 txtNHMColumnName.Text = member.NHMColumnName;
-                txtNHMColumnName.SelectionStart = cursorPositionHbmColumn;
+                txtNHMColumnName.SelectionStart = cursorPositionNHMColumn;
 
                 chkIsPrimaryKey.Checked = member.IsPrimaryKey;
                 chkIsNotNull.Checked = member.IsNotNull;

@@ -98,6 +98,7 @@ namespace NClass.GUI
             classType.Modifier = ClassModifier.None;
             classType.Name = name;
             classType.NHMTableName = table.Name;
+            classType.IdGenerator = Enum.GetName(typeof(CodeGenerator.IdGeneratorType), CodeGenerator.Settings.Default.DefaultIdGenerator);
 
             foreach (var column in table.Columns)
             {

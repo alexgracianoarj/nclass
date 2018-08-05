@@ -25,6 +25,12 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
 
 			toolStripAdvancedOptions.Renderer = ToolStripSimplifiedRenderer.Default;
 
+            cboIdGenerator.SelectedIndexChanged -= cboIdGenerator_SelectedIndexChanged;
+
+            cboIdGenerator.DataSource = Enum.GetNames(typeof(CodeGenerator.IdGeneratorType));
+
+            cboIdGenerator.SelectedIndexChanged += cboIdGenerator_SelectedIndexChanged;
+
 			// Set this in the constructor instead of the designer so that the designer doesn't give an error about
 			// using the parent's TextChanged method.
             this.txtStereotype.TextChanged += new EventHandler(base.textBox_TextChanged);
@@ -42,7 +48,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
 			CompositeType type = Shape.CompositeType;
 
 			// If the user has entered a stereotype for this class, then expand the form to show the stereotype textbox.
-			if (type.Stereotype != null)
+			if (type.Stereotype != null || !string.IsNullOrEmpty(type.NHMTableName))
 			{
 				ExpandAdvancedOptions();
 			}
@@ -74,10 +80,11 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
 			CompositeType type = Shape.CompositeType;
 
             int cursorPositionStereotype = txtStereotype.SelectionStart;
-            int cursorPositionHbmTable = txtNHMTableName.SelectionStart;
+            int cursorPositionNHMTable = txtNHMTableName.SelectionStart;
 
             txtStereotype.Text = type.Stereotype;
             txtNHMTableName.Text = type.NHMTableName;
+            cboIdGenerator.SelectedItem = type.IdGenerator;
 
 			// Remove the angled characters when the stereotype is displayed in the editor.
 			if (!string.IsNullOrEmpty(txtStereotype.Text))
@@ -86,7 +93,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
 			}
 
             txtStereotype.SelectionStart = cursorPositionStereotype;
-            txtNHMTableName.SelectionStart = cursorPositionHbmTable;
+            txtNHMTableName.SelectionStart = cursorPositionNHMTable;
 
 			ResumeLayout();
 		}
@@ -159,7 +166,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
 		/// </summary>
 		private void ExpandAdvancedOptions()
 		{
-            this.Height = pnlAdvancedOptionsHbmTable.Bottom + pnlAdvancedOptionsHbmTable.Margin.Bottom;
+            this.Height = pnlAdvancedOptions.Bottom + pnlAdvancedOptions.Margin.Bottom;
 
 			toolAdvancedOptions.Image = Properties.Resources.CollapseSingle;
 			
@@ -203,9 +210,9 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
         }
 
         /// <summary>
-        /// Validates the stereotype that has been entered into the stereotype textbox.
+        /// Validates the NHMTableName that has been entered into the NHMTableName textbox.
         /// </summary>
-        /// <returns>True if the stereotype is valid, false if it is not.</returns>
+        /// <returns>True if the NHMTableName is valid, false if it is not.</returns>
         private bool ValidateNHMTableName()
         {
             if (NeedValidation)
@@ -219,7 +226,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
                     else
                     {
                         if ((new System.Text.RegularExpressions.Regex("[^a-zA-Z0-9_ ]").IsMatch(txtNHMTableName.Text)))
-                            throw new BadSyntaxException("Invalid HBM Table Name");
+                            throw new BadSyntaxException("Invalid NHM Table Name");
 
                         Shape.CompositeType.NHMTableName = txtNHMTableName.Text;
                     }
@@ -237,6 +244,13 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
         private void borderedTextBox1_KeyDown(object sender, KeyEventArgs e)
         {
             HandleCompositeTypeTextBoxKeyDown(ValidateNHMTableName, e.KeyCode, e.Modifiers);
+        }
+
+        private void cboIdGenerator_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Shape.CompositeType.IdGenerator = (string)cboIdGenerator.SelectedItem;
+            RefreshValues();
+            txtNHMTableName.Focus();
         }
 	}
 }

@@ -289,5 +289,11 @@ namespace NClass.Core
             get;
             set;
         }
+
+        public virtual string IdGenerator
+        {
+            get;
+            set;
+        }
 	}
 }

@@ -54,7 +54,7 @@ namespace NClass.CodeGenerator
 			grpCodeStyle.Text = Strings.CodeStyle;
 			chkUseTabs.Text = Strings.UseTabs;
 			lblIndentSize.Text = Strings.IndentSize;
-			chkNotImplemented.Text = Strings.UseNotImplementedExceptions;
+			rbNotImplemented.Text = Strings.UseNotImplementedExceptions;
 		}
 
 		private void UpdateValues()
@@ -66,12 +66,12 @@ namespace NClass.CodeGenerator
 			chkUseTabs.Checked = Settings.Default.UseTabsForIndents;
 			updIndentSize.Value = Settings.Default.IndentSize;
 			cboSolutionType.SelectedItem = Settings.Default.SolutionType;
-			chkNotImplemented.Checked = Settings.Default.UseNotImplementedExceptions;
-            chkAutomaticProperties.Checked = Settings.Default.UseAutomaticProperties;
+			rbNotImplemented.Checked = Settings.Default.UseNotImplementedExceptions;
+            rbAutomaticProperties.Checked = Settings.Default.UseAutomaticProperties;
             chkGenerateNHibernateMapping.Checked = Settings.Default.GenerateNHibernateMapping;
-            cboMappingType.SelectedItem = Settings.Default.MappingType;
-            cboIdGeneratorType.SelectedItem = Settings.Default.IdGeneratorType;
-            chkUseLazyLoading.Checked = Settings.Default.UseLazyLoading;
+            cboDefaultMapping.SelectedItem = Settings.Default.DefaultMapping;
+            cboDefaultIdGenerator.SelectedItem = Settings.Default.DefaultIdGenerator;
+            chkDefaultLazyFetching.Checked = Settings.Default.DefaultLazyFetching;
             chkUseLowercaseUnderscoredWordsInDb.Checked = Settings.Default.UseLowercaseAndUnderscoredWordsInDb;
             txtTextPrefix.Text = Settings.Default.PrefixTable;
             chkGenerateCodeFromTemplates.Checked = Settings.Default.GenerateCodeFromTemplates;
@@ -137,12 +137,12 @@ namespace NClass.CodeGenerator
 
         private void PopulateMappingType()
         {
-            cboMappingType.DataSource = Enum.GetValues(typeof(MappingType));
+            cboDefaultMapping.DataSource = Enum.GetValues(typeof(MappingType));
         }
 
         private void PopulateIdGeneratorType()
         {
-            cboIdGeneratorType.DataSource = Enum.GetValues(typeof(IdGeneratorType));
+            cboDefaultIdGenerator.DataSource = Enum.GetValues(typeof(IdGeneratorType));
         }
 
         private void PopulateSqlToServerType()
@@ -355,12 +355,12 @@ namespace NClass.CodeGenerator
 			Settings.Default.UseTabsForIndents = chkUseTabs.Checked;
 			Settings.Default.IndentSize = (int) updIndentSize.Value;
             Settings.Default.SolutionType = (SolutionType)cboSolutionType.SelectedItem;
-			Settings.Default.UseNotImplementedExceptions = chkNotImplemented.Checked;
-            Settings.Default.UseAutomaticProperties = chkAutomaticProperties.Checked;
+			Settings.Default.UseNotImplementedExceptions = rbNotImplemented.Checked;
+            Settings.Default.UseAutomaticProperties = rbAutomaticProperties.Checked;
             Settings.Default.GenerateNHibernateMapping = chkGenerateNHibernateMapping.Checked;
-            Settings.Default.MappingType = (MappingType) cboMappingType.SelectedItem;
-            Settings.Default.IdGeneratorType = (IdGeneratorType)cboIdGeneratorType.SelectedItem;
-            Settings.Default.UseLazyLoading = chkUseLazyLoading.Checked;
+            Settings.Default.DefaultMapping = (MappingType) cboDefaultMapping.SelectedItem;
+            Settings.Default.DefaultIdGenerator = (IdGeneratorType)cboDefaultIdGenerator.SelectedItem;
+            Settings.Default.DefaultLazyFetching = chkDefaultLazyFetching.Checked;
             Settings.Default.UseLowercaseAndUnderscoredWordsInDb = chkUseLowercaseUnderscoredWordsInDb.Checked;
             Settings.Default.PrefixTable = txtTextPrefix.Text.Trim();
             Settings.Default.GenerateCodeFromTemplates = chkGenerateCodeFromTemplates.Checked;

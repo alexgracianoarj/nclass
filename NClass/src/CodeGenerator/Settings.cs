@@ -22,7 +22,7 @@ using System.IO;
 
 namespace NClass.CodeGenerator
 {
-	internal sealed partial class Settings
+	public sealed partial class Settings
 	{
 		Dictionary<Language, StringCollection> importLists = new Dictionary<Language, StringCollection>();
 

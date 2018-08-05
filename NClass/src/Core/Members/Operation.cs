@@ -360,7 +360,7 @@ namespace NClass.Core
             {
                 if ((new System.Text.RegularExpressions.Regex("[^a-zA-Z0-9_ ]").IsMatch(value)))
                 {
-                    throw new BadSyntaxException("Invalid HBM Column Name");
+                    throw new BadSyntaxException("Invalid NHM Column Name");
                 }
                 else
                 {

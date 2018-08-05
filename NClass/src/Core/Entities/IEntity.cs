@@ -35,5 +35,11 @@ namespace NClass.Core
             get; 
             set; 
         }
+
+        string IdGenerator
+        {
+            get;
+            set;
+        }
 	}
 }

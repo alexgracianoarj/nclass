@@ -660,7 +660,10 @@ namespace NClass.Core
 					IEntity entity = GetEntity(type);
 
                     if (entity is ClassType)
+                    {
                         entity.NHMTableName = node.GetAttribute("nhmTableName");
+                        entity.IdGenerator = (node.GetAttribute("idGenerator") == string.Empty) ? null : node.GetAttribute("idGenerator");
+                    }
  
 					entity.Deserialize(node);
 				}
@@ -810,7 +813,10 @@ namespace NClass.Core
                 child.SetAttribute("type", entity.EntityType.ToString());
                 
                 if (entity is ClassType)
+                {
                     child.SetAttribute("nhmTableName", entity.NHMTableName);
+                    child.SetAttribute("idGenerator", entity.IdGenerator);
+                }
 				
                 entitiesChild.AppendChild(child);
 			}

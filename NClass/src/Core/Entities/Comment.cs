@@ -144,6 +144,16 @@ namespace NClass.Core
 			}
 		}
 
-        public string NHMTableName { get; set; }
+        public string NHMTableName 
+        { 
+            get; 
+            set; 
+        }
+
+        public string IdGenerator
+        {
+            get;
+            set;
+        }
 	}
 }

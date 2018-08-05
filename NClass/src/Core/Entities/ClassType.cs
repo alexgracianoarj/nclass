@@ -238,6 +238,7 @@ namespace NClass.Core
 			modifier = classType.modifier;
 			Stereotype = classType.Stereotype;
             NHMTableName = classType.NHMTableName;
+            IdGenerator = classType.IdGenerator;
 		}
 
 		public abstract ClassType Clone();
@@ -314,5 +315,26 @@ namespace NClass.Core
                 }
             }
         }
-	}
+
+        string idGenerator;
+
+        /// <summary>
+        /// Gets or sets the idGenerator for this class.
+        /// </summary>
+        public override string IdGenerator
+        {
+            get
+            {
+                return idGenerator;
+            }
+            set
+            {
+                if (value != idGenerator)
+                {
+                    idGenerator = value;
+                    Changed();
+                }
+            }
+        }
+    }
 }

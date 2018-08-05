@@ -35,13 +35,13 @@
     <Setting Name="GenerateNHibernateMapping" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="MappingType" Type="NClass.CodeGenerator.MappingType" Scope="User">
+    <Setting Name="DefaultMapping" Type="NClass.CodeGenerator.MappingType" Scope="User">
       <Value Profile="(Default)">NHibernateXml</Value>
     </Setting>
-    <Setting Name="IdGeneratorType" Type="NClass.CodeGenerator.IdGeneratorType" Scope="User">
+    <Setting Name="DefaultIdGenerator" Type="NClass.CodeGenerator.IdGeneratorType" Scope="User">
       <Value Profile="(Default)">Increment</Value>
     </Setting>
-    <Setting Name="UseLazyLoading" Type="System.Boolean" Scope="User">
+    <Setting Name="DefaultLazyFetching" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="UseLowercaseAndUnderscoredWordsInDb" Type="System.Boolean" Scope="User">

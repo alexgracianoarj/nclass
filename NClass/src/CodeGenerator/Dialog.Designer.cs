@@ -41,12 +41,12 @@
             this.txtNewImport = new System.Windows.Forms.TextBox();
             this.btnAddItem = new System.Windows.Forms.Button();
             this.grpCodeStyle = new System.Windows.Forms.GroupBox();
-            this.chkAutomaticProperties = new System.Windows.Forms.CheckBox();
-            this.chkNotImplemented = new System.Windows.Forms.CheckBox();
+            this.rbAutomaticProperties = new System.Windows.Forms.RadioButton();
+            this.rbNotImplemented = new System.Windows.Forms.RadioButton();
             this.chkUseLowercaseUnderscoredWordsInDb = new System.Windows.Forms.CheckBox();
-            this.chkUseLazyLoading = new System.Windows.Forms.CheckBox();
-            this.cboMappingType = new System.Windows.Forms.ComboBox();
-            this.lblTypeOfMapping = new System.Windows.Forms.Label();
+            this.chkDefaultLazyFetching = new System.Windows.Forms.CheckBox();
+            this.cboDefaultMapping = new System.Windows.Forms.ComboBox();
+            this.lblDefaultMapping = new System.Windows.Forms.Label();
             this.chkGenerateNHibernateMapping = new System.Windows.Forms.CheckBox();
             this.lblSolutionType = new System.Windows.Forms.Label();
             this.cboSolutionType = new System.Windows.Forms.ComboBox();
@@ -56,8 +56,8 @@
             this.txtDestination = new System.Windows.Forms.TextBox();
             this.lblDestination = new System.Windows.Forms.Label();
             this.gpbNHibernate = new System.Windows.Forms.GroupBox();
-            this.lblIdGeneratorType = new System.Windows.Forms.Label();
-            this.cboIdGeneratorType = new System.Windows.Forms.ComboBox();
+            this.lblDefaultIdGenerator = new System.Windows.Forms.Label();
+            this.cboDefaultIdGenerator = new System.Windows.Forms.ComboBox();
             this.lblUsePrefixTables = new System.Windows.Forms.Label();
             this.txtTextPrefix = new System.Windows.Forms.TextBox();
             this.chkGenerateCodeFromTemplates = new System.Windows.Forms.CheckBox();
@@ -229,8 +229,8 @@
             // grpCodeStyle
             // 
             this.grpCodeStyle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.grpCodeStyle.Controls.Add(this.chkAutomaticProperties);
-            this.grpCodeStyle.Controls.Add(this.chkNotImplemented);
+            this.grpCodeStyle.Controls.Add(this.rbAutomaticProperties);
+            this.grpCodeStyle.Controls.Add(this.rbNotImplemented);
             this.grpCodeStyle.Controls.Add(this.lblIndentSize);
             this.grpCodeStyle.Controls.Add(this.updIndentSize);
             this.grpCodeStyle.Controls.Add(this.chkUseTabs);
@@ -241,25 +241,25 @@
             this.grpCodeStyle.TabStop = false;
             this.grpCodeStyle.Text = "Code style";
             // 
-            // chkAutomaticProperties
+            // rbAutomaticProperties
             // 
-            this.chkAutomaticProperties.AutoSize = true;
-            this.chkAutomaticProperties.Location = new System.Drawing.Point(13, 105);
-            this.chkAutomaticProperties.Name = "chkAutomaticProperties";
-            this.chkAutomaticProperties.Size = new System.Drawing.Size(122, 17);
-            this.chkAutomaticProperties.TabIndex = 5;
-            this.chkAutomaticProperties.Text = "Automatic properties";
-            this.chkAutomaticProperties.UseVisualStyleBackColor = true;
+            this.rbAutomaticProperties.AutoSize = true;
+            this.rbAutomaticProperties.Location = new System.Drawing.Point(13, 105);
+            this.rbAutomaticProperties.Name = "rbAutomaticProperties";
+            this.rbAutomaticProperties.Size = new System.Drawing.Size(121, 17);
+            this.rbAutomaticProperties.TabIndex = 5;
+            this.rbAutomaticProperties.Text = "Automatic properties";
+            this.rbAutomaticProperties.UseVisualStyleBackColor = true;
             // 
-            // chkNotImplemented
+            // rbNotImplemented
             // 
-            this.chkNotImplemented.AutoSize = true;
-            this.chkNotImplemented.Location = new System.Drawing.Point(13, 82);
-            this.chkNotImplemented.Name = "chkNotImplemented";
-            this.chkNotImplemented.Size = new System.Drawing.Size(243, 17);
-            this.chkNotImplemented.TabIndex = 4;
-            this.chkNotImplemented.Text = "Fill methods with \'Not implemented\' exceptions";
-            this.chkNotImplemented.UseVisualStyleBackColor = true;
+            this.rbNotImplemented.AutoSize = true;
+            this.rbNotImplemented.Location = new System.Drawing.Point(13, 82);
+            this.rbNotImplemented.Name = "rbNotImplemented";
+            this.rbNotImplemented.Size = new System.Drawing.Size(242, 17);
+            this.rbNotImplemented.TabIndex = 4;
+            this.rbNotImplemented.Text = "Fill methods with \'Not implemented\' exceptions";
+            this.rbNotImplemented.UseVisualStyleBackColor = true;
             // 
             // chkUseLowercaseUnderscoredWordsInDb
             // 
@@ -272,33 +272,33 @@
     "base)";
             this.chkUseLowercaseUnderscoredWordsInDb.UseVisualStyleBackColor = true;
             // 
-            // chkUseLazyLoading
+            // chkDefaultLazyFetching
             // 
-            this.chkUseLazyLoading.AutoSize = true;
-            this.chkUseLazyLoading.Location = new System.Drawing.Point(13, 82);
-            this.chkUseLazyLoading.Name = "chkUseLazyLoading";
-            this.chkUseLazyLoading.Size = new System.Drawing.Size(103, 17);
-            this.chkUseLazyLoading.TabIndex = 9;
-            this.chkUseLazyLoading.Text = "Use lazy loading";
-            this.chkUseLazyLoading.UseVisualStyleBackColor = true;
+            this.chkDefaultLazyFetching.AutoSize = true;
+            this.chkDefaultLazyFetching.Location = new System.Drawing.Point(13, 82);
+            this.chkDefaultLazyFetching.Name = "chkDefaultLazyFetching";
+            this.chkDefaultLazyFetching.Size = new System.Drawing.Size(122, 17);
+            this.chkDefaultLazyFetching.TabIndex = 9;
+            this.chkDefaultLazyFetching.Text = "Default lazy fetching";
+            this.chkDefaultLazyFetching.UseVisualStyleBackColor = true;
             // 
-            // cboMappingType
+            // cboDefaultMapping
             // 
-            this.cboMappingType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboMappingType.FormattingEnabled = true;
-            this.cboMappingType.Location = new System.Drawing.Point(13, 55);
-            this.cboMappingType.Name = "cboMappingType";
-            this.cboMappingType.Size = new System.Drawing.Size(120, 21);
-            this.cboMappingType.TabIndex = 8;
+            this.cboDefaultMapping.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboDefaultMapping.FormattingEnabled = true;
+            this.cboDefaultMapping.Location = new System.Drawing.Point(13, 55);
+            this.cboDefaultMapping.Name = "cboDefaultMapping";
+            this.cboDefaultMapping.Size = new System.Drawing.Size(120, 21);
+            this.cboDefaultMapping.TabIndex = 8;
             // 
-            // lblTypeOfMapping
+            // lblDefaultMapping
             // 
-            this.lblTypeOfMapping.AutoSize = true;
-            this.lblTypeOfMapping.Location = new System.Drawing.Point(10, 39);
-            this.lblTypeOfMapping.Name = "lblTypeOfMapping";
-            this.lblTypeOfMapping.Size = new System.Drawing.Size(89, 13);
-            this.lblTypeOfMapping.TabIndex = 7;
-            this.lblTypeOfMapping.Text = "Type of mapping:";
+            this.lblDefaultMapping.AutoSize = true;
+            this.lblDefaultMapping.Location = new System.Drawing.Point(10, 39);
+            this.lblDefaultMapping.Name = "lblDefaultMapping";
+            this.lblDefaultMapping.Size = new System.Drawing.Size(87, 13);
+            this.lblDefaultMapping.TabIndex = 7;
+            this.lblDefaultMapping.Text = "Default mapping:";
             // 
             // chkGenerateNHibernateMapping
             // 
@@ -398,14 +398,14 @@
             // 
             // gpbNHibernate
             // 
-            this.gpbNHibernate.Controls.Add(this.lblIdGeneratorType);
-            this.gpbNHibernate.Controls.Add(this.cboIdGeneratorType);
+            this.gpbNHibernate.Controls.Add(this.lblDefaultIdGenerator);
+            this.gpbNHibernate.Controls.Add(this.cboDefaultIdGenerator);
             this.gpbNHibernate.Controls.Add(this.lblUsePrefixTables);
             this.gpbNHibernate.Controls.Add(this.txtTextPrefix);
             this.gpbNHibernate.Controls.Add(this.chkGenerateNHibernateMapping);
-            this.gpbNHibernate.Controls.Add(this.lblTypeOfMapping);
-            this.gpbNHibernate.Controls.Add(this.cboMappingType);
-            this.gpbNHibernate.Controls.Add(this.chkUseLazyLoading);
+            this.gpbNHibernate.Controls.Add(this.lblDefaultMapping);
+            this.gpbNHibernate.Controls.Add(this.cboDefaultMapping);
+            this.gpbNHibernate.Controls.Add(this.chkDefaultLazyFetching);
             this.gpbNHibernate.Controls.Add(this.chkUseLowercaseUnderscoredWordsInDb);
             this.gpbNHibernate.Location = new System.Drawing.Point(311, 242);
             this.gpbNHibernate.Name = "gpbNHibernate";
@@ -414,23 +414,23 @@
             this.gpbNHibernate.TabStop = false;
             this.gpbNHibernate.Text = "NHibernate";
             // 
-            // lblIdGeneratorType
+            // lblDefaultIdGenerator
             // 
-            this.lblIdGeneratorType.AutoSize = true;
-            this.lblIdGeneratorType.Location = new System.Drawing.Point(136, 39);
-            this.lblIdGeneratorType.Name = "lblIdGeneratorType";
-            this.lblIdGeneratorType.Size = new System.Drawing.Size(106, 13);
-            this.lblIdGeneratorType.TabIndex = 16;
-            this.lblIdGeneratorType.Text = "Type of Id generator:";
+            this.lblDefaultIdGenerator.AutoSize = true;
+            this.lblDefaultIdGenerator.Location = new System.Drawing.Point(136, 39);
+            this.lblDefaultIdGenerator.Name = "lblDefaultIdGenerator";
+            this.lblDefaultIdGenerator.Size = new System.Drawing.Size(103, 13);
+            this.lblDefaultIdGenerator.TabIndex = 16;
+            this.lblDefaultIdGenerator.Text = "Default id generator:";
             // 
-            // cboIdGeneratorType
+            // cboDefaultIdGenerator
             // 
-            this.cboIdGeneratorType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboIdGeneratorType.FormattingEnabled = true;
-            this.cboIdGeneratorType.Location = new System.Drawing.Point(139, 55);
-            this.cboIdGeneratorType.Name = "cboIdGeneratorType";
-            this.cboIdGeneratorType.Size = new System.Drawing.Size(121, 21);
-            this.cboIdGeneratorType.TabIndex = 15;
+            this.cboDefaultIdGenerator.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboDefaultIdGenerator.FormattingEnabled = true;
+            this.cboDefaultIdGenerator.Location = new System.Drawing.Point(139, 55);
+            this.cboDefaultIdGenerator.Name = "cboDefaultIdGenerator";
+            this.cboDefaultIdGenerator.Size = new System.Drawing.Size(121, 21);
+            this.cboDefaultIdGenerator.TabIndex = 15;
             // 
             // lblUsePrefixTables
             // 
@@ -564,25 +564,25 @@
 		private System.Windows.Forms.GroupBox grpCodeStyle;
 		private System.Windows.Forms.Label lblSolutionType;
 		private System.Windows.Forms.ComboBox cboSolutionType;
-		private System.Windows.Forms.CheckBox chkNotImplemented;
+		private System.Windows.Forms.RadioButton rbNotImplemented;
 		private System.Windows.Forms.ComboBox cboLanguage;
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
 		private System.Windows.Forms.Button btnBrowse;
 		private System.Windows.Forms.TextBox txtDestination;
 		private System.Windows.Forms.Label lblDestination;
-        private System.Windows.Forms.CheckBox chkAutomaticProperties;
+        private System.Windows.Forms.RadioButton rbAutomaticProperties;
         private System.Windows.Forms.CheckBox chkGenerateNHibernateMapping;
-        private System.Windows.Forms.ComboBox cboMappingType;
-        private System.Windows.Forms.Label lblTypeOfMapping;
-        private System.Windows.Forms.CheckBox chkUseLazyLoading;
+        private System.Windows.Forms.ComboBox cboDefaultMapping;
+        private System.Windows.Forms.Label lblDefaultMapping;
+        private System.Windows.Forms.CheckBox chkDefaultLazyFetching;
         private System.Windows.Forms.CheckBox chkUseLowercaseUnderscoredWordsInDb;
         private System.Windows.Forms.GroupBox gpbNHibernate;
         private System.Windows.Forms.TextBox txtTextPrefix;
         private System.Windows.Forms.Label lblUsePrefixTables;
         private System.Windows.Forms.CheckBox chkGenerateCodeFromTemplates;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Label lblIdGeneratorType;
-        private System.Windows.Forms.ComboBox cboIdGeneratorType;
+        private System.Windows.Forms.Label lblDefaultIdGenerator;
+        private System.Windows.Forms.ComboBox cboDefaultIdGenerator;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.CheckBox chkGenerateSqlCode;
         private System.Windows.Forms.ComboBox cboSqlToServerType;
