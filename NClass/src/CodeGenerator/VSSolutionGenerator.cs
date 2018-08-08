@@ -27,13 +27,15 @@ namespace NClass.CodeGenerator
 	internal sealed class VSSolutionGenerator : SolutionGenerator
 	{
 		SolutionType version = SolutionType.VisualStudio2013;
+        DotNetVersion dotNetVersion = DotNetVersion.v20;
 
 		/// <exception cref="ArgumentNullException">
 		/// <paramref name="project"/> is null.
 		/// </exception>
-		public VSSolutionGenerator(Project project, SolutionType version) : base(project)
+		public VSSolutionGenerator(Project project, SolutionType version, DotNetVersion dotNetVersion) : base(project)
 		{
 			Version = version;
+            this.dotNetVersion = dotNetVersion;
 		}
 
 		public SolutionType Version
@@ -82,7 +84,7 @@ namespace NClass.CodeGenerator
 			Language language = model.Language;
 
 			if (language == CSharpLanguage.Instance)
-				return new CSharpProjectGenerator(model, Version);
+				return new CSharpProjectGenerator(model, Version, dotNetVersion);
 			if (language == JavaLanguage.Instance)
 				return new JavaProjectGenerator(model);
 

@@ -116,7 +116,7 @@ namespace NClass.CodeGenerator {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool GenerateNHibernateMapping {
             get {
                 return ((bool)(this["GenerateNHibernateMapping"]));
@@ -231,6 +231,18 @@ namespace NClass.CodeGenerator {
             }
             set {
                 this["SQLToServerType"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("v472")]
+        public global::NClass.CodeGenerator.DotNetVersion TargetFrameworkVersion {
+            get {
+                return ((global::NClass.CodeGenerator.DotNetVersion)(this["TargetFrameworkVersion"]));
+            }
+            set {
+                this["TargetFrameworkVersion"] = value;
             }
         }
     }

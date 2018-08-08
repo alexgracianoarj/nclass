@@ -33,7 +33,7 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="GenerateNHibernateMapping" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
+      <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="DefaultMapping" Type="NClass.CodeGenerator.MappingType" Scope="User">
       <Value Profile="(Default)">NHibernateXml</Value>
@@ -61,6 +61,9 @@
     </Setting>
     <Setting Name="SQLToServerType" Type="DatabaseSchemaReader.DataSchema.SqlType" Scope="User">
       <Value Profile="(Default)">SqlServer</Value>
+    </Setting>
+    <Setting Name="TargetFrameworkVersion" Type="NClass.CodeGenerator.DotNetVersion" Scope="User">
+      <Value Profile="(Default)">v472</Value>
     </Setting>
   </Settings>
 </SettingsFile>

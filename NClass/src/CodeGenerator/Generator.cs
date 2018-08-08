@@ -25,17 +25,17 @@ namespace NClass.CodeGenerator
 		/// <exception cref="ArgumentNullException">
 		/// <paramref name="project"/> is null.
 		/// </exception>
-		public Generator(Project project, SolutionType type)
+		public Generator(Project project, SolutionType type, DotNetVersion dotNetVersion)
 		{
 			if (project == null)
 				throw new ArgumentNullException("project");
 
-			solutionGenerator = CreateSolutionGenerator(project, type);
+			solutionGenerator = CreateSolutionGenerator(project, type, dotNetVersion);
 		}
 
-		protected virtual SolutionGenerator CreateSolutionGenerator(Project project, SolutionType type)
+		protected virtual SolutionGenerator CreateSolutionGenerator(Project project, SolutionType type, DotNetVersion dotNetVersion)
 		{
-			return new VSSolutionGenerator(project, type);
+			return new VSSolutionGenerator(project, type, dotNetVersion);
 		}
 
 		/// <exception cref="ArgumentException">

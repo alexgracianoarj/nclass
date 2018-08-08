@@ -41,6 +41,14 @@ namespace NClass.GUI
 
             serverTypeComboBox.SelectedIndexChanged += OnServerTypeSelectedIndexChanged;
 
+            chkNHibernateMapping.Checked = CodeGenerator.Settings.Default.GenerateNHibernateMapping;
+
+            cboDefaultIdGenerator.DataSource = Enum.GetValues(typeof(CodeGenerator.IdGeneratorType));
+
+            cboDefaultIdGenerator.SelectedItem = CodeGenerator.Settings.Default.DefaultIdGenerator;
+
+            chkDefaultFetching.Checked = CodeGenerator.Settings.Default.DefaultLazyFetching;
+
             Load += OnConnectionDialogLoad;
         }
 
@@ -108,6 +116,11 @@ namespace NClass.GUI
         private void OnSaveButtonClick(object sender, EventArgs e)
         {
             CaptureConnection();
+
+            CodeGenerator.Settings.Default.GenerateNHibernateMapping = chkNHibernateMapping.Checked;
+            CodeGenerator.Settings.Default.DefaultIdGenerator = (CodeGenerator.IdGeneratorType)cboDefaultIdGenerator.SelectedItem;
+            CodeGenerator.Settings.Default.DefaultLazyFetching = chkDefaultFetching.Checked;
+            CodeGenerator.Settings.Default.Save();
         }
 
         private ConnectionSettings CreateNewConnection(SqlType serverType = SqlType.SqlServer)

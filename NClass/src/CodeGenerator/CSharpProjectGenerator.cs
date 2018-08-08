@@ -28,13 +28,15 @@ namespace NClass.CodeGenerator
 	internal sealed class CSharpProjectGenerator : ProjectGenerator
 	{
 		SolutionType solutionType;
+        DotNetVersion dotNetVersion;
 
 		/// <exception cref="ArgumentNullException">
 		/// <paramref name="model"/> is null.
 		/// </exception>
-		public CSharpProjectGenerator(Model model, SolutionType solutionType) : base(model)
+		public CSharpProjectGenerator(Model model, SolutionType solutionType, DotNetVersion dotNetVersion) : base(model)
 		{
 			this.solutionType = solutionType;
+            this.dotNetVersion = dotNetVersion;
 		}
 
 		public override string RelativeProjectFileName
@@ -67,6 +69,14 @@ namespace NClass.CodeGenerator
 						line = line.Replace("${RootNamespace}", RootNamespace);
                         line = line.Replace("${AssemblyName}", AssemblyName);
 
+                        if (line.Contains("${VersionNumber}"))
+                        {
+                            if (solutionType == SolutionType.VisualStudio2010)
+                                line = Regex.Replace(line, @"\${VersionNumber}", "11.0");
+                            else
+                                line = Regex.Replace(line, @"\${VersionNumber}", "12.0");
+                        }
+
 						if (line.Contains("${VS2005:"))
 						{
 							if (solutionType == SolutionType.VisualStudio2010)
@@ -87,6 +97,14 @@ namespace NClass.CodeGenerator
 							if (line.Length == 0)
 								continue;
 						}
+
+                        if (line.Contains("${DotNetVersion}"))
+                        {
+                            line = Regex.Replace(line, @"\${DotNetVersion}", EnumExtensions.GetDescription(dotNetVersion));
+
+                            if (line.Length == 0)
+                                continue;
+                        }
 
 						if (line.Contains("${SourceFile}"))
 						{

@@ -44,13 +44,19 @@
             this.cboConnection = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.txtTextPrefix = new System.Windows.Forms.TextBox();
+            this.gpNHibernate = new System.Windows.Forms.GroupBox();
+            this.chkDefaultFetching = new System.Windows.Forms.CheckBox();
+            this.cboDefaultIdGenerator = new System.Windows.Forms.ComboBox();
+            this.lblDefaultIdGenerator = new System.Windows.Forms.Label();
+            this.chkNHibernateMapping = new System.Windows.Forms.CheckBox();
+            this.gpNHibernate.SuspendLayout();
             this.SuspendLayout();
             // 
             // cancelButton
             // 
-            this.cancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cancelButton.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cancelButton.Location = new System.Drawing.Point(506, 88);
+            this.cancelButton.Location = new System.Drawing.Point(501, 144);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(75, 23);
             this.cancelButton.TabIndex = 0;
@@ -59,8 +65,9 @@
             // 
             // saveButton
             // 
+            this.saveButton.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.saveButton.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.saveButton.Location = new System.Drawing.Point(304, 88);
+            this.saveButton.Location = new System.Drawing.Point(293, 144);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(112, 23);
             this.saveButton.TabIndex = 1;
@@ -97,7 +104,7 @@
             // 
             // nameTextBox
             // 
-            this.nameTextBox.Location = new System.Drawing.Point(249, 10);
+            this.nameTextBox.Location = new System.Drawing.Point(242, 10);
             this.nameTextBox.Name = "nameTextBox";
             this.nameTextBox.Size = new System.Drawing.Size(125, 20);
             this.nameTextBox.TabIndex = 3;
@@ -106,23 +113,24 @@
             // 
             this.connectionStringTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.connectionStringTextBox.Location = new System.Drawing.Point(122, 36);
+            this.connectionStringTextBox.Location = new System.Drawing.Point(114, 36);
             this.connectionStringTextBox.Name = "connectionStringTextBox";
-            this.connectionStringTextBox.Size = new System.Drawing.Size(427, 20);
+            this.connectionStringTextBox.Size = new System.Drawing.Size(429, 20);
             this.connectionStringTextBox.TabIndex = 3;
             // 
             // serverTypeComboBox
             // 
             this.serverTypeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.serverTypeComboBox.FormattingEnabled = true;
-            this.serverTypeComboBox.Location = new System.Drawing.Point(380, 10);
+            this.serverTypeComboBox.Location = new System.Drawing.Point(373, 10);
             this.serverTypeComboBox.Name = "serverTypeComboBox";
             this.serverTypeComboBox.Size = new System.Drawing.Size(122, 21);
             this.serverTypeComboBox.TabIndex = 16;
             // 
             // deleteButton
             // 
-            this.deleteButton.Location = new System.Drawing.Point(422, 88);
+            this.deleteButton.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.deleteButton.Location = new System.Drawing.Point(411, 144);
             this.deleteButton.Name = "deleteButton";
             this.deleteButton.Size = new System.Drawing.Size(80, 23);
             this.deleteButton.TabIndex = 1;
@@ -132,8 +140,8 @@
             // 
             // addButton
             // 
-            this.addButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.addButton.Location = new System.Drawing.Point(506, 8);
+            this.addButton.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.addButton.Location = new System.Drawing.Point(501, 8);
             this.addButton.Name = "addButton";
             this.addButton.Size = new System.Drawing.Size(75, 23);
             this.addButton.TabIndex = 17;
@@ -143,8 +151,8 @@
             // 
             // connectionStringButton
             // 
-            this.connectionStringButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.connectionStringButton.Location = new System.Drawing.Point(554, 34);
+            this.connectionStringButton.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.connectionStringButton.Location = new System.Drawing.Point(549, 34);
             this.connectionStringButton.Name = "connectionStringButton";
             this.connectionStringButton.Size = new System.Drawing.Size(27, 23);
             this.connectionStringButton.TabIndex = 18;
@@ -154,7 +162,7 @@
             // 
             // btnConnect
             // 
-            this.btnConnect.Location = new System.Drawing.Point(122, 60);
+            this.btnConnect.Location = new System.Drawing.Point(114, 60);
             this.btnConnect.Name = "btnConnect";
             this.btnConnect.Size = new System.Drawing.Size(122, 23);
             this.btnConnect.TabIndex = 19;
@@ -167,7 +175,7 @@
             this.cboSchema.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.cboSchema.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboSchema.FormattingEnabled = true;
-            this.cboSchema.Location = new System.Drawing.Point(249, 62);
+            this.cboSchema.Location = new System.Drawing.Point(242, 62);
             this.cboSchema.Name = "cboSchema";
             this.cboSchema.Size = new System.Drawing.Size(178, 21);
             this.cboSchema.TabIndex = 21;
@@ -176,7 +184,7 @@
             // 
             this.cboConnection.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboConnection.FormattingEnabled = true;
-            this.cboConnection.Location = new System.Drawing.Point(122, 10);
+            this.cboConnection.Location = new System.Drawing.Point(114, 10);
             this.cboConnection.Name = "cboConnection";
             this.cboConnection.Size = new System.Drawing.Size(122, 21);
             this.cboConnection.TabIndex = 22;
@@ -185,7 +193,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(433, 65);
+            this.label4.Location = new System.Drawing.Point(426, 65);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(81, 13);
             this.label4.TabIndex = 23;
@@ -193,18 +201,70 @@
             // 
             // txtTextPrefix
             // 
-            this.txtTextPrefix.Location = new System.Drawing.Point(520, 62);
+            this.txtTextPrefix.Location = new System.Drawing.Point(513, 62);
             this.txtTextPrefix.Name = "txtTextPrefix";
-            this.txtTextPrefix.Size = new System.Drawing.Size(61, 20);
+            this.txtTextPrefix.Size = new System.Drawing.Size(63, 20);
             this.txtTextPrefix.TabIndex = 24;
             this.txtTextPrefix.Text = "pfx_";
+            // 
+            // gpNHibernate
+            // 
+            this.gpNHibernate.Controls.Add(this.chkDefaultFetching);
+            this.gpNHibernate.Controls.Add(this.cboDefaultIdGenerator);
+            this.gpNHibernate.Controls.Add(this.lblDefaultIdGenerator);
+            this.gpNHibernate.Controls.Add(this.chkNHibernateMapping);
+            this.gpNHibernate.Location = new System.Drawing.Point(15, 89);
+            this.gpNHibernate.Name = "gpNHibernate";
+            this.gpNHibernate.Size = new System.Drawing.Size(561, 49);
+            this.gpNHibernate.TabIndex = 25;
+            this.gpNHibernate.TabStop = false;
+            this.gpNHibernate.Text = "NHibernate";
+            // 
+            // chkDefaultFetching
+            // 
+            this.chkDefaultFetching.AutoSize = true;
+            this.chkDefaultFetching.Location = new System.Drawing.Point(345, 19);
+            this.chkDefaultFetching.Name = "chkDefaultFetching";
+            this.chkDefaultFetching.Size = new System.Drawing.Size(122, 17);
+            this.chkDefaultFetching.TabIndex = 3;
+            this.chkDefaultFetching.Text = "Default lazy fetching";
+            this.chkDefaultFetching.UseVisualStyleBackColor = true;
+            // 
+            // cboDefaultIdGenerator
+            // 
+            this.cboDefaultIdGenerator.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboDefaultIdGenerator.FormattingEnabled = true;
+            this.cboDefaultIdGenerator.Location = new System.Drawing.Point(206, 17);
+            this.cboDefaultIdGenerator.Name = "cboDefaultIdGenerator";
+            this.cboDefaultIdGenerator.Size = new System.Drawing.Size(121, 21);
+            this.cboDefaultIdGenerator.TabIndex = 2;
+            // 
+            // lblDefaultIdGenerator
+            // 
+            this.lblDefaultIdGenerator.AutoSize = true;
+            this.lblDefaultIdGenerator.Location = new System.Drawing.Point(97, 20);
+            this.lblDefaultIdGenerator.Name = "lblDefaultIdGenerator";
+            this.lblDefaultIdGenerator.Size = new System.Drawing.Size(103, 13);
+            this.lblDefaultIdGenerator.TabIndex = 1;
+            this.lblDefaultIdGenerator.Text = "Default id generator:";
+            // 
+            // chkNHibernateMapping
+            // 
+            this.chkNHibernateMapping.AutoSize = true;
+            this.chkNHibernateMapping.Location = new System.Drawing.Point(24, 19);
+            this.chkNHibernateMapping.Name = "chkNHibernateMapping";
+            this.chkNHibernateMapping.Size = new System.Drawing.Size(67, 17);
+            this.chkNHibernateMapping.TabIndex = 0;
+            this.chkNHibernateMapping.Text = "Mapping";
+            this.chkNHibernateMapping.UseVisualStyleBackColor = true;
             // 
             // ConnectionDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cancelButton;
-            this.ClientSize = new System.Drawing.Size(593, 122);
+            this.ClientSize = new System.Drawing.Size(584, 176);
+            this.Controls.Add(this.gpNHibernate);
             this.Controls.Add(this.txtTextPrefix);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.cboConnection);
@@ -227,6 +287,8 @@
             this.Name = "ConnectionDialog";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Connection Dialog";
+            this.gpNHibernate.ResumeLayout(false);
+            this.gpNHibernate.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -250,5 +312,10 @@
         private System.Windows.Forms.ComboBox cboConnection;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox txtTextPrefix;
+        private System.Windows.Forms.GroupBox gpNHibernate;
+        private System.Windows.Forms.Label lblDefaultIdGenerator;
+        private System.Windows.Forms.CheckBox chkNHibernateMapping;
+        private System.Windows.Forms.CheckBox chkDefaultFetching;
+        private System.Windows.Forms.ComboBox cboDefaultIdGenerator;
     }
 }

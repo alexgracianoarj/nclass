@@ -79,6 +79,7 @@
     <Compile Include="CSharpNHibernateXmlSourceFileGenerator.cs" />
     <Compile Include="CSharpSQLSourceFileGenerator.cs" />
     <Compile Include="CSharpTemplateSourceFileGenerator.cs" />
+    <Compile Include="DotNetVersion.cs" />
     <Compile Include="EnumExtensions.cs" />
     <Compile Include="FieldNamingConvention.cs" />
     <Compile Include="GenerationResult.cs" />

@@ -65,6 +65,8 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.chkGenerateSqlCode = new System.Windows.Forms.CheckBox();
             this.cboSqlToServerType = new System.Windows.Forms.ComboBox();
+            this.lblTargetFrameworkVersion = new System.Windows.Forms.Label();
+            this.cboTargetFrameworkVersion = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.updIndentSize)).BeginInit();
             this.importToolStrip.SuspendLayout();
             this.grpCodeStyle.SuspendLayout();
@@ -330,7 +332,7 @@
             "Visual Studio 2008"});
             this.cboSolutionType.Location = new System.Drawing.Point(311, 83);
             this.cboSolutionType.Name = "cboSolutionType";
-            this.cboSolutionType.Size = new System.Drawing.Size(271, 21);
+            this.cboSolutionType.Size = new System.Drawing.Size(133, 21);
             this.cboSolutionType.TabIndex = 13;
             // 
             // cboLanguage
@@ -499,11 +501,31 @@
             this.cboSqlToServerType.Size = new System.Drawing.Size(121, 21);
             this.cboSqlToServerType.TabIndex = 1;
             // 
+            // lblTargetFrameworkVersion
+            // 
+            this.lblTargetFrameworkVersion.AutoSize = true;
+            this.lblTargetFrameworkVersion.Location = new System.Drawing.Point(447, 67);
+            this.lblTargetFrameworkVersion.Name = "lblTargetFrameworkVersion";
+            this.lblTargetFrameworkVersion.Size = new System.Drawing.Size(130, 13);
+            this.lblTargetFrameworkVersion.TabIndex = 20;
+            this.lblTargetFrameworkVersion.Text = "Target framework version:";
+            // 
+            // cboTargetFrameworkVersion
+            // 
+            this.cboTargetFrameworkVersion.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboTargetFrameworkVersion.FormattingEnabled = true;
+            this.cboTargetFrameworkVersion.Location = new System.Drawing.Point(450, 83);
+            this.cboTargetFrameworkVersion.Name = "cboTargetFrameworkVersion";
+            this.cboTargetFrameworkVersion.Size = new System.Drawing.Size(132, 21);
+            this.cboTargetFrameworkVersion.TabIndex = 21;
+            // 
             // Dialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(594, 451);
+            this.Controls.Add(this.cboTargetFrameworkVersion);
+            this.Controls.Add(this.lblTargetFrameworkVersion);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.tableLayoutPanel1);
@@ -586,5 +608,7 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.CheckBox chkGenerateSqlCode;
         private System.Windows.Forms.ComboBox cboSqlToServerType;
+        private System.Windows.Forms.Label lblTargetFrameworkVersion;
+        private System.Windows.Forms.ComboBox cboTargetFrameworkVersion;
 	}
 }

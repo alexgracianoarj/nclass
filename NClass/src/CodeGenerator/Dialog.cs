@@ -66,6 +66,7 @@ namespace NClass.CodeGenerator
 			chkUseTabs.Checked = Settings.Default.UseTabsForIndents;
 			updIndentSize.Value = Settings.Default.IndentSize;
 			cboSolutionType.SelectedItem = Settings.Default.SolutionType;
+            cboTargetFrameworkVersion.SelectedItem = Settings.Default.TargetFrameworkVersion;
 			rbNotImplemented.Checked = Settings.Default.UseNotImplementedExceptions;
             rbAutomaticProperties.Checked = Settings.Default.UseAutomaticProperties;
             chkGenerateNHibernateMapping.Checked = Settings.Default.GenerateNHibernateMapping;
@@ -117,6 +118,7 @@ namespace NClass.CodeGenerator
 			this.project = project;
 
 			UpdateTexts();
+            PolulateDotNetVersion();
             PopulateSolutionType();
             PopulateIdGeneratorType();
             PopulateMappingType();
@@ -129,6 +131,11 @@ namespace NClass.CodeGenerator
 			else
 				Settings.Default.Reload();
 		}
+
+        private void PolulateDotNetVersion()
+        {
+            cboTargetFrameworkVersion.DataSource = Enum.GetValues(typeof(DotNetVersion));
+        }
 
         private void PopulateSolutionType()
         {
@@ -265,11 +272,12 @@ namespace NClass.CodeGenerator
                 progressDialog.SetIndeterminate(true);
 
                 SolutionType solutionType = (SolutionType)cboSolutionType.SelectedIndex;
+                DotNetVersion dotNetVersion = (DotNetVersion)cboTargetFrameworkVersion.SelectedIndex;
                 string destination = txtDestination.Text;
 
                 try
                 {
-                    Generator generator = new Generator(project, solutionType);
+                    Generator generator = new Generator(project, solutionType, dotNetVersion);
                     GenerationResult result = new GenerationResult();
 
                     Thread backgroundThread = new Thread(
@@ -355,6 +363,7 @@ namespace NClass.CodeGenerator
 			Settings.Default.UseTabsForIndents = chkUseTabs.Checked;
 			Settings.Default.IndentSize = (int) updIndentSize.Value;
             Settings.Default.SolutionType = (SolutionType)cboSolutionType.SelectedItem;
+            Settings.Default.TargetFrameworkVersion = (DotNetVersion)cboTargetFrameworkVersion.SelectedItem;
 			Settings.Default.UseNotImplementedExceptions = rbNotImplemented.Checked;
             Settings.Default.UseAutomaticProperties = rbAutomaticProperties.Checked;
             Settings.Default.GenerateNHibernateMapping = chkGenerateNHibernateMapping.Checked;

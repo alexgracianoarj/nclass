@@ -97,16 +97,24 @@ namespace NClass.GUI
             classType.AccessModifier = AccessModifier.Public;
             classType.Modifier = ClassModifier.None;
             classType.Name = name;
-            classType.NHMTableName = table.Name;
-            classType.IdGenerator = Enum.GetName(typeof(CodeGenerator.IdGeneratorType), CodeGenerator.Settings.Default.DefaultIdGenerator);
+            
+            if(CodeGenerator.Settings.Default.GenerateNHibernateMapping)
+            {
+                classType.NHMTableName = table.Name;
+                classType.IdGenerator = Enum.GetName(typeof(CodeGenerator.IdGeneratorType), CodeGenerator.Settings.Default.DefaultIdGenerator);
+            }
 
             foreach (var column in table.Columns)
             {
                 Property property = classType.AddProperty();
                 property.InitFromString(CreateProperty(column, classType));
-                property.NHMColumnName = column.Name;
-                property.IsPrimaryKey = column.IsPrimaryKey;
-                property.IsNotNull = !column.Nullable;
+
+                if (CodeGenerator.Settings.Default.GenerateNHibernateMapping)
+                {
+                    property.NHMColumnName = column.Name;
+                    property.IsPrimaryKey = column.IsPrimaryKey;
+                    property.IsNotNull = !column.Nullable;
+                }
             }
 
             return classType;
