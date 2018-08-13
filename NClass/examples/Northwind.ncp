@@ -4,220 +4,220 @@
     <Name>Northwind</Name>
     <Language>CSharp</Language>
     <Entities>
-      <Entity type="Class" nhmTableName="Categories">
+      <Entity type="Class" nhmTableName="Categories" idGenerator="Assigned">
         <Name>Categories</Name>
         <Access>Public</Access>
         <Location left="12" top="810" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
-        <Member type="Property" nhmColumnName="CategoryID" isPrimaryKey="True" isNotNull="True">public virtual int CategoryId { get; set; }</Member>
-        <Member type="Property" nhmColumnName="CategoryName" isPrimaryKey="False" isNotNull="True">public virtual string CategoryName { get; set; }</Member>
-        <Member type="Property" nhmColumnName="Description" isPrimaryKey="False" isNotNull="False">public virtual string Description { get; set; }</Member>
-        <Member type="Property" nhmColumnName="Picture" isPrimaryKey="False" isNotNull="False">public virtual System.Byte[] Picture { get; set; }</Member>
+        <Member type="Property" nhmColumnName="CategoryID" isPrimaryKey="True" isUnique="False" isNotNull="True">public virtual int CategoryId { get; set; }</Member>
+        <Member type="Property" nhmColumnName="CategoryName" isPrimaryKey="False" isUnique="False" isNotNull="True">public virtual string CategoryName { get; set; }</Member>
+        <Member type="Property" nhmColumnName="Description" isPrimaryKey="False" isUnique="False" isNotNull="False">public virtual string Description { get; set; }</Member>
+        <Member type="Property" nhmColumnName="Picture" isPrimaryKey="False" isUnique="False" isNotNull="False">public virtual System.Byte[] Picture { get; set; }</Member>
         <Modifier>None</Modifier>
         <Stereotype>
         </Stereotype>
       </Entity>
-      <Entity type="Class" nhmTableName="CustomerCustomerDemo">
+      <Entity type="Class" nhmTableName="CustomerCustomerDemo" idGenerator="Assigned">
         <Name>CustomerCustomerDemo</Name>
         <Access>Public</Access>
         <Location left="1072" top="377" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
-        <Member type="Property" nhmColumnName="CustomerID" isPrimaryKey="True" isNotNull="True">public virtual Customers CustomerId { get; set; }</Member>
-        <Member type="Property" nhmColumnName="CustomerTypeID" isPrimaryKey="True" isNotNull="True">public virtual CustomerDemographics CustomerTypeId { get; set; }</Member>
+        <Member type="Property" nhmColumnName="CustomerID" isPrimaryKey="True" isUnique="False" isNotNull="True">public virtual Customers CustomerId { get; set; }</Member>
+        <Member type="Property" nhmColumnName="CustomerTypeID" isPrimaryKey="True" isUnique="False" isNotNull="True">public virtual CustomerDemographics CustomerTypeId { get; set; }</Member>
         <Modifier>None</Modifier>
         <Stereotype>
         </Stereotype>
       </Entity>
-      <Entity type="Class" nhmTableName="Customers">
+      <Entity type="Class" nhmTableName="Customers" idGenerator="Assigned">
         <Name>Customers</Name>
         <Access>Public</Access>
         <Location left="860" top="377" />
         <Size width="162" height="264" />
         <Collapsed>False</Collapsed>
-        <Member type="Property" nhmColumnName="CustomerID" isPrimaryKey="True" isNotNull="True">public virtual string CustomerId { get; set; }</Member>
-        <Member type="Property" nhmColumnName="CompanyName" isPrimaryKey="False" isNotNull="True">public virtual string CompanyName { get; set; }</Member>
-        <Member type="Property" nhmColumnName="ContactName" isPrimaryKey="False" isNotNull="False">public virtual string ContactName { get; set; }</Member>
-        <Member type="Property" nhmColumnName="ContactTitle" isPrimaryKey="False" isNotNull="False">public virtual string ContactTitle { get; set; }</Member>
-        <Member type="Property" nhmColumnName="Address" isPrimaryKey="False" isNotNull="False">public virtual string Address { get; set; }</Member>
-        <Member type="Property" nhmColumnName="City" isPrimaryKey="False" isNotNull="False">public virtual string City { get; set; }</Member>
-        <Member type="Property" nhmColumnName="Region" isPrimaryKey="False" isNotNull="False">public virtual string Region { get; set; }</Member>
-        <Member type="Property" nhmColumnName="PostalCode" isPrimaryKey="False" isNotNull="False">public virtual string PostalCode { get; set; }</Member>
-        <Member type="Property" nhmColumnName="Country" isPrimaryKey="False" isNotNull="False">public virtual string Country { get; set; }</Member>
-        <Member type="Property" nhmColumnName="Phone" isPrimaryKey="False" isNotNull="False">public virtual string Phone { get; set; }</Member>
-        <Member type="Property" nhmColumnName="Fax" isPrimaryKey="False" isNotNull="False">public virtual string Fax { get; set; }</Member>
+        <Member type="Property" nhmColumnName="CustomerID" isPrimaryKey="True" isUnique="False" isNotNull="True">public virtual string CustomerId { get; set; }</Member>
+        <Member type="Property" nhmColumnName="CompanyName" isPrimaryKey="False" isUnique="False" isNotNull="True">public virtual string CompanyName { get; set; }</Member>
+        <Member type="Property" nhmColumnName="ContactName" isPrimaryKey="False" isUnique="False" isNotNull="False">public virtual string ContactName { get; set; }</Member>
+        <Member type="Property" nhmColumnName="ContactTitle" isPrimaryKey="False" isUnique="False" isNotNull="False">public virtual string ContactTitle { get; set; }</Member>
+        <Member type="Property" nhmColumnName="Address" isPrimaryKey="False" isUnique="False" isNotNull="False">public virtual string Address { get; set; }</Member>
+        <Member type="Property" nhmColumnName="City" isPrimaryKey="False" isUnique="False" isNotNull="False">public virtual string City { get; set; }</Member>
+        <Member type="Property" nhmColumnName="Region" isPrimaryKey="False" isUnique="False" isNotNull="False">public virtual string Region { get; set; }</Member>
+        <Member type="Property" nhmColumnName="PostalCode" isPrimaryKey="False" isUnique="False" isNotNull="False">public virtual string PostalCode { get; set; }</Member>
+        <Member type="Property" nhmColumnName="Country" isPrimaryKey="False" isUnique="False" isNotNull="False">public virtual string Country { get; set; }</Member>
+        <Member type="Property" nhmColumnName="Phone" isPrimaryKey="False" isUnique="False" isNotNull="False">public virtual string Phone { get; set; }</Member>
+        <Member type="Property" nhmColumnName="Fax" isPrimaryKey="False" isUnique="False" isNotNull="False">public virtual string Fax { get; set; }</Member>
         <Modifier>None</Modifier>
         <Stereotype>
         </Stereotype>
       </Entity>
-      <Entity type="Class" nhmTableName="CustomerDemographics">
+      <Entity type="Class" nhmTableName="CustomerDemographics" idGenerator="Assigned">
         <Name>CustomerDemographics</Name>
         <Access>Public</Access>
         <Location left="648" top="377" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
-        <Member type="Property" nhmColumnName="CustomerTypeID" isPrimaryKey="True" isNotNull="True">public virtual string CustomerTypeId { get; set; }</Member>
-        <Member type="Property" nhmColumnName="CustomerDesc" isPrimaryKey="False" isNotNull="False">public virtual string CustomerDesc { get; set; }</Member>
+        <Member type="Property" nhmColumnName="CustomerTypeID" isPrimaryKey="True" isUnique="False" isNotNull="True">public virtual string CustomerTypeId { get; set; }</Member>
+        <Member type="Property" nhmColumnName="CustomerDesc" isPrimaryKey="False" isUnique="False" isNotNull="False">public virtual string CustomerDesc { get; set; }</Member>
         <Modifier>None</Modifier>
         <Stereotype>
         </Stereotype>
       </Entity>
-      <Entity type="Class" nhmTableName="Employees">
+      <Entity type="Class" nhmTableName="Employees" idGenerator="Assigned">
         <Name>Employees</Name>
         <Access>Public</Access>
         <Location left="436" top="377" />
         <Size width="162" height="383" />
         <Collapsed>False</Collapsed>
-        <Member type="Property" nhmColumnName="EmployeeID" isPrimaryKey="True" isNotNull="True">public virtual int EmployeeId { get; set; }</Member>
-        <Member type="Property" nhmColumnName="LastName" isPrimaryKey="False" isNotNull="True">public virtual string LastName { get; set; }</Member>
-        <Member type="Property" nhmColumnName="FirstName" isPrimaryKey="False" isNotNull="True">public virtual string FirstName { get; set; }</Member>
-        <Member type="Property" nhmColumnName="Title" isPrimaryKey="False" isNotNull="False">public virtual string Title { get; set; }</Member>
-        <Member type="Property" nhmColumnName="TitleOfCourtesy" isPrimaryKey="False" isNotNull="False">public virtual string TitleOfCourtesy { get; set; }</Member>
-        <Member type="Property" nhmColumnName="BirthDate" isPrimaryKey="False" isNotNull="False">public virtual DateTime BirthDate { get; set; }</Member>
-        <Member type="Property" nhmColumnName="HireDate" isPrimaryKey="False" isNotNull="False">public virtual DateTime HireDate { get; set; }</Member>
-        <Member type="Property" nhmColumnName="Address" isPrimaryKey="False" isNotNull="False">public virtual string Address { get; set; }</Member>
-        <Member type="Property" nhmColumnName="City" isPrimaryKey="False" isNotNull="False">public virtual string City { get; set; }</Member>
-        <Member type="Property" nhmColumnName="Region" isPrimaryKey="False" isNotNull="False">public virtual string Region { get; set; }</Member>
-        <Member type="Property" nhmColumnName="PostalCode" isPrimaryKey="False" isNotNull="False">public virtual string PostalCode { get; set; }</Member>
-        <Member type="Property" nhmColumnName="Country" isPrimaryKey="False" isNotNull="False">public virtual string Country { get; set; }</Member>
-        <Member type="Property" nhmColumnName="HomePhone" isPrimaryKey="False" isNotNull="False">public virtual string HomePhone { get; set; }</Member>
-        <Member type="Property" nhmColumnName="Extension" isPrimaryKey="False" isNotNull="False">public virtual string Extension { get; set; }</Member>
-        <Member type="Property" nhmColumnName="Photo" isPrimaryKey="False" isNotNull="False">public virtual System.Byte[] Photo { get; set; }</Member>
-        <Member type="Property" nhmColumnName="Notes" isPrimaryKey="False" isNotNull="False">public virtual string Notes { get; set; }</Member>
-        <Member type="Property" nhmColumnName="ReportsTo" isPrimaryKey="False" isNotNull="False">public virtual Employees ReportsTo { get; set; }</Member>
-        <Member type="Property" nhmColumnName="PhotoPath" isPrimaryKey="False" isNotNull="False">public virtual string PhotoPath { get; set; }</Member>
+        <Member type="Property" nhmColumnName="EmployeeID" isPrimaryKey="True" isUnique="False" isNotNull="True">public virtual int EmployeeId { get; set; }</Member>
+        <Member type="Property" nhmColumnName="LastName" isPrimaryKey="False" isUnique="False" isNotNull="True">public virtual string LastName { get; set; }</Member>
+        <Member type="Property" nhmColumnName="FirstName" isPrimaryKey="False" isUnique="False" isNotNull="True">public virtual string FirstName { get; set; }</Member>
+        <Member type="Property" nhmColumnName="Title" isPrimaryKey="False" isUnique="False" isNotNull="False">public virtual string Title { get; set; }</Member>
+        <Member type="Property" nhmColumnName="TitleOfCourtesy" isPrimaryKey="False" isUnique="False" isNotNull="False">public virtual string TitleOfCourtesy { get; set; }</Member>
+        <Member type="Property" nhmColumnName="BirthDate" isPrimaryKey="False" isUnique="False" isNotNull="False">public virtual DateTime BirthDate { get; set; }</Member>
+        <Member type="Property" nhmColumnName="HireDate" isPrimaryKey="False" isUnique="False" isNotNull="False">public virtual DateTime HireDate { get; set; }</Member>
+        <Member type="Property" nhmColumnName="Address" isPrimaryKey="False" isUnique="False" isNotNull="False">public virtual string Address { get; set; }</Member>
+        <Member type="Property" nhmColumnName="City" isPrimaryKey="False" isUnique="False" isNotNull="False">public virtual string City { get; set; }</Member>
+        <Member type="Property" nhmColumnName="Region" isPrimaryKey="False" isUnique="False" isNotNull="False">public virtual string Region { get; set; }</Member>
+        <Member type="Property" nhmColumnName="PostalCode" isPrimaryKey="False" isUnique="False" isNotNull="False">public virtual string PostalCode { get; set; }</Member>
+        <Member type="Property" nhmColumnName="Country" isPrimaryKey="False" isUnique="False" isNotNull="False">public virtual string Country { get; set; }</Member>
+        <Member type="Property" nhmColumnName="HomePhone" isPrimaryKey="False" isUnique="False" isNotNull="False">public virtual string HomePhone { get; set; }</Member>
+        <Member type="Property" nhmColumnName="Extension" isPrimaryKey="False" isUnique="False" isNotNull="False">public virtual string Extension { get; set; }</Member>
+        <Member type="Property" nhmColumnName="Photo" isPrimaryKey="False" isUnique="False" isNotNull="False">public virtual System.Byte[] Photo { get; set; }</Member>
+        <Member type="Property" nhmColumnName="Notes" isPrimaryKey="False" isUnique="False" isNotNull="False">public virtual string Notes { get; set; }</Member>
+        <Member type="Property" nhmColumnName="ReportsTo" isPrimaryKey="False" isUnique="False" isNotNull="False">public virtual Employees ReportsTo { get; set; }</Member>
+        <Member type="Property" nhmColumnName="PhotoPath" isPrimaryKey="False" isUnique="False" isNotNull="False">public virtual string PhotoPath { get; set; }</Member>
         <Modifier>None</Modifier>
         <Stereotype>
         </Stereotype>
       </Entity>
-      <Entity type="Class" nhmTableName="EmployeeTerritories">
+      <Entity type="Class" nhmTableName="EmployeeTerritories" idGenerator="Assigned">
         <Name>EmployeeTerritories</Name>
         <Access>Public</Access>
         <Location left="224" top="377" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
-        <Member type="Property" nhmColumnName="EmployeeID" isPrimaryKey="True" isNotNull="True">public virtual Employees EmployeeId { get; set; }</Member>
-        <Member type="Property" nhmColumnName="TerritoryID" isPrimaryKey="True" isNotNull="True">public virtual Territories TerritoryId { get; set; }</Member>
+        <Member type="Property" nhmColumnName="EmployeeID" isPrimaryKey="True" isUnique="False" isNotNull="True">public virtual Employees EmployeeId { get; set; }</Member>
+        <Member type="Property" nhmColumnName="TerritoryID" isPrimaryKey="True" isUnique="False" isNotNull="True">public virtual Territories TerritoryId { get; set; }</Member>
         <Modifier>None</Modifier>
         <Stereotype>
         </Stereotype>
       </Entity>
-      <Entity type="Class" nhmTableName="Territories">
+      <Entity type="Class" nhmTableName="Territories" idGenerator="Assigned">
         <Name>Territories</Name>
         <Access>Public</Access>
         <Location left="12" top="377" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
-        <Member type="Property" nhmColumnName="TerritoryID" isPrimaryKey="True" isNotNull="True">public virtual string TerritoryId { get; set; }</Member>
-        <Member type="Property" nhmColumnName="TerritoryDescription" isPrimaryKey="False" isNotNull="True">public virtual string TerritoryDescription { get; set; }</Member>
-        <Member type="Property" nhmColumnName="RegionID" isPrimaryKey="False" isNotNull="True">public virtual Region RegionId { get; set; }</Member>
+        <Member type="Property" nhmColumnName="TerritoryID" isPrimaryKey="True" isUnique="False" isNotNull="True">public virtual string TerritoryId { get; set; }</Member>
+        <Member type="Property" nhmColumnName="TerritoryDescription" isPrimaryKey="False" isUnique="False" isNotNull="True">public virtual string TerritoryDescription { get; set; }</Member>
+        <Member type="Property" nhmColumnName="RegionID" isPrimaryKey="False" isUnique="False" isNotNull="True">public virtual Region RegionId { get; set; }</Member>
         <Modifier>None</Modifier>
         <Stereotype>
         </Stereotype>
       </Entity>
-      <Entity type="Class" nhmTableName="Region">
+      <Entity type="Class" nhmTableName="Region" idGenerator="Assigned">
         <Name>Region</Name>
         <Access>Public</Access>
         <Location left="1072" top="35" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
-        <Member type="Property" nhmColumnName="RegionID" isPrimaryKey="True" isNotNull="True">public virtual int RegionId { get; set; }</Member>
-        <Member type="Property" nhmColumnName="RegionDescription" isPrimaryKey="False" isNotNull="True">public virtual string RegionDescription { get; set; }</Member>
+        <Member type="Property" nhmColumnName="RegionID" isPrimaryKey="True" isUnique="False" isNotNull="True">public virtual int RegionId { get; set; }</Member>
+        <Member type="Property" nhmColumnName="RegionDescription" isPrimaryKey="False" isUnique="False" isNotNull="True">public virtual string RegionDescription { get; set; }</Member>
         <Modifier>None</Modifier>
         <Stereotype>
         </Stereotype>
       </Entity>
-      <Entity type="Class" nhmTableName="Order Details">
+      <Entity type="Class" nhmTableName="Order Details" idGenerator="Assigned">
         <Name>OrderDetails</Name>
         <Access>Public</Access>
         <Location left="860" top="12" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
-        <Member type="Property" nhmColumnName="OrderID" isPrimaryKey="True" isNotNull="True">public virtual Orders OrderId { get; set; }</Member>
-        <Member type="Property" nhmColumnName="ProductID" isPrimaryKey="True" isNotNull="True">public virtual Products ProductId { get; set; }</Member>
-        <Member type="Property" nhmColumnName="UnitPrice" isPrimaryKey="False" isNotNull="True">public virtual decimal UnitPrice { get; set; }</Member>
-        <Member type="Property" nhmColumnName="Quantity" isPrimaryKey="False" isNotNull="True">public virtual short Quantity { get; set; }</Member>
-        <Member type="Property" nhmColumnName="Discount" isPrimaryKey="False" isNotNull="True">public virtual float Discount { get; set; }</Member>
+        <Member type="Property" nhmColumnName="OrderID" isPrimaryKey="True" isUnique="False" isNotNull="True">public virtual Orders OrderId { get; set; }</Member>
+        <Member type="Property" nhmColumnName="ProductID" isPrimaryKey="True" isUnique="False" isNotNull="True">public virtual Products ProductId { get; set; }</Member>
+        <Member type="Property" nhmColumnName="UnitPrice" isPrimaryKey="False" isUnique="False" isNotNull="True">public virtual decimal UnitPrice { get; set; }</Member>
+        <Member type="Property" nhmColumnName="Quantity" isPrimaryKey="False" isUnique="False" isNotNull="True">public virtual short Quantity { get; set; }</Member>
+        <Member type="Property" nhmColumnName="Discount" isPrimaryKey="False" isUnique="False" isNotNull="True">public virtual float Discount { get; set; }</Member>
         <Modifier>None</Modifier>
         <Stereotype>
         </Stereotype>
       </Entity>
-      <Entity type="Class" nhmTableName="Orders">
+      <Entity type="Class" nhmTableName="Orders" idGenerator="Assigned">
         <Name>Orders</Name>
         <Access>Public</Access>
         <Location left="648" top="35" />
         <Size width="162" height="315" />
         <Collapsed>False</Collapsed>
-        <Member type="Property" nhmColumnName="OrderID" isPrimaryKey="True" isNotNull="True">public virtual int OrderId { get; set; }</Member>
-        <Member type="Property" nhmColumnName="CustomerID" isPrimaryKey="False" isNotNull="False">public virtual Customers CustomerId { get; set; }</Member>
-        <Member type="Property" nhmColumnName="EmployeeID" isPrimaryKey="False" isNotNull="False">public virtual Employees EmployeeId { get; set; }</Member>
-        <Member type="Property" nhmColumnName="OrderDate" isPrimaryKey="False" isNotNull="False">public virtual DateTime OrderDate { get; set; }</Member>
-        <Member type="Property" nhmColumnName="RequiredDate" isPrimaryKey="False" isNotNull="False">public virtual DateTime RequiredDate { get; set; }</Member>
-        <Member type="Property" nhmColumnName="ShippedDate" isPrimaryKey="False" isNotNull="False">public virtual DateTime ShippedDate { get; set; }</Member>
-        <Member type="Property" nhmColumnName="ShipVia" isPrimaryKey="False" isNotNull="False">public virtual Shippers ShipVia { get; set; }</Member>
-        <Member type="Property" nhmColumnName="Freight" isPrimaryKey="False" isNotNull="False">public virtual decimal Freight { get; set; }</Member>
-        <Member type="Property" nhmColumnName="ShipName" isPrimaryKey="False" isNotNull="False">public virtual string ShipName { get; set; }</Member>
-        <Member type="Property" nhmColumnName="ShipAddress" isPrimaryKey="False" isNotNull="False">public virtual string ShipAddress { get; set; }</Member>
-        <Member type="Property" nhmColumnName="ShipCity" isPrimaryKey="False" isNotNull="False">public virtual string ShipCity { get; set; }</Member>
-        <Member type="Property" nhmColumnName="ShipRegion" isPrimaryKey="False" isNotNull="False">public virtual string ShipRegion { get; set; }</Member>
-        <Member type="Property" nhmColumnName="ShipPostalCode" isPrimaryKey="False" isNotNull="False">public virtual string ShipPostalCode { get; set; }</Member>
-        <Member type="Property" nhmColumnName="ShipCountry" isPrimaryKey="False" isNotNull="False">public virtual string ShipCountry { get; set; }</Member>
+        <Member type="Property" nhmColumnName="OrderID" isPrimaryKey="True" isUnique="False" isNotNull="True">public virtual int OrderId { get; set; }</Member>
+        <Member type="Property" nhmColumnName="CustomerID" isPrimaryKey="False" isUnique="False" isNotNull="False">public virtual Customers CustomerId { get; set; }</Member>
+        <Member type="Property" nhmColumnName="EmployeeID" isPrimaryKey="False" isUnique="False" isNotNull="False">public virtual Employees EmployeeId { get; set; }</Member>
+        <Member type="Property" nhmColumnName="OrderDate" isPrimaryKey="False" isUnique="False" isNotNull="False">public virtual DateTime OrderDate { get; set; }</Member>
+        <Member type="Property" nhmColumnName="RequiredDate" isPrimaryKey="False" isUnique="False" isNotNull="False">public virtual DateTime RequiredDate { get; set; }</Member>
+        <Member type="Property" nhmColumnName="ShippedDate" isPrimaryKey="False" isUnique="False" isNotNull="False">public virtual DateTime ShippedDate { get; set; }</Member>
+        <Member type="Property" nhmColumnName="ShipVia" isPrimaryKey="False" isUnique="False" isNotNull="False">public virtual Shippers ShipVia { get; set; }</Member>
+        <Member type="Property" nhmColumnName="Freight" isPrimaryKey="False" isUnique="False" isNotNull="False">public virtual decimal Freight { get; set; }</Member>
+        <Member type="Property" nhmColumnName="ShipName" isPrimaryKey="False" isUnique="False" isNotNull="False">public virtual string ShipName { get; set; }</Member>
+        <Member type="Property" nhmColumnName="ShipAddress" isPrimaryKey="False" isUnique="False" isNotNull="False">public virtual string ShipAddress { get; set; }</Member>
+        <Member type="Property" nhmColumnName="ShipCity" isPrimaryKey="False" isUnique="False" isNotNull="False">public virtual string ShipCity { get; set; }</Member>
+        <Member type="Property" nhmColumnName="ShipRegion" isPrimaryKey="False" isUnique="False" isNotNull="False">public virtual string ShipRegion { get; set; }</Member>
+        <Member type="Property" nhmColumnName="ShipPostalCode" isPrimaryKey="False" isUnique="False" isNotNull="False">public virtual string ShipPostalCode { get; set; }</Member>
+        <Member type="Property" nhmColumnName="ShipCountry" isPrimaryKey="False" isUnique="False" isNotNull="False">public virtual string ShipCountry { get; set; }</Member>
         <Modifier>None</Modifier>
         <Stereotype>
         </Stereotype>
       </Entity>
-      <Entity type="Class" nhmTableName="Shippers">
+      <Entity type="Class" nhmTableName="Shippers" idGenerator="Assigned">
         <Name>Shippers</Name>
         <Access>Public</Access>
         <Location left="436" top="12" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
-        <Member type="Property" nhmColumnName="ShipperID" isPrimaryKey="True" isNotNull="True">public virtual int ShipperId { get; set; }</Member>
-        <Member type="Property" nhmColumnName="CompanyName" isPrimaryKey="False" isNotNull="True">public virtual string CompanyName { get; set; }</Member>
-        <Member type="Property" nhmColumnName="Phone" isPrimaryKey="False" isNotNull="False">public virtual string Phone { get; set; }</Member>
+        <Member type="Property" nhmColumnName="ShipperID" isPrimaryKey="True" isUnique="False" isNotNull="True">public virtual int ShipperId { get; set; }</Member>
+        <Member type="Property" nhmColumnName="CompanyName" isPrimaryKey="False" isUnique="False" isNotNull="True">public virtual string CompanyName { get; set; }</Member>
+        <Member type="Property" nhmColumnName="Phone" isPrimaryKey="False" isUnique="False" isNotNull="False">public virtual string Phone { get; set; }</Member>
         <Modifier>None</Modifier>
         <Stereotype>
         </Stereotype>
       </Entity>
-      <Entity type="Class" nhmTableName="Products">
+      <Entity type="Class" nhmTableName="Products" idGenerator="Assigned">
         <Name>Products</Name>
         <Access>Public</Access>
         <Location left="224" top="35" />
         <Size width="162" height="247" />
         <Collapsed>False</Collapsed>
-        <Member type="Property" nhmColumnName="ProductID" isPrimaryKey="True" isNotNull="True">public virtual int ProductId { get; set; }</Member>
-        <Member type="Property" nhmColumnName="ProductName" isPrimaryKey="False" isNotNull="True">public virtual string ProductName { get; set; }</Member>
-        <Member type="Property" nhmColumnName="SupplierID" isPrimaryKey="False" isNotNull="False">public virtual Suppliers SupplierId { get; set; }</Member>
-        <Member type="Property" nhmColumnName="CategoryID" isPrimaryKey="False" isNotNull="False">public virtual Categories CategoryId { get; set; }</Member>
-        <Member type="Property" nhmColumnName="QuantityPerUnit" isPrimaryKey="False" isNotNull="False">public virtual string QuantityPerUnit { get; set; }</Member>
-        <Member type="Property" nhmColumnName="UnitPrice" isPrimaryKey="False" isNotNull="False">public virtual decimal UnitPrice { get; set; }</Member>
-        <Member type="Property" nhmColumnName="UnitsInStock" isPrimaryKey="False" isNotNull="False">public virtual short UnitsInStock { get; set; }</Member>
-        <Member type="Property" nhmColumnName="UnitsOnOrder" isPrimaryKey="False" isNotNull="False">public virtual short UnitsOnOrder { get; set; }</Member>
-        <Member type="Property" nhmColumnName="ReorderLevel" isPrimaryKey="False" isNotNull="False">public virtual short ReorderLevel { get; set; }</Member>
-        <Member type="Property" nhmColumnName="Discontinued" isPrimaryKey="False" isNotNull="True">public virtual bool Discontinued { get; set; }</Member>
+        <Member type="Property" nhmColumnName="ProductID" isPrimaryKey="True" isUnique="False" isNotNull="True">public virtual int ProductId { get; set; }</Member>
+        <Member type="Property" nhmColumnName="ProductName" isPrimaryKey="False" isUnique="False" isNotNull="True">public virtual string ProductName { get; set; }</Member>
+        <Member type="Property" nhmColumnName="SupplierID" isPrimaryKey="False" isUnique="False" isNotNull="False">public virtual Suppliers SupplierId { get; set; }</Member>
+        <Member type="Property" nhmColumnName="CategoryID" isPrimaryKey="False" isUnique="False" isNotNull="False">public virtual Categories CategoryId { get; set; }</Member>
+        <Member type="Property" nhmColumnName="QuantityPerUnit" isPrimaryKey="False" isUnique="False" isNotNull="False">public virtual string QuantityPerUnit { get; set; }</Member>
+        <Member type="Property" nhmColumnName="UnitPrice" isPrimaryKey="False" isUnique="False" isNotNull="False">public virtual decimal UnitPrice { get; set; }</Member>
+        <Member type="Property" nhmColumnName="UnitsInStock" isPrimaryKey="False" isUnique="False" isNotNull="False">public virtual short UnitsInStock { get; set; }</Member>
+        <Member type="Property" nhmColumnName="UnitsOnOrder" isPrimaryKey="False" isUnique="False" isNotNull="False">public virtual short UnitsOnOrder { get; set; }</Member>
+        <Member type="Property" nhmColumnName="ReorderLevel" isPrimaryKey="False" isUnique="False" isNotNull="False">public virtual short ReorderLevel { get; set; }</Member>
+        <Member type="Property" nhmColumnName="Discontinued" isPrimaryKey="False" isUnique="False" isNotNull="True">public virtual bool Discontinued { get; set; }</Member>
         <Modifier>None</Modifier>
         <Stereotype>
         </Stereotype>
       </Entity>
-      <Entity type="Class" nhmTableName="Suppliers">
+      <Entity type="Class" nhmTableName="Suppliers" idGenerator="Assigned">
         <Name>Suppliers</Name>
         <Access>Public</Access>
         <Location left="12" top="35" />
         <Size width="162" height="281" />
         <Collapsed>False</Collapsed>
-        <Member type="Property" nhmColumnName="SupplierID" isPrimaryKey="True" isNotNull="True">public virtual int SupplierId { get; set; }</Member>
-        <Member type="Property" nhmColumnName="CompanyName" isPrimaryKey="False" isNotNull="True">public virtual string CompanyName { get; set; }</Member>
-        <Member type="Property" nhmColumnName="ContactName" isPrimaryKey="False" isNotNull="False">public virtual string ContactName { get; set; }</Member>
-        <Member type="Property" nhmColumnName="ContactTitle" isPrimaryKey="False" isNotNull="False">public virtual string ContactTitle { get; set; }</Member>
-        <Member type="Property" nhmColumnName="Address" isPrimaryKey="False" isNotNull="False">public virtual string Address { get; set; }</Member>
-        <Member type="Property" nhmColumnName="City" isPrimaryKey="False" isNotNull="False">public virtual string City { get; set; }</Member>
-        <Member type="Property" nhmColumnName="Region" isPrimaryKey="False" isNotNull="False">public virtual string Region { get; set; }</Member>
-        <Member type="Property" nhmColumnName="PostalCode" isPrimaryKey="False" isNotNull="False">public virtual string PostalCode { get; set; }</Member>
-        <Member type="Property" nhmColumnName="Country" isPrimaryKey="False" isNotNull="False">public virtual string Country { get; set; }</Member>
-        <Member type="Property" nhmColumnName="Phone" isPrimaryKey="False" isNotNull="False">public virtual string Phone { get; set; }</Member>
-        <Member type="Property" nhmColumnName="Fax" isPrimaryKey="False" isNotNull="False">public virtual string Fax { get; set; }</Member>
-        <Member type="Property" nhmColumnName="HomePage" isPrimaryKey="False" isNotNull="False">public virtual string HomePage { get; set; }</Member>
+        <Member type="Property" nhmColumnName="SupplierID" isPrimaryKey="True" isUnique="False" isNotNull="True">public virtual int SupplierId { get; set; }</Member>
+        <Member type="Property" nhmColumnName="CompanyName" isPrimaryKey="False" isUnique="False" isNotNull="True">public virtual string CompanyName { get; set; }</Member>
+        <Member type="Property" nhmColumnName="ContactName" isPrimaryKey="False" isUnique="False" isNotNull="False">public virtual string ContactName { get; set; }</Member>
+        <Member type="Property" nhmColumnName="ContactTitle" isPrimaryKey="False" isUnique="False" isNotNull="False">public virtual string ContactTitle { get; set; }</Member>
+        <Member type="Property" nhmColumnName="Address" isPrimaryKey="False" isUnique="False" isNotNull="False">public virtual string Address { get; set; }</Member>
+        <Member type="Property" nhmColumnName="City" isPrimaryKey="False" isUnique="False" isNotNull="False">public virtual string City { get; set; }</Member>
+        <Member type="Property" nhmColumnName="Region" isPrimaryKey="False" isUnique="False" isNotNull="False">public virtual string Region { get; set; }</Member>
+        <Member type="Property" nhmColumnName="PostalCode" isPrimaryKey="False" isUnique="False" isNotNull="False">public virtual string PostalCode { get; set; }</Member>
+        <Member type="Property" nhmColumnName="Country" isPrimaryKey="False" isUnique="False" isNotNull="False">public virtual string Country { get; set; }</Member>
+        <Member type="Property" nhmColumnName="Phone" isPrimaryKey="False" isUnique="False" isNotNull="False">public virtual string Phone { get; set; }</Member>
+        <Member type="Property" nhmColumnName="Fax" isPrimaryKey="False" isUnique="False" isNotNull="False">public virtual string Fax { get; set; }</Member>
+        <Member type="Property" nhmColumnName="HomePage" isPrimaryKey="False" isUnique="False" isNotNull="False">public virtual string HomePage { get; set; }</Member>
         <Modifier>None</Modifier>
         <Stereotype>
         </Stereotype>

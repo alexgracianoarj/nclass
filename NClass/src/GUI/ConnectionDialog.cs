@@ -42,12 +42,10 @@ namespace NClass.GUI
             serverTypeComboBox.SelectedIndexChanged += OnServerTypeSelectedIndexChanged;
 
             chkNHibernateMapping.Checked = CodeGenerator.Settings.Default.GenerateNHibernateMapping;
-
             cboDefaultIdGenerator.DataSource = Enum.GetValues(typeof(CodeGenerator.IdGeneratorType));
-
             cboDefaultIdGenerator.SelectedItem = CodeGenerator.Settings.Default.DefaultIdGenerator;
-
             chkDefaultFetching.Checked = CodeGenerator.Settings.Default.DefaultLazyFetching;
+            chkUseUnderscoreAndLowercaseInDB.Checked = CodeGenerator.Settings.Default.UseUnderscoreAndLowercaseInDB;
 
             Load += OnConnectionDialogLoad;
         }
@@ -120,6 +118,7 @@ namespace NClass.GUI
             CodeGenerator.Settings.Default.GenerateNHibernateMapping = chkNHibernateMapping.Checked;
             CodeGenerator.Settings.Default.DefaultIdGenerator = (CodeGenerator.IdGeneratorType)cboDefaultIdGenerator.SelectedItem;
             CodeGenerator.Settings.Default.DefaultLazyFetching = chkDefaultFetching.Checked;
+            CodeGenerator.Settings.Default.UseUnderscoreAndLowercaseInDB = chkUseUnderscoreAndLowercaseInDB.Checked;
             CodeGenerator.Settings.Default.Save();
         }
 
@@ -165,7 +164,7 @@ namespace NClass.GUI
         {
             serverTypeComboBox.SelectedIndexChanged -= OnServerTypeSelectedIndexChanged;
 
-            nameTextBox.Text = Connection.Name;
+            txtName.Text = Connection.Name;
             serverTypeComboBox.SelectedItem = Connection.ServerType;
             connectionStringTextBox.Text = Connection.ConnectionString;
             cboSchema.DataSource = new string[] { Connection.Schema };
@@ -176,7 +175,7 @@ namespace NClass.GUI
 
         private void CaptureConnection()
         {
-            Connection.Name = nameTextBox.Text;
+            Connection.Name = txtName.Text;
             Connection.ServerType = (SqlType)serverTypeComboBox.SelectedItem;
             Connection.ConnectionString = connectionStringTextBox.Text.Trim();
             Connection.Schema = (string)cboSchema.SelectedItem;
@@ -212,10 +211,11 @@ namespace NClass.GUI
 
             try
             {
+                CaptureConnection();
+
                 var dcs = new DataConnectionConfiguration(null);
                 dcs.LoadConfiguration(dcd, Connection.ServerType);
 
-                CaptureConnection();
                 if (Connection.ConnectionString != GetDefaultConnectionStringForServerType(Connection.ServerType))
                 {
                     dcd.ConnectionString = Connection.ConnectionString;
@@ -223,7 +223,6 @@ namespace NClass.GUI
 
                 dialogResult = DataConnectionDialog.Show(dcd);
                 connectionString = dcd.ConnectionString;
-
             }
             catch (ArgumentException)
             {
@@ -310,7 +309,7 @@ namespace NClass.GUI
             progressDialog.ShowDialog();
         }
 
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        private void cboConnection_SelectedIndexChanged(object sender, EventArgs e)
         {
             Connection = (ConnectionSettings)cboConnection.SelectedItem;
             BindData();

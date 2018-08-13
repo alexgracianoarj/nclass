@@ -156,6 +156,7 @@ namespace NClass.Core
 
             NHMColumnName = property.NHMColumnName;
             IsPrimaryKey = property.IsPrimaryKey;
+            IsUnique = property.IsUnique;
             IsNotNull = property.IsNotNull;
 		}
 	}

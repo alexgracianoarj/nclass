@@ -81,6 +81,7 @@
             this.txtNHMColumnName = new System.Windows.Forms.TextBox();
             this.chkIsPrimaryKey = new System.Windows.Forms.CheckBox();
             this.chkIsNotNull = new System.Windows.Forms.CheckBox();
+            this.chkIsUnique = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
             this.toolStrip.SuspendLayout();
             this.grpFieldModifiers.SuspendLayout();
@@ -646,7 +647,7 @@
             // chkIsNotNull
             // 
             this.chkIsNotNull.AutoSize = true;
-            this.chkIsNotNull.Location = new System.Drawing.Point(158, 186);
+            this.chkIsNotNull.Location = new System.Drawing.Point(224, 186);
             this.chkIsNotNull.Name = "chkIsNotNull";
             this.chkIsNotNull.Size = new System.Drawing.Size(64, 17);
             this.chkIsNotNull.TabIndex = 17;
@@ -654,12 +655,24 @@
             this.chkIsNotNull.UseVisualStyleBackColor = true;
             this.chkIsNotNull.CheckedChanged += new System.EventHandler(this.chkIsNotNull_CheckedChanged);
             // 
+            // chkIsUnique
+            // 
+            this.chkIsUnique.AutoSize = true;
+            this.chkIsUnique.Location = new System.Drawing.Point(158, 186);
+            this.chkIsUnique.Name = "chkIsUnique";
+            this.chkIsUnique.Size = new System.Drawing.Size(60, 17);
+            this.chkIsUnique.TabIndex = 18;
+            this.chkIsUnique.Text = "Unique";
+            this.chkIsUnique.UseVisualStyleBackColor = true;
+            this.chkIsUnique.CheckedChanged += new System.EventHandler(this.chkIsUnique_CheckedChanged);
+            // 
             // MembersDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CausesValidation = false;
             this.ClientSize = new System.Drawing.Size(469, 530);
+            this.Controls.Add(this.chkIsUnique);
             this.Controls.Add(this.txtNHMColumnName);
             this.Controls.Add(this.chkIsNotNull);
             this.Controls.Add(this.chkIsPrimaryKey);
@@ -757,6 +770,7 @@
         private System.Windows.Forms.Label lblNHMColumnName;
         private System.Windows.Forms.CheckBox chkIsNotNull;
         private System.Windows.Forms.CheckBox chkIsPrimaryKey;
+        private System.Windows.Forms.CheckBox chkIsUnique;
 	}
 }
 

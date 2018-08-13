@@ -307,7 +307,7 @@ namespace NClass.CodeGenerator
 
         protected string LowercaseAndUnderscoredWord(string text)
         {
-            return new LowercaseAndUnderscoredWordTextFormatter().FormatText(text);
+            return new LowercaseAndUnderscoreTextFormatter().FormatText(text);
         }
 	}
 }

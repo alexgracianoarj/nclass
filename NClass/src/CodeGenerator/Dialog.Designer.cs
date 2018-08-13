@@ -43,7 +43,7 @@
             this.grpCodeStyle = new System.Windows.Forms.GroupBox();
             this.rbAutomaticProperties = new System.Windows.Forms.RadioButton();
             this.rbNotImplemented = new System.Windows.Forms.RadioButton();
-            this.chkUseLowercaseUnderscoredWordsInDb = new System.Windows.Forms.CheckBox();
+            this.chkUseUnderscoreAndLowercaseInDB = new System.Windows.Forms.CheckBox();
             this.chkDefaultLazyFetching = new System.Windows.Forms.CheckBox();
             this.cboDefaultMapping = new System.Windows.Forms.ComboBox();
             this.lblDefaultMapping = new System.Windows.Forms.Label();
@@ -263,16 +263,15 @@
             this.rbNotImplemented.Text = "Fill methods with \'Not implemented\' exceptions";
             this.rbNotImplemented.UseVisualStyleBackColor = true;
             // 
-            // chkUseLowercaseUnderscoredWordsInDb
+            // chkUseUnderscoreAndLowercaseInDB
             // 
-            this.chkUseLowercaseUnderscoredWordsInDb.AutoSize = true;
-            this.chkUseLowercaseUnderscoredWordsInDb.Location = new System.Drawing.Point(13, 105);
-            this.chkUseLowercaseUnderscoredWordsInDb.Name = "chkUseLowercaseUnderscoredWordsInDb";
-            this.chkUseLowercaseUnderscoredWordsInDb.Size = new System.Drawing.Size(253, 30);
-            this.chkUseLowercaseUnderscoredWordsInDb.TabIndex = 10;
-            this.chkUseLowercaseUnderscoredWordsInDb.Text = "Use lowercase and underscored words \r\nin the database (or the same as in the data" +
-    "base)";
-            this.chkUseLowercaseUnderscoredWordsInDb.UseVisualStyleBackColor = true;
+            this.chkUseUnderscoreAndLowercaseInDB.AutoSize = true;
+            this.chkUseUnderscoreAndLowercaseInDB.Location = new System.Drawing.Point(13, 105);
+            this.chkUseUnderscoreAndLowercaseInDB.Name = "chkUseUnderscoreAndLowercaseInDB";
+            this.chkUseUnderscoreAndLowercaseInDB.Size = new System.Drawing.Size(252, 30);
+            this.chkUseUnderscoreAndLowercaseInDB.TabIndex = 10;
+            this.chkUseUnderscoreAndLowercaseInDB.Text = "Use underscore and lowercase in the database \r\n(or unchanged)";
+            this.chkUseUnderscoreAndLowercaseInDB.UseVisualStyleBackColor = true;
             // 
             // chkDefaultLazyFetching
             // 
@@ -400,15 +399,15 @@
             // 
             // gpbNHibernate
             // 
+            this.gpbNHibernate.Controls.Add(this.txtTextPrefix);
             this.gpbNHibernate.Controls.Add(this.lblDefaultIdGenerator);
             this.gpbNHibernate.Controls.Add(this.cboDefaultIdGenerator);
-            this.gpbNHibernate.Controls.Add(this.lblUsePrefixTables);
-            this.gpbNHibernate.Controls.Add(this.txtTextPrefix);
             this.gpbNHibernate.Controls.Add(this.chkGenerateNHibernateMapping);
             this.gpbNHibernate.Controls.Add(this.lblDefaultMapping);
             this.gpbNHibernate.Controls.Add(this.cboDefaultMapping);
             this.gpbNHibernate.Controls.Add(this.chkDefaultLazyFetching);
-            this.gpbNHibernate.Controls.Add(this.chkUseLowercaseUnderscoredWordsInDb);
+            this.gpbNHibernate.Controls.Add(this.chkUseUnderscoreAndLowercaseInDB);
+            this.gpbNHibernate.Controls.Add(this.lblUsePrefixTables);
             this.gpbNHibernate.Location = new System.Drawing.Point(311, 242);
             this.gpbNHibernate.Name = "gpbNHibernate";
             this.gpbNHibernate.Size = new System.Drawing.Size(271, 164);
@@ -437,7 +436,7 @@
             // lblUsePrefixTables
             // 
             this.lblUsePrefixTables.AutoSize = true;
-            this.lblUsePrefixTables.Location = new System.Drawing.Point(6, 142);
+            this.lblUsePrefixTables.Location = new System.Drawing.Point(10, 142);
             this.lblUsePrefixTables.Name = "lblUsePrefixTables";
             this.lblUsePrefixTables.Size = new System.Drawing.Size(193, 13);
             this.lblUsePrefixTables.TabIndex = 14;
@@ -597,7 +596,7 @@
         private System.Windows.Forms.ComboBox cboDefaultMapping;
         private System.Windows.Forms.Label lblDefaultMapping;
         private System.Windows.Forms.CheckBox chkDefaultLazyFetching;
-        private System.Windows.Forms.CheckBox chkUseLowercaseUnderscoredWordsInDb;
+        private System.Windows.Forms.CheckBox chkUseUnderscoreAndLowercaseInDB;
         private System.Windows.Forms.GroupBox gpbNHibernate;
         private System.Windows.Forms.TextBox txtTextPrefix;
         private System.Windows.Forms.Label lblUsePrefixTables;

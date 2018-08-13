@@ -71,7 +71,7 @@ namespace NClass.CodeGenerator
 
             var result = "";
 
-            string[] words = base.FormatText(new LowercaseAndUnderscoredWordTextFormatter().FormatText(text)).Split('_');
+            string[] words = base.FormatText(new LowercaseAndUnderscoreTextFormatter().FormatText(text)).Split('_');
 
             foreach (string word in words)
                 result += char.ToUpper(word[0]) + word.Substring(1);
@@ -80,7 +80,7 @@ namespace NClass.CodeGenerator
         }
     }
 
-    public class LowercaseAndUnderscoredWordTextFormatter : AbstractTextFormatter
+    public class LowercaseAndUnderscoreTextFormatter : AbstractTextFormatter
     {
         public override string FormatText(string text)
         {

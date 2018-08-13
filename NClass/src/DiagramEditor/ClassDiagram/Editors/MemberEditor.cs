@@ -67,10 +67,15 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
 			{
 				Member member = shape.ActiveMember;
 
-                lblNHMColumnName.Enabled = (member is Property);
-                txtNHMColumnName.Enabled = (member is Property);
-                chkIsPrimaryKey.Enabled = (member is Property);
-                chkIsNotNull.Enabled = (member is Property);
+                if (member is Property)
+                {
+                    this.Height = pnlAdvancedOptions.Bottom + pnlAdvancedOptions.Margin.Bottom;
+                }
+                else
+                {
+                    this.Height = pnlAdvancedOptions.Location.Y;
+                }
+                Refresh();
 
 				SuspendLayout();
 				RefreshModifiers();
@@ -86,6 +91,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
                 txtNHMColumnName.SelectionStart = cursorPositionNHMColumn;
 
                 chkIsPrimaryKey.Checked = member.IsPrimaryKey;
+                chkIsUnique.Checked = member.IsUnique;
                 chkIsNotNull.Checked = member.IsNotNull;
 				
 				SetError(null);
@@ -504,6 +510,16 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
 				try
 				{
 					shape.ActiveMember.InitFromString(txtDeclaration.Text);
+
+                    if (CodeGenerator.Settings.Default.GenerateNHibernateMapping
+                        && string.IsNullOrEmpty(shape.ActiveMember.NHMColumnName))
+                    {
+                        if(CodeGenerator.Settings.Default.UseUnderscoreAndLowercaseInDB)
+                            shape.ActiveMember.NHMColumnName = new CodeGenerator.LowercaseAndUnderscoreTextFormatter().FormatText(shape.ActiveMember.Name);
+                        else
+                            shape.ActiveMember.NHMColumnName = shape.ActiveMember.Name;
+                    }
+
 					RefreshValues();
 				}
 				catch (BadSyntaxException ex)
@@ -865,6 +881,16 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
             if (shape.ActiveMember != null)
             {
                 shape.ActiveMember.IsPrimaryKey = chkIsPrimaryKey.Checked;
+                RefreshValues();
+                txtNHMColumnName.Focus();
+            }
+        }
+
+        private void chkIsUnique_CheckedChanged(object sender, EventArgs e)
+        {
+            if (shape.ActiveMember != null)
+            {
+                shape.ActiveMember.IsUnique = chkIsUnique.Checked;
                 RefreshValues();
                 txtNHMColumnName.Focus();
             }

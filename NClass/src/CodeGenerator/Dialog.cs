@@ -73,7 +73,7 @@ namespace NClass.CodeGenerator
             cboDefaultMapping.SelectedItem = Settings.Default.DefaultMapping;
             cboDefaultIdGenerator.SelectedItem = Settings.Default.DefaultIdGenerator;
             chkDefaultLazyFetching.Checked = Settings.Default.DefaultLazyFetching;
-            chkUseLowercaseUnderscoredWordsInDb.Checked = Settings.Default.UseLowercaseAndUnderscoredWordsInDb;
+            chkUseUnderscoreAndLowercaseInDB.Checked = Settings.Default.UseUnderscoreAndLowercaseInDB;
             txtTextPrefix.Text = Settings.Default.PrefixTable;
             chkGenerateCodeFromTemplates.Checked = Settings.Default.GenerateCodeFromTemplates;
             chkGenerateSqlCode.Checked = Settings.Default.GenerateSQLCode;
@@ -370,7 +370,7 @@ namespace NClass.CodeGenerator
             Settings.Default.DefaultMapping = (MappingType) cboDefaultMapping.SelectedItem;
             Settings.Default.DefaultIdGenerator = (IdGeneratorType)cboDefaultIdGenerator.SelectedItem;
             Settings.Default.DefaultLazyFetching = chkDefaultLazyFetching.Checked;
-            Settings.Default.UseLowercaseAndUnderscoredWordsInDb = chkUseLowercaseUnderscoredWordsInDb.Checked;
+            Settings.Default.UseUnderscoreAndLowercaseInDB = chkUseUnderscoreAndLowercaseInDB.Checked;
             Settings.Default.PrefixTable = txtTextPrefix.Text.Trim();
             Settings.Default.GenerateCodeFromTemplates = chkGenerateCodeFromTemplates.Checked;
             Settings.Default.GenerateSQLCode = chkGenerateSqlCode.Checked;

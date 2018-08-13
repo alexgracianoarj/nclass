@@ -32,7 +32,7 @@ namespace NClass.CodeGenerator
         protected override void WriteFileContent()
         {
             useLazyLoading = Settings.Default.DefaultLazyFetching;
-            useLowercaseUnderscored = Settings.Default.UseLowercaseAndUnderscoredWordsInDb;
+            useLowercaseUnderscored = Settings.Default.UseUnderscoreAndLowercaseInDB;
 
             XmlWriterSettings settings = new XmlWriterSettings();
             settings.Indent = true;
@@ -142,6 +142,7 @@ namespace NClass.CodeGenerator
                                 ? property.Name
                                 : property.NHMColumnName
                             ));
+                        xml.WriteAttributeString("unique", property.IsUnique.ToString().ToLower());
                         xml.WriteAttributeString("not-null", property.IsNotNull.ToString().ToLower());
                         xml.WriteEndElement();
                     }
@@ -158,6 +159,7 @@ namespace NClass.CodeGenerator
                                 : property.NHMColumnName
                             ));
                         xml.WriteAttributeString("type", property.Type);
+                        xml.WriteAttributeString("unique", property.IsUnique.ToString().ToLower());
                         xml.WriteAttributeString("not-null", property.IsNotNull.ToString().ToLower());
                         xml.WriteEndElement();
                     }

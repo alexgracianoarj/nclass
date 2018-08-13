@@ -306,6 +306,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Dialogs
 			txtInitialValue.Enabled = (member is Field);
             txtNHMColumnName.Enabled = (member is Property);
             chkIsPrimaryKey.Enabled = (member is Property);
+            chkIsUnique.Enabled = (member is Property);
             chkIsNotNull.Enabled = (member is Property);
 			toolSortByKind.Enabled = true;
 			toolSortByAccess.Enabled = true;
@@ -322,6 +323,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Dialogs
 			cboType.Text = member.Type;
             txtNHMColumnName.Text = member.NHMColumnName;
             chkIsPrimaryKey.Checked = member.IsPrimaryKey;
+            chkIsUnique.Checked = member.IsUnique;
             chkIsNotNull.Checked = member.IsNotNull;
 
 			// Access selection
@@ -406,7 +408,9 @@ namespace NClass.DiagramEditor.ClassDiagram.Dialogs
 			cboAccess.Text = null;
 			txtInitialValue.Text = null;
             txtNHMColumnName.Text = null;
+
             chkIsPrimaryKey.Checked = false;
+            chkIsUnique.Checked = false;
             chkIsNotNull.Checked = false;
 
 			txtSyntax.Enabled = false;
@@ -415,8 +419,6 @@ namespace NClass.DiagramEditor.ClassDiagram.Dialogs
 			cboAccess.Enabled = false;
 			txtInitialValue.Enabled = false;
             txtNHMColumnName.Enabled = false;
-            chkIsPrimaryKey.Enabled = false;
-            chkIsNotNull.Enabled = false;
 
 			grpFieldModifiers.Enabled = false;
 			grpOperationModifiers.Enabled = false;
@@ -528,6 +530,16 @@ namespace NClass.DiagramEditor.ClassDiagram.Dialogs
 					member.Name = txtName.Text;
 					errorProvider.SetError(txtName, null);
 					error = false;
+
+                    if (CodeGenerator.Settings.Default.GenerateNHibernateMapping
+                        && string.IsNullOrEmpty(member.NHMColumnName)
+                        && member is Property)
+                    {
+                        if (CodeGenerator.Settings.Default.UseUnderscoreAndLowercaseInDB)
+                            member.NHMColumnName = new CodeGenerator.LowercaseAndUnderscoreTextFormatter().FormatText(member.Name);
+                        else
+                            member.NHMColumnName = member.Name;
+                    }
 
 					RefreshValues();
 					if (oldValue != txtName.Text)
@@ -1114,6 +1126,15 @@ namespace NClass.DiagramEditor.ClassDiagram.Dialogs
             if (!locked && member is Property)
             {
                 member.IsNotNull = chkIsNotNull.Checked;
+                OnContentsChanged(EventArgs.Empty);
+            }
+        }
+
+        private void chkIsUnique_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!locked && member is Property)
+            {
+                member.IsUnique = chkIsUnique.Checked;
                 OnContentsChanged(EventArgs.Empty);
             }
         }

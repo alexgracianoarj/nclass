@@ -320,7 +320,17 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
 				try
 				{
 					Shape.CompositeType.Name = txtName.Text;
-					RefreshValues();
+                    
+                    if(CodeGenerator.Settings.Default.GenerateNHibernateMapping
+                        && string.IsNullOrEmpty(Shape.CompositeType.NHMTableName))
+                    {
+                        if (CodeGenerator.Settings.Default.UseUnderscoreAndLowercaseInDB)
+                            Shape.CompositeType.NHMTableName = new CodeGenerator.LowercaseAndUnderscoreTextFormatter().FormatText(Shape.CompositeType.Name);
+                        else
+                            Shape.CompositeType.NHMTableName = Shape.CompositeType.Name;
+                    }
+					
+                    RefreshValues();
 				}
 				catch (BadSyntaxException ex)
 				{

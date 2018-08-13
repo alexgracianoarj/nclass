@@ -258,6 +258,12 @@ namespace NClass.Core
             set;
         }
 
+        public virtual bool IsUnique
+        {
+            get;
+            set;
+        }
+
         public virtual bool IsNotNull
         {
             get;

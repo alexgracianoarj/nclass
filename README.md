@@ -1,4 +1,4 @@
-# NClass
+# ![image](/NClass/src/icons/nclass_icon.png) NClass
 
 Original project [NClass v2.04](http://nclass.sourceforge.net/).
 
@@ -33,12 +33,17 @@ Design your application with just a few clicks - the main goal is to provide a s
 		* SQLite ([ADO.NET provider](https://system.data.sqlite.org/downloads/1.0.106.0/sqlite-netFx45-setup-bundle-x86-2012-1.0.106.0.exe));
 * Generation NHibernate mapping files;
 	* Types of Mapping:
-		* NHibernate XML (hbm.xml);
+		* NHibernate XML (.hbm.xml);
 		* Fluent NHibernate;
 		* NHibernate Mapping Attributes;
 		* NHibernate ByCode.	
 * Template engine with [Liquid.NET](https://github.com/mikebridge/Liquid.NET);
 * SQL code generation from C# class diagram model using DatabaseSchemaReader.
+
+## Requirements
+
+* Microsoft .NET Framework 4.6;
+* ADO.NET provider of your choice database (supported databases above).
 
 ## Installation
 
@@ -46,15 +51,15 @@ Download the install file in the latest [release](https://github.com/alexgracian
 
 ## Screenshots
 
-![image](./screenshots/connection.png)
-![image](./screenshots/database_objects.png)
-![image](./screenshots/northwind.png)
-![image](./screenshots/northwind_2.png)
-![image](./screenshots/class_editor.png)
-![image](./screenshots/member_editor_1.png)
-![image](./screenshots/member_editor_2.png)
-![image](./screenshots/template_editor.png)
-![image](./screenshots/generate_code.png)
+![image](/screenshots/connection.png)
+![image](/screenshots/database_objects.png)
+![image](/screenshots/northwind.png)
+![image](/screenshots/northwind_2.png)
+![image](/screenshots/class_editor.png)
+![image](/screenshots/member_editor_1.png)
+![image](/screenshots/member_editor_2.png)
+![image](/screenshots/template_editor.png)
+![image](/screenshots/generate_code.png)
 
 ## Donation
 

@@ -42,7 +42,7 @@ Features
 
 Requirements
 ------------
-To run this software, the Microsoft .NET Framework 4.5 must be installed on your computer.
+To run this software, the Microsoft .NET Framework 4.6 must be installed on your computer.
 
 If you are a Linux/Mac user, you can alternatively use the Mono framework.
 Please always use the latest version of Mono as there may be little compatibility 

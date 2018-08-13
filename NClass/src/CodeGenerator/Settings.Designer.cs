@@ -165,12 +165,12 @@ namespace NClass.CodeGenerator {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool UseLowercaseAndUnderscoredWordsInDb {
+        public bool UseUnderscoreAndLowercaseInDB {
             get {
-                return ((bool)(this["UseLowercaseAndUnderscoredWordsInDb"]));
+                return ((bool)(this["UseUnderscoreAndLowercaseInDB"]));
             }
             set {
-                this["UseLowercaseAndUnderscoredWordsInDb"] = value;
+                this["UseUnderscoreAndLowercaseInDB"] = value;
             }
         }
         

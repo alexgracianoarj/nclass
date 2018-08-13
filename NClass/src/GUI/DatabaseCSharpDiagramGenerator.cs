@@ -100,7 +100,11 @@ namespace NClass.GUI
             
             if(CodeGenerator.Settings.Default.GenerateNHibernateMapping)
             {
-                classType.NHMTableName = table.Name;
+                if (CodeGenerator.Settings.Default.UseUnderscoreAndLowercaseInDB)
+                    classType.NHMTableName = new LowercaseAndUnderscoreTextFormatter().FormatText(table.Name);
+                else
+                    classType.NHMTableName = table.Name;
+
                 classType.IdGenerator = Enum.GetName(typeof(CodeGenerator.IdGeneratorType), CodeGenerator.Settings.Default.DefaultIdGenerator);
             }
 
@@ -111,8 +115,13 @@ namespace NClass.GUI
 
                 if (CodeGenerator.Settings.Default.GenerateNHibernateMapping)
                 {
-                    property.NHMColumnName = column.Name;
+                    if(CodeGenerator.Settings.Default.UseUnderscoreAndLowercaseInDB)
+                        property.NHMColumnName = new LowercaseAndUnderscoreTextFormatter().FormatText(column.Name);
+                    else
+                        property.NHMColumnName = column.Name;
+
                     property.IsPrimaryKey = column.IsPrimaryKey;
+                    property.IsUnique = column.IsUniqueKey;
                     property.IsNotNull = !column.Nullable;
                 }
             }

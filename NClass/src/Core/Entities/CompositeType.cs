@@ -451,6 +451,7 @@ namespace NClass.Core
                 {
                     child.SetAttribute("nhmColumnName", operation.NHMColumnName);
                     child.SetAttribute("isPrimaryKey", operation.IsPrimaryKey.ToString());
+                    child.SetAttribute("isUnique", operation.IsUnique.ToString());
                     child.SetAttribute("isNotNull", operation.IsNotNull.ToString());
                 }
 
@@ -496,6 +497,7 @@ namespace NClass.Core
                     {
                         operation.NHMColumnName = childNode.GetAttribute("nhmColumnName");
                         operation.IsPrimaryKey = (childNode.GetAttribute("isPrimaryKey") == "True") ? true : false;
+                        operation.IsUnique = (childNode.GetAttribute("isUnique") == "True") ? true : false;
                         operation.IsNotNull = (childNode.GetAttribute("isNotNull") == "True") ? true : false;
                     }
 				}

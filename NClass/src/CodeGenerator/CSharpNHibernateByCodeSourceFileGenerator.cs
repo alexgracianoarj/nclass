@@ -31,7 +31,7 @@ namespace NClass.CodeGenerator
         protected override void WriteFileContent()
         {
             useLazyLoading = Settings.Default.DefaultLazyFetching;
-            useLowercaseUnderscored = Settings.Default.UseLowercaseAndUnderscoredWordsInDb;
+            useLowercaseUnderscored = Settings.Default.UseUnderscoreAndLowercaseInDB;
 
             if (Type.IdGenerator == null)
                 idGeneratorType = Enum.GetName(typeof(IdGeneratorType), Settings.Default.DefaultIdGenerator);
@@ -179,27 +179,29 @@ namespace NClass.CodeGenerator
             {
                 WriteLine(
                     string.Format(
-                        "ManyToOne(x => x.{0}, map => {{ map.Class(typeof({1})); map.Column(\"`{2}`\"); }});",
+                        "ManyToOne(x => x.{0}, map => {{ map.Class(typeof({1})); map.Column(\"`{2}`\"); map.Unique({3}); }});",
                         property.Name, 
                         property.Type,
                         useLowercaseUnderscored
                         ? LowercaseAndUnderscoredWord(property.Name)
                         : string.IsNullOrEmpty(property.NHMColumnName)
                         ? property.Name
-                        : property.NHMColumnName
+                        : property.NHMColumnName,
+                        property.IsUnique.ToString().ToLower()
                     ));
             }
             else
             {
                 WriteLine(
                     string.Format(
-                        "Property(x => x.{0}, map => {{ map.Column(\"`{1}`\"); map.NotNullable({2}); }});", 
+                        "Property(x => x.{0}, map => {{ map.Column(\"`{1}`\"); map.Unique({2}); map.NotNullable({3}); }});", 
                         property.Name, 
                         useLowercaseUnderscored
                         ? LowercaseAndUnderscoredWord(property.Name)
                         : string.IsNullOrEmpty(property.NHMColumnName)
                         ? property.Name
                         : property.NHMColumnName,
+                        property.IsUnique.ToString().ToLower(),
                         property.IsNotNull.ToString().ToLower()
                     ));
             }

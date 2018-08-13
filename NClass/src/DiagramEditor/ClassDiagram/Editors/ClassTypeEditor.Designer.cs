@@ -85,7 +85,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
             this.cboIdGenerator.FormattingEnabled = true;
             this.cboIdGenerator.Location = new System.Drawing.Point(124, 53);
             this.cboIdGenerator.Name = "cboIdGenerator";
-            this.cboIdGenerator.Size = new System.Drawing.Size(112, 21);
+            this.cboIdGenerator.Size = new System.Drawing.Size(100, 21);
             this.cboIdGenerator.TabIndex = 12;
             this.cboIdGenerator.SelectedIndexChanged += new System.EventHandler(this.cboIdGenerator_SelectedIndexChanged);
             // 

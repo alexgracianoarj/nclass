@@ -391,6 +391,24 @@ namespace NClass.Core
             }
         }
 
+        bool isUnique;
+
+        public override bool IsUnique
+        {
+            get
+            {
+                return isUnique;
+            }
+            set
+            {
+                if (isUnique != value)
+                {
+                    isUnique = value;
+                    Changed();
+                }
+            }
+        }
+
         bool isNotNull;
 
         public override bool IsNotNull

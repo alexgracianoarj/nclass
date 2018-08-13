@@ -92,6 +92,14 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
 				txtStereotype.Text = txtStereotype.Text.Replace("«", "").Replace("»", "");
 			}
 
+            if(CodeGenerator.Settings.Default.GenerateNHibernateMapping
+                && !string.IsNullOrEmpty(Shape.CompositeType.NHMTableName)
+                && !isAdvancedOptionsExpanded)
+            {
+                ExpandAdvancedOptions();
+                Refresh();
+            }
+
             txtStereotype.SelectionStart = cursorPositionStereotype;
             txtNHMTableName.SelectionStart = cursorPositionNHMTable;
 

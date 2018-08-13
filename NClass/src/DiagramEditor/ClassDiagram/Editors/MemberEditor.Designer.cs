@@ -67,9 +67,11 @@
 			this.toolNewConstructor = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolNewDestructor = new System.Windows.Forms.ToolStripMenuItem();
             this.txtDeclaration = new NClass.DiagramEditor.ClassDiagram.Editors.BorderedTextBox();
+            this.pnlAdvancedOptions = new System.Windows.Forms.Panel();
             this.lblNHMColumnName = new System.Windows.Forms.Label();
             this.txtNHMColumnName = new NClass.DiagramEditor.ClassDiagram.Editors.BorderedTextBox();
             this.chkIsPrimaryKey = new System.Windows.Forms.CheckBox();
+            this.chkIsUnique = new System.Windows.Forms.CheckBox();
             this.chkIsNotNull = new System.Windows.Forms.CheckBox();
             this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
 			this.toolStrip.SuspendLayout();
@@ -445,18 +447,31 @@
 			this.txtDeclaration.Validating += new System.ComponentModel.CancelEventHandler(this.txtDeclaration_Validating);
 			this.txtDeclaration.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtDeclaration_KeyDown);
             // 
+            // pnlAdvancedOptions
+            // 
+            this.pnlAdvancedOptions.Controls.Add(this.lblNHMColumnName);
+            this.pnlAdvancedOptions.Controls.Add(this.txtNHMColumnName);
+            this.pnlAdvancedOptions.Controls.Add(this.chkIsPrimaryKey);
+            this.pnlAdvancedOptions.Controls.Add(this.chkIsUnique);
+            this.pnlAdvancedOptions.Controls.Add(this.chkIsNotNull);
+            this.pnlAdvancedOptions.Location = new System.Drawing.Point(1, 52);
+            this.pnlAdvancedOptions.Name = "pnlAdvancedOptions";
+            this.pnlAdvancedOptions.Size = new System.Drawing.Size(338, 42);
+            this.pnlAdvancedOptions.TabIndex = 12;
+            // 
             // lblNHMColumnName
             // 
             this.lblNHMColumnName.AutoSize = true;
-            this.lblNHMColumnName.Location = new System.Drawing.Point(1, 58);
+            this.lblNHMColumnName.Location = new System.Drawing.Point(1, 6);
             this.lblNHMColumnName.Name = "lblNHMColumnName";
             this.lblNHMColumnName.Size = new System.Drawing.Size(64, 13);
             this.lblNHMColumnName.Text = "NHM Column:";
+            this.lblNHMColumnName.SendToBack();
             // 
             // txtNHMColumnName
             // 
             this.txtNHMColumnName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left))));
-            this.txtNHMColumnName.Location = new System.Drawing.Point(74, 55);
+            this.txtNHMColumnName.Location = new System.Drawing.Point(73, 2);
             this.txtNHMColumnName.Name = "txtNHMColumnName";
             this.txtNHMColumnName.Padding = new System.Windows.Forms.Padding(1);
             this.txtNHMColumnName.ReadOnly = false;
@@ -470,7 +485,7 @@
             // chkIsPrimaryKey
             //
             this.chkIsPrimaryKey.AutoSize = true;
-            this.chkIsPrimaryKey.Location = new System.Drawing.Point(75, 80);
+            this.chkIsPrimaryKey.Location = new System.Drawing.Point(74, 26);
             this.chkIsPrimaryKey.Name = "chkPrimaryKey";
             this.chkIsPrimaryKey.Size = new System.Drawing.Size(60, 17);
             this.chkIsPrimaryKey.TabIndex = 3;
@@ -478,13 +493,25 @@
             this.chkIsPrimaryKey.UseVisualStyleBackColor = true;
             this.chkIsPrimaryKey.CheckedChanged += new System.EventHandler(this.chkIsPrimaryKey_CheckedChanged);
             // 
+            // chkIsUnique
+            //
+            this.chkIsUnique.AutoSize = true;
+            this.chkIsUnique.Location = new System.Drawing.Point(160, 26);
+            this.chkIsUnique.Name = "chkIsUnique";
+            this.chkIsUnique.Size = new System.Drawing.Size(60, 17);
+            this.chkIsUnique.TabIndex = 4;
+            this.chkIsUnique.Text = "Unique";
+            this.chkIsUnique.UseVisualStyleBackColor = true;
+            this.chkIsUnique.BringToFront();
+            this.chkIsUnique.CheckedChanged += new System.EventHandler(this.chkIsUnique_CheckedChanged);
+            // 
             // chkIsNotNull
             // 
             this.chkIsNotNull.AutoSize = true;
-            this.chkIsNotNull.Location = new System.Drawing.Point(160, 80);
+            this.chkIsNotNull.Location = new System.Drawing.Point(225, 26);
             this.chkIsNotNull.Name = "chkNotNull";
             this.chkIsNotNull.Size = new System.Drawing.Size(60, 17);
-            this.chkIsNotNull.TabIndex = 4;
+            this.chkIsNotNull.TabIndex = 5;
             this.chkIsNotNull.Text = "Not Null";
             this.chkIsNotNull.UseVisualStyleBackColor = true;
             this.chkIsNotNull.CheckedChanged += new System.EventHandler(this.chkIsNotNull_CheckedChanged);
@@ -496,15 +523,15 @@
 			// MemberEditor
 			// 
             this.Controls.Add(this.txtDeclaration);
-            this.Controls.Add(this.lblNHMColumnName);
-            this.Controls.Add(this.txtNHMColumnName);
-            this.Controls.Add(this.chkIsPrimaryKey);
-            this.Controls.Add(this.chkIsNotNull);
+            this.Controls.Add(this.pnlAdvancedOptions);
 			this.Controls.Add(this.toolStrip);
 			this.Name = "MemberEditor";
 			this.Size = new System.Drawing.Size(340, 100);
 			this.toolStrip.ResumeLayout(false);
 			this.toolStrip.PerformLayout();
+            this.Controls.SetChildIndex(this.pnlAdvancedOptions, 0);
+            this.pnlAdvancedOptions.ResumeLayout(false);
+            this.pnlAdvancedOptions.PerformLayout();
 			((System.ComponentModel.ISupportInitialize) (this.errorProvider)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
@@ -542,9 +569,11 @@
 		private System.Windows.Forms.ToolStripMenuItem toolNewField;
 		private System.Windows.Forms.ToolStripMenuItem toolNewProperty;
         private BorderedTextBox txtDeclaration;
+        private System.Windows.Forms.Panel pnlAdvancedOptions;
         private System.Windows.Forms.Label lblNHMColumnName;
         private BorderedTextBox txtNHMColumnName;
         private System.Windows.Forms.CheckBox chkIsPrimaryKey;
+        private System.Windows.Forms.CheckBox chkIsUnique;
         private System.Windows.Forms.CheckBox chkIsNotNull;
 		private System.Windows.Forms.ToolStripMenuItem toolDefault;
 		private System.Windows.Forms.ToolStripDropDownButton toolFieldModifiers;

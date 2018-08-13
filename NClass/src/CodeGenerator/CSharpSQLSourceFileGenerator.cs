@@ -36,7 +36,7 @@ namespace NClass.CodeGenerator
 
         protected override void WriteFileContent()
         {
-            useLowercaseUnderscored = Settings.Default.UseLowercaseAndUnderscoredWordsInDb;
+            useLowercaseUnderscored = Settings.Default.UseUnderscoreAndLowercaseInDB;
             var sqlToServerType = Settings.Default.SQLToServerType;
 
             schema = new DatabaseSchema(null, sqlToServerType);
@@ -119,23 +119,29 @@ namespace NClass.CodeGenerator
         {
             if (Model.Entities.Where(e => e.Name == property.Type).Count() > 0)
             {
-                table.AddColumn(
-                    useLowercaseUnderscored
-                    ? LowercaseAndUnderscoredWord(property.Name)
-                    : property.Name,
-                    GetTypeFromString(property.Type))
-                    .AddLength(255)
-                    .AddForeignKey(CreateTable(GetClassByName(property.Type)).Name);
+                var column = table.AddColumn(
+                                useLowercaseUnderscored
+                                ? LowercaseAndUnderscoredWord(property.Name)
+                                : property.Name,
+                                GetTypeFromString(property.Type))
+                                .AddLength(255)
+                                .AddForeignKey(CreateTable(GetClassByName(property.Type)).Name);
+
+                if (property.IsUnique)
+                    column.AddUniqueKey();
             }
             else
             {
-                table.AddColumn(
-                    useLowercaseUnderscored
-                    ? LowercaseAndUnderscoredWord(property.Name)
-                    : property.Name,
-                    GetTypeFromString(property.Type))
-                    .AddPrecisionScale(18, 5)
-                    .AddLength(255);
+                var column = table.AddColumn(
+                                useLowercaseUnderscored
+                                ? LowercaseAndUnderscoredWord(property.Name)
+                                : property.Name,
+                                GetTypeFromString(property.Type))
+                                .AddPrecisionScale(18, 5)
+                                .AddLength(255);
+
+                if (property.IsUnique)
+                    column.AddUniqueKey();
             }
         }
 

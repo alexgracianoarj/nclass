@@ -31,7 +31,7 @@ namespace NClass.CodeGenerator
         protected override void WriteFileContent()
         {
             useLazyLoading = Settings.Default.DefaultLazyFetching;
-            useLowercaseUnderscored = Settings.Default.UseLowercaseAndUnderscoredWordsInDb;
+            useLowercaseUnderscored = Settings.Default.UseUnderscoreAndLowercaseInDB;
 
             if(Type.IdGenerator == null)
                 idGeneratorType = Enum.GetName(typeof(IdGeneratorType), Settings.Default.DefaultIdGenerator);
@@ -173,13 +173,16 @@ namespace NClass.CodeGenerator
             {
                 WriteLine(
                     string.Format(
-                        "References(x => x.{0}).Column(\"`{1}`\"){2}.Nullable();",
+                        "References(x => x.{0}).Column(\"`{1}`\"){2}{3}.Nullable();",
                         property.Name,
                         useLowercaseUnderscored
                         ? LowercaseAndUnderscoredWord(property.Name)
                         : string.IsNullOrEmpty(property.NHMColumnName)
                         ? property.Name
                         : property.NHMColumnName,
+                        property.IsUnique
+                        ? ".Unique()"
+                        : "",
                         property.IsNotNull
                         ? ".Not"
                         : ""
@@ -189,13 +192,16 @@ namespace NClass.CodeGenerator
             {
                 WriteLine(
                     string.Format(
-                        "Map(x => x.{0}).Column(\"`{1}`\"){2}.Nullable();",
+                        "Map(x => x.{0}).Column(\"`{1}`\"){2}{3}.Nullable();",
                         property.Name,
                         useLowercaseUnderscored
                         ? LowercaseAndUnderscoredWord(property.Name)
                         : string.IsNullOrEmpty(property.NHMColumnName)
                         ? property.Name
                         : property.NHMColumnName,
+                        property.IsUnique
+                        ? ".Unique()"
+                        : "",
                         property.IsNotNull
                         ? ".Not"
                         : ""
