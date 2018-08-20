@@ -8,7 +8,7 @@ using System.ComponentModel;
 
 namespace NClass.CodeGenerator
 {
-    public enum IdGeneratorType
+    public enum IdentityGeneratorType
     {
         [Description("increment")]
         Increment,

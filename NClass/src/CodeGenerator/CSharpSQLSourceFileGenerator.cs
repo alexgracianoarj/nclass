@@ -66,13 +66,13 @@ namespace NClass.CodeGenerator
             if (table != null)
                 return table;
 
-            List<Operation> keys = _class.Operations.Where(o => o is Property && o.IsPrimaryKey).ToList<Operation>();
+            List<Operation> keys = _class.Operations.Where(o => o is Property && o.IsIdentity).ToList<Operation>();
 
             table = schema.AddTable(name);
 
             foreach(var key in keys)
             {
-                if (Model.Entities.Where(e => e.Name == key.Type).Count() > 0)
+                if (!string.IsNullOrEmpty(key.ManyToOne))
                 {
                     table.AddColumn(
                         useLowercaseUnderscored
@@ -95,7 +95,7 @@ namespace NClass.CodeGenerator
                 }
             }
 
-            foreach (var property in _class.Operations.Where(o => o is Property && !o.IsPrimaryKey).ToList<Operation>())
+            foreach (var property in _class.Operations.Where(o => o is Property && !o.IsIdentity).ToList<Operation>())
             {
                 try
                 {
@@ -117,7 +117,7 @@ namespace NClass.CodeGenerator
 
         private void CreateColumn(ref DatabaseTable table, Property property)
         {
-            if (Model.Entities.Where(e => e.Name == property.Type).Count() > 0)
+            if (!string.IsNullOrEmpty(property.ManyToOne))
             {
                 var column = table.AddColumn(
                                 useLowercaseUnderscored

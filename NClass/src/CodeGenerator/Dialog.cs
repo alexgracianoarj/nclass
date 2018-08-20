@@ -71,7 +71,7 @@ namespace NClass.CodeGenerator
             rbAutomaticProperties.Checked = Settings.Default.UseAutomaticProperties;
             chkGenerateNHibernateMapping.Checked = Settings.Default.GenerateNHibernateMapping;
             cboDefaultMapping.SelectedItem = Settings.Default.DefaultMapping;
-            cboDefaultIdGenerator.SelectedItem = Settings.Default.DefaultIdGenerator;
+            cboDefaultIdGenerator.SelectedItem = Settings.Default.DefaultIdentityGenerator;
             chkDefaultLazyFetching.Checked = Settings.Default.DefaultLazyFetching;
             chkUseUnderscoreAndLowercaseInDB.Checked = Settings.Default.UseUnderscoreAndLowercaseInDB;
             txtTextPrefix.Text = Settings.Default.PrefixTable;
@@ -149,7 +149,7 @@ namespace NClass.CodeGenerator
 
         private void PopulateIdGeneratorType()
         {
-            cboDefaultIdGenerator.DataSource = Enum.GetValues(typeof(IdGeneratorType));
+            cboDefaultIdGenerator.DataSource = Enum.GetValues(typeof(IdentityGeneratorType));
         }
 
         private void PopulateSqlToServerType()
@@ -368,7 +368,7 @@ namespace NClass.CodeGenerator
             Settings.Default.UseAutomaticProperties = rbAutomaticProperties.Checked;
             Settings.Default.GenerateNHibernateMapping = chkGenerateNHibernateMapping.Checked;
             Settings.Default.DefaultMapping = (MappingType) cboDefaultMapping.SelectedItem;
-            Settings.Default.DefaultIdGenerator = (IdGeneratorType)cboDefaultIdGenerator.SelectedItem;
+            Settings.Default.DefaultIdentityGenerator = (IdentityGeneratorType)cboDefaultIdGenerator.SelectedItem;
             Settings.Default.DefaultLazyFetching = chkDefaultLazyFetching.Checked;
             Settings.Default.UseUnderscoreAndLowercaseInDB = chkUseUnderscoreAndLowercaseInDB.Checked;
             Settings.Default.PrefixTable = txtTextPrefix.Text.Trim();

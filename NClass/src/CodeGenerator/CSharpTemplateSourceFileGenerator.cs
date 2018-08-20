@@ -63,7 +63,7 @@ namespace NClass.CodeGenerator
                         }
                         else
                         {
-                            var modelMeta = GenerateModelMeta();
+                            var modelMeta = GenerateModelMeta();                            
                             fileName = TemplateRender("model", modelMeta, tmpltSettings.FileExt);
                         }
 
@@ -161,7 +161,6 @@ namespace NClass.CodeGenerator
             var modelMeta = new ModelMeta();
             modelMeta.ProjectName = Model.Project.Name;
             modelMeta.Name = Model.Name;
-            modelMeta.EntitiesNames = Model.Entities.Select(x => x.Name).ToList();
 
             foreach (var entity in Model.Entities)
             {
@@ -190,6 +189,8 @@ namespace NClass.CodeGenerator
                     entityMeta.EntityType = Enum.GetName(typeof(EntityType), entity.EntityType);
                     entityMeta.Access = Enum.GetName(typeof(AccessModifier), entityType.Access);
                     entityMeta.Name = entityType.Name;
+                    entityMeta.NHMTableName = entityType.NHMTableName;
+                    entityMeta.IdentityGenerator = EnumExtensions.GetDescription((IdentityGeneratorType)Enum.Parse(typeof(IdentityGeneratorType), entityType.IdGenerator));
 
                     if (entityType.SupportsFields)
                     {
@@ -207,7 +208,7 @@ namespace NClass.CodeGenerator
                         }
                     }
 
-                    if(entityType.SupportsOperations)
+                    if (entityType.SupportsOperations)
                     {
                         entityMeta.OperationsCount = entityType.OperationCount;
 
@@ -218,6 +219,11 @@ namespace NClass.CodeGenerator
                             operationMeta.Access = Enum.GetName(typeof(AccessModifier), operation.Access);
                             operationMeta.Name = operation.Name;
                             operationMeta.Type = operation.Type;
+                            operationMeta.NHMColumnName = operation.NHMColumnName;
+                            operationMeta.Identity = operation.IsIdentity;
+                            operationMeta.ManyToOne = operation.ManyToOne;
+                            operationMeta.Unique = operation.IsUnique;
+                            operationMeta.NotNull = operation.IsNotNull;
 
                             entityMeta.Operations.Add(operationMeta);
                         }
@@ -225,22 +231,6 @@ namespace NClass.CodeGenerator
 
                     modelMeta.Entities.Add(entityMeta);
                 }
-            }
-
-            foreach(var relationship in Model.Relationships)
-            {
-                var relationshipMeta = new RelationshipMeta();
-                relationshipMeta.RelationshipType = Enum.GetName(typeof(RelationshipType), relationship.RelationshipType);
-                relationshipMeta.SupportsLabel = relationship.SupportsLabel;
-                relationshipMeta.Label = relationship.Label;
-
-                relationshipMeta.FirstEntity.EntityType = Enum.GetName(typeof(EntityType), relationship.First.EntityType);
-                relationshipMeta.FirstEntity.Name = relationship.First.Name;
-
-                relationshipMeta.SecondEntity.EntityType = Enum.GetName(typeof(EntityType), relationship.Second.EntityType);
-                relationshipMeta.SecondEntity.Name = relationship.Second.Name;
-
-                modelMeta.Relationships.Add(relationshipMeta);
             }
 
             return modelMeta;
@@ -255,9 +245,8 @@ namespace NClass.CodeGenerator
 
                 entityMeta.ProjectName = Model.Project.Name;
                 entityMeta.ModelName = Model.Name;
-                entityMeta.EntitiesNames = Model.Entities.Select(x => x.Name).ToList();
 
-                entityMeta.EntityType = Enum.GetName(typeof(EntityType), Type.EntityType);
+                entityMeta.EntityType = Enum.GetName(typeof(EntityType), entityType.EntityType);
                 entityMeta.Access = Enum.GetName(typeof(AccessModifier), entityType.Access);
                 entityMeta.Name = entityType.Name;
                 entityMeta.ValuesCount = entityType.ValueCount;
@@ -265,22 +254,6 @@ namespace NClass.CodeGenerator
                 foreach (var value in entityType.Values)
                 {
                     entityMeta.Values.Add(Enum.GetName(typeof(EnumValue), value));
-                }
-
-                foreach (var relationship in Model.Relationships)
-                {
-                    var relationshipMeta = new RelationshipMeta();
-                    relationshipMeta.RelationshipType = Enum.GetName(typeof(RelationshipType), relationship.RelationshipType);
-                    relationshipMeta.SupportsLabel = relationship.SupportsLabel;
-                    relationshipMeta.Label = relationship.Label;
-
-                    relationshipMeta.FirstEntity.EntityType = Enum.GetName(typeof(EntityType), relationship.First.EntityType);
-                    relationshipMeta.FirstEntity.Name = relationship.First.Name;
-
-                    relationshipMeta.SecondEntity.EntityType = Enum.GetName(typeof(EntityType), relationship.Second.EntityType);
-                    relationshipMeta.SecondEntity.Name = relationship.Second.Name;
-
-                    entityMeta.Relationships.Add(relationshipMeta);
                 }
 
                 return entityMeta;
@@ -292,11 +265,12 @@ namespace NClass.CodeGenerator
 
                 entityMeta.ProjectName = Model.Project.Name;
                 entityMeta.ModelName = Model.Name;
-                entityMeta.EntitiesNames = Model.Entities.Select(x => x.Name).ToList();
 
-                entityMeta.EntityType = Enum.GetName(typeof(EntityType), Type.EntityType);
+                entityMeta.EntityType = Enum.GetName(typeof(EntityType), entityType.EntityType);
                 entityMeta.Access = Enum.GetName(typeof(AccessModifier), entityType.Access);
                 entityMeta.Name = entityType.Name;
+                entityMeta.NHMTableName = entityType.NHMTableName;
+                entityMeta.IdentityGenerator = EnumExtensions.GetDescription((IdentityGeneratorType)Enum.Parse(typeof(IdentityGeneratorType), entityType.IdGenerator));
 
                 if (entityType.SupportsFields)
                 {
@@ -325,25 +299,14 @@ namespace NClass.CodeGenerator
                         operationMeta.Access = Enum.GetName(typeof(AccessModifier), operation.Access);
                         operationMeta.Name = operation.Name;
                         operationMeta.Type = operation.Type;
+                        operationMeta.NHMColumnName = operation.NHMColumnName;
+                        operationMeta.Identity = operation.IsIdentity;
+                        operationMeta.ManyToOne = operation.ManyToOne;
+                        operationMeta.Unique = operation.IsUnique;
+                        operationMeta.NotNull = operation.IsNotNull;
 
                         entityMeta.Operations.Add(operationMeta);
                     }
-                }
-
-                foreach (var relationship in Model.Relationships)
-                {
-                    var relationshipMeta = new RelationshipMeta();
-                    relationshipMeta.RelationshipType = Enum.GetName(typeof(RelationshipType), relationship.RelationshipType);
-                    relationshipMeta.SupportsLabel = relationship.SupportsLabel;
-                    relationshipMeta.Label = relationship.Label;
-
-                    relationshipMeta.FirstEntity.EntityType = Enum.GetName(typeof(EntityType), relationship.First.EntityType);
-                    relationshipMeta.FirstEntity.Name = relationship.First.Name;
-
-                    relationshipMeta.SecondEntity.EntityType = Enum.GetName(typeof(EntityType), relationship.Second.EntityType);
-                    relationshipMeta.SecondEntity.Name = relationship.Second.Name;
-
-                    entityMeta.Relationships.Add(relationshipMeta);
                 }
 
                 return entityMeta;
@@ -376,14 +339,10 @@ namespace NClass.CodeGenerator
             }
         }
         public List<EntityMeta> Entities { get; set; }
-        public List<string> EntitiesNames { get; set; }
-        public List<RelationshipMeta> Relationships { get; set; }
 
         public ModelMeta()
         {
             Entities = new List<EntityMeta>();
-            EntitiesNames = new List<string>();
-            Relationships = new List<RelationshipMeta>();
         }
     }
 
@@ -411,21 +370,19 @@ namespace NClass.CodeGenerator
                     return ProjectName + "." + ModelName;
             }
         }
-        public List<string> EntitiesNames { get; set; }
         public string EntityType { get; set; }
         public string Access { get; set; }
         public string Name { get; set; }
-        public List<RelationshipMeta> Relationships { get; set; }
 
         public EntityMeta()
         {
-            EntitiesNames = new List<string>();
-            Relationships = new List<RelationshipMeta>();
         }
     }
 
     public class CompositeMeta : EntityMeta
     {
+        public string NHMTableName { get; set; }
+        public string IdentityGenerator { get; set; }
         public int FieldsCount { get; set; }
         public List<FieldMeta> Fields { get; set; }
         public int OperationsCount { get; set; }
@@ -459,6 +416,11 @@ namespace NClass.CodeGenerator
     public class OperationMeta : MemberMeta
     {
         public string Type { get; set; }
+        public string NHMColumnName { get; set; }
+        public bool Identity { get; set; }
+        public string ManyToOne { get; set; }
+        public bool Unique { get; set; }
+        public bool NotNull { get; set; }
 
         public OperationMeta()
         {
@@ -471,21 +433,6 @@ namespace NClass.CodeGenerator
         
         public FieldMeta()
         {
-        }
-    }
-
-    public class RelationshipMeta
-    {
-        public string RelationshipType { get; set; }
-        public bool SupportsLabel { get; set; }
-        public string Label { get; set; }
-        public EntityMeta FirstEntity { get; set; }
-        public EntityMeta SecondEntity { get; set; }
-
-        public RelationshipMeta()
-        {
-            FirstEntity = new EntityMeta();
-            SecondEntity = new EntityMeta();
         }
     }
 }

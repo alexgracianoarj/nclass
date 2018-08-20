@@ -105,7 +105,7 @@ namespace NClass.GUI
                 else
                     classType.NHMTableName = table.Name;
 
-                classType.IdGenerator = Enum.GetName(typeof(CodeGenerator.IdGeneratorType), CodeGenerator.Settings.Default.DefaultIdGenerator);
+                classType.IdGenerator = Enum.GetName(typeof(CodeGenerator.IdentityGeneratorType), CodeGenerator.Settings.Default.DefaultIdentityGenerator);
             }
 
             foreach (var column in table.Columns)
@@ -120,7 +120,11 @@ namespace NClass.GUI
                     else
                         property.NHMColumnName = column.Name;
 
-                    property.IsPrimaryKey = column.IsPrimaryKey;
+                    property.IsIdentity = column.IsPrimaryKey;
+                    
+                    if(column.IsForeignKey)
+                        property.ManyToOne = textFormatter.FormatText(column.ForeignKeyTableName);
+                    
                     property.IsUnique = column.IsUniqueKey;
                     property.IsNotNull = !column.Nullable;
                 }

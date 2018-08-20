@@ -234,11 +234,11 @@
             // chkDefaultFetching
             // 
             this.chkDefaultFetching.AutoSize = true;
-            this.chkDefaultFetching.Location = new System.Drawing.Point(255, 19);
+            this.chkDefaultFetching.Location = new System.Drawing.Point(262, 19);
             this.chkDefaultFetching.Name = "chkDefaultFetching";
-            this.chkDefaultFetching.Size = new System.Drawing.Size(92, 17);
+            this.chkDefaultFetching.Size = new System.Drawing.Size(48, 17);
             this.chkDefaultFetching.TabIndex = 3;
-            this.chkDefaultFetching.Text = "Lazy Fetching";
+            this.chkDefaultFetching.Text = "Lazy";
             this.chkDefaultFetching.UseVisualStyleBackColor = true;
             // 
             // chkNHibernateMapping
@@ -254,11 +254,11 @@
             // chkUseUnderscoreAndLowercaseInDB
             // 
             this.chkUseUnderscoreAndLowercaseInDB.AutoSize = true;
-            this.chkUseUnderscoreAndLowercaseInDB.Location = new System.Drawing.Point(350, 19);
+            this.chkUseUnderscoreAndLowercaseInDB.Location = new System.Drawing.Point(319, 19);
             this.chkUseUnderscoreAndLowercaseInDB.Name = "chkUseUnderscoreAndLowercaseInDB";
-            this.chkUseUnderscoreAndLowercaseInDB.Size = new System.Drawing.Size(208, 17);
+            this.chkUseUnderscoreAndLowercaseInDB.Size = new System.Drawing.Size(239, 17);
             this.chkUseUnderscoreAndLowercaseInDB.TabIndex = 4;
-            this.chkUseUnderscoreAndLowercaseInDB.Text = "Use Underscore and Lowercase in DB";
+            this.chkUseUnderscoreAndLowercaseInDB.Text = "Use Underscore and Lowercase in Database";
             this.chkUseUnderscoreAndLowercaseInDB.UseVisualStyleBackColor = true;
             // 
             // lblDefaultIdGenerator

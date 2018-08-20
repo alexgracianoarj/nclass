@@ -20,6 +20,8 @@ using System.Windows.Forms;
 using NClass.Core;
 using NClass.Translations;
 
+using System.Linq;
+
 namespace NClass.DiagramEditor.ClassDiagram.Dialogs
 {
 	public partial class MembersDialog : Form
@@ -29,6 +31,8 @@ namespace NClass.DiagramEditor.ClassDiagram.Dialogs
 		bool locked = false;
 		int attributeCount = 0;
 		bool error = false;
+
+        List<string> entities = null;
 
 		public event EventHandler ContentsChanged;
 
@@ -75,13 +79,19 @@ namespace NClass.DiagramEditor.ClassDiagram.Dialogs
 			btnClose.Text = Strings.ButtonClose;
 		}
 
-		public void ShowDialog(CompositeType parent)
+		public void ShowDialog(CompositeType parent, IEnumerable<IEntity> entities)
 		{
 			if (parent == null)
 				return;
 
 			this.parent = parent;
 			this.Text = string.Format(Strings.MembersOfType, parent.Name);
+
+            this.entities = new List<string>();
+            this.entities.Add("(None)");
+            this.entities.AddRange(entities.Select(ent => ent.Name).ToList());
+
+            cboForeignKey.DataSource = this.entities;
 
 			LanguageSpecificInitialization(parent.Language);
 			FillMembersList();
@@ -306,6 +316,8 @@ namespace NClass.DiagramEditor.ClassDiagram.Dialogs
 			txtInitialValue.Enabled = (member is Field);
             txtNHMColumnName.Enabled = (member is Property);
             chkIsPrimaryKey.Enabled = (member is Property);
+            lblForeignKey.Enabled = (member is Property);
+            cboForeignKey.Enabled = (member is Property);
             chkIsUnique.Enabled = (member is Property);
             chkIsNotNull.Enabled = (member is Property);
 			toolSortByKind.Enabled = true;
@@ -322,7 +334,8 @@ namespace NClass.DiagramEditor.ClassDiagram.Dialogs
 			txtName.Text = member.Name;
 			cboType.Text = member.Type;
             txtNHMColumnName.Text = member.NHMColumnName;
-            chkIsPrimaryKey.Checked = member.IsPrimaryKey;
+            chkIsPrimaryKey.Checked = member.IsIdentity;
+            cboForeignKey.SelectedItem = string.IsNullOrEmpty(member.ManyToOne) ? "(None)" : member.ManyToOne;
             chkIsUnique.Checked = member.IsUnique;
             chkIsNotNull.Checked = member.IsNotNull;
 
@@ -408,10 +421,11 @@ namespace NClass.DiagramEditor.ClassDiagram.Dialogs
 			cboAccess.Text = null;
 			txtInitialValue.Text = null;
             txtNHMColumnName.Text = null;
+            cboForeignKey.Text = null;
 
-            chkIsPrimaryKey.Checked = false;
-            chkIsUnique.Checked = false;
-            chkIsNotNull.Checked = false;
+            chkIsPrimaryKey.Enabled = false;
+            chkIsUnique.Enabled = false;
+            chkIsNotNull.Enabled = false;
 
 			txtSyntax.Enabled = false;
 			txtName.Enabled = false;
@@ -419,6 +433,8 @@ namespace NClass.DiagramEditor.ClassDiagram.Dialogs
 			cboAccess.Enabled = false;
 			txtInitialValue.Enabled = false;
             txtNHMColumnName.Enabled = false;
+            lblForeignKey.Enabled = false;
+            cboForeignKey.Enabled = false;
 
 			grpFieldModifiers.Enabled = false;
 			grpOperationModifiers.Enabled = false;
@@ -481,6 +497,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Dialogs
 		{
 			base.OnLoad(e);
 			UpdateTexts();
+
 			errorProvider.SetError(grpFieldModifiers, null);
 			errorProvider.SetError(grpOperationModifiers, null);
 			error = false;
@@ -509,7 +526,23 @@ namespace NClass.DiagramEditor.ClassDiagram.Dialogs
 					errorProvider.SetError(txtSyntax, null);
 					error = false;
 
+                    if (CodeGenerator.Settings.Default.GenerateNHibernateMapping
+                        && string.IsNullOrEmpty(member.NHMColumnName)
+                        && member is Property)
+                    {
+                        if (CodeGenerator.Settings.Default.UseUnderscoreAndLowercaseInDB)
+                            member.NHMColumnName = new CodeGenerator.LowercaseAndUnderscoreTextFormatter().FormatText(member.Name);
+                        else
+                            member.NHMColumnName = member.Name;
+                    }
+
+                    if (entities.Contains(member.Type))
+                        member.ManyToOne = member.Type;
+                    else
+                        member.ManyToOne = null;
+
 					RefreshValues();
+
 					if (oldValue != txtSyntax.Text)
 						OnContentsChanged(EventArgs.Empty);
 				}
@@ -541,7 +574,13 @@ namespace NClass.DiagramEditor.ClassDiagram.Dialogs
                             member.NHMColumnName = member.Name;
                     }
 
-					RefreshValues();
+                    if (entities.Contains(member.Type))
+                        member.ManyToOne = member.Type;
+                    else
+                        member.ManyToOne = null;
+                    
+                    RefreshValues();
+
 					if (oldValue != txtName.Text)
 						OnContentsChanged(EventArgs.Empty);
 				}
@@ -566,7 +605,13 @@ namespace NClass.DiagramEditor.ClassDiagram.Dialogs
 					error = false;
 					cboType.Select(0, 0);
 
+                    if (entities.Contains(member.Type))
+                        member.ManyToOne = member.Type;
+                    else
+                        member.ManyToOne = null;
+
 					RefreshValues();
+
 					if (oldValue != cboType.Text)
 						OnContentsChanged(EventArgs.Empty);
 				}
@@ -1116,7 +1161,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Dialogs
         {
             if (!locked && member is Property)
             {
-                member.IsPrimaryKey = chkIsPrimaryKey.Checked;
+                member.IsIdentity = chkIsPrimaryKey.Checked;
                 OnContentsChanged(EventArgs.Empty);
             }
         }
@@ -1135,6 +1180,17 @@ namespace NClass.DiagramEditor.ClassDiagram.Dialogs
             if (!locked && member is Property)
             {
                 member.IsUnique = chkIsUnique.Checked;
+                OnContentsChanged(EventArgs.Empty);
+            }
+        }
+
+        private void cboForeignKey_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!locked && member != null)
+            {
+                member.ManyToOne = (cboForeignKey.SelectedIndex == 0) ? null : cboForeignKey.SelectedItem.ToString();
+                member.Type = (member.ManyToOne == null) ? "int" : member.ManyToOne;
+                RefreshValues();
                 OnContentsChanged(EventArgs.Empty);
             }
         }

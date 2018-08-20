@@ -373,19 +373,37 @@ namespace NClass.Core
             }
         }
 
-        bool isPrimaryKey;
+        bool isIdentity;
 
-        public override bool IsPrimaryKey
+        public override bool IsIdentity
         {
             get
             {
-                return isPrimaryKey;
+                return isIdentity;
             }
             set
             {
-                if(isPrimaryKey != value)
+                if(isIdentity != value)
                 {
-                    isPrimaryKey = value;
+                    isIdentity = value;
+                    Changed();
+                }
+            }
+        }
+
+        string manyToOne;
+
+        public override string ManyToOne
+        {
+            get
+            {
+                return manyToOne;
+            }
+            set
+            {
+                if (manyToOne != value)
+                {
+                    manyToOne = value;
                     Changed();
                 }
             }

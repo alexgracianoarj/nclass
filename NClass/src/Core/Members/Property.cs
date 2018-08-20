@@ -155,7 +155,8 @@ namespace NClass.Core
 			writeAccess = property.writeAccess;
 
             NHMColumnName = property.NHMColumnName;
-            IsPrimaryKey = property.IsPrimaryKey;
+            IsIdentity = property.IsIdentity;
+            ManyToOne = property.ManyToOne;
             IsUnique = property.IsUnique;
             IsNotNull = property.IsNotNull;
 		}

@@ -38,7 +38,7 @@
     <Setting Name="DefaultMapping" Type="NClass.CodeGenerator.MappingType" Scope="User">
       <Value Profile="(Default)">NHibernateXml</Value>
     </Setting>
-    <Setting Name="DefaultIdGenerator" Type="NClass.CodeGenerator.IdGeneratorType" Scope="User">
+    <Setting Name="DefaultIdentityGenerator" Type="NClass.CodeGenerator.IdentityGeneratorType" Scope="User">
       <Value Profile="(Default)">Increment</Value>
     </Setting>
     <Setting Name="DefaultLazyFetching" Type="System.Boolean" Scope="User">

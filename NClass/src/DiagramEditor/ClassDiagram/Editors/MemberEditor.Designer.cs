@@ -70,9 +70,11 @@
             this.pnlAdvancedOptions = new System.Windows.Forms.Panel();
             this.lblNHMColumnName = new System.Windows.Forms.Label();
             this.txtNHMColumnName = new NClass.DiagramEditor.ClassDiagram.Editors.BorderedTextBox();
-            this.chkIsPrimaryKey = new System.Windows.Forms.CheckBox();
+            this.chkIsIdentity = new System.Windows.Forms.CheckBox();
             this.chkIsUnique = new System.Windows.Forms.CheckBox();
             this.chkIsNotNull = new System.Windows.Forms.CheckBox();
+            this.lblManyToOne = new System.Windows.Forms.Label();
+            this.cboManyToOne = new System.Windows.Forms.ComboBox();
             this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
 			this.toolStrip.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize) (this.errorProvider)).BeginInit();
@@ -451,12 +453,14 @@
             // 
             this.pnlAdvancedOptions.Controls.Add(this.lblNHMColumnName);
             this.pnlAdvancedOptions.Controls.Add(this.txtNHMColumnName);
-            this.pnlAdvancedOptions.Controls.Add(this.chkIsPrimaryKey);
+            this.pnlAdvancedOptions.Controls.Add(this.chkIsIdentity);
             this.pnlAdvancedOptions.Controls.Add(this.chkIsUnique);
             this.pnlAdvancedOptions.Controls.Add(this.chkIsNotNull);
+            this.pnlAdvancedOptions.Controls.Add(this.lblManyToOne);
+            this.pnlAdvancedOptions.Controls.Add(this.cboManyToOne);
             this.pnlAdvancedOptions.Location = new System.Drawing.Point(1, 52);
             this.pnlAdvancedOptions.Name = "pnlAdvancedOptions";
-            this.pnlAdvancedOptions.Size = new System.Drawing.Size(338, 42);
+            this.pnlAdvancedOptions.Size = new System.Drawing.Size(338, 68);
             this.pnlAdvancedOptions.TabIndex = 12;
             // 
             // lblNHMColumnName
@@ -482,21 +486,21 @@
             this.txtNHMColumnName.Validating += new System.ComponentModel.CancelEventHandler(this.txtNHMColumnName_Validating);
             this.txtNHMColumnName.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtNHMColumnName_KeyDown);
             // 
-            // chkIsPrimaryKey
+            // chkIsIdentity
             //
-            this.chkIsPrimaryKey.AutoSize = true;
-            this.chkIsPrimaryKey.Location = new System.Drawing.Point(74, 26);
-            this.chkIsPrimaryKey.Name = "chkPrimaryKey";
-            this.chkIsPrimaryKey.Size = new System.Drawing.Size(60, 17);
-            this.chkIsPrimaryKey.TabIndex = 3;
-            this.chkIsPrimaryKey.Text = "Primary Key";
-            this.chkIsPrimaryKey.UseVisualStyleBackColor = true;
-            this.chkIsPrimaryKey.CheckedChanged += new System.EventHandler(this.chkIsPrimaryKey_CheckedChanged);
+            this.chkIsIdentity.AutoSize = true;
+            this.chkIsIdentity.Location = new System.Drawing.Point(74, 26);
+            this.chkIsIdentity.Name = "chkIsIdentity";
+            this.chkIsIdentity.Size = new System.Drawing.Size(60, 17);
+            this.chkIsIdentity.TabIndex = 3;
+            this.chkIsIdentity.Text = "Identity";
+            this.chkIsIdentity.UseVisualStyleBackColor = true;
+            this.chkIsIdentity.CheckedChanged += new System.EventHandler(this.chkIsIdentity_CheckedChanged);
             // 
             // chkIsUnique
             //
             this.chkIsUnique.AutoSize = true;
-            this.chkIsUnique.Location = new System.Drawing.Point(160, 26);
+            this.chkIsUnique.Location = new System.Drawing.Point(150, 26);
             this.chkIsUnique.Name = "chkIsUnique";
             this.chkIsUnique.Size = new System.Drawing.Size(60, 17);
             this.chkIsUnique.TabIndex = 4;
@@ -516,6 +520,25 @@
             this.chkIsNotNull.UseVisualStyleBackColor = true;
             this.chkIsNotNull.CheckedChanged += new System.EventHandler(this.chkIsNotNull_CheckedChanged);
             // 
+            // lblManyToOne
+            // 
+            this.lblManyToOne.AutoSize = true;
+            this.lblManyToOne.Location = new System.Drawing.Point(70, 48);
+            this.lblManyToOne.Name = "lblManyToOne";
+            this.lblManyToOne.Size = new System.Drawing.Size(64, 13);
+            this.lblManyToOne.Text = "Many to One:";
+            this.lblManyToOne.SendToBack();
+            // 
+            // cboManyToOne
+            // 
+            this.cboManyToOne.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboManyToOne.FormattingEnabled = true;
+            this.cboManyToOne.Location = new System.Drawing.Point(140, 45);
+            this.cboManyToOne.Name = "cboManyToOne";
+            this.cboManyToOne.Size = new System.Drawing.Size(145, 21);
+            this.cboManyToOne.TabIndex = 12;
+            this.cboManyToOne.SelectedIndexChanged += new System.EventHandler(this.cboManyToOne_SelectedIndexChanged);
+            // 
 			// errorProvider
 			// 
 			this.errorProvider.ContainerControl = this;
@@ -526,7 +549,7 @@
             this.Controls.Add(this.pnlAdvancedOptions);
 			this.Controls.Add(this.toolStrip);
 			this.Name = "MemberEditor";
-			this.Size = new System.Drawing.Size(340, 100);
+			this.Size = new System.Drawing.Size(340, 122);
 			this.toolStrip.ResumeLayout(false);
 			this.toolStrip.PerformLayout();
             this.Controls.SetChildIndex(this.pnlAdvancedOptions, 0);
@@ -572,9 +595,11 @@
         private System.Windows.Forms.Panel pnlAdvancedOptions;
         private System.Windows.Forms.Label lblNHMColumnName;
         private BorderedTextBox txtNHMColumnName;
-        private System.Windows.Forms.CheckBox chkIsPrimaryKey;
+        private System.Windows.Forms.CheckBox chkIsIdentity;
         private System.Windows.Forms.CheckBox chkIsUnique;
         private System.Windows.Forms.CheckBox chkIsNotNull;
+        private System.Windows.Forms.Label lblManyToOne;
+        private System.Windows.Forms.ComboBox cboManyToOne;
 		private System.Windows.Forms.ToolStripMenuItem toolDefault;
 		private System.Windows.Forms.ToolStripDropDownButton toolFieldModifiers;
 		private System.Windows.Forms.ToolStripMenuItem toolFieldNone;

@@ -31,10 +31,10 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
             this.lblStereotype = new System.Windows.Forms.Label();
             this.txtStereotype = new NClass.DiagramEditor.ClassDiagram.Editors.BorderedTextBox();
             this.pnlAdvancedOptions = new System.Windows.Forms.Panel();
-            this.cboIdGenerator = new System.Windows.Forms.ComboBox();
+            this.cboIdentityGenerator = new System.Windows.Forms.ComboBox();
             this.txtNHMTableName = new NClass.DiagramEditor.ClassDiagram.Editors.BorderedTextBox();
             this.lblNHMTableName = new System.Windows.Forms.Label();
-            this.lblIdGenerator = new System.Windows.Forms.Label();
+            this.lblIdentityGenerator = new System.Windows.Forms.Label();
             this.toolStripAdvancedOptions = new System.Windows.Forms.ToolStrip();
             this.toolAdvancedOptions = new System.Windows.Forms.ToolStripButton();
             this.pnlAdvancedOptions.SuspendLayout();
@@ -68,26 +68,26 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
             // 
             // pnlAdvancedOptions
             // 
-            this.pnlAdvancedOptions.Controls.Add(this.cboIdGenerator);
+            this.pnlAdvancedOptions.Controls.Add(this.cboIdentityGenerator);
             this.pnlAdvancedOptions.Controls.Add(this.txtNHMTableName);
             this.pnlAdvancedOptions.Controls.Add(this.lblNHMTableName);
             this.pnlAdvancedOptions.Controls.Add(this.lblStereotype);
             this.pnlAdvancedOptions.Controls.Add(this.txtStereotype);
-            this.pnlAdvancedOptions.Controls.Add(this.lblIdGenerator);
+            this.pnlAdvancedOptions.Controls.Add(this.lblIdentityGenerator);
             this.pnlAdvancedOptions.Location = new System.Drawing.Point(3, 52);
             this.pnlAdvancedOptions.Name = "pnlAdvancedOptions";
             this.pnlAdvancedOptions.Size = new System.Drawing.Size(321, 77);
             this.pnlAdvancedOptions.TabIndex = 12;
             // 
-            // cboIdGenerator
+            // cboIdentityGenerator
             // 
-            this.cboIdGenerator.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboIdGenerator.FormattingEnabled = true;
-            this.cboIdGenerator.Location = new System.Drawing.Point(124, 53);
-            this.cboIdGenerator.Name = "cboIdGenerator";
-            this.cboIdGenerator.Size = new System.Drawing.Size(100, 21);
-            this.cboIdGenerator.TabIndex = 12;
-            this.cboIdGenerator.SelectedIndexChanged += new System.EventHandler(this.cboIdGenerator_SelectedIndexChanged);
+            this.cboIdentityGenerator.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboIdentityGenerator.FormattingEnabled = true;
+            this.cboIdentityGenerator.Location = new System.Drawing.Point(148, 53);
+            this.cboIdentityGenerator.Name = "cboIdentityGenerator";
+            this.cboIdentityGenerator.Size = new System.Drawing.Size(100, 21);
+            this.cboIdentityGenerator.TabIndex = 12;
+            this.cboIdentityGenerator.SelectedIndexChanged += new System.EventHandler(this.cboIdGenerator_SelectedIndexChanged);
             // 
             // txtNHMTableName
             // 
@@ -110,14 +110,14 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
             this.lblNHMTableName.TabIndex = 10;
             this.lblNHMTableName.Text = "NHM Table:";
             // 
-            // lblIdGenerator
+            // lblIdentityGenerator
             // 
-            this.lblIdGenerator.AutoSize = true;
-            this.lblIdGenerator.Location = new System.Drawing.Point(56, 56);
-            this.lblIdGenerator.Name = "lblIdGenerator";
-            this.lblIdGenerator.Size = new System.Drawing.Size(69, 13);
-            this.lblIdGenerator.TabIndex = 13;
-            this.lblIdGenerator.Text = "Id Generator:";
+            this.lblIdentityGenerator.AutoSize = true;
+            this.lblIdentityGenerator.Location = new System.Drawing.Point(56, 56);
+            this.lblIdentityGenerator.Name = "lblIdentityGenerator";
+            this.lblIdentityGenerator.Size = new System.Drawing.Size(94, 13);
+            this.lblIdentityGenerator.TabIndex = 13;
+            this.lblIdentityGenerator.Text = "Identity Generator:";
             // 
             // toolStripAdvancedOptions
             // 
@@ -170,7 +170,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
 		private System.Windows.Forms.ToolStripButton toolAdvancedOptions;
         private System.Windows.Forms.Label lblNHMTableName;
         private BorderedTextBox txtNHMTableName;
-        private System.Windows.Forms.ComboBox cboIdGenerator;
-        private System.Windows.Forms.Label lblIdGenerator;
+        private System.Windows.Forms.ComboBox cboIdentityGenerator;
+        private System.Windows.Forms.Label lblIdentityGenerator;
 	}
 }

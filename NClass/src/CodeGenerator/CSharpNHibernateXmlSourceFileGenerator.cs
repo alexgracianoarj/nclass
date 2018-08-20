@@ -42,9 +42,9 @@ namespace NClass.CodeGenerator
             ClassType _class = (ClassType)Type;
             
             if(_class.IdGenerator == null)
-                idGeneratorType = EnumExtensions.GetDescription(Settings.Default.DefaultIdGenerator);
+                idGeneratorType = EnumExtensions.GetDescription(Settings.Default.DefaultIdentityGenerator);
             else
-                idGeneratorType = EnumExtensions.GetDescription((IdGeneratorType)Enum.Parse(typeof(IdGeneratorType), _class.IdGenerator));
+                idGeneratorType = EnumExtensions.GetDescription((IdentityGeneratorType)Enum.Parse(typeof(IdentityGeneratorType), _class.IdGenerator));
             
             using (XmlWriter xml = XmlWriter.Create(CodeBuilder, settings))
             {
@@ -70,14 +70,14 @@ namespace NClass.CodeGenerator
                     )));
                 xml.WriteAttributeString("lazy", useLazyLoading.ToString().ToLower());
 
-                List<Operation> ids = _class.Operations.Where(o => o is Property && o.IsPrimaryKey).ToList<Operation>();
+                List<Operation> ids = _class.Operations.Where(o => o is Property && o.IsIdentity).ToList<Operation>();
 
                 if(ids.Count > 1)
                 {
                     xml.WriteStartElement("composite-id");
                     foreach (var id in ids)
                     {
-                        if(Model.Entities.Where(e => e.Name == id.Type).Count() > 0)
+                        if(!string.IsNullOrEmpty(id.ManyToOne))
                         {
                             xml.WriteStartElement("key-many-to-one");
                             xml.WriteAttributeString("name", id.Name);
@@ -127,9 +127,9 @@ namespace NClass.CodeGenerator
                     xml.WriteEndElement();
                 }
 
-                foreach (var property in _class.Operations.Where(o => o is Property && !o.IsPrimaryKey).ToList<Operation>())
+                foreach (var property in _class.Operations.Where(o => o is Property && !o.IsIdentity).ToList<Operation>())
                 {
-                    if (Model.Entities.Where(e => e.Name == property.Type).Count() > 0)
+                    if (!string.IsNullOrEmpty(property.ManyToOne))
                     {
                         xml.WriteStartElement("many-to-one");
                         xml.WriteAttributeString("name", property.Name);
@@ -142,7 +142,10 @@ namespace NClass.CodeGenerator
                                 ? property.Name
                                 : property.NHMColumnName
                             ));
-                        xml.WriteAttributeString("unique", property.IsUnique.ToString().ToLower());
+                        
+                        if (property.IsUnique)
+                            xml.WriteAttributeString("unique", "true");
+                        
                         xml.WriteAttributeString("not-null", property.IsNotNull.ToString().ToLower());
                         xml.WriteEndElement();
                     }
@@ -159,7 +162,10 @@ namespace NClass.CodeGenerator
                                 : property.NHMColumnName
                             ));
                         xml.WriteAttributeString("type", property.Type);
-                        xml.WriteAttributeString("unique", property.IsUnique.ToString().ToLower());
+
+                        if (property.IsUnique)
+                            xml.WriteAttributeString("unique", "true");
+
                         xml.WriteAttributeString("not-null", property.IsNotNull.ToString().ToLower());
                         xml.WriteEndElement();
                     }

@@ -25,11 +25,11 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
 
 			toolStripAdvancedOptions.Renderer = ToolStripSimplifiedRenderer.Default;
 
-            cboIdGenerator.SelectedIndexChanged -= cboIdGenerator_SelectedIndexChanged;
+            cboIdentityGenerator.SelectedIndexChanged -= cboIdGenerator_SelectedIndexChanged;
 
-            cboIdGenerator.DataSource = Enum.GetNames(typeof(CodeGenerator.IdGeneratorType));
+            cboIdentityGenerator.DataSource = Enum.GetNames(typeof(CodeGenerator.IdentityGeneratorType));
 
-            cboIdGenerator.SelectedIndexChanged += cboIdGenerator_SelectedIndexChanged;
+            cboIdentityGenerator.SelectedIndexChanged += cboIdGenerator_SelectedIndexChanged;
 
 			// Set this in the constructor instead of the designer so that the designer doesn't give an error about
 			// using the parent's TextChanged method.
@@ -84,7 +84,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
 
             txtStereotype.Text = type.Stereotype;
             txtNHMTableName.Text = type.NHMTableName;
-            cboIdGenerator.SelectedItem = type.IdGenerator;
+            cboIdentityGenerator.SelectedItem = type.IdGenerator;
 
 			// Remove the angled characters when the stereotype is displayed in the editor.
 			if (!string.IsNullOrEmpty(txtStereotype.Text))
@@ -256,9 +256,9 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
 
         private void cboIdGenerator_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Shape.CompositeType.IdGenerator = (string)cboIdGenerator.SelectedItem;
+            Shape.CompositeType.IdGenerator = (string)cboIdentityGenerator.SelectedItem;
             RefreshValues();
-            txtNHMTableName.Focus();
+            txtName.Focus();
         }
 	}
 }

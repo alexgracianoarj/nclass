@@ -922,189 +922,1136 @@ namespace NClass.GUI
         private void toolStripMenuItem12_Click(object sender, EventArgs e)
         {
             NewTemplate();
-            string model = @"// /examples/shapes.ncp
+            string model = @"// /examples/Northwind.ncp
 {
-  ""ProjectName"": ""Shapes"",
-  ""Name"": ""Shapes"",
-  ""AssemblyName"": ""Shapes"",
-  ""RootNamespace"": ""Shapes"",
+  ""ProjectName"": ""Northwind"",
+  ""Name"": ""Northwind"",
+  ""AssemblyName"": ""Northwind"",
+  ""RootNamespace"": ""Northwind"",
   ""Entities"": [
     {
-      ""FieldsCount"": 2,
-      ""Fields"": [
-        {
-          ""Type"": ""Color"",
-          ""MemberType"": ""Field"",
-          ""Access"": ""Private"",
-          ""Name"": ""color""
-        },
-        {
-          ""Type"": ""PointF"",
-          ""MemberType"": ""Field"",
-          ""Access"": ""Private"",
-          ""Name"": ""location""
-        }
-      ],
+      ""EntityType"": ""Class"",
+      ""Access"": ""Public"",
+      ""Name"": ""Categories""
+      ""NHMTableName"": ""Categories"",
+      ""IdentityGenerator"": ""assigned"",
+      ""FieldsCount"": 0,
+      ""Fields"": [],
       ""OperationsCount"": 4,
       ""Operations"": [
         {
-          ""Type"": ""Color"",
+          ""Type"": ""int"",
+          ""NHMColumnName"": ""CategoryID"",
+          ""Identity"": true,
+          ""ManyToOne"": """",
+          ""Unique"": false,
+          ""NotNull"": true,
           ""MemberType"": ""Property"",
           ""Access"": ""Public"",
-          ""Name"": ""Color""
+          ""Name"": ""CategoryId""
         },
         {
-          ""Type"": ""PointF"",
+          ""Type"": ""string"",
+          ""NHMColumnName"": ""CategoryName"",
+          ""Identity"": false,
+          ""ManyToOne"": """",
+          ""Unique"": false,
+          ""NotNull"": true,
           ""MemberType"": ""Property"",
           ""Access"": ""Public"",
-          ""Name"": ""Location""
+          ""Name"": ""CategoryName""
         },
         {
-          ""MemberType"": ""Constructor"",
-          ""Access"": ""Protected"",
-          ""Name"": ""Shape""
-        },
-        {
-          ""Type"": ""void"",
-          ""MemberType"": ""Method"",
+          ""Type"": ""string"",
+          ""NHMColumnName"": ""Description"",
+          ""Identity"": false,
+          ""ManyToOne"": """",
+          ""Unique"": false,
+          ""NotNull"": false,
+          ""MemberType"": ""Property"",
           ""Access"": ""Public"",
-          ""Name"": ""Draw""
+          ""Name"": ""Description""
+        },
+        {
+          ""Type"": ""System.Byte[]"",
+          ""NHMColumnName"": ""Picture"",
+          ""Identity"": false,
+          ""ManyToOne"": """",
+          ""Unique"": false,
+          ""NotNull"": false,
+          ""MemberType"": ""Property"",
+          ""Access"": ""Public"",
+          ""Name"": ""Picture""
         }
       ],
-      ""EntityType"": ""Class"",
-      ""Access"": ""Public"",
-      ""Name"": ""Shape"",
     },
     {
-      ""FieldsCount"": 1,
-      ""Fields"": [
-        {
-          ""Type"": ""float"",
-          ""MemberType"": ""Field"",
-          ""Access"": ""Private"",
-          ""Name"": ""radius""
-        }
-      ],
-      ""OperationsCount"": 3,
-      ""Operations"": [
-        {
-          ""Type"": ""float"",
-          ""MemberType"": ""Property"",
-          ""Access"": ""Public"",
-          ""Name"": ""Radius""
-        },
-        {
-          ""MemberType"": ""Constructor"",
-          ""Access"": ""Public"",
-          ""Name"": ""Circle""
-        },
-        {
-          ""Type"": ""void"",
-          ""MemberType"": ""Method"",
-          ""Access"": ""Public"",
-          ""Name"": ""Draw""
-        }
-      ],
       ""EntityType"": ""Class"",
       ""Access"": ""Public"",
-      ""Name"": ""Circle"",
-    },
-    {
-      ""FieldsCount"": 1,
-      ""Fields"": [
-        {
-          ""Type"": ""float"",
-          ""MemberType"": ""Field"",
-          ""Access"": ""Private"",
-          ""Name"": ""size""
-        }
-      ],
-      ""OperationsCount"": 3,
-      ""Operations"": [
-        {
-          ""Type"": ""float"",
-          ""MemberType"": ""Property"",
-          ""Access"": ""Public"",
-          ""Name"": ""Size""
-        },
-        {
-          ""MemberType"": ""Constructor"",
-          ""Access"": ""Public"",
-          ""Name"": ""Square""
-        },
-        {
-          ""Type"": ""void"",
-          ""MemberType"": ""Method"",
-          ""Access"": ""Public"",
-          ""Name"": ""Draw""
-        }
-      ],
-      ""EntityType"": ""Class"",
-      ""Access"": ""Public"",
-      ""Name"": ""Square"",
-    },
-    {
+      ""Name"": ""CustomerCustomerDemo""
+      ""NHMTableName"": ""CustomerCustomerDemo"",
+      ""IdentityGenerator"": ""assigned"",
       ""FieldsCount"": 0,
       ""Fields"": [],
-      ""OperationsCount"": 1,
+      ""OperationsCount"": 2,
       ""Operations"": [
         {
-          ""Type"": ""void"",
-          ""MemberType"": ""Method"",
+          ""Type"": ""Customers"",
+          ""NHMColumnName"": ""CustomerID"",
+          ""Identity"": true,
+          ""ManyToOne"": ""Customers"",
+          ""Unique"": false,
+          ""NotNull"": true,
+          ""MemberType"": ""Property"",
           ""Access"": ""Public"",
-          ""Name"": ""Draw""
+          ""Name"": ""CustomerId""
+        },
+        {
+          ""Type"": ""CustomerDemographics"",
+          ""NHMColumnName"": ""CustomerTypeID"",
+          ""Identity"": true,
+          ""ManyToOne"": ""CustomerDemographics"",
+          ""Unique"": false,
+          ""NotNull"": true,
+          ""MemberType"": ""Property"",
+          ""Access"": ""Public"",
+          ""Name"": ""CustomerTypeId""
         }
       ],
-      ""EntityType"": ""Interface"",
+    },
+    {
+      ""EntityType"": ""Class"",
       ""Access"": ""Public"",
-      ""Name"": ""IDrawable"",
-    }
-  ],
-  ""EntitiesNames"": [
-    ""Shape"",
-    ""Circle"",
-    ""Square"",
-    ""IDrawable""
-  ],
-  ""Relationships"": [
-    {
-      ""RelationshipType"": ""Generalization"",
-      ""SupportsLabel"": false,
-      ""Label"": """",
-      ""FirstEntity"": {
-        ""EntityType"": ""Class"",
-        ""Name"": ""Circle"",
-      },
-      ""SecondEntity"": {
-        ""EntityType"": ""Class"",
-        ""Name"": ""Shape"",
-      }
+      ""Name"": ""Customers""
+      ""NHMTableName"": ""Customers"",
+      ""IdentityGenerator"": ""assigned"",
+      ""FieldsCount"": 0,
+      ""Fields"": [],
+      ""OperationsCount"": 11,
+      ""Operations"": [
+        {
+          ""Type"": ""string"",
+          ""NHMColumnName"": ""CustomerID"",
+          ""Identity"": true,
+          ""ManyToOne"": """",
+          ""Unique"": false,
+          ""NotNull"": true,
+          ""MemberType"": ""Property"",
+          ""Access"": ""Public"",
+          ""Name"": ""CustomerId""
+        },
+        {
+          ""Type"": ""string"",
+          ""NHMColumnName"": ""CompanyName"",
+          ""Identity"": false,
+          ""ManyToOne"": """",
+          ""Unique"": false,
+          ""NotNull"": true,
+          ""MemberType"": ""Property"",
+          ""Access"": ""Public"",
+          ""Name"": ""CompanyName""
+        },
+        {
+          ""Type"": ""string"",
+          ""NHMColumnName"": ""ContactName"",
+          ""Identity"": false,
+          ""ManyToOne"": """",
+          ""Unique"": false,
+          ""NotNull"": false,
+          ""MemberType"": ""Property"",
+          ""Access"": ""Public"",
+          ""Name"": ""ContactName""
+        },
+        {
+          ""Type"": ""string"",
+          ""NHMColumnName"": ""ContactTitle"",
+          ""Identity"": false,
+          ""ManyToOne"": """",
+          ""Unique"": false,
+          ""NotNull"": false,
+          ""MemberType"": ""Property"",
+          ""Access"": ""Public"",
+          ""Name"": ""ContactTitle""
+        },
+        {
+          ""Type"": ""string"",
+          ""NHMColumnName"": ""Address"",
+          ""Identity"": false,
+          ""ManyToOne"": """",
+          ""Unique"": false,
+          ""NotNull"": false,
+          ""MemberType"": ""Property"",
+          ""Access"": ""Public"",
+          ""Name"": ""Address""
+        },
+        {
+          ""Type"": ""string"",
+          ""NHMColumnName"": ""City"",
+          ""Identity"": false,
+          ""ManyToOne"": """",
+          ""Unique"": false,
+          ""NotNull"": false,
+          ""MemberType"": ""Property"",
+          ""Access"": ""Public"",
+          ""Name"": ""City""
+        },
+        {
+          ""Type"": ""string"",
+          ""NHMColumnName"": ""Region"",
+          ""Identity"": false,
+          ""ManyToOne"": """",
+          ""Unique"": false,
+          ""NotNull"": false,
+          ""MemberType"": ""Property"",
+          ""Access"": ""Public"",
+          ""Name"": ""Region""
+        },
+        {
+          ""Type"": ""string"",
+          ""NHMColumnName"": ""PostalCode"",
+          ""Identity"": false,
+          ""ManyToOne"": """",
+          ""Unique"": false,
+          ""NotNull"": false,
+          ""MemberType"": ""Property"",
+          ""Access"": ""Public"",
+          ""Name"": ""PostalCode""
+        },
+        {
+          ""Type"": ""string"",
+          ""NHMColumnName"": ""Country"",
+          ""Identity"": false,
+          ""ManyToOne"": """",
+          ""Unique"": false,
+          ""NotNull"": false,
+          ""MemberType"": ""Property"",
+          ""Access"": ""Public"",
+          ""Name"": ""Country""
+        },
+        {
+          ""Type"": ""string"",
+          ""NHMColumnName"": ""Phone"",
+          ""Identity"": false,
+          ""ManyToOne"": """",
+          ""Unique"": false,
+          ""NotNull"": false,
+          ""MemberType"": ""Property"",
+          ""Access"": ""Public"",
+          ""Name"": ""Phone""
+        },
+        {
+          ""Type"": ""string"",
+          ""NHMColumnName"": ""Fax"",
+          ""Identity"": false,
+          ""ManyToOne"": """",
+          ""Unique"": false,
+          ""NotNull"": false,
+          ""MemberType"": ""Property"",
+          ""Access"": ""Public"",
+          ""Name"": ""Fax""
+        }
+      ],
     },
     {
-      ""RelationshipType"": ""Generalization"",
-      ""SupportsLabel"": false,
-      ""Label"": """",
-      ""FirstEntity"": {
-        ""EntityType"": ""Class"",
-        ""Name"": ""Square"",
-      },
-      ""SecondEntity"": {
-        ""EntityType"": ""Class"",
-        ""Name"": ""Shape"",
-      }
+      ""NHMTableName"": ""CustomerDemographics"",
+      ""IdentityGenerator"": ""assigned"",
+      ""FieldsCount"": 0,
+      ""Fields"": [],
+      ""OperationsCount"": 2,
+      ""Operations"": [
+        {
+          ""Type"": ""string"",
+          ""NHMColumnName"": ""CustomerTypeID"",
+          ""Identity"": true,
+          ""ManyToOne"": """",
+          ""Unique"": false,
+          ""NotNull"": true,
+          ""MemberType"": ""Property"",
+          ""Access"": ""Public"",
+          ""Name"": ""CustomerTypeId""
+        },
+        {
+          ""Type"": ""string"",
+          ""NHMColumnName"": ""CustomerDesc"",
+          ""Identity"": false,
+          ""ManyToOne"": """",
+          ""Unique"": false,
+          ""NotNull"": false,
+          ""MemberType"": ""Property"",
+          ""Access"": ""Public"",
+          ""Name"": ""CustomerDesc""
+        }
+      ],
+      ""EntityType"": ""Class"",
+      ""Access"": ""Public"",
+      ""Name"": ""CustomerDemographics""
     },
     {
-      ""RelationshipType"": ""Realization"",
-      ""SupportsLabel"": false,
-      ""Label"": """",
-      ""FirstEntity"": {
-        ""EntityType"": ""Class"",
-        ""Name"": ""Shape"",
-      },
-      ""SecondEntity"": {
-        ""EntityType"": ""Interface"",
-        ""Name"": ""IDrawable"",
-      }
+      ""NHMTableName"": ""Employees"",
+      ""IdentityGenerator"": ""assigned"",
+      ""FieldsCount"": 0,
+      ""Fields"": [],
+      ""OperationsCount"": 18,
+      ""Operations"": [
+        {
+          ""Type"": ""int"",
+          ""NHMColumnName"": ""EmployeeID"",
+          ""Identity"": true,
+          ""ManyToOne"": """",
+          ""Unique"": false,
+          ""NotNull"": true,
+          ""MemberType"": ""Property"",
+          ""Access"": ""Public"",
+          ""Name"": ""EmployeeId""
+        },
+        {
+          ""Type"": ""string"",
+          ""NHMColumnName"": ""LastName"",
+          ""Identity"": false,
+          ""ManyToOne"": """",
+          ""Unique"": false,
+          ""NotNull"": true,
+          ""MemberType"": ""Property"",
+          ""Access"": ""Public"",
+          ""Name"": ""LastName""
+        },
+        {
+          ""Type"": ""string"",
+          ""NHMColumnName"": ""FirstName"",
+          ""Identity"": false,
+          ""ManyToOne"": """",
+          ""Unique"": false,
+          ""NotNull"": true,
+          ""MemberType"": ""Property"",
+          ""Access"": ""Public"",
+          ""Name"": ""FirstName""
+        },
+        {
+          ""Type"": ""string"",
+          ""NHMColumnName"": ""Title"",
+          ""Identity"": false,
+          ""ManyToOne"": """",
+          ""Unique"": false,
+          ""NotNull"": false,
+          ""MemberType"": ""Property"",
+          ""Access"": ""Public"",
+          ""Name"": ""Title""
+        },
+        {
+          ""Type"": ""string"",
+          ""NHMColumnName"": ""TitleOfCourtesy"",
+          ""Identity"": false,
+          ""ManyToOne"": """",
+          ""Unique"": false,
+          ""NotNull"": false,
+          ""MemberType"": ""Property"",
+          ""Access"": ""Public"",
+          ""Name"": ""TitleOfCourtesy""
+        },
+        {
+          ""Type"": ""DateTime"",
+          ""NHMColumnName"": ""BirthDate"",
+          ""Identity"": false,
+          ""ManyToOne"": """",
+          ""Unique"": false,
+          ""NotNull"": false,
+          ""MemberType"": ""Property"",
+          ""Access"": ""Public"",
+          ""Name"": ""BirthDate""
+        },
+        {
+          ""Type"": ""DateTime"",
+          ""NHMColumnName"": ""HireDate"",
+          ""Identity"": false,
+          ""ManyToOne"": """",
+          ""Unique"": false,
+          ""NotNull"": false,
+          ""MemberType"": ""Property"",
+          ""Access"": ""Public"",
+          ""Name"": ""HireDate""
+        },
+        {
+          ""Type"": ""string"",
+          ""NHMColumnName"": ""Address"",
+          ""Identity"": false,
+          ""ManyToOne"": """",
+          ""Unique"": false,
+          ""NotNull"": false,
+          ""MemberType"": ""Property"",
+          ""Access"": ""Public"",
+          ""Name"": ""Address""
+        },
+        {
+          ""Type"": ""string"",
+          ""NHMColumnName"": ""City"",
+          ""Identity"": false,
+          ""ManyToOne"": """",
+          ""Unique"": false,
+          ""NotNull"": false,
+          ""MemberType"": ""Property"",
+          ""Access"": ""Public"",
+          ""Name"": ""City""
+        },
+        {
+          ""Type"": ""string"",
+          ""NHMColumnName"": ""Region"",
+          ""Identity"": false,
+          ""ManyToOne"": """",
+          ""Unique"": false,
+          ""NotNull"": false,
+          ""MemberType"": ""Property"",
+          ""Access"": ""Public"",
+          ""Name"": ""Region""
+        },
+        {
+          ""Type"": ""string"",
+          ""NHMColumnName"": ""PostalCode"",
+          ""Identity"": false,
+          ""ManyToOne"": """",
+          ""Unique"": false,
+          ""NotNull"": false,
+          ""MemberType"": ""Property"",
+          ""Access"": ""Public"",
+          ""Name"": ""PostalCode""
+        },
+        {
+          ""Type"": ""string"",
+          ""NHMColumnName"": ""Country"",
+          ""Identity"": false,
+          ""ManyToOne"": """",
+          ""Unique"": false,
+          ""NotNull"": false,
+          ""MemberType"": ""Property"",
+          ""Access"": ""Public"",
+          ""Name"": ""Country""
+        },
+        {
+          ""Type"": ""string"",
+          ""NHMColumnName"": ""HomePhone"",
+          ""Identity"": false,
+          ""ManyToOne"": """",
+          ""Unique"": false,
+          ""NotNull"": false,
+          ""MemberType"": ""Property"",
+          ""Access"": ""Public"",
+          ""Name"": ""HomePhone""
+        },
+        {
+          ""Type"": ""string"",
+          ""NHMColumnName"": ""Extension"",
+          ""Identity"": false,
+          ""ManyToOne"": """",
+          ""Unique"": false,
+          ""NotNull"": false,
+          ""MemberType"": ""Property"",
+          ""Access"": ""Public"",
+          ""Name"": ""Extension""
+        },
+        {
+          ""Type"": ""System.Byte[]"",
+          ""NHMColumnName"": ""Photo"",
+          ""Identity"": false,
+          ""ManyToOne"": """",
+          ""Unique"": false,
+          ""NotNull"": false,
+          ""MemberType"": ""Property"",
+          ""Access"": ""Public"",
+          ""Name"": ""Photo""
+        },
+        {
+          ""Type"": ""string"",
+          ""NHMColumnName"": ""Notes"",
+          ""Identity"": false,
+          ""ManyToOne"": """",
+          ""Unique"": false,
+          ""NotNull"": false,
+          ""MemberType"": ""Property"",
+          ""Access"": ""Public"",
+          ""Name"": ""Notes""
+        },
+        {
+          ""Type"": ""Employees"",
+          ""NHMColumnName"": ""ReportsTo"",
+          ""Identity"": false,
+          ""ManyToOne"": ""Employees"",
+          ""Unique"": false,
+          ""NotNull"": false,
+          ""MemberType"": ""Property"",
+          ""Access"": ""Public"",
+          ""Name"": ""ReportsTo""
+        },
+        {
+          ""Type"": ""string"",
+          ""NHMColumnName"": ""PhotoPath"",
+          ""Identity"": false,
+          ""ManyToOne"": """",
+          ""Unique"": false,
+          ""NotNull"": false,
+          ""MemberType"": ""Property"",
+          ""Access"": ""Public"",
+          ""Name"": ""PhotoPath""
+        }
+      ],
+      ""EntityType"": ""Class"",
+      ""Access"": ""Public"",
+      ""Name"": ""Employees""
+    },
+    {
+      ""NHMTableName"": ""EmployeeTerritories"",
+      ""IdentityGenerator"": ""assigned"",
+      ""FieldsCount"": 0,
+      ""Fields"": [],
+      ""OperationsCount"": 2,
+      ""Operations"": [
+        {
+          ""Type"": ""Employees"",
+          ""NHMColumnName"": ""EmployeeID"",
+          ""Identity"": true,
+          ""ManyToOne"": ""Employees"",
+          ""Unique"": false,
+          ""NotNull"": true,
+          ""MemberType"": ""Property"",
+          ""Access"": ""Public"",
+          ""Name"": ""EmployeeId""
+        },
+        {
+          ""Type"": ""Territories"",
+          ""NHMColumnName"": ""TerritoryID"",
+          ""Identity"": true,
+          ""ManyToOne"": ""Territories"",
+          ""Unique"": false,
+          ""NotNull"": true,
+          ""MemberType"": ""Property"",
+          ""Access"": ""Public"",
+          ""Name"": ""TerritoryId""
+        }
+      ],
+      ""EntityType"": ""Class"",
+      ""Access"": ""Public"",
+      ""Name"": ""EmployeeTerritories""
+    },
+    {
+      ""NHMTableName"": ""Territories"",
+      ""IdentityGenerator"": ""assigned"",
+      ""FieldsCount"": 0,
+      ""Fields"": [],
+      ""OperationsCount"": 3,
+      ""Operations"": [
+        {
+          ""Type"": ""string"",
+          ""NHMColumnName"": ""TerritoryID"",
+          ""Identity"": true,
+          ""ManyToOne"": """",
+          ""Unique"": false,
+          ""NotNull"": true,
+          ""MemberType"": ""Property"",
+          ""Access"": ""Public"",
+          ""Name"": ""TerritoryId""
+        },
+        {
+          ""Type"": ""string"",
+          ""NHMColumnName"": ""TerritoryDescription"",
+          ""Identity"": false,
+          ""ManyToOne"": """",
+          ""Unique"": false,
+          ""NotNull"": true,
+          ""MemberType"": ""Property"",
+          ""Access"": ""Public"",
+          ""Name"": ""TerritoryDescription""
+        },
+        {
+          ""Type"": ""Region"",
+          ""NHMColumnName"": ""RegionID"",
+          ""Identity"": false,
+          ""ManyToOne"": ""Region"",
+          ""Unique"": false,
+          ""NotNull"": true,
+          ""MemberType"": ""Property"",
+          ""Access"": ""Public"",
+          ""Name"": ""RegionId""
+        }
+      ],
+      ""EntityType"": ""Class"",
+      ""Access"": ""Public"",
+      ""Name"": ""Territories""
+    },
+    {
+      ""NHMTableName"": ""Region"",
+      ""IdentityGenerator"": ""assigned"",
+      ""FieldsCount"": 0,
+      ""Fields"": [],
+      ""OperationsCount"": 2,
+      ""Operations"": [
+        {
+          ""Type"": ""int"",
+          ""NHMColumnName"": ""RegionID"",
+          ""Identity"": true,
+          ""ManyToOne"": """",
+          ""Unique"": false,
+          ""NotNull"": true,
+          ""MemberType"": ""Property"",
+          ""Access"": ""Public"",
+          ""Name"": ""RegionId""
+        },
+        {
+          ""Type"": ""string"",
+          ""NHMColumnName"": ""RegionDescription"",
+          ""Identity"": false,
+          ""ManyToOne"": """",
+          ""Unique"": false,
+          ""NotNull"": true,
+          ""MemberType"": ""Property"",
+          ""Access"": ""Public"",
+          ""Name"": ""RegionDescription""
+        }
+      ],
+      ""EntityType"": ""Class"",
+      ""Access"": ""Public"",
+      ""Name"": ""Region""
+    },
+    {
+      ""NHMTableName"": ""Order Details"",
+      ""IdentityGenerator"": ""assigned"",
+      ""FieldsCount"": 0,
+      ""Fields"": [],
+      ""OperationsCount"": 5,
+      ""Operations"": [
+        {
+          ""Type"": ""Orders"",
+          ""NHMColumnName"": ""OrderID"",
+          ""Identity"": true,
+          ""ManyToOne"": ""Orders"",
+          ""Unique"": false,
+          ""NotNull"": true,
+          ""MemberType"": ""Property"",
+          ""Access"": ""Public"",
+          ""Name"": ""OrderId""
+        },
+        {
+          ""Type"": ""Products"",
+          ""NHMColumnName"": ""ProductID"",
+          ""Identity"": true,
+          ""ManyToOne"": ""Products"",
+          ""Unique"": false,
+          ""NotNull"": true,
+          ""MemberType"": ""Property"",
+          ""Access"": ""Public"",
+          ""Name"": ""ProductId""
+        },
+        {
+          ""Type"": ""decimal"",
+          ""NHMColumnName"": ""UnitPrice"",
+          ""Identity"": false,
+          ""ManyToOne"": """",
+          ""Unique"": false,
+          ""NotNull"": true,
+          ""MemberType"": ""Property"",
+          ""Access"": ""Public"",
+          ""Name"": ""UnitPrice""
+        },
+        {
+          ""Type"": ""short"",
+          ""NHMColumnName"": ""Quantity"",
+          ""Identity"": false,
+          ""ManyToOne"": """",
+          ""Unique"": false,
+          ""NotNull"": true,
+          ""MemberType"": ""Property"",
+          ""Access"": ""Public"",
+          ""Name"": ""Quantity""
+        },
+        {
+          ""Type"": ""float"",
+          ""NHMColumnName"": ""Discount"",
+          ""Identity"": false,
+          ""ManyToOne"": """",
+          ""Unique"": false,
+          ""NotNull"": true,
+          ""MemberType"": ""Property"",
+          ""Access"": ""Public"",
+          ""Name"": ""Discount""
+        }
+      ],
+      ""EntityType"": ""Class"",
+      ""Access"": ""Public"",
+      ""Name"": ""OrderDetails""
+    },
+    {
+      ""NHMTableName"": ""Orders"",
+      ""IdentityGenerator"": ""assigned"",
+      ""FieldsCount"": 0,
+      ""Fields"": [],
+      ""OperationsCount"": 14,
+      ""Operations"": [
+        {
+          ""Type"": ""int"",
+          ""NHMColumnName"": ""OrderID"",
+          ""Identity"": true,
+          ""ManyToOne"": """",
+          ""Unique"": false,
+          ""NotNull"": true,
+          ""MemberType"": ""Property"",
+          ""Access"": ""Public"",
+          ""Name"": ""OrderId""
+        },
+        {
+          ""Type"": ""Customers"",
+          ""NHMColumnName"": ""CustomerID"",
+          ""Identity"": false,
+          ""ManyToOne"": ""Customers"",
+          ""Unique"": false,
+          ""NotNull"": false,
+          ""MemberType"": ""Property"",
+          ""Access"": ""Public"",
+          ""Name"": ""CustomerId""
+        },
+        {
+          ""Type"": ""Employees"",
+          ""NHMColumnName"": ""EmployeeID"",
+          ""Identity"": false,
+          ""ManyToOne"": ""Employees"",
+          ""Unique"": false,
+          ""NotNull"": false,
+          ""MemberType"": ""Property"",
+          ""Access"": ""Public"",
+          ""Name"": ""EmployeeId""
+        },
+        {
+          ""Type"": ""DateTime"",
+          ""NHMColumnName"": ""OrderDate"",
+          ""Identity"": false,
+          ""ManyToOne"": """",
+          ""Unique"": false,
+          ""NotNull"": false,
+          ""MemberType"": ""Property"",
+          ""Access"": ""Public"",
+          ""Name"": ""OrderDate""
+        },
+        {
+          ""Type"": ""DateTime"",
+          ""NHMColumnName"": ""RequiredDate"",
+          ""Identity"": false,
+          ""ManyToOne"": """",
+          ""Unique"": false,
+          ""NotNull"": false,
+          ""MemberType"": ""Property"",
+          ""Access"": ""Public"",
+          ""Name"": ""RequiredDate""
+        },
+        {
+          ""Type"": ""DateTime"",
+          ""NHMColumnName"": ""ShippedDate"",
+          ""Identity"": false,
+          ""ManyToOne"": """",
+          ""Unique"": false,
+          ""NotNull"": false,
+          ""MemberType"": ""Property"",
+          ""Access"": ""Public"",
+          ""Name"": ""ShippedDate""
+        },
+        {
+          ""Type"": ""Shippers"",
+          ""NHMColumnName"": ""ShipVia"",
+          ""Identity"": false,
+          ""ManyToOne"": ""Shippers"",
+          ""Unique"": false,
+          ""NotNull"": false,
+          ""MemberType"": ""Property"",
+          ""Access"": ""Public"",
+          ""Name"": ""ShipVia""
+        },
+        {
+          ""Type"": ""decimal"",
+          ""NHMColumnName"": ""Freight"",
+          ""Identity"": false,
+          ""ManyToOne"": """",
+          ""Unique"": false,
+          ""NotNull"": false,
+          ""MemberType"": ""Property"",
+          ""Access"": ""Public"",
+          ""Name"": ""Freight""
+        },
+        {
+          ""Type"": ""string"",
+          ""NHMColumnName"": ""ShipName"",
+          ""Identity"": false,
+          ""ManyToOne"": """",
+          ""Unique"": false,
+          ""NotNull"": false,
+          ""MemberType"": ""Property"",
+          ""Access"": ""Public"",
+          ""Name"": ""ShipName""
+        },
+        {
+          ""Type"": ""string"",
+          ""NHMColumnName"": ""ShipAddress"",
+          ""Identity"": false,
+          ""ManyToOne"": """",
+          ""Unique"": false,
+          ""NotNull"": false,
+          ""MemberType"": ""Property"",
+          ""Access"": ""Public"",
+          ""Name"": ""ShipAddress""
+        },
+        {
+          ""Type"": ""string"",
+          ""NHMColumnName"": ""ShipCity"",
+          ""Identity"": false,
+          ""ManyToOne"": """",
+          ""Unique"": false,
+          ""NotNull"": false,
+          ""MemberType"": ""Property"",
+          ""Access"": ""Public"",
+          ""Name"": ""ShipCity""
+        },
+        {
+          ""Type"": ""string"",
+          ""NHMColumnName"": ""ShipRegion"",
+          ""Identity"": false,
+          ""ManyToOne"": """",
+          ""Unique"": false,
+          ""NotNull"": false,
+          ""MemberType"": ""Property"",
+          ""Access"": ""Public"",
+          ""Name"": ""ShipRegion""
+        },
+        {
+          ""Type"": ""string"",
+          ""NHMColumnName"": ""ShipPostalCode"",
+          ""Identity"": false,
+          ""ManyToOne"": """",
+          ""Unique"": false,
+          ""NotNull"": false,
+          ""MemberType"": ""Property"",
+          ""Access"": ""Public"",
+          ""Name"": ""ShipPostalCode""
+        },
+        {
+          ""Type"": ""string"",
+          ""NHMColumnName"": ""ShipCountry"",
+          ""Identity"": false,
+          ""ManyToOne"": """",
+          ""Unique"": false,
+          ""NotNull"": false,
+          ""MemberType"": ""Property"",
+          ""Access"": ""Public"",
+          ""Name"": ""ShipCountry""
+        }
+      ],
+      ""EntityType"": ""Class"",
+      ""Access"": ""Public"",
+      ""Name"": ""Orders""
+    },
+    {
+      ""NHMTableName"": ""Shippers"",
+      ""IdentityGenerator"": ""assigned"",
+      ""FieldsCount"": 0,
+      ""Fields"": [],
+      ""OperationsCount"": 3,
+      ""Operations"": [
+        {
+          ""Type"": ""int"",
+          ""NHMColumnName"": ""ShipperID"",
+          ""Identity"": true,
+          ""ManyToOne"": """",
+          ""Unique"": false,
+          ""NotNull"": true,
+          ""MemberType"": ""Property"",
+          ""Access"": ""Public"",
+          ""Name"": ""ShipperId""
+        },
+        {
+          ""Type"": ""string"",
+          ""NHMColumnName"": ""CompanyName"",
+          ""Identity"": false,
+          ""ManyToOne"": """",
+          ""Unique"": false,
+          ""NotNull"": true,
+          ""MemberType"": ""Property"",
+          ""Access"": ""Public"",
+          ""Name"": ""CompanyName""
+        },
+        {
+          ""Type"": ""string"",
+          ""NHMColumnName"": ""Phone"",
+          ""Identity"": false,
+          ""ManyToOne"": """",
+          ""Unique"": false,
+          ""NotNull"": false,
+          ""MemberType"": ""Property"",
+          ""Access"": ""Public"",
+          ""Name"": ""Phone""
+        }
+      ],
+      ""EntityType"": ""Class"",
+      ""Access"": ""Public"",
+      ""Name"": ""Shippers""
+    },
+    {
+      ""NHMTableName"": ""Products"",
+      ""IdentityGenerator"": ""assigned"",
+      ""FieldsCount"": 0,
+      ""Fields"": [],
+      ""OperationsCount"": 10,
+      ""Operations"": [
+        {
+          ""Type"": ""int"",
+          ""NHMColumnName"": ""ProductID"",
+          ""Identity"": true,
+          ""ManyToOne"": """",
+          ""Unique"": false,
+          ""NotNull"": true,
+          ""MemberType"": ""Property"",
+          ""Access"": ""Public"",
+          ""Name"": ""ProductId""
+        },
+        {
+          ""Type"": ""string"",
+          ""NHMColumnName"": ""ProductName"",
+          ""Identity"": false,
+          ""ManyToOne"": """",
+          ""Unique"": false,
+          ""NotNull"": true,
+          ""MemberType"": ""Property"",
+          ""Access"": ""Public"",
+          ""Name"": ""ProductName""
+        },
+        {
+          ""Type"": ""Suppliers"",
+          ""NHMColumnName"": ""SupplierID"",
+          ""Identity"": false,
+          ""ManyToOne"": ""Suppliers"",
+          ""Unique"": false,
+          ""NotNull"": false,
+          ""MemberType"": ""Property"",
+          ""Access"": ""Public"",
+          ""Name"": ""SupplierId""
+        },
+        {
+          ""Type"": ""Categories"",
+          ""NHMColumnName"": ""CategoryID"",
+          ""Identity"": false,
+          ""ManyToOne"": ""Categories"",
+          ""Unique"": false,
+          ""NotNull"": false,
+          ""MemberType"": ""Property"",
+          ""Access"": ""Public"",
+          ""Name"": ""CategoryId""
+        },
+        {
+          ""Type"": ""string"",
+          ""NHMColumnName"": ""QuantityPerUnit"",
+          ""Identity"": false,
+          ""ManyToOne"": """",
+          ""Unique"": false,
+          ""NotNull"": false,
+          ""MemberType"": ""Property"",
+          ""Access"": ""Public"",
+          ""Name"": ""QuantityPerUnit""
+        },
+        {
+          ""Type"": ""decimal"",
+          ""NHMColumnName"": ""UnitPrice"",
+          ""Identity"": false,
+          ""ManyToOne"": """",
+          ""Unique"": false,
+          ""NotNull"": false,
+          ""MemberType"": ""Property"",
+          ""Access"": ""Public"",
+          ""Name"": ""UnitPrice""
+        },
+        {
+          ""Type"": ""short"",
+          ""NHMColumnName"": ""UnitsInStock"",
+          ""Identity"": false,
+          ""ManyToOne"": """",
+          ""Unique"": false,
+          ""NotNull"": false,
+          ""MemberType"": ""Property"",
+          ""Access"": ""Public"",
+          ""Name"": ""UnitsInStock""
+        },
+        {
+          ""Type"": ""short"",
+          ""NHMColumnName"": ""UnitsOnOrder"",
+          ""Identity"": false,
+          ""ManyToOne"": """",
+          ""Unique"": false,
+          ""NotNull"": false,
+          ""MemberType"": ""Property"",
+          ""Access"": ""Public"",
+          ""Name"": ""UnitsOnOrder""
+        },
+        {
+          ""Type"": ""short"",
+          ""NHMColumnName"": ""ReorderLevel"",
+          ""Identity"": false,
+          ""ManyToOne"": """",
+          ""Unique"": false,
+          ""NotNull"": false,
+          ""MemberType"": ""Property"",
+          ""Access"": ""Public"",
+          ""Name"": ""ReorderLevel""
+        },
+        {
+          ""Type"": ""bool"",
+          ""NHMColumnName"": ""Discontinued"",
+          ""Identity"": false,
+          ""ManyToOne"": """",
+          ""Unique"": false,
+          ""NotNull"": true,
+          ""MemberType"": ""Property"",
+          ""Access"": ""Public"",
+          ""Name"": ""Discontinued""
+        }
+      ],
+      ""EntityType"": ""Class"",
+      ""Access"": ""Public"",
+      ""Name"": ""Products""
+    },
+    {
+      ""NHMTableName"": ""Suppliers"",
+      ""IdentityGenerator"": ""assigned"",
+      ""FieldsCount"": 0,
+      ""Fields"": [],
+      ""OperationsCount"": 12,
+      ""Operations"": [
+        {
+          ""Type"": ""int"",
+          ""NHMColumnName"": ""SupplierID"",
+          ""Identity"": true,
+          ""ManyToOne"": """",
+          ""Unique"": false,
+          ""NotNull"": true,
+          ""MemberType"": ""Property"",
+          ""Access"": ""Public"",
+          ""Name"": ""SupplierId""
+        },
+        {
+          ""Type"": ""string"",
+          ""NHMColumnName"": ""CompanyName"",
+          ""Identity"": false,
+          ""ManyToOne"": """",
+          ""Unique"": false,
+          ""NotNull"": true,
+          ""MemberType"": ""Property"",
+          ""Access"": ""Public"",
+          ""Name"": ""CompanyName""
+        },
+        {
+          ""Type"": ""string"",
+          ""NHMColumnName"": ""ContactName"",
+          ""Identity"": false,
+          ""ManyToOne"": """",
+          ""Unique"": false,
+          ""NotNull"": false,
+          ""MemberType"": ""Property"",
+          ""Access"": ""Public"",
+          ""Name"": ""ContactName""
+        },
+        {
+          ""Type"": ""string"",
+          ""NHMColumnName"": ""ContactTitle"",
+          ""Identity"": false,
+          ""ManyToOne"": """",
+          ""Unique"": false,
+          ""NotNull"": false,
+          ""MemberType"": ""Property"",
+          ""Access"": ""Public"",
+          ""Name"": ""ContactTitle""
+        },
+        {
+          ""Type"": ""string"",
+          ""NHMColumnName"": ""Address"",
+          ""Identity"": false,
+          ""ManyToOne"": """",
+          ""Unique"": false,
+          ""NotNull"": false,
+          ""MemberType"": ""Property"",
+          ""Access"": ""Public"",
+          ""Name"": ""Address""
+        },
+        {
+          ""Type"": ""string"",
+          ""NHMColumnName"": ""City"",
+          ""Identity"": false,
+          ""ManyToOne"": """",
+          ""Unique"": false,
+          ""NotNull"": false,
+          ""MemberType"": ""Property"",
+          ""Access"": ""Public"",
+          ""Name"": ""City""
+        },
+        {
+          ""Type"": ""string"",
+          ""NHMColumnName"": ""Region"",
+          ""Identity"": false,
+          ""ManyToOne"": """",
+          ""Unique"": false,
+          ""NotNull"": false,
+          ""MemberType"": ""Property"",
+          ""Access"": ""Public"",
+          ""Name"": ""Region""
+        },
+        {
+          ""Type"": ""string"",
+          ""NHMColumnName"": ""PostalCode"",
+          ""Identity"": false,
+          ""ManyToOne"": """",
+          ""Unique"": false,
+          ""NotNull"": false,
+          ""MemberType"": ""Property"",
+          ""Access"": ""Public"",
+          ""Name"": ""PostalCode""
+        },
+        {
+          ""Type"": ""string"",
+          ""NHMColumnName"": ""Country"",
+          ""Identity"": false,
+          ""ManyToOne"": """",
+          ""Unique"": false,
+          ""NotNull"": false,
+          ""MemberType"": ""Property"",
+          ""Access"": ""Public"",
+          ""Name"": ""Country""
+        },
+        {
+          ""Type"": ""string"",
+          ""NHMColumnName"": ""Phone"",
+          ""Identity"": false,
+          ""ManyToOne"": """",
+          ""Unique"": false,
+          ""NotNull"": false,
+          ""MemberType"": ""Property"",
+          ""Access"": ""Public"",
+          ""Name"": ""Phone""
+        },
+        {
+          ""Type"": ""string"",
+          ""NHMColumnName"": ""Fax"",
+          ""Identity"": false,
+          ""ManyToOne"": """",
+          ""Unique"": false,
+          ""NotNull"": false,
+          ""MemberType"": ""Property"",
+          ""Access"": ""Public"",
+          ""Name"": ""Fax""
+        },
+        {
+          ""Type"": ""string"",
+          ""NHMColumnName"": ""HomePage"",
+          ""Identity"": false,
+          ""ManyToOne"": """",
+          ""Unique"": false,
+          ""NotNull"": false,
+          ""MemberType"": ""Property"",
+          ""Access"": ""Public"",
+          ""Name"": ""HomePage""
+        }
+      ],
+      ""EntityType"": ""Class"",
+      ""Access"": ""Public"",
+      ""Name"": ""Suppliers""
     }
   ]
 }
@@ -1115,102 +2062,154 @@ namespace NClass.GUI
         private void toolStripMenuItem13_Click(object sender, EventArgs e)
         {
             NewTemplate();
-            string entity = @"// /examples/shapes.ncp, Shape Entity
+            string entity = @"// /examples/Northwind.ncp, Suppliers Entity
 {
-  ""ProjectName"": ""Shapes"",
-  ""ModelName"": ""Shapes"",
-  ""RootNamespace"": ""Shapes"",
-  ""EntitiesNames"": [
-    ""Shape"",
-    ""Circle"",
-    ""Square"",
-    ""IDrawable""
-  ],
+  ""ProjectName"": ""Northwind"",
+  ""ModelName"": ""Northwind"",
+  ""AssemblyName"": ""Northwind"",
+  ""RootNamespace"": ""Northwind"",
   ""EntityType"": ""Class"",
   ""Access"": ""Public"",
-  ""Name"": ""Shape"",
-  ""FieldsCount"": 2,
-  ""Fields"": [
-    {
-      ""Type"": ""Color"",
-      ""MemberType"": ""Field"",
-      ""Access"": ""Private"",
-      ""Name"": ""color""
-    },
-    {
-      ""Type"": ""PointF"",
-      ""MemberType"": ""Field"",
-      ""Access"": ""Private"",
-      ""Name"": ""location""
-    }
-  ],
-  ""OperationsCount"": 4,
+  ""Name"": ""Suppliers""
+  ""NHMTableName"": ""Suppliers"",
+  ""IdentityGenerator"": ""assigned"",
+  ""FieldsCount"": 0,
+  ""Fields"": [],
+  ""OperationsCount"": 12,
   ""Operations"": [
     {
-      ""Type"": ""Color"",
+      ""Type"": ""int"",
+      ""NHMColumnName"": ""SupplierID"",
+      ""Identity"": true,
+      ""ManyToOne"": """",
+      ""Unique"": false,
+      ""NotNull"": true,
       ""MemberType"": ""Property"",
       ""Access"": ""Public"",
-      ""Name"": ""Color""
+      ""Name"": ""SupplierId""
     },
     {
-      ""Type"": ""PointF"",
+      ""Type"": ""string"",
+      ""NHMColumnName"": ""CompanyName"",
+      ""Identity"": false,
+      ""ManyToOne"": """",
+      ""Unique"": false,
+      ""NotNull"": true,
       ""MemberType"": ""Property"",
       ""Access"": ""Public"",
-      ""Name"": ""Location""
+      ""Name"": ""CompanyName""
     },
     {
-      ""MemberType"": ""Constructor"",
-      ""Access"": ""Protected"",
-      ""Name"": ""Shape""
-    },
-    {
-      ""Type"": ""void"",
-      ""MemberType"": ""Method"",
+      ""Type"": ""string"",
+      ""NHMColumnName"": ""ContactName"",
+      ""Identity"": false,
+      ""ManyToOne"": """",
+      ""Unique"": false,
+      ""NotNull"": false,
+      ""MemberType"": ""Property"",
       ""Access"": ""Public"",
-      ""Name"": ""Draw""
+      ""Name"": ""ContactName""
+    },
+    {
+      ""Type"": ""string"",
+      ""NHMColumnName"": ""ContactTitle"",
+      ""Identity"": false,
+      ""ManyToOne"": """",
+      ""Unique"": false,
+      ""NotNull"": false,
+      ""MemberType"": ""Property"",
+      ""Access"": ""Public"",
+      ""Name"": ""ContactTitle""
+    },
+    {
+      ""Type"": ""string"",
+      ""NHMColumnName"": ""Address"",
+      ""Identity"": false,
+      ""ManyToOne"": """",
+      ""Unique"": false,
+      ""NotNull"": false,
+      ""MemberType"": ""Property"",
+      ""Access"": ""Public"",
+      ""Name"": ""Address""
+    },
+    {
+      ""Type"": ""string"",
+      ""NHMColumnName"": ""City"",
+      ""Identity"": false,
+      ""ManyToOne"": """",
+      ""Unique"": false,
+      ""NotNull"": false,
+      ""MemberType"": ""Property"",
+      ""Access"": ""Public"",
+      ""Name"": ""City""
+    },
+    {
+      ""Type"": ""string"",
+      ""NHMColumnName"": ""Region"",
+      ""Identity"": false,
+      ""ManyToOne"": """",
+      ""Unique"": false,
+      ""NotNull"": false,
+      ""MemberType"": ""Property"",
+      ""Access"": ""Public"",
+      ""Name"": ""Region""
+    },
+    {
+      ""Type"": ""string"",
+      ""NHMColumnName"": ""PostalCode"",
+      ""Identity"": false,
+      ""ManyToOne"": """",
+      ""Unique"": false,
+      ""NotNull"": false,
+      ""MemberType"": ""Property"",
+      ""Access"": ""Public"",
+      ""Name"": ""PostalCode""
+    },
+    {
+      ""Type"": ""string"",
+      ""NHMColumnName"": ""Country"",
+      ""Identity"": false,
+      ""ManyToOne"": """",
+      ""Unique"": false,
+      ""NotNull"": false,
+      ""MemberType"": ""Property"",
+      ""Access"": ""Public"",
+      ""Name"": ""Country""
+    },
+    {
+      ""Type"": ""string"",
+      ""NHMColumnName"": ""Phone"",
+      ""Identity"": false,
+      ""ManyToOne"": """",
+      ""Unique"": false,
+      ""NotNull"": false,
+      ""MemberType"": ""Property"",
+      ""Access"": ""Public"",
+      ""Name"": ""Phone""
+    },
+    {
+      ""Type"": ""string"",
+      ""NHMColumnName"": ""Fax"",
+      ""Identity"": false,
+      ""ManyToOne"": """",
+      ""Unique"": false,
+      ""NotNull"": false,
+      ""MemberType"": ""Property"",
+      ""Access"": ""Public"",
+      ""Name"": ""Fax""
+    },
+    {
+      ""Type"": ""string"",
+      ""NHMColumnName"": ""HomePage"",
+      ""Identity"": false,
+      ""ManyToOne"": """",
+      ""Unique"": false,
+      ""NotNull"": false,
+      ""MemberType"": ""Property"",
+      ""Access"": ""Public"",
+      ""Name"": ""HomePage""
     }
   ],
-  ""Relationships"": [
-    {
-      ""RelationshipType"": ""Generalization"",
-      ""SupportsLabel"": false,
-      ""Label"": """",
-      ""FirstEntity"": {
-        ""EntityType"": ""Class"",
-        ""Name"": ""Circle"",
-      },
-      ""SecondEntity"": {
-        ""EntityType"": ""Class"",
-        ""Name"": ""Shape"",
-      }
-    },
-    {
-      ""RelationshipType"": ""Generalization"",
-      ""SupportsLabel"": false,
-      ""Label"": """",
-      ""FirstEntity"": {
-        ""EntityType"": ""Class"",
-        ""Name"": ""Square"",
-      },
-      ""SecondEntity"": {
-        ""EntityType"": ""Class"",
-        ""Name"": ""Shape"",
-      }
-    },
-    {
-      ""RelationshipType"": ""Realization"",
-      ""SupportsLabel"": false,
-      ""Label"": """",
-      ""FirstEntity"": {
-        ""EntityType"": ""Class"",
-        ""Name"": ""Shape"",
-      },
-      ""SecondEntity"": {
-        ""EntityType"": ""Interface"",
-        ""Name"": ""IDrawable"",
-      }
-    }
-  ]
 }
 ";
             fctbCode.Text = entity;

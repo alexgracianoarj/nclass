@@ -21,12 +21,16 @@ using NClass.Core;
 using NClass.DiagramEditor.ClassDiagram.Shapes;
 using NClass.Translations;
 
+using System.Collections.Generic;
+using System.Linq;
+
 namespace NClass.DiagramEditor.ClassDiagram.Editors
 {
 	public partial class MemberEditor : FloatingEditor
 	{
 		CompositeTypeShape shape = null;
 		bool needValidation = false;
+        List<string> entities = null;
 
 		public MemberEditor()
 		{
@@ -58,6 +62,19 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
 		internal override void Init(DiagramElement element)
 		{
 			shape = (CompositeTypeShape) element;
+
+            entities = new List<string>();
+
+            entities.Add("(None)");
+
+            entities.AddRange(shape.Diagram.Entities.Select(ent => ent.Name).ToList());
+
+            cboManyToOne.SelectedIndexChanged -= cboManyToOne_SelectedIndexChanged;
+
+            cboManyToOne.DataSource = entities;
+
+            cboManyToOne.SelectedIndexChanged += cboManyToOne_SelectedIndexChanged;
+
 			RefreshValues();
 		}
 
@@ -90,7 +107,8 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
                 txtNHMColumnName.Text = member.NHMColumnName;
                 txtNHMColumnName.SelectionStart = cursorPositionNHMColumn;
 
-                chkIsPrimaryKey.Checked = member.IsPrimaryKey;
+                chkIsIdentity.Checked = member.IsIdentity;
+                cboManyToOne.SelectedItem = string.IsNullOrEmpty(member.ManyToOne) ? "(None)" : member.ManyToOne;
                 chkIsUnique.Checked = member.IsUnique;
                 chkIsNotNull.Checked = member.IsNotNull;
 				
@@ -520,6 +538,11 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
                             shape.ActiveMember.NHMColumnName = shape.ActiveMember.Name;
                     }
 
+                    if (entities.Contains(shape.ActiveMember.Type))
+                        shape.ActiveMember.ManyToOne = shape.ActiveMember.Type;
+                    else
+                        shape.ActiveMember.ManyToOne = null;
+
 					RefreshValues();
 				}
 				catch (BadSyntaxException ex)
@@ -876,13 +899,13 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
             ValidateNHMColumnName();
         }
 
-        private void chkIsPrimaryKey_CheckedChanged(object sender, EventArgs e)
+        private void chkIsIdentity_CheckedChanged(object sender, EventArgs e)
         {
             if (shape.ActiveMember != null)
             {
-                shape.ActiveMember.IsPrimaryKey = chkIsPrimaryKey.Checked;
+                shape.ActiveMember.IsIdentity = chkIsIdentity.Checked;
                 RefreshValues();
-                txtNHMColumnName.Focus();
+                txtDeclaration.Focus();
             }
         }
 
@@ -892,7 +915,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
             {
                 shape.ActiveMember.IsUnique = chkIsUnique.Checked;
                 RefreshValues();
-                txtNHMColumnName.Focus();
+                txtDeclaration.Focus();
             }
         }
 
@@ -902,7 +925,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
             {
                 shape.ActiveMember.IsNotNull = chkIsNotNull.Checked;
                 RefreshValues();
-                txtNHMColumnName.Focus();
+                txtDeclaration.Focus();
             }
         }
 
@@ -1152,5 +1175,16 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
 		{
 			shape.DeleteActiveMember();
 		}
+
+        private void cboManyToOne_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (shape.ActiveMember != null)
+            {
+                shape.ActiveMember.ManyToOne = (cboManyToOne.SelectedIndex == 0) ? null : cboManyToOne.SelectedItem.ToString() ;
+                shape.ActiveMember.Type = string.IsNullOrEmpty(shape.ActiveMember.ManyToOne) ? "int" : shape.ActiveMember.ManyToOne;
+                RefreshValues();
+                txtDeclaration.Focus();
+            }
+        }
 	}
 }

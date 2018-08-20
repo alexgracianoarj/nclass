@@ -34,7 +34,7 @@ namespace NClass.CodeGenerator
             useLowercaseUnderscored = Settings.Default.UseUnderscoreAndLowercaseInDB;
 
             if (Type.IdGenerator == null)
-                idGeneratorType = Enum.GetName(typeof(IdGeneratorType), Settings.Default.DefaultIdGenerator);
+                idGeneratorType = Enum.GetName(typeof(IdentityGeneratorType), Settings.Default.DefaultIdentityGenerator);
             else
                 idGeneratorType = Type.IdGenerator;
 
@@ -99,11 +99,11 @@ namespace NClass.CodeGenerator
                     useLazyLoading.ToString().ToLower()
                 ));
 
-            List<Operation> ids = _class.Operations.Where(o => o is Property && o.IsPrimaryKey).ToList<Operation>();
+            List<Operation> ids = _class.Operations.Where(o => o is Property && o.IsIdentity).ToList<Operation>();
 
             WriteIds(ids);
 
-            foreach (var property in _class.Operations.Where(o => o is Property && !o.IsPrimaryKey).ToList<Operation>())
+            foreach (var property in _class.Operations.Where(o => o is Property && !o.IsIdentity).ToList<Operation>())
             {
                 WriteProperty((Property)property);
             }
@@ -125,7 +125,7 @@ namespace NClass.CodeGenerator
                 IndentLevel++;
                 foreach (var id in ids)
                 {
-                    if (Model.Entities.Where(e => e.Name == id.Type).Count() > 0)
+                    if (!string.IsNullOrEmpty(id.ManyToOne))
                     {
                         WriteLine(
                             string.Format(
@@ -175,11 +175,11 @@ namespace NClass.CodeGenerator
 
         private void WriteProperty(Property property)
         {
-            if (Model.Entities.Where(e => e.Name == property.Type).Count() > 0)
+            if (!string.IsNullOrEmpty(property.ManyToOne))
             {
                 WriteLine(
                     string.Format(
-                        "ManyToOne(x => x.{0}, map => {{ map.Class(typeof({1})); map.Column(\"`{2}`\"); map.Unique({3}); }});",
+                        "ManyToOne(x => x.{0}, map => {{ map.Class(typeof({1})); map.Column(\"`{2}`\");{3} map.NotNullable({4}); }});",
                         property.Name, 
                         property.Type,
                         useLowercaseUnderscored
@@ -187,21 +187,26 @@ namespace NClass.CodeGenerator
                         : string.IsNullOrEmpty(property.NHMColumnName)
                         ? property.Name
                         : property.NHMColumnName,
-                        property.IsUnique.ToString().ToLower()
+                        property.IsUnique
+                        ? " map.Unique(true);"
+                        : "",
+                        property.IsNotNull.ToString().ToLower()
                     ));
             }
             else
             {
                 WriteLine(
                     string.Format(
-                        "Property(x => x.{0}, map => {{ map.Column(\"`{1}`\"); map.Unique({2}); map.NotNullable({3}); }});", 
+                        "Property(x => x.{0}, map => {{ map.Column(\"`{1}`\");{2} map.NotNullable({3}); }});", 
                         property.Name, 
                         useLowercaseUnderscored
                         ? LowercaseAndUnderscoredWord(property.Name)
                         : string.IsNullOrEmpty(property.NHMColumnName)
                         ? property.Name
                         : property.NHMColumnName,
-                        property.IsUnique.ToString().ToLower(),
+                        property.IsUnique
+                        ? " map.Unique(true);"
+                        : "",
                         property.IsNotNull.ToString().ToLower()
                     ));
             }

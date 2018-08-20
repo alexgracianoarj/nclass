@@ -141,12 +141,12 @@ namespace NClass.CodeGenerator {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("Increment")]
-        public global::NClass.CodeGenerator.IdGeneratorType DefaultIdGenerator {
+        public global::NClass.CodeGenerator.IdentityGeneratorType DefaultIdentityGenerator {
             get {
-                return ((global::NClass.CodeGenerator.IdGeneratorType)(this["DefaultIdGenerator"]));
+                return ((global::NClass.CodeGenerator.IdentityGeneratorType)(this["DefaultIdentityGenerator"]));
             }
             set {
-                this["DefaultIdGenerator"] = value;
+                this["DefaultIdentityGenerator"] = value;
             }
         }
         

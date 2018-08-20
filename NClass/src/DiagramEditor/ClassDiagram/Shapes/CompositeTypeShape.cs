@@ -121,7 +121,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Shapes
 
 		protected internal override void EditMembers()
 		{
-			membersDialog.ShowDialog(CompositeType);
+			membersDialog.ShowDialog(CompositeType, this.Diagram.Entities);
 		}
 
 		protected override EditorWindow GetEditorWindow()

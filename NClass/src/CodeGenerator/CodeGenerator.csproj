@@ -83,7 +83,7 @@
     <Compile Include="EnumExtensions.cs" />
     <Compile Include="FieldNamingConvention.cs" />
     <Compile Include="GenerationResult.cs" />
-    <Compile Include="IdGeneratorType.cs" />
+    <Compile Include="IdentityGeneratorType.cs" />
     <Compile Include="MappingType.cs" />
     <Compile Include="ProgressDialog.cs">
       <SubType>Form</SubType>

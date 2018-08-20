@@ -77,27 +77,6 @@ namespace NClass.CodeGenerator
                                 line = Regex.Replace(line, @"\${VersionNumber}", "12.0");
                         }
 
-						if (line.Contains("${VS2005:"))
-						{
-							if (solutionType == SolutionType.VisualStudio2010)
-								line = Regex.Replace(line, @"\${VS2005:(?<content>.+?)}", "${content}");
-							else
-								line = Regex.Replace(line, @"\${VS2005:(?<content>.+?)}", "");
-
-							if (line.Length == 0)
-								continue;
-						}
-						if (line.Contains("${VS2008:"))
-						{
-							if (solutionType == SolutionType.VisualStudio2013)
-								line = Regex.Replace(line, @"\${VS2008:(?<content>.+?)}", "${content}");
-							else
-								line = Regex.Replace(line, @"\${VS2008:(?<content>.+?)}", "");
-
-							if (line.Length == 0)
-								continue;
-						}
-
                         if (line.Contains("${DotNetVersion}"))
                         {
                             line = Regex.Replace(line, @"\${DotNetVersion}", EnumExtensions.GetDescription(dotNetVersion));
@@ -128,13 +107,13 @@ namespace NClass.CodeGenerator
                                 }
                             }
                         }
-                        else if (line.Contains("${Others}"))
+                        else if (line.Contains("${OtherFile}"))
                         {
                             foreach (string fileName in FileNames)
                             {
                                 if (!(new Regex(@"\.hbm\.xml$|\.cs$").IsMatch(fileName)))
                                 {
-                                    string newLine = line.Replace("${Others}", fileName);
+                                    string newLine = line.Replace("${OtherFile}", fileName);
                                     writer.WriteLine(newLine);
                                 }
                             }

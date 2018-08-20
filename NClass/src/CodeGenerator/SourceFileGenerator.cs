@@ -62,6 +62,10 @@ namespace NClass.CodeGenerator
             this.model = model;
         }
 
+        protected SourceFileGenerator()
+        {
+        }
+
 		protected TypeBase Type
 		{
 			get { return type; }

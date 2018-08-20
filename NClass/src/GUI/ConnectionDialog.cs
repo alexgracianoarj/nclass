@@ -42,8 +42,8 @@ namespace NClass.GUI
             serverTypeComboBox.SelectedIndexChanged += OnServerTypeSelectedIndexChanged;
 
             chkNHibernateMapping.Checked = CodeGenerator.Settings.Default.GenerateNHibernateMapping;
-            cboDefaultIdGenerator.DataSource = Enum.GetValues(typeof(CodeGenerator.IdGeneratorType));
-            cboDefaultIdGenerator.SelectedItem = CodeGenerator.Settings.Default.DefaultIdGenerator;
+            cboDefaultIdGenerator.DataSource = Enum.GetValues(typeof(CodeGenerator.IdentityGeneratorType));
+            cboDefaultIdGenerator.SelectedItem = CodeGenerator.Settings.Default.DefaultIdentityGenerator;
             chkDefaultFetching.Checked = CodeGenerator.Settings.Default.DefaultLazyFetching;
             chkUseUnderscoreAndLowercaseInDB.Checked = CodeGenerator.Settings.Default.UseUnderscoreAndLowercaseInDB;
 
@@ -116,7 +116,7 @@ namespace NClass.GUI
             CaptureConnection();
 
             CodeGenerator.Settings.Default.GenerateNHibernateMapping = chkNHibernateMapping.Checked;
-            CodeGenerator.Settings.Default.DefaultIdGenerator = (CodeGenerator.IdGeneratorType)cboDefaultIdGenerator.SelectedItem;
+            CodeGenerator.Settings.Default.DefaultIdentityGenerator = (CodeGenerator.IdentityGeneratorType)cboDefaultIdGenerator.SelectedItem;
             CodeGenerator.Settings.Default.DefaultLazyFetching = chkDefaultFetching.Checked;
             CodeGenerator.Settings.Default.UseUnderscoreAndLowercaseInDB = chkUseUnderscoreAndLowercaseInDB.Checked;
             CodeGenerator.Settings.Default.Save();

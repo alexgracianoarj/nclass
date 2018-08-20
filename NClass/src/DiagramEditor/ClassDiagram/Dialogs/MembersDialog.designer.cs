@@ -82,6 +82,8 @@
             this.chkIsPrimaryKey = new System.Windows.Forms.CheckBox();
             this.chkIsNotNull = new System.Windows.Forms.CheckBox();
             this.chkIsUnique = new System.Windows.Forms.CheckBox();
+            this.lblForeignKey = new System.Windows.Forms.Label();
+            this.cboForeignKey = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
             this.toolStrip.SuspendLayout();
             this.grpFieldModifiers.SuspendLayout();
@@ -202,7 +204,7 @@
             this.lstMembers.FullRowSelect = true;
             this.lstMembers.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.lstMembers.HideSelection = false;
-            this.lstMembers.Location = new System.Drawing.Point(12, 234);
+            this.lstMembers.Location = new System.Drawing.Point(12, 266);
             this.lstMembers.MultiSelect = false;
             this.lstMembers.Name = "lstMembers";
             this.lstMembers.ShowGroups = false;
@@ -256,11 +258,11 @@
             // 
             this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnClose.Location = new System.Drawing.Point(382, 495);
+            this.btnClose.Location = new System.Drawing.Point(382, 527);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(75, 23);
             this.btnClose.TabIndex = 8;
-            this.btnClose.Text = "Bezár";
+            this.btnClose.Text = "Close";
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
@@ -290,7 +292,7 @@
             this.toolSepAddNew,
             this.toolOverrideList,
             this.toolImplementList});
-            this.toolStrip.Location = new System.Drawing.Point(12, 209);
+            this.toolStrip.Location = new System.Drawing.Point(12, 241);
             this.toolStrip.Name = "toolStrip";
             this.toolStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
             this.toolStrip.Size = new System.Drawing.Size(445, 25);
@@ -638,16 +640,16 @@
             this.chkIsPrimaryKey.AutoSize = true;
             this.chkIsPrimaryKey.Location = new System.Drawing.Point(71, 186);
             this.chkIsPrimaryKey.Name = "chkIsPrimaryKey";
-            this.chkIsPrimaryKey.Size = new System.Drawing.Size(81, 17);
+            this.chkIsPrimaryKey.Size = new System.Drawing.Size(60, 17);
             this.chkIsPrimaryKey.TabIndex = 16;
-            this.chkIsPrimaryKey.Text = "Primary Key";
+            this.chkIsPrimaryKey.Text = "Identity";
             this.chkIsPrimaryKey.UseVisualStyleBackColor = true;
             this.chkIsPrimaryKey.CheckedChanged += new System.EventHandler(this.chkIsPrimaryKey_CheckedChanged);
             // 
             // chkIsNotNull
             // 
             this.chkIsNotNull.AutoSize = true;
-            this.chkIsNotNull.Location = new System.Drawing.Point(224, 186);
+            this.chkIsNotNull.Location = new System.Drawing.Point(229, 186);
             this.chkIsNotNull.Name = "chkIsNotNull";
             this.chkIsNotNull.Size = new System.Drawing.Size(64, 17);
             this.chkIsNotNull.TabIndex = 17;
@@ -658,7 +660,7 @@
             // chkIsUnique
             // 
             this.chkIsUnique.AutoSize = true;
-            this.chkIsUnique.Location = new System.Drawing.Point(158, 186);
+            this.chkIsUnique.Location = new System.Drawing.Point(151, 186);
             this.chkIsUnique.Name = "chkIsUnique";
             this.chkIsUnique.Size = new System.Drawing.Size(60, 17);
             this.chkIsUnique.TabIndex = 18;
@@ -666,12 +668,33 @@
             this.chkIsUnique.UseVisualStyleBackColor = true;
             this.chkIsUnique.CheckedChanged += new System.EventHandler(this.chkIsUnique_CheckedChanged);
             // 
+            // lblForeignKey
+            // 
+            this.lblForeignKey.AutoSize = true;
+            this.lblForeignKey.Location = new System.Drawing.Point(68, 212);
+            this.lblForeignKey.Name = "lblForeignKey";
+            this.lblForeignKey.Size = new System.Drawing.Size(71, 13);
+            this.lblForeignKey.TabIndex = 19;
+            this.lblForeignKey.Text = "Many to One:";
+            // 
+            // cboForeignKey
+            // 
+            this.cboForeignKey.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboForeignKey.FormattingEnabled = true;
+            this.cboForeignKey.Location = new System.Drawing.Point(137, 209);
+            this.cboForeignKey.Name = "cboForeignKey";
+            this.cboForeignKey.Size = new System.Drawing.Size(156, 21);
+            this.cboForeignKey.TabIndex = 20;
+            this.cboForeignKey.SelectedIndexChanged += new System.EventHandler(this.cboForeignKey_SelectedIndexChanged);
+            // 
             // MembersDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CausesValidation = false;
-            this.ClientSize = new System.Drawing.Size(469, 530);
+            this.ClientSize = new System.Drawing.Size(469, 562);
+            this.Controls.Add(this.cboForeignKey);
+            this.Controls.Add(this.lblForeignKey);
             this.Controls.Add(this.chkIsUnique);
             this.Controls.Add(this.txtNHMColumnName);
             this.Controls.Add(this.chkIsNotNull);
@@ -771,6 +794,8 @@
         private System.Windows.Forms.CheckBox chkIsNotNull;
         private System.Windows.Forms.CheckBox chkIsPrimaryKey;
         private System.Windows.Forms.CheckBox chkIsUnique;
+        private System.Windows.Forms.ComboBox cboForeignKey;
+        private System.Windows.Forms.Label lblForeignKey;
 	}
 }
 

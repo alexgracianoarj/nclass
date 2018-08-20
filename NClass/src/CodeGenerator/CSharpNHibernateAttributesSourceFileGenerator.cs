@@ -34,9 +34,9 @@ namespace NClass.CodeGenerator
             useLowercaseUnderscored = Settings.Default.UseUnderscoreAndLowercaseInDB;
 
             if (Type.IdGenerator == null)
-                idGeneratorType = EnumExtensions.GetDescription(Settings.Default.DefaultIdGenerator);
+                idGeneratorType = EnumExtensions.GetDescription(Settings.Default.DefaultIdentityGenerator);
             else
-                idGeneratorType = EnumExtensions.GetDescription((IdGeneratorType)Enum.Parse(typeof(IdGeneratorType), Type.IdGenerator));
+                idGeneratorType = EnumExtensions.GetDescription((IdentityGeneratorType)Enum.Parse(typeof(IdentityGeneratorType), Type.IdGenerator));
 
             WriteHeader();
             WriteUsings();
@@ -125,12 +125,12 @@ namespace NClass.CodeGenerator
 
             if (Type is ClassType)
             {
-                ids = type.Operations.Where(o => o is Property && o.IsPrimaryKey).ToList<Operation>();
+                ids = type.Operations.Where(o => o is Property && o.IsIdentity).ToList<Operation>();
    
                 WriteNHibernateAttributesIds(ids);
             }
 
-            foreach (var operation in type.Operations.Where(o => !o.IsPrimaryKey).ToList<Operation>())
+            foreach (var operation in type.Operations.Where(o => !o.IsIdentity).ToList<Operation>())
             {
                 WriteOperation(operation);
                 AddBlankLine();
@@ -156,7 +156,7 @@ namespace NClass.CodeGenerator
                 int position = 1;
                 foreach (var id in ids)
                 {
-                    if (Model.Entities.Where(e => e.Name == id.Type).Count() > 0)
+                    if (!string.IsNullOrEmpty(id.ManyToOne))
                     {
                         WriteLine(
                             string.Format(
@@ -283,18 +283,20 @@ namespace NClass.CodeGenerator
 
         private void WriteNHibernateAttributesProperty(Property property)
         {
-            if (Model.Entities.Where(e => e.Name == property.Type).Count() > 0)
+            if (!string.IsNullOrEmpty(property.ManyToOne))
             {
                 WriteLine(
                     string.Format(
-                        "[ManyToOne(0, Name = \"{0}\", Column = \"`{1}`\", Unique = {2}, NotNull = {3}, ClassType = typeof({4}))]", 
+                        "[ManyToOne(0, Name = \"{0}\", Column = \"`{1}`\", {2}NotNull = {3}, ClassType = typeof({4}))]", 
                         property.Name,
                         useLowercaseUnderscored
                         ? LowercaseAndUnderscoredWord(property.Name)
                         : string.IsNullOrEmpty(property.NHMColumnName)
                         ? property.Name
                         : property.NHMColumnName,
-                        property.IsUnique.ToString().ToLower(),
+                        property.IsUnique
+                        ? "Unique = true, "
+                        : "",
                         property.IsNotNull.ToString().ToLower(),
                         property.Type
                     ));
@@ -304,14 +306,16 @@ namespace NClass.CodeGenerator
             {
                 WriteLine(
                     string.Format(
-                        "[Property(Name = \"{0}\", Column = \"`{1}`\", Unique = {2}, NotNull = {3})]", 
+                        "[Property(Name = \"{0}\", Column = \"`{1}`\", {2}NotNull = {3})]", 
                         property.Name,
                         useLowercaseUnderscored
                         ? LowercaseAndUnderscoredWord(property.Name)
                         : string.IsNullOrEmpty(property.NHMColumnName)
                         ? property.Name
                         : property.NHMColumnName,
-                        property.IsUnique.ToString().ToLower(),
+                        property.IsUnique
+                        ? "Unique = true, "
+                        : "",
                         property.IsNotNull.ToString().ToLower()
                     ));
             }

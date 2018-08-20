@@ -450,7 +450,8 @@ namespace NClass.Core
                 if (operation is Property)
                 {
                     child.SetAttribute("nhmColumnName", operation.NHMColumnName);
-                    child.SetAttribute("isPrimaryKey", operation.IsPrimaryKey.ToString());
+                    child.SetAttribute("isIdentity", operation.IsIdentity.ToString());
+                    child.SetAttribute("manyToOne", operation.ManyToOne);
                     child.SetAttribute("isUnique", operation.IsUnique.ToString());
                     child.SetAttribute("isNotNull", operation.IsNotNull.ToString());
                 }
@@ -496,7 +497,8 @@ namespace NClass.Core
                     if (operation is Property)
                     {
                         operation.NHMColumnName = childNode.GetAttribute("nhmColumnName");
-                        operation.IsPrimaryKey = (childNode.GetAttribute("isPrimaryKey") == "True") ? true : false;
+                        operation.IsIdentity = (childNode.GetAttribute("isIdentity") == "True") ? true : false;
+                        operation.ManyToOne = childNode.GetAttribute("manyToOne");
                         operation.IsUnique = (childNode.GetAttribute("isUnique") == "True") ? true : false;
                         operation.IsNotNull = (childNode.GetAttribute("isNotNull") == "True") ? true : false;
                     }

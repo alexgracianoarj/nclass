@@ -51,7 +51,7 @@ namespace NClass.CodeGenerator
         {
             ClassType _class = (ClassType)Type;
 
-            List<Operation> ids = _class.Operations.Where(o => o is Property && o.IsPrimaryKey).ToList<Operation>();
+            List<Operation> ids = _class.Operations.Where(o => o is Property && o.IsIdentity).ToList<Operation>();
 
             if (ids.Count > 1)
             {

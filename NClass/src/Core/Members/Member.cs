@@ -252,7 +252,13 @@ namespace NClass.Core
             set;
         }
 
-        public virtual bool IsPrimaryKey
+        public virtual bool IsIdentity
+        {
+            get;
+            set;
+        }
+
+        public virtual string ManyToOne
         {
             get;
             set;

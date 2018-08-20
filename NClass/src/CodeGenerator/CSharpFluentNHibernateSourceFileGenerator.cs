@@ -34,7 +34,7 @@ namespace NClass.CodeGenerator
             useLowercaseUnderscored = Settings.Default.UseUnderscoreAndLowercaseInDB;
 
             if(Type.IdGenerator == null)
-                idGeneratorType = Enum.GetName(typeof(IdGeneratorType), Settings.Default.DefaultIdGenerator);
+                idGeneratorType = Enum.GetName(typeof(IdentityGeneratorType), Settings.Default.DefaultIdentityGenerator);
             else
                 idGeneratorType = Type.IdGenerator;
 
@@ -91,11 +91,11 @@ namespace NClass.CodeGenerator
                 : "Not.LazyLoad();"
                 );
 
-            List<Operation> ids = _class.Operations.Where(o => o is Property && o.IsPrimaryKey).ToList<Operation>();
+            List<Operation> ids = _class.Operations.Where(o => o is Property && o.IsIdentity).ToList<Operation>();
 
             WriteIds(ids);
 
-            foreach (var property in _class.Operations.Where(o => o is Property && !o.IsPrimaryKey).ToList<Operation>())
+            foreach (var property in _class.Operations.Where(o => o is Property && !o.IsIdentity).ToList<Operation>())
             {
                 WriteProperty((Property)property);
             }
@@ -117,7 +117,7 @@ namespace NClass.CodeGenerator
                 IndentLevel++;
                 foreach (var id in ids)
                 {
-                    if (Model.Entities.Where(e => e.Name == id.Type).Count() > 0)
+                    if (!string.IsNullOrEmpty(id.ManyToOne))
                     {
                         Write(
                             string.Format(
@@ -169,7 +169,7 @@ namespace NClass.CodeGenerator
 
         private void WriteProperty(Property property)
         {
-            if (Model.Entities.Where(e => e.Name == property.Type).Count() > 0)
+            if (!string.IsNullOrEmpty(property.ManyToOne))
             {
                 WriteLine(
                     string.Format(
