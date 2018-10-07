@@ -9,6 +9,8 @@ using System.Windows.Forms;
 using NClass.Core;
 using NClass.Translations;
 
+using System.Xml;
+
 namespace NClass.DiagramEditor.ClassDiagram.Editors
 {
 	public partial class ClassTypeEditor : CompositeTypeEditor
@@ -51,11 +53,14 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
 			if (type.Stereotype != null || !string.IsNullOrEmpty(type.NHMTableName))
 			{
 				ExpandAdvancedOptions();
+                RefreshIdentityGeneratorParameters();
 			}
 			else
 			{
 				CollapseAdvancedOptions();
 			}
+
+            Refresh();
 		}
 
 		/// <summary>
@@ -99,6 +104,9 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
                 ExpandAdvancedOptions();
                 Refresh();
             }
+
+            RefreshIdentityGeneratorParameters();
+            Refresh();
 
             txtStereotype.SelectionStart = cursorPositionStereotype;
             txtNHMTableName.SelectionStart = cursorPositionNHMTable;
@@ -207,6 +215,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
 			else
 			{
 				ExpandAdvancedOptions();
+                RefreshIdentityGeneratorParameters();
 			}
 
 			Refresh();
@@ -259,6 +268,152 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
             Shape.CompositeType.IdGenerator = (string)cboIdentityGenerator.SelectedItem;
             RefreshValues();
             txtName.Focus();
+        }
+
+        private void RefreshIdentityGeneratorParameters()
+        {
+            XmlDocument xmlGeneratorParameters = new XmlDocument();
+            
+            if (!string.IsNullOrEmpty(Shape.CompositeType.GeneratorParameters))
+                xmlGeneratorParameters.LoadXml(Shape.CompositeType.GeneratorParameters);
+
+            if (Shape.CompositeType.IdGenerator == "HiLo")
+            {
+                this.Height = pnlGeneratorParameters.Bottom + pnlGeneratorParameters.Margin.Bottom;
+                
+                CodeGenerator.HiLoIdentityGeneratorParameters hiLo = null;
+
+                if(xmlGeneratorParameters.SelectSingleNode("//HiLoIdentityGeneratorParameters") != null)
+                    hiLo = CodeGenerator.GeneratorParametersDeSerializer.Deserialize<CodeGenerator.HiLoIdentityGeneratorParameters>(Shape.CompositeType.GeneratorParameters);
+                else
+                {
+                    Shape.CompositeType.GeneratorParameters = null;
+                    hiLo = new CodeGenerator.HiLoIdentityGeneratorParameters();
+                }
+
+                prgGeneratorParameters.SelectedObject = hiLo;
+            }
+            else if (Shape.CompositeType.IdGenerator == "SeqHiLo")
+            {
+                this.Height = pnlGeneratorParameters.Bottom + pnlGeneratorParameters.Margin.Bottom;
+
+                CodeGenerator.SeqHiLoIdentityGeneratorParameters seqHiLo = null;
+
+                if (xmlGeneratorParameters.SelectSingleNode("//SeqHiLoIdentityGeneratorParameters") != null)
+                    seqHiLo = CodeGenerator.GeneratorParametersDeSerializer.Deserialize<CodeGenerator.SeqHiLoIdentityGeneratorParameters>(Shape.CompositeType.GeneratorParameters);
+                else
+                {
+                    Shape.CompositeType.GeneratorParameters = null;
+                    seqHiLo = new CodeGenerator.SeqHiLoIdentityGeneratorParameters();
+                }
+
+                prgGeneratorParameters.SelectedObject = seqHiLo;
+            }
+            else if (Shape.CompositeType.IdGenerator == "Sequence")
+            {
+                this.Height = pnlGeneratorParameters.Bottom + pnlGeneratorParameters.Margin.Bottom;
+                
+                CodeGenerator.SequenceIdentityGeneratorParameters sequence = null;
+
+                if (xmlGeneratorParameters.SelectSingleNode("//SequenceIdentityGeneratorParameters") != null)
+                    sequence = CodeGenerator.GeneratorParametersDeSerializer.Deserialize<CodeGenerator.SequenceIdentityGeneratorParameters>(Shape.CompositeType.GeneratorParameters);
+                else
+                {
+                    Shape.CompositeType.GeneratorParameters = null;
+                    sequence = new CodeGenerator.SequenceIdentityGeneratorParameters();
+                }
+
+                prgGeneratorParameters.SelectedObject = sequence;
+            }
+            else if (Shape.CompositeType.IdGenerator == "UuidHex")
+            {
+                this.Height = pnlGeneratorParameters.Bottom + pnlGeneratorParameters.Margin.Bottom;
+
+                CodeGenerator.UuidHexIdentityGeneratorParameters uuidHex = null;
+
+                if (xmlGeneratorParameters.SelectSingleNode("//UuidHexIdentityGeneratorParameters") != null)
+                    uuidHex = CodeGenerator.GeneratorParametersDeSerializer.Deserialize<CodeGenerator.UuidHexIdentityGeneratorParameters>(Shape.CompositeType.GeneratorParameters);
+                else
+                {
+                    Shape.CompositeType.GeneratorParameters = null;
+                    uuidHex = new CodeGenerator.UuidHexIdentityGeneratorParameters();
+                }
+
+                prgGeneratorParameters.SelectedObject = uuidHex;
+            }
+            else if (Shape.CompositeType.IdGenerator == "Foreign")
+            {
+                this.Height = pnlGeneratorParameters.Bottom + pnlGeneratorParameters.Margin.Bottom;
+
+                CodeGenerator.ForeignIdentityGeneratorParameters foreign = null;
+
+                if (xmlGeneratorParameters.SelectSingleNode("//ForeignIdentityGeneratorParameters") != null)
+                    foreign = CodeGenerator.GeneratorParametersDeSerializer.Deserialize<CodeGenerator.ForeignIdentityGeneratorParameters>(Shape.CompositeType.GeneratorParameters);
+                else
+                {
+                    Shape.CompositeType.GeneratorParameters = null;
+                    foreign = new CodeGenerator.ForeignIdentityGeneratorParameters();
+                }
+
+                prgGeneratorParameters.SelectedObject = foreign;
+            }
+            else if (Shape.CompositeType.IdGenerator == "Custom")
+            {
+                this.Height = pnlGeneratorParameters.Bottom + pnlGeneratorParameters.Margin.Bottom;
+
+                CodeGenerator.CustomIdentityGeneratorParameters custom = null;
+
+                if (xmlGeneratorParameters.SelectSingleNode("//CustomIdentityGeneratorParameters") != null)
+                    custom = CodeGenerator.GeneratorParametersDeSerializer.Deserialize<CodeGenerator.CustomIdentityGeneratorParameters>(Shape.CompositeType.GeneratorParameters);
+                else
+                {
+                    Shape.CompositeType.GeneratorParameters = null;
+                    custom = new CodeGenerator.CustomIdentityGeneratorParameters();
+                }
+
+                prgGeneratorParameters.SelectedObject = custom;
+            }
+            else
+            {
+                this.Height = pnlAdvancedOptions.Bottom + pnlAdvancedOptions.Margin.Bottom;
+                Shape.CompositeType.GeneratorParameters = null;
+            }
+        }
+
+        private void prgGeneratorParameters_Validating(object sender, CancelEventArgs e)
+        {
+            if (Shape.CompositeType.IdGenerator == "HiLo")
+                Shape.CompositeType.GeneratorParameters = CodeGenerator.GeneratorParametersDeSerializer.Serialize((CodeGenerator.HiLoIdentityGeneratorParameters)prgGeneratorParameters.SelectedObject);
+            else if (Shape.CompositeType.IdGenerator == "SeqHiLo")
+                Shape.CompositeType.GeneratorParameters = CodeGenerator.GeneratorParametersDeSerializer.Serialize((CodeGenerator.SeqHiLoIdentityGeneratorParameters)prgGeneratorParameters.SelectedObject);
+            else if (Shape.CompositeType.IdGenerator == "Sequence")
+                Shape.CompositeType.GeneratorParameters = CodeGenerator.GeneratorParametersDeSerializer.Serialize((CodeGenerator.SequenceIdentityGeneratorParameters)prgGeneratorParameters.SelectedObject);
+            else if (Shape.CompositeType.IdGenerator == "UuidHex")
+                Shape.CompositeType.GeneratorParameters = CodeGenerator.GeneratorParametersDeSerializer.Serialize((CodeGenerator.UuidHexIdentityGeneratorParameters)prgGeneratorParameters.SelectedObject);
+            else if (Shape.CompositeType.IdGenerator == "Foreign")
+                Shape.CompositeType.GeneratorParameters = CodeGenerator.GeneratorParametersDeSerializer.Serialize((CodeGenerator.ForeignIdentityGeneratorParameters)prgGeneratorParameters.SelectedObject);
+            else if (Shape.CompositeType.IdGenerator == "Custom")
+                Shape.CompositeType.GeneratorParameters = CodeGenerator.GeneratorParametersDeSerializer.Serialize((CodeGenerator.CustomIdentityGeneratorParameters)prgGeneratorParameters.SelectedObject);
+
+            RefreshValues();
+        }
+
+        private void prgGeneratorParameters_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
+        {
+            if (Shape.CompositeType.IdGenerator == "HiLo")
+                Shape.CompositeType.GeneratorParameters = CodeGenerator.GeneratorParametersDeSerializer.Serialize((CodeGenerator.HiLoIdentityGeneratorParameters)prgGeneratorParameters.SelectedObject);
+            else if (Shape.CompositeType.IdGenerator == "SeqHiLo")
+                Shape.CompositeType.GeneratorParameters = CodeGenerator.GeneratorParametersDeSerializer.Serialize((CodeGenerator.SeqHiLoIdentityGeneratorParameters)prgGeneratorParameters.SelectedObject);
+            else if (Shape.CompositeType.IdGenerator == "Sequence")
+                Shape.CompositeType.GeneratorParameters = CodeGenerator.GeneratorParametersDeSerializer.Serialize((CodeGenerator.SequenceIdentityGeneratorParameters)prgGeneratorParameters.SelectedObject);
+            else if (Shape.CompositeType.IdGenerator == "UuidHex")
+                Shape.CompositeType.GeneratorParameters = CodeGenerator.GeneratorParametersDeSerializer.Serialize((CodeGenerator.UuidHexIdentityGeneratorParameters)prgGeneratorParameters.SelectedObject);
+            else if (Shape.CompositeType.IdGenerator == "Foreign")
+                Shape.CompositeType.GeneratorParameters = CodeGenerator.GeneratorParametersDeSerializer.Serialize((CodeGenerator.ForeignIdentityGeneratorParameters)prgGeneratorParameters.SelectedObject);
+            else if (Shape.CompositeType.IdGenerator == "Custom")
+                Shape.CompositeType.GeneratorParameters = CodeGenerator.GeneratorParametersDeSerializer.Serialize((CodeGenerator.CustomIdentityGeneratorParameters)prgGeneratorParameters.SelectedObject);
+
+            RefreshValues();
         }
 	}
 }

@@ -336,5 +336,26 @@ namespace NClass.Core
                 }
             }
         }
+
+        string generatorParameters;
+
+        /// <summary>
+        /// Gets or sets the GeneratorParameters for this class.
+        /// </summary>
+        public override string GeneratorParameters
+        {
+            get
+            {
+                return generatorParameters;
+            }
+            set
+            {
+                if (value != generatorParameters)
+                {
+                    generatorParameters = value;
+                    Changed();
+                }
+            }
+        }
     }
 }

@@ -37,8 +37,12 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
             this.lblIdentityGenerator = new System.Windows.Forms.Label();
             this.toolStripAdvancedOptions = new System.Windows.Forms.ToolStrip();
             this.toolAdvancedOptions = new System.Windows.Forms.ToolStripButton();
+            this.pnlGeneratorParameters = new System.Windows.Forms.Panel();
+            this.prgGeneratorParameters = new System.Windows.Forms.PropertyGrid();
+            this.label3 = new System.Windows.Forms.Label();
             this.pnlAdvancedOptions.SuspendLayout();
             this.toolStripAdvancedOptions.SuspendLayout();
+            this.pnlGeneratorParameters.SuspendLayout();
             this.SuspendLayout();
             // 
             // txtName
@@ -76,7 +80,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
             this.pnlAdvancedOptions.Controls.Add(this.lblIdentityGenerator);
             this.pnlAdvancedOptions.Location = new System.Drawing.Point(3, 52);
             this.pnlAdvancedOptions.Name = "pnlAdvancedOptions";
-            this.pnlAdvancedOptions.Size = new System.Drawing.Size(321, 77);
+            this.pnlAdvancedOptions.Size = new System.Drawing.Size(323, 77);
             this.pnlAdvancedOptions.TabIndex = 12;
             // 
             // cboIdentityGenerator
@@ -85,7 +89,7 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
             this.cboIdentityGenerator.FormattingEnabled = true;
             this.cboIdentityGenerator.Location = new System.Drawing.Point(148, 53);
             this.cboIdentityGenerator.Name = "cboIdentityGenerator";
-            this.cboIdentityGenerator.Size = new System.Drawing.Size(100, 21);
+            this.cboIdentityGenerator.Size = new System.Drawing.Size(110, 21);
             this.cboIdentityGenerator.TabIndex = 12;
             this.cboIdentityGenerator.SelectedIndexChanged += new System.EventHandler(this.cboIdGenerator_SelectedIndexChanged);
             // 
@@ -141,21 +145,54 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
             this.toolAdvancedOptions.Size = new System.Drawing.Size(23, 22);
             this.toolAdvancedOptions.Click += new System.EventHandler(this.toolAdvancedOptions_Click);
             // 
+            // pnlGeneratorParameters
+            // 
+            this.pnlGeneratorParameters.Controls.Add(this.prgGeneratorParameters);
+            this.pnlGeneratorParameters.Controls.Add(this.label3);
+            this.pnlGeneratorParameters.Location = new System.Drawing.Point(3, 132);
+            this.pnlGeneratorParameters.Name = "pnlGeneratorParameters";
+            this.pnlGeneratorParameters.Size = new System.Drawing.Size(323, 50);
+            this.pnlGeneratorParameters.TabIndex = 13;
+            // 
+            // prgGeneratorParameters
+            // 
+            this.prgGeneratorParameters.HelpVisible = false;
+            this.prgGeneratorParameters.Location = new System.Drawing.Point(59, 0);
+            this.prgGeneratorParameters.Name = "prgGeneratorParameters";
+            this.prgGeneratorParameters.Size = new System.Drawing.Size(240, 47);
+            this.prgGeneratorParameters.TabIndex = 14;
+            this.prgGeneratorParameters.ToolbarVisible = false;
+            this.prgGeneratorParameters.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.prgGeneratorParameters_PropertyValueChanged);
+            this.prgGeneratorParameters.Validating += new System.ComponentModel.CancelEventHandler(this.prgGeneratorParameters_Validating);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(56, 56);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(94, 13);
+            this.label3.TabIndex = 13;
+            this.label3.Text = "Identity Generator:";
+            // 
             // ClassTypeEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.pnlGeneratorParameters);
             this.Controls.Add(this.pnlAdvancedOptions);
             this.Controls.Add(this.toolStripAdvancedOptions);
             this.Name = "ClassTypeEditor";
-            this.Size = new System.Drawing.Size(330, 133);
+            this.Size = new System.Drawing.Size(330, 186);
             this.Controls.SetChildIndex(this.toolStripAdvancedOptions, 0);
             this.Controls.SetChildIndex(this.txtName, 0);
             this.Controls.SetChildIndex(this.pnlAdvancedOptions, 0);
+            this.Controls.SetChildIndex(this.pnlGeneratorParameters, 0);
             this.pnlAdvancedOptions.ResumeLayout(false);
             this.pnlAdvancedOptions.PerformLayout();
             this.toolStripAdvancedOptions.ResumeLayout(false);
             this.toolStripAdvancedOptions.PerformLayout();
+            this.pnlGeneratorParameters.ResumeLayout(false);
+            this.pnlGeneratorParameters.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -172,5 +209,8 @@ namespace NClass.DiagramEditor.ClassDiagram.Editors
         private BorderedTextBox txtNHMTableName;
         private System.Windows.Forms.ComboBox cboIdentityGenerator;
         private System.Windows.Forms.Label lblIdentityGenerator;
+        private System.Windows.Forms.Panel pnlGeneratorParameters;
+        private System.Windows.Forms.PropertyGrid prgGeneratorParameters;
+        private System.Windows.Forms.Label label3;
 	}
 }

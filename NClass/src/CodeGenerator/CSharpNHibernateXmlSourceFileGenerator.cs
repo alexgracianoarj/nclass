@@ -123,7 +123,97 @@ namespace NClass.CodeGenerator
                             : ids[0].NHMColumnName
                         ));
                     xml.WriteAttributeString("type", ids[0].Type);
-                    xml.WriteAttributeString("generator", idGeneratorType);
+                    xml.WriteStartElement("generator");
+                    
+                    if (_class.IdGenerator != "Custom")
+                        xml.WriteAttributeString("class", idGeneratorType);
+
+                    if (_class.IdGenerator == "HiLo")
+                    {
+                        HiLoIdentityGeneratorParameters hiLo = GeneratorParametersDeSerializer.Deserialize<HiLoIdentityGeneratorParameters>(_class.GeneratorParameters);
+                        
+                        xml.WriteStartElement("param");
+                        xml.WriteAttributeString("name", "table");
+                        xml.WriteValue(hiLo.Table);
+                        xml.WriteEndElement();
+
+                        xml.WriteStartElement("param");
+                        xml.WriteAttributeString("name", "column");
+                        xml.WriteValue(hiLo.Column);
+                        xml.WriteEndElement();
+
+                        xml.WriteStartElement("param");
+                        xml.WriteAttributeString("name", "max_lo");
+                        xml.WriteValue(hiLo.MaxLo);
+                        xml.WriteEndElement();
+
+                        xml.WriteStartElement("param");
+                        xml.WriteAttributeString("name", "where");
+                        xml.WriteValue(hiLo.Where);
+                        xml.WriteEndElement();
+                    }
+                    else if (_class.IdGenerator == "SeqHiLo")
+                    {
+                        SeqHiLoIdentityGeneratorParameters seqHiLo = GeneratorParametersDeSerializer.Deserialize<SeqHiLoIdentityGeneratorParameters>(_class.GeneratorParameters);
+
+                        xml.WriteStartElement("param");
+                        xml.WriteAttributeString("name", "sequence");
+                        xml.WriteValue(seqHiLo.Sequence);
+                        xml.WriteEndElement();
+
+                        xml.WriteStartElement("param");
+                        xml.WriteAttributeString("name", "max_lo");
+                        xml.WriteValue(seqHiLo.MaxLo);
+                        xml.WriteEndElement();
+                    }
+                    else if (_class.IdGenerator == "Sequence")
+                    {
+                        SequenceIdentityGeneratorParameters sequence = GeneratorParametersDeSerializer.Deserialize<SequenceIdentityGeneratorParameters>(_class.GeneratorParameters);
+
+                        xml.WriteStartElement("param");
+                        xml.WriteAttributeString("name", "sequence");
+                        xml.WriteValue(sequence.Sequence);
+                        xml.WriteEndElement();
+                    }
+                    else if (_class.IdGenerator == "UuidHex")
+                    {
+                        UuidHexIdentityGeneratorParameters uuidHex = GeneratorParametersDeSerializer.Deserialize<UuidHexIdentityGeneratorParameters>(_class.GeneratorParameters);
+
+                        xml.WriteStartElement("param");
+                        xml.WriteAttributeString("name", "format_value");
+                        xml.WriteValue(uuidHex.Format);
+                        xml.WriteEndElement();
+
+                        xml.WriteStartElement("param");
+                        xml.WriteAttributeString("name", "separator_value");
+                        xml.WriteValue(uuidHex.Separator);
+                        xml.WriteEndElement();
+                    }
+                    else if (_class.IdGenerator == "Foreign")
+                    {
+                        ForeignIdentityGeneratorParameters foreign = GeneratorParametersDeSerializer.Deserialize<ForeignIdentityGeneratorParameters>(_class.GeneratorParameters);
+
+                        xml.WriteStartElement("param");
+                        xml.WriteAttributeString("name", "property");
+                        xml.WriteValue(foreign.Property);
+                        xml.WriteEndElement();
+                    }
+                    else if (_class.IdGenerator == "Custom")
+                    {
+                        CustomIdentityGeneratorParameters custom = GeneratorParametersDeSerializer.Deserialize<CustomIdentityGeneratorParameters>(_class.GeneratorParameters);
+
+                        xml.WriteAttributeString("class", custom.Class);
+
+                        foreach(var param in custom.Parameters)
+                        {
+                            xml.WriteStartElement("param");
+                            xml.WriteAttributeString("name", param.Name);
+                            xml.WriteValue(param.Value);
+                            xml.WriteEndElement();
+                        }
+                    }
+
+                    xml.WriteEndElement();
                     xml.WriteEndElement();
                 }
 

@@ -155,5 +155,11 @@ namespace NClass.Core
             get;
             set;
         }
+
+        public string GeneratorParameters
+        {
+            get;
+            set;
+        }
 	}
 }

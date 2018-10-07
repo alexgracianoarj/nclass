@@ -69,14 +69,6 @@ namespace NClass.CodeGenerator
 						line = line.Replace("${RootNamespace}", RootNamespace);
                         line = line.Replace("${AssemblyName}", AssemblyName);
 
-                        if (line.Contains("${VersionNumber}"))
-                        {
-                            if (solutionType == SolutionType.VisualStudio2010)
-                                line = Regex.Replace(line, @"\${VersionNumber}", "11.0");
-                            else
-                                line = Regex.Replace(line, @"\${VersionNumber}", "12.0");
-                        }
-
                         if (line.Contains("${DotNetVersion}"))
                         {
                             line = Regex.Replace(line, @"\${DotNetVersion}", EnumExtensions.GetDescription(dotNetVersion));

@@ -159,16 +159,90 @@ namespace NClass.CodeGenerator
             }
             else if (ids.Count == 1)
             {
+                ClassType _class = (ClassType)Type;
+
+                string generatorParams = null;
+
+                if (_class.IdGenerator == "HiLo")
+                {
+                    HiLoIdentityGeneratorParameters hiLo = GeneratorParametersDeSerializer.Deserialize<HiLoIdentityGeneratorParameters>(_class.GeneratorParameters);
+
+                    generatorParams = string.Format(
+                                            ", gmap => gmap.Params(new {{ table = \"{0}\", column = \"{1}\", max_lo = \"{2}\", where = \"{3}\" }})",
+                                            hiLo.Table,
+                                            hiLo.Column,
+                                            hiLo.MaxLo,
+                                            hiLo.Where
+                                            );
+                }
+                else if (_class.IdGenerator == "SeqHiLo")
+                {
+                    SeqHiLoIdentityGeneratorParameters seqHiLo = GeneratorParametersDeSerializer.Deserialize<SeqHiLoIdentityGeneratorParameters>(_class.GeneratorParameters);
+
+                    generatorParams = string.Format(
+                                            ", gmap => gmap.Params(new {{ sequence = \"{0}\", max_lo = \"{1}\" }})",
+                                            seqHiLo.Sequence,
+                                            seqHiLo.MaxLo
+                                            );
+                }
+                else if (_class.IdGenerator == "Sequence")
+                {
+                    SequenceIdentityGeneratorParameters sequence = GeneratorParametersDeSerializer.Deserialize<SequenceIdentityGeneratorParameters>(_class.GeneratorParameters);
+
+                    generatorParams = string.Format(
+                                            ", gmap => gmap.Params(new {{ sequence = \"{0}\" }})",
+                                            sequence.Sequence
+                                            );
+                }
+                else if (_class.IdGenerator == "UuidHex")
+                {
+                    UuidHexIdentityGeneratorParameters uuidHex = GeneratorParametersDeSerializer.Deserialize<UuidHexIdentityGeneratorParameters>(_class.GeneratorParameters);
+
+                    generatorParams = string.Format(
+                                            ", gmap => gmap.Params(new {{ format_value = \"{0}\", separator_value = \"{1}\" }})",
+                                            uuidHex.Format,
+                                            uuidHex.Separator
+                                            );
+                }
+                else if (_class.IdGenerator == "Foreign")
+                {
+                    ForeignIdentityGeneratorParameters foreign = GeneratorParametersDeSerializer.Deserialize<ForeignIdentityGeneratorParameters>(_class.GeneratorParameters);
+
+                    generatorParams = string.Format(
+                                            ", gmap => gmap.Params(new {{ property = \"{0}\" }})",
+                                            foreign.Property
+                                            );
+                }
+                else if (_class.IdGenerator == "Custom")
+                {
+                    CustomIdentityGeneratorParameters custom = GeneratorParametersDeSerializer.Deserialize<CustomIdentityGeneratorParameters>(_class.GeneratorParameters);
+
+                    idGeneratorType = custom.Class;
+
+                    generatorParams = ", gmap => gmap.Params(new { ";
+
+                    for (int i = 0; i <= (custom.Parameters.Count - 1); i++)
+                    {
+                        generatorParams += custom.Parameters[i].Name + " = \"" + custom.Parameters[i].Value + "\"";
+
+                        if (i < (custom.Parameters.Count - 1))
+                            generatorParams += ", ";
+                    }
+
+                    generatorParams += " })";
+                }
+
                 WriteLine(
                     string.Format(
-                        "Id(x => x.{0}, map => {{ map.Column(\"`{1}`\"); map.Generator(Generators.{2}); }});",
+                        "Id(x => x.{0}, map => {{ map.Column(\"`{1}`\"); map.Generator(Generators.{2}{3}); }});",
                         ids[0].Name,
                         useLowercaseUnderscored
                         ? LowercaseAndUnderscoredWord(ids[0].Name)
                         : string.IsNullOrEmpty(ids[0].NHMColumnName)
                         ? ids[0].Name
                         : ids[0].NHMColumnName,
-                        idGeneratorType
+                        idGeneratorType,
+                        generatorParams
                     ));
             }
         }

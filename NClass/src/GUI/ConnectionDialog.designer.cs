@@ -210,10 +210,10 @@
             // 
             // gpNHibernate
             // 
+            this.gpNHibernate.Controls.Add(this.chkUseUnderscoreAndLowercaseInDB);
             this.gpNHibernate.Controls.Add(this.cboDefaultIdGenerator);
             this.gpNHibernate.Controls.Add(this.chkDefaultFetching);
             this.gpNHibernate.Controls.Add(this.chkNHibernateMapping);
-            this.gpNHibernate.Controls.Add(this.chkUseUnderscoreAndLowercaseInDB);
             this.gpNHibernate.Controls.Add(this.lblDefaultIdGenerator);
             this.gpNHibernate.Location = new System.Drawing.Point(12, 89);
             this.gpNHibernate.Name = "gpNHibernate";
@@ -226,15 +226,15 @@
             // 
             this.cboDefaultIdGenerator.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboDefaultIdGenerator.FormattingEnabled = true;
-            this.cboDefaultIdGenerator.Location = new System.Drawing.Point(144, 17);
+            this.cboDefaultIdGenerator.Location = new System.Drawing.Point(142, 17);
             this.cboDefaultIdGenerator.Name = "cboDefaultIdGenerator";
-            this.cboDefaultIdGenerator.Size = new System.Drawing.Size(100, 21);
+            this.cboDefaultIdGenerator.Size = new System.Drawing.Size(110, 21);
             this.cboDefaultIdGenerator.TabIndex = 2;
             // 
             // chkDefaultFetching
             // 
             this.chkDefaultFetching.AutoSize = true;
-            this.chkDefaultFetching.Location = new System.Drawing.Point(262, 19);
+            this.chkDefaultFetching.Location = new System.Drawing.Point(265, 19);
             this.chkDefaultFetching.Name = "chkDefaultFetching";
             this.chkDefaultFetching.Size = new System.Drawing.Size(48, 17);
             this.chkDefaultFetching.TabIndex = 3;
@@ -264,7 +264,7 @@
             // lblDefaultIdGenerator
             // 
             this.lblDefaultIdGenerator.AutoSize = true;
-            this.lblDefaultIdGenerator.Location = new System.Drawing.Point(77, 20);
+            this.lblDefaultIdGenerator.Location = new System.Drawing.Point(76, 20);
             this.lblDefaultIdGenerator.Name = "lblDefaultIdGenerator";
             this.lblDefaultIdGenerator.Size = new System.Drawing.Size(69, 13);
             this.lblDefaultIdGenerator.TabIndex = 1;

@@ -229,6 +229,10 @@ namespace NClass.Core
 
 			XmlElement child;
 
+            child = node.OwnerDocument.CreateElement("GeneratorParameters");
+            child.InnerXml = GeneratorParameters;
+            node.AppendChild(child);
+
 			child = node.OwnerDocument.CreateElement("Name");
 			child.InnerText = Name;
 			node.AppendChild(child);
@@ -255,9 +259,13 @@ namespace NClass.Core
 				throw new ArgumentNullException("node");
 
 			RaiseChangedEvent = false;
-			XmlElement nameChild = node["Name"];
-			if (nameChild != null)
-				Name = nameChild.InnerText;
+            XmlElement nameChild = node["Name"];
+            if (nameChild != null)
+                Name = nameChild.InnerText;
+
+            XmlElement GeneratorParametersChild = node["GeneratorParameters"];
+            if (GeneratorParametersChild != null)
+                GeneratorParameters = GeneratorParametersChild.InnerXml;
 
 			XmlElement accessChild = node["Access"];
 			if (accessChild != null)
@@ -291,6 +299,12 @@ namespace NClass.Core
         }
 
         public virtual string IdGenerator
+        {
+            get;
+            set;
+        }
+
+        public virtual string GeneratorParameters
         {
             get;
             set;

@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "NClass"
-#define MyAppVersion "2.14"
+#define MyAppVersion "2.15"
 #define MyAppPublisher "Alex Graciano"
 #define MyAppURL "alexgracianoarj@gmail.com"
 #define MyAppExeName "NClass.exe"
@@ -11,7 +11,7 @@
 ; NOTE: The value of AppId uniquely identifies this application.
 ; Do not use the same AppId value in installers for other applications.
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
-AppId={{E97588B8-08FC-400A-85EF-8B6436C7BE0D}}
+AppId={{680C349F-F242-4DA4-A2BC-C3149D505795}}
 AppName={#MyAppName}
 AppVersion={#MyAppVersion}
 AppVerName={#MyAppName} {#MyAppVersion}

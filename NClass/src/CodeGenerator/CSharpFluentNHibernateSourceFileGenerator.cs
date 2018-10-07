@@ -153,16 +153,88 @@ namespace NClass.CodeGenerator
             }
             else if (ids.Count == 1)
             {
+                ClassType _class = (ClassType)Type;
+
+                string generatorParameters = null;
+
+                if (_class.IdGenerator == "HiLo")
+                {
+                    HiLoIdentityGeneratorParameters hiLo = GeneratorParametersDeSerializer.Deserialize<HiLoIdentityGeneratorParameters>(_class.GeneratorParameters);
+
+                    generatorParameters = string.Format(
+                                            "\"{0}\", \"{1}\", \"{2}\", \"{3}\"",
+                                            hiLo.Table,
+                                            hiLo.Column,
+                                            hiLo.MaxLo,
+                                            hiLo.Where
+                                            );
+                }
+                else if (_class.IdGenerator == "SeqHiLo")
+                {
+                    SeqHiLoIdentityGeneratorParameters seqHiLo = GeneratorParametersDeSerializer.Deserialize<SeqHiLoIdentityGeneratorParameters>(_class.GeneratorParameters);
+
+                    generatorParameters = string.Format(
+                                            "\"{0}\", \"{1}\"",
+                                            seqHiLo.Sequence,
+                                            seqHiLo.MaxLo
+                                            );
+                }
+                else if (_class.IdGenerator == "Sequence")
+                {
+                    SequenceIdentityGeneratorParameters sequence = GeneratorParametersDeSerializer.Deserialize<SequenceIdentityGeneratorParameters>(_class.GeneratorParameters);
+
+                    generatorParameters = string.Format(
+                                            "\"{0}\"",
+                                            sequence.Sequence
+                                            );
+                }
+                else if (_class.IdGenerator == "UuidHex")
+                {
+                    UuidHexIdentityGeneratorParameters uuidHex = GeneratorParametersDeSerializer.Deserialize<UuidHexIdentityGeneratorParameters>(_class.GeneratorParameters);
+
+                    generatorParameters = string.Format(
+                                            "\"{0}\", \"{1}\"",
+                                            uuidHex.Format,
+                                            uuidHex.Separator
+                                            );
+                }
+                else if (_class.IdGenerator == "Foreign")
+                {
+                    ForeignIdentityGeneratorParameters foreign = GeneratorParametersDeSerializer.Deserialize<ForeignIdentityGeneratorParameters>(_class.GeneratorParameters);
+
+                    generatorParameters = string.Format(
+                                            "\"{0}\"",
+                                            foreign.Property
+                                            );
+                }
+                else if (_class.IdGenerator == "Custom")
+                {
+                    CustomIdentityGeneratorParameters custom = GeneratorParametersDeSerializer.Deserialize<CustomIdentityGeneratorParameters>(_class.GeneratorParameters);
+
+                    generatorParameters = string.Format(
+                                    "\"{0}\", p => {{ ",
+                                    custom.Class
+                                    );
+
+                    for (int i = 0; i <= (custom.Parameters.Count - 1); i++)
+                    {
+                        generatorParameters += "p.AddParam(\"" + custom.Parameters[i].Name + "\", \"" + custom.Parameters[i].Value + "\"); ";
+                    }
+
+                    generatorParameters += "}";
+                }
+
                 WriteLine(
                     string.Format(
-                        "Id(x => x.{0}).Column(\"`{1}`\").GeneratedBy.{2}();",
+                        "Id(x => x.{0}).Column(\"`{1}`\").GeneratedBy.{2}({3});",
                         ids[0].Name,
                         useLowercaseUnderscored
                         ? LowercaseAndUnderscoredWord(ids[0].Name)
                         : string.IsNullOrEmpty(ids[0].NHMColumnName)
                         ? ids[0].Name
                         : ids[0].NHMColumnName,
-                        idGeneratorType
+                        idGeneratorType,
+                        generatorParameters
                     ));
             }
         }

@@ -206,6 +206,8 @@ namespace NClass.CodeGenerator
             }
             else if (ids.Count == 1)
             {
+                ClassType _class = (ClassType)Type;
+
                 WriteLine(
                     string.Format(
                         "[Id(0, Name = \"{0}\", Column = \"`{1}`\")]",
@@ -217,11 +219,118 @@ namespace NClass.CodeGenerator
                         : ids[0].NHMColumnName
                     ));
 
-                WriteLine(
-                    string.Format(
-                        "[Generator(1, Class = \"{0}\")]",
-                        idGeneratorType
-                    ));
+                if (_class.IdGenerator != "Custom")
+                    WriteLine(
+                        string.Format(
+                            "[Generator(1, Class = \"{0}\")]",
+                            idGeneratorType
+                        ));
+
+                if (_class.IdGenerator == "HiLo")
+                {
+                    HiLoIdentityGeneratorParameters hiLo = GeneratorParametersDeSerializer.Deserialize<HiLoIdentityGeneratorParameters>(_class.GeneratorParameters);
+
+                    WriteLine(
+                        string.Format(
+                            "[Param(2, Name = \"table\", Content = \"{0}\")]",
+                            hiLo.Table
+                        ));
+
+                    WriteLine(
+                        string.Format(
+                            "[Param(3, Name = \"column\", Content = \"{0}\")]",
+                            hiLo.Column
+                        ));
+
+                    WriteLine(
+                        string.Format(
+                            "[Param(4, Name = \"max_lo\", Content = \"{0}\")]",
+                            hiLo.MaxLo
+                        ));
+
+                    WriteLine(
+                        string.Format(
+                            "[Param(5, Name = \"where\", Content = \"{0}\")]",
+                            hiLo.Where
+                        ));
+                }
+                else if (_class.IdGenerator == "SeqHiLo")
+                {
+                    SeqHiLoIdentityGeneratorParameters seqHiLo = GeneratorParametersDeSerializer.Deserialize<SeqHiLoIdentityGeneratorParameters>(_class.GeneratorParameters);
+
+                    WriteLine(
+                        string.Format(
+                            "[Param(2, Name = \"sequence\", Content = \"{0}\")]",
+                            seqHiLo.Sequence
+                        ));
+
+                    WriteLine(
+                        string.Format(
+                            "[Param(3, Name = \"max_lo\", Content = \"{0}\")]",
+                            seqHiLo.MaxLo
+                        ));
+                }
+                else if (_class.IdGenerator == "Sequence")
+                {
+                    SequenceIdentityGeneratorParameters sequence = GeneratorParametersDeSerializer.Deserialize<SequenceIdentityGeneratorParameters>(_class.GeneratorParameters);
+
+                    WriteLine(
+                        string.Format(
+                            "[Param(2, Name = \"sequence\", Content = \"{0}\")]",
+                            sequence.Sequence
+                        ));
+                }
+                else if (_class.IdGenerator == "UuidHex")
+                {
+                    UuidHexIdentityGeneratorParameters uuidHex = GeneratorParametersDeSerializer.Deserialize<UuidHexIdentityGeneratorParameters>(_class.GeneratorParameters);
+
+                    WriteLine(
+                        string.Format(
+                            "[Param(2, Name = \"format_value\", Content = \"{0}\")]",
+                            uuidHex.Format
+                        ));
+
+                    WriteLine(
+                        string.Format(
+                            "[Param(3, Name = \"separator_value\", Content = \"{0}\")]",
+                            uuidHex.Format
+                        ));
+                }
+                else if (_class.IdGenerator == "Foreign")
+                {
+                    ForeignIdentityGeneratorParameters foreign = GeneratorParametersDeSerializer.Deserialize<ForeignIdentityGeneratorParameters>(_class.GeneratorParameters);
+
+                    WriteLine(
+                        string.Format(
+                            "[Param(2, Name = \"property\", Content = \"{0}\")]",
+                            foreign.Property
+                        ));
+                }
+                else if (_class.IdGenerator == "Custom")
+                {
+                    CustomIdentityGeneratorParameters custom = GeneratorParametersDeSerializer.Deserialize<CustomIdentityGeneratorParameters>(_class.GeneratorParameters);
+
+                    idGeneratorType = custom.Class;
+
+                    WriteLine(
+                        string.Format(
+                            "[Generator(1, Class = \"{0}\")]",
+                            idGeneratorType
+                        ));
+
+                    int position = 2;
+                    for (int i = 0; i <= (custom.Parameters.Count - 1); i++)
+                    {
+                        WriteLine(
+                            string.Format(
+                                "[Param({0}, Name = \"{1}\", Content = \"{2}\")]",
+                                position.ToString(),
+                                custom.Parameters[i].Name,
+                                custom.Parameters[i].Value
+                            ));
+                        position++;
+                    }
+                }
 
                 if (Settings.Default.UseAutomaticProperties)
                 {

@@ -1,4 +1,4 @@
-NClass 2.14
+NClass 2.15
 ===========
 
 Overview
