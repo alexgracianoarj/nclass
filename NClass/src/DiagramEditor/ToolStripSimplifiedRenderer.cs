@@ -13,12 +13,11 @@
 // this program; if not, write to the Free Software Foundation, Inc., 
 // 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-using System;
 using System.Windows.Forms;
 
 namespace NClass.DiagramEditor
 {
-	public class ToolStripSimplifiedRenderer : ToolStripProfessionalRenderer
+    public class ToolStripSimplifiedRenderer : ToolStripProfessionalRenderer
 	{
 		static ToolStripSimplifiedRenderer renderer = new ToolStripSimplifiedRenderer();
 

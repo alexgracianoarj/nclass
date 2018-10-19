@@ -1,10 +1,5 @@
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using NClass.Core;
 using NClass.Translations;
@@ -13,7 +8,7 @@ using System.Xml;
 
 namespace NClass.DiagramEditor.ClassDiagram.Editors
 {
-	public partial class ClassTypeEditor : CompositeTypeEditor
+    public partial class ClassTypeEditor : CompositeTypeEditor
 	{
 		private bool isAdvancedOptionsExpanded = false;
 

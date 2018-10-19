@@ -15,12 +15,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Xml;
 
 namespace NClass.Core
 {
-	public abstract class EnumType : TypeBase
+    public abstract class EnumType : TypeBase
 	{
 		List<EnumValue> values = new List<EnumValue>();
 

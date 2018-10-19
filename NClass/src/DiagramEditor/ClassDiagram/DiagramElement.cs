@@ -19,12 +19,11 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Collections.Generic;
 using NClass.Core;
-using NClass.DiagramEditor.ClassDiagram.Editors;
 using NClass.Translations;
 
 namespace NClass.DiagramEditor.ClassDiagram
 {
-	public abstract class DiagramElement : IModifiable
+    public abstract class DiagramElement : IModifiable
 	{
 		protected const float UndreadableZoom = 0.25F;
 		internal static Graphics Graphics = null; // Graphics object for text measuring

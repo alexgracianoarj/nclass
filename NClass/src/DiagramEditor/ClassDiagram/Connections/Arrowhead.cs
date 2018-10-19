@@ -13,13 +13,12 @@
 // this program; if not, write to the Free Software Foundation, Inc., 
 // 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 
 namespace NClass.DiagramEditor.ClassDiagram.Connections
 {
-	internal static class Arrowhead
+    internal static class Arrowhead
 	{
 		public const int ClosedArrowWidth = 12;
 		public const int ClosedArrowHeight = 17;

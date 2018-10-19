@@ -15,13 +15,12 @@
 
 using System;
 using System.Text;
-using System.Collections.Generic;
 using NClass.Core;
 using NClass.Translations;
 
 namespace NClass.CSharp
 {
-	internal sealed class CSharpClass : ClassType
+    internal sealed class CSharpClass : ClassType
 	{
 		internal CSharpClass() : this("NewClass")
 		{

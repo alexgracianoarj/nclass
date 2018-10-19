@@ -15,12 +15,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Xml;
 
 namespace NClass.Core
 {
-	public abstract class DelegateType : TypeBase
+    public abstract class DelegateType : TypeBase
 	{
 		string returnType;
 		ArgumentList argumentList;

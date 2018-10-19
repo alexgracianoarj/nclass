@@ -15,13 +15,12 @@
 
 using System;
 using System.Text;
-using System.Collections.Generic;
 using NClass.Core;
 using NClass.Translations;
 
 namespace NClass.Java
 {
-	internal sealed class JavaClass : ClassType
+    internal sealed class JavaClass : ClassType
 	{
 		internal JavaClass() : this("NewClass")
 		{

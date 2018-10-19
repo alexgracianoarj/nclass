@@ -13,13 +13,11 @@
 // this program; if not, write to the Free Software Foundation, Inc., 
 // 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-using System;
-using System.Text;
 using NClass.Core;
 
 namespace NClass.Java
 {
-	internal sealed class JavaEnumValue : EnumValue
+    internal sealed class JavaEnumValue : EnumValue
 	{
 		/// <exception cref="BadSyntaxException">
 		/// The <paramref name="declaration"/> does not fit to the syntax.

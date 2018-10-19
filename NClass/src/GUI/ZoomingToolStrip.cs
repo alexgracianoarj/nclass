@@ -15,7 +15,6 @@
 
 using System;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.ComponentModel;
 using System.Windows.Forms;
 using System.Windows.Forms.Design;
@@ -24,7 +23,7 @@ using NClass.DiagramEditor;
 
 namespace NClass.GUI
 {
-	[ToolStripItemDesignerAvailability(
+    [ToolStripItemDesignerAvailability(
 		ToolStripItemDesignerAvailability.ToolStrip |
 		ToolStripItemDesignerAvailability.StatusStrip)]
 	[DefaultEvent("ZoomValueChanged")]

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Globalization;
-using System.IO;
 using System.Windows.Forms;
 using NClass.AssemblyImport.Lang;
 using NClass.CSharp;
@@ -9,10 +8,10 @@ using NClass.GUI;
 
 namespace NClass.AssemblyImport
 {
-  /// <summary>
-  ///   Implements the PlugIn-Interface of NClass.
-  /// </summary>
-  public class NETImportPlugin : Plugin
+    /// <summary>
+    ///   Implements the PlugIn-Interface of NClass.
+    /// </summary>
+    public class NETImportPlugin : Plugin
   {
     // ========================================================================
     // Fields

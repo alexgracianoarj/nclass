@@ -14,12 +14,10 @@
 // 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 using System;
-using System.Text;
-using System.Text.RegularExpressions;
 
 namespace NClass.Core
 {
-	public abstract class Event : Operation
+    public abstract class Event : Operation
 	{
 		/// <exception cref="BadSyntaxException">
 		/// The <paramref name="name"/> does not fit to the syntax.

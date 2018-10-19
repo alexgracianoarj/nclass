@@ -15,11 +15,10 @@
 
 using System;
 using System.Drawing;
-using System.Windows.Forms;
 
 namespace NClass.DiagramEditor
 {
-	public interface IDocumentVisualizer
+    public interface IDocumentVisualizer
 	{
 		event EventHandler DocumentRedrawed;
 		event EventHandler VisibleAreaChanged;

@@ -24,12 +24,11 @@ using NClass.DiagramEditor.ClassDiagram.Shapes;
 using NClass.DiagramEditor.ClassDiagram.Dialogs;
 using NClass.DiagramEditor.ClassDiagram.Connections;
 using NClass.DiagramEditor.ClassDiagram.ContextMenus;
-using NClass.DiagramEditor.ClassDiagram.Editors;
 using NClass.Translations;
 
 namespace NClass.DiagramEditor.ClassDiagram
 {
-	public class Diagram : Model, IDocument, IEditable, IPrintable
+    public class Diagram : Model, IDocument, IEditable, IPrintable
 	{
 		private enum State
 		{

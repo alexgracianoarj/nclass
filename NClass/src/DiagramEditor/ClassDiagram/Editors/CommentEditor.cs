@@ -16,12 +16,11 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
-using NClass.Core;
 using NClass.DiagramEditor.ClassDiagram.Shapes;
 
 namespace NClass.DiagramEditor.ClassDiagram.Editors
 {
-	public sealed partial class CommentEditor : EditorWindow
+    public sealed partial class CommentEditor : EditorWindow
 	{
 		CommentShape shape = null;
 

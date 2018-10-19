@@ -14,13 +14,11 @@
 // 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 using System;
-using System.Xml;
 using System.Text;
-using System.Text.RegularExpressions;
 
 namespace NClass.Core
 {
-	public abstract class Field : Member
+    public abstract class Field : Member
 	{
 		FieldModifier modifier = FieldModifier.None;
 		string initialValue = null;

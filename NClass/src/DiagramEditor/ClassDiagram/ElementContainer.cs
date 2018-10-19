@@ -13,7 +13,6 @@
 // this program; if not, write to the Free Software Foundation, Inc., 
 // 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-using System;
 using System.Collections.Generic;
 using System.Drawing;
 using NClass.Core;
@@ -22,7 +21,7 @@ using NClass.DiagramEditor.ClassDiagram.Connections;
 
 namespace NClass.DiagramEditor.ClassDiagram
 {
-	internal class ElementContainer : IClipboardItem
+    internal class ElementContainer : IClipboardItem
 	{
 		const int BaseOffset = 20;
 

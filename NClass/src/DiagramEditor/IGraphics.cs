@@ -13,15 +13,12 @@
 // this program; if not, write to the Free Software Foundation, Inc., 
 // 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Drawing.Text;
-using System.Drawing.Imaging;
 
 namespace NClass.DiagramEditor
 {
-	public interface IGraphics
+    public interface IGraphics
 	{
 		Region Clip { get; set; }
 		RectangleF ClipBounds { get; }

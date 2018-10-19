@@ -9,16 +9,14 @@ using System.Collections.Generic;
 using System.Xml.Linq;
 using System.IO;
 using Microsoft.Data.ConnectionUI;
-
-using DatabaseSchemaReader;
 using DatabaseSchemaReader.DataSchema;
 
 namespace NClass.GUI
 {
-	/// <summary>
-	/// Provide a default implementation for the storage of DataConnection Dialog UI configuration.
-	/// </summary>
-	public class DataConnectionConfiguration : IDataConnectionConfiguration
+    /// <summary>
+    /// Provide a default implementation for the storage of DataConnection Dialog UI configuration.
+    /// </summary>
+    public class DataConnectionConfiguration : IDataConnectionConfiguration
 	{
 		private const string configFileName = @"DataConnection.xml";
 		private string fullFilePath = null;

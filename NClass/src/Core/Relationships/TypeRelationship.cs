@@ -14,11 +14,10 @@
 // 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 using System;
-using System.Xml;
 
 namespace NClass.Core
 {
-	public abstract class TypeRelationship : Relationship
+    public abstract class TypeRelationship : Relationship
 	{
 		TypeBase first;
 		TypeBase second;

@@ -14,12 +14,10 @@
 // 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 using System;
-using System.Collections.Generic;
-using System.Text.RegularExpressions;
 
 namespace NClass.Core
 {
-	public abstract class Operation : Member
+    public abstract class Operation : Member
 	{
 		OperationModifier modifier = OperationModifier.None;
 		ArgumentList argumentList;

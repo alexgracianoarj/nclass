@@ -5,19 +5,18 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
 
 namespace My.Examples.UserControls
 {
-	
-	/// <summary>
-	/// Provides a tree view
-	/// control supporting
-	/// tri-state checkboxes.
-	/// </summary>
-	public class TriStateTreeView : TreeView
+
+    /// <summary>
+    /// Provides a tree view
+    /// control supporting
+    /// tri-state checkboxes.
+    /// </summary>
+    public class TriStateTreeView : TreeView
 	{
 
 		// ~~~ fields ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

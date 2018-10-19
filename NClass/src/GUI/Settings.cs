@@ -14,16 +14,12 @@
 // 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 using System.IO;
-using System.Collections.Specialized;
-using System.ComponentModel;
-using System.Configuration;
 using NClass.Core;
 using NClass.CSharp;
-using NClass.Translations;
 
 namespace NClass.GUI
 {
-	public sealed partial class Settings
+    public sealed partial class Settings
 	{
 		const int MaxRecentFileCount = 5;
 

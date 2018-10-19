@@ -15,14 +15,13 @@
 
 using System;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 using NClass.Core;
 using NClass.DiagramEditor.ClassDiagram.Dialogs;
 using NClass.DiagramEditor.ClassDiagram.Editors;
 
 namespace NClass.DiagramEditor.ClassDiagram.Shapes
 {
-	internal sealed class EnumShape : TypeShape
+    internal sealed class EnumShape : TypeShape
 	{
 		static EnumEditor typeEditor = new EnumEditor();
 		static EnumValueEditor valueEditor = new EnumValueEditor();

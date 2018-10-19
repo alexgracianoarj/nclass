@@ -14,7 +14,6 @@
 // 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 using System;
-using System.Drawing;
 using System.ComponentModel;
 using System.Windows.Forms;
 using NClass.Core;
@@ -24,7 +23,7 @@ using NClass.DiagramEditor.ClassDiagram.Dialogs;
 
 namespace NClass.DiagramEditor.ClassDiagram.Editors
 {
-	public partial class CompositeTypeEditor : TypeEditor
+    public partial class CompositeTypeEditor : TypeEditor
 	{
 		public CompositeTypeEditor()
 		{

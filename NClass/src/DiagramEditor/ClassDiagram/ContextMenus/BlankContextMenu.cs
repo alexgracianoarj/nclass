@@ -14,7 +14,6 @@
 // 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 using System;
-using System.Collections.Generic;
 using System.Windows.Forms;
 using NClass.DiagramEditor.Properties;
 using NClass.Translations;
@@ -22,7 +21,7 @@ using NClass.Core;
 
 namespace NClass.DiagramEditor.ClassDiagram.ContextMenus
 {
-	public sealed class BlankContextMenu : DiagramContextMenu
+    public sealed class BlankContextMenu : DiagramContextMenu
 	{
 		static BlankContextMenu _default = new BlankContextMenu();
 

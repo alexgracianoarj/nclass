@@ -14,14 +14,12 @@
 // 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 using System;
-using System.Xml;
 using System.Text;
-using System.Collections.Generic;
 using NClass.Core;
 
 namespace NClass.Java
 {
-	internal sealed class JavaInterface : InterfaceType
+    internal sealed class JavaInterface : InterfaceType
 	{
 		internal JavaInterface() : this("NewInterface")
 		{

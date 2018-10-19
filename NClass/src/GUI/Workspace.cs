@@ -14,7 +14,6 @@
 // 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 using System;
-using System.IO;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using NClass.Core;
@@ -22,7 +21,7 @@ using NClass.Translations;
 
 namespace NClass.GUI
 {
-	public class Workspace
+    public class Workspace
 	{
 		static Workspace _default = new Workspace();
 

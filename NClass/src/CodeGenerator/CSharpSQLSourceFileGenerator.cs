@@ -1,16 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using NClass.Core;
-using NClass.CSharp;
 
 using System.Text.RegularExpressions;
 using System.Linq;
 
 using System.IO;
 using System.Text;
-
-using DatabaseSchemaReader;
 using DatabaseSchemaReader.DataSchema;
 
 using DatabaseSchemaReader.SqlGen;

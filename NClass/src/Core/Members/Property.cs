@@ -14,13 +14,11 @@
 // 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 using System;
-using System.Text;
-using System.Text.RegularExpressions;
 using NClass.Translations;
 
 namespace NClass.Core
 {
-	public abstract class Property : Operation
+    public abstract class Property : Operation
 	{
 		bool isReadonly = false;
 		bool isWriteonly = false;

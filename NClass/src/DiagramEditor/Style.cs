@@ -16,19 +16,15 @@
 using System;
 using System.IO;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Threading;
-using System.Globalization;
 using System.ComponentModel;
 using System.Collections.Generic;
-using System.Windows.Forms;
 using NClass.Translations;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Runtime.Serialization;
 
 namespace NClass.DiagramEditor
 {
-	public enum GradientStyle
+    public enum GradientStyle
 	{
 		None,
 		Horizontal,

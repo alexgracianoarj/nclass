@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Xml;
 using System.IO;
 using NClass.Translations;
 
 namespace NClass.Core
 {
-	//TODO: átdolgozni
-	public class Model : IProjectItem
+    //TODO: átdolgozni
+    public class Model : IProjectItem
 	{
 		string name;
 		Language language;

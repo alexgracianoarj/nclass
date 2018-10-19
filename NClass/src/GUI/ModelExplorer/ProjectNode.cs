@@ -14,7 +14,6 @@
 // 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 using System;
-using System.Collections.Generic;
 using System.Windows.Forms;
 using NClass.Core;
 using NClass.Java;
@@ -26,7 +25,7 @@ using NClass.DiagramEditor;
 
 namespace NClass.GUI.ModelExplorer
 {
-	public sealed class ProjectNode : ModelNode
+    public sealed class ProjectNode : ModelNode
 	{
 		Project project;
 		static ContextMenuStrip contextMenu = new ContextMenuStrip();

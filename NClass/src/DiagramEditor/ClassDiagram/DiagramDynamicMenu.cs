@@ -15,14 +15,13 @@
 
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Windows.Forms;
 using NClass.Translations;
 using NClass.Core;
 
 namespace NClass.DiagramEditor.ClassDiagram
 {
-	public sealed partial class DiagramDynamicMenu : DynamicMenu
+    public sealed partial class DiagramDynamicMenu : DynamicMenu
 	{
 		static DiagramDynamicMenu _default = new DiagramDynamicMenu();
 

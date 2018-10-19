@@ -21,11 +21,10 @@ using System.Drawing.Imaging;
 using System.Windows.Forms;
 using NClass.Translations;
 using System.IO;
-using NClass.DiagramEditor.ClassDiagram;
 
 namespace NClass.DiagramEditor
 {
-	public static class ImageCreator
+    public static class ImageCreator
 	{
 		const string DialogFilter = "BMP (*.bmp)|*.bmp|GIF (*.gif)|*.gif|" +
 			"JPEG (*.jpg;*.jpeg)|*.jpg;*.jpeg|PNG (*.png)|*.png|" +

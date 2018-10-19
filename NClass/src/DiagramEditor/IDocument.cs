@@ -16,12 +16,11 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
-using System.Collections.Generic;
 using NClass.Core;
 
 namespace NClass.DiagramEditor
 {
-	public interface IDocument : IProjectItem, IEditable, IPrintable
+    public interface IDocument : IProjectItem, IEditable, IPrintable
 	{
 		event EventHandler OffsetChanged;
 		event EventHandler SizeChanged;

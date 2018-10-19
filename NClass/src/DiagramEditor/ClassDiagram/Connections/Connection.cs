@@ -22,11 +22,10 @@ using System.Xml;
 using NClass.Core;
 using NClass.DiagramEditor.ClassDiagram.Shapes;
 using NClass.DiagramEditor.ClassDiagram.ContextMenus;
-using NClass.DiagramEditor.ClassDiagram.Editors;
 
 namespace NClass.DiagramEditor.ClassDiagram.Connections
 {
-	public abstract class Connection : DiagramElement
+    public abstract class Connection : DiagramElement
 	{
 		private enum LineOrientation
 		{

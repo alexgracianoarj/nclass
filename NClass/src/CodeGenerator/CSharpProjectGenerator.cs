@@ -15,17 +15,13 @@
 
 using System;
 using System.IO;
-using System.Xml;
-using System.Text;
-using System.Collections.Generic;
 using System.Windows.Forms;
 using NClass.Core;
-using NClass.CSharp;
 using System.Text.RegularExpressions;
 
 namespace NClass.CodeGenerator
 {
-	internal sealed class CSharpProjectGenerator : ProjectGenerator
+    internal sealed class CSharpProjectGenerator : ProjectGenerator
 	{
 		SolutionType solutionType;
         DotNetVersion dotNetVersion;

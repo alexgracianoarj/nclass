@@ -13,15 +13,12 @@
 // this program; if not, write to the Free Software Foundation, Inc., 
 // 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-using System;
-using System.Collections.Generic;
 using System.Text;
-using System.Xml;
 using NClass.Core;
 
 namespace NClass.CSharp
 {
-	internal sealed class CSharpDelegate : DelegateType
+    internal sealed class CSharpDelegate : DelegateType
 	{
 		internal CSharpDelegate() : this("NewDelegate")
 		{

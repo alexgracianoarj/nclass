@@ -19,12 +19,11 @@ using System.ComponentModel;
 using System.Windows.Forms;
 using NClass.DiagramEditor;
 using NClass.Core;
-using NClass.GUI.Properties;
 using NClass.Translations;
 
 namespace NClass.GUI.ModelExplorer
 {
-	public partial class ModelView : TreeView
+    public partial class ModelView : TreeView
 	{
 		Workspace workspace = null;
 		Font boldFont, normalFont;

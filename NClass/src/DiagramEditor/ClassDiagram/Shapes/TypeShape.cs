@@ -21,13 +21,11 @@ using System.Windows.Forms;
 using System.Collections.Generic;
 using NClass.Core;
 using NClass.DiagramEditor.ClassDiagram.ContextMenus;
-using NClass.DiagramEditor.ClassDiagram.Dialogs;
 using NClass.DiagramEditor.ClassDiagram.Editors;
-using NClass.Translations;
 
 namespace NClass.DiagramEditor.ClassDiagram.Shapes
 {
-	public abstract class TypeShape : Shape
+    public abstract class TypeShape : Shape
 	{
 		public const int DefaultWidth = 162;
 		public const int DefaultHeight = 216;

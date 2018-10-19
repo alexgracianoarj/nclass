@@ -16,13 +16,12 @@
 using System;
 using System.IO;
 using System.Xml;
-using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using NClass.Translations;
 
 namespace NClass.Core
 {
-	public abstract class CompositeType : TypeBase
+    public abstract class CompositeType : TypeBase
 	{
 		List<Field> fields = new List<Field>();
 		List<Operation> operations = new List<Operation>();

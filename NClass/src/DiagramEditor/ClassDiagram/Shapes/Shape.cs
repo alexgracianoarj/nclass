@@ -16,7 +16,6 @@
 using System;
 using System.Xml;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using NClass.Core;
@@ -24,7 +23,7 @@ using NClass.DiagramEditor.ClassDiagram.ContextMenus;
 
 namespace NClass.DiagramEditor.ClassDiagram.Shapes
 {
-	public abstract class Shape : DiagramElement
+    public abstract class Shape : DiagramElement
 	{
 		protected enum ResizeMode
 		{

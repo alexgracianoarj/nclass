@@ -1,11 +1,10 @@
-﻿using System;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 using NClass.DiagramEditor;
 using System.ComponentModel;
 
 namespace NClass.GUI
 {
-	public partial class TabbedWindow : UserControl
+    public partial class TabbedWindow : UserControl
 	{
 		DocumentManager docManager = null;
 

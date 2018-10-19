@@ -15,13 +15,11 @@
 
 using System;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 using NClass.Core;
-using NClass.DiagramEditor.ClassDiagram.Editors;
 
 namespace NClass.DiagramEditor.ClassDiagram.Shapes
 {
-	public sealed class InterfaceShape : CompositeTypeShape
+    public sealed class InterfaceShape : CompositeTypeShape
 	{
 		InterfaceType _interface;
 

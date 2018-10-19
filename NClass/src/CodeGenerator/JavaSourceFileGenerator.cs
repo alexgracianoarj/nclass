@@ -16,11 +16,10 @@
 using System;
 using System.Collections.Specialized;
 using NClass.Core;
-using NClass.Java;
 
 namespace NClass.CodeGenerator
 {
-	internal sealed class JavaSourceFileGenerator : SourceFileGenerator
+    internal sealed class JavaSourceFileGenerator : SourceFileGenerator
 	{
 		/// <exception cref="NullReferenceException">
 		/// <paramref name="type"/> is null.

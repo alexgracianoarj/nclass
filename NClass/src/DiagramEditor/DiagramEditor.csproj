@@ -16,7 +16,7 @@
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
     <IsWebBootstrapper>false</IsWebBootstrapper>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -136,9 +136,7 @@
     <Compile Include="ClassDiagram\Dialogs\OverrideDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ClassDiagram\Dialogs\DiagramPrintDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="ClassDiagram\Dialogs\DiagramPrintDialog.cs" />
     <Compile Include="ClassDiagram\Dialogs\DiagramPrintDialog.Designer.cs">
       <DependentUpon>DiagramPrintDialog.cs</DependentUpon>
     </Compile>

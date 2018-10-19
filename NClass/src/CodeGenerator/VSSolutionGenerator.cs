@@ -15,16 +15,14 @@
 
 using System;
 using System.IO;
-using System.Collections.Generic;
 using System.Windows.Forms;
 using NClass.Core;
 using NClass.CSharp;
 using NClass.Java;
-using System.Text;
 
 namespace NClass.CodeGenerator
 {
-	internal sealed class VSSolutionGenerator : SolutionGenerator
+    internal sealed class VSSolutionGenerator : SolutionGenerator
 	{
 		SolutionType version = SolutionType.VisualStudio2013;
         DotNetVersion dotNetVersion = DotNetVersion.v20;

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using NClass.Core;
-using NClass.CSharp;
 using System.Xml;
 
 using System.Linq;

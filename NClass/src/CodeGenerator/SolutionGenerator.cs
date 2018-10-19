@@ -16,13 +16,11 @@
 using System;
 using System.IO;
 using System.Collections.Generic;
-using System.Windows.Forms;
 using NClass.Core;
-using NClass.Translations;
 
 namespace NClass.CodeGenerator
 {
-	public abstract class SolutionGenerator
+    public abstract class SolutionGenerator
 	{
 		Project project;
 		List<ProjectGenerator> projectGenerators = new List<ProjectGenerator>();

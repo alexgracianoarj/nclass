@@ -15,16 +15,14 @@
 
 using System;
 using System.IO;
-using System.Drawing;
 using System.Windows.Forms;
-using System.ComponentModel;
 using NClass.DiagramEditor;
 using NClass.Translations;
 using NClass.DiagramEditor.ClassDiagram;
 
 namespace NClass.GUI.Dialogs
 {
-	public sealed partial class OptionsDialog : Form
+    public sealed partial class OptionsDialog : Form
 	{
 		Style savedStyle = null;
 

@@ -16,14 +16,13 @@
 using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.ComponentModel;
 using System.Windows.Forms;
 using NClass.Core;
 using NClass.Translations;
 
 namespace NClass.DiagramEditor.ClassDiagram.Dialogs
 {
-	public partial class AssociationDialog : Form
+    public partial class AssociationDialog : Form
 	{
 		const int ArrowWidth = 18;
 		const int ArrowHeight = 10;

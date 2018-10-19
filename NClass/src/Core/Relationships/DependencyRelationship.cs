@@ -14,12 +14,11 @@
 // 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 using System;
-using System.Xml;
 using NClass.Translations;
 
 namespace NClass.Core
 {
-	public sealed class DependencyRelationship : TypeRelationship
+    public sealed class DependencyRelationship : TypeRelationship
 	{
 		/// <exception cref="ArgumentNullException">
 		/// <paramref name="first"/> is null.-or-

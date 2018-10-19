@@ -16,12 +16,11 @@
 using System;
 using System.Xml;
 using System.Collections;
-using System.Text.RegularExpressions;
 using NClass.Translations;
 
 namespace NClass.Core
 {
-	public abstract class TypeBase : LanguageElement, IEntity
+    public abstract class TypeBase : LanguageElement, IEntity
 	{
 		string name;
 		AccessModifier access = AccessModifier.Public;

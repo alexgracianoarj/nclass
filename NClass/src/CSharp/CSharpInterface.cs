@@ -15,12 +15,11 @@
 
 using System;
 using System.Text;
-using System.Collections.Generic;
 using NClass.Core;
 
 namespace NClass.CSharp
 {
-	internal sealed class CSharpInterface : InterfaceType
+    internal sealed class CSharpInterface : InterfaceType
 	{
 		internal CSharpInterface() : this("NewInterface")
 		{

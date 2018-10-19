@@ -13,7 +13,6 @@
 // this program; if not, write to the Free Software Foundation, Inc., 
 // 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-using System;
 using System.Drawing;
 using NClass.Core;
 using NClass.DiagramEditor.ClassDiagram.Shapes;
@@ -23,7 +22,7 @@ using NClass.Translations;
 
 namespace NClass.DiagramEditor.ClassDiagram
 {
-	internal class ConnectionCreator
+    internal class ConnectionCreator
 	{
 		const int BorderOffset = 8;
 		const int BorderOffset2 = 12;

@@ -13,16 +13,10 @@
 // this program; if not, write to the Free Software Foundation, Inc., 
 // 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-using System;
-using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Windows.Forms;
-using NClass.DiagramEditor.ClassDiagram.Shapes;
-using NClass.Core;
 
 namespace NClass.DiagramEditor.ClassDiagram.Editors
 {
-	public abstract class EditorWindow : PopupWindow
+    public abstract class EditorWindow : PopupWindow
 	{
 		internal abstract void Init(DiagramElement element);
 

@@ -14,14 +14,11 @@
 // 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 using System;
-using System.IO;
-using System.Collections.Generic;
 using NClass.Core;
-using NClass.CSharp;
 
 namespace NClass.CodeGenerator
 {
-	internal sealed class JavaProjectGenerator : ProjectGenerator
+    internal sealed class JavaProjectGenerator : ProjectGenerator
 	{
 		/// <exception cref="ArgumentNullException">
 		/// <paramref name="model"/> is null.

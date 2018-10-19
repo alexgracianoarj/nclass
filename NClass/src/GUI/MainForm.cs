@@ -15,9 +15,6 @@
 
 using System;
 using System.IO;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.Drawing.Printing;
 using System.Collections.Generic;
 using System.Reflection;
 using System.ComponentModel;

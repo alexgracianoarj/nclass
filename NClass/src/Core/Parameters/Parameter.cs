@@ -13,12 +13,10 @@
 // this program; if not, write to the Free Software Foundation, Inc., 
 // 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-using System;
-using System.Text.RegularExpressions;
 
 namespace NClass.Core
 {
-	public abstract class Parameter : LanguageElement
+    public abstract class Parameter : LanguageElement
 	{
 		string type;
 		string name;

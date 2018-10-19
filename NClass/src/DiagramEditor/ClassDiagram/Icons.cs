@@ -17,11 +17,10 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 using NClass.Core;
-using System.Drawing.Imaging;
 
 namespace NClass.DiagramEditor.ClassDiagram
 {
-	public static class Icons
+    public static class Icons
 	{
 		const int DefaultDestructorIndex = 84;
 		const int PrivateDestructorIndex = 85;

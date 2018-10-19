@@ -17,12 +17,11 @@ using System;
 using System.Drawing;
 using System.Drawing.Printing;
 using System.Windows.Forms;
-using NClass.DiagramEditor;
 using NClass.Translations;
 
 namespace NClass.DiagramEditor.ClassDiagram.Dialogs
 {
-	public class PrintingSettings
+    public class PrintingSettings
 	{
 		public bool Landscape { get; set; }
 		public Margins Margins { get; set; }

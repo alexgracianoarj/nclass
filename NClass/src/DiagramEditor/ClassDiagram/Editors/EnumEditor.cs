@@ -14,7 +14,6 @@
 // 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 using System;
-using System.Drawing;
 using System.ComponentModel;
 using System.Windows.Forms;
 using NClass.Core;
@@ -23,7 +22,7 @@ using NClass.Translations;
 
 namespace NClass.DiagramEditor.ClassDiagram.Editors
 {
-	public partial class EnumEditor : TypeEditor
+    public partial class EnumEditor : TypeEditor
 	{
 		static readonly string newValueText = "« " + Strings.NewValue + " »";
 

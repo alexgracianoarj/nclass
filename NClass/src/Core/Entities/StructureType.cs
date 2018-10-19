@@ -14,12 +14,11 @@
 // 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 using System;
-using System.Text;
 using System.Collections.Generic;
 
 namespace NClass.Core
 {
-	public abstract class StructureType : SingleInharitanceType
+    public abstract class StructureType : SingleInharitanceType
 	{
 		/// <exception cref="BadSyntaxException">
 		/// The <paramref name="name"/> does not fit to the syntax.

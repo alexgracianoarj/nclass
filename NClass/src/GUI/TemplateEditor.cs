@@ -3,13 +3,11 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using FastColoredTextBoxNS;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading;
-using System.Drawing.Drawing2D;
 
 using NClass.CodeGenerator;
 
