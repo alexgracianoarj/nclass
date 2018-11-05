@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "NClass"
-#define MyAppVersion "2.15"
+#define MyAppVersion "2.16"
 #define MyAppPublisher "Alex Graciano"
 #define MyAppURL "alexgracianoarj@gmail.com"
 #define MyAppExeName "NClass.exe"
@@ -11,7 +11,7 @@
 ; NOTE: The value of AppId uniquely identifies this application.
 ; Do not use the same AppId value in installers for other applications.
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
-AppId={{680C349F-F242-4DA4-A2BC-C3149D505795}}
+AppId={{F5403CD9-11A5-49F6-ACC2-A7CD2DAC891F}}
 AppName={#MyAppName}
 AppVersion={#MyAppVersion}
 AppVerName={#MyAppName} {#MyAppVersion}
@@ -46,6 +46,8 @@ Source: ".\NClass\src\GUI\bin\Release\NClass.exe"; DestDir: "{app}";
 Source: ".\NClass\src\GUI\bin\Release\NClass.exe.config"; DestDir: "{app}";
 Source: ".\NClass\src\GUI\bin\Release\NClass.Translations.dll"; DestDir: "{app}\Lang";
 Source: ".\NClass\src\GUI\bin\Release\*.dll"; DestDir: "{app}"; Excludes: "NClass.Translations.dll,*.pdb,*.config,*.xml,*.manifest";
+Source: ".\NClass\src\GUI\bin\Release\x86\*"; DestDir: "{app}\x86"
+Source: ".\NClass\src\GUI\bin\Release\x64\*"; DestDir: "{app}\x64"
 Source: ".\NClass\doc\README.TXT"; DestDir: "{app}\doc"; Flags: isreadme
 Source: ".\NClass\doc\LICENSE.TXT"; DestDir: "{app}\doc";
 Source: ".\NClass\src\icons\diagram.ico"; DestDir: "{app}";

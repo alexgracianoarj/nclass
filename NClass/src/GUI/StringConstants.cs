@@ -5,8 +5,8 @@
         public static string DB2_CONN_STR_TEMPLATE =
             "Server=myAddress:myPortNumber;Database=myDataBase;UID=myUsername;PWD=myPassword;";
 
-        public static string ORACLE_CONN_STR_TEMPLATE = 
-            "Data Source=XE;User Id=Sample;Password=password;";
+        public static string ORACLE_CONN_STR_TEMPLATE =
+            "User ID=userName;Password=pass;Data Source=(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=localhost)(PORT=1521))(CONNECT_DATA=(SERVER=dedicated)(SERVICE_NAME=XE)))";
 
         public static string SQL_CONN_STR_TEMPLATE =
             "Data Source=.\\SQLExpress;Integrated Security=true;AttachDbFilename=MyDataFile.mdf;User Instance=true;";

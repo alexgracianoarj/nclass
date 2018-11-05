@@ -18,19 +18,19 @@ Design your application with just a few clicks - the main goal is to provide a s
 * Multilingual user interface;
 * Mono support for non-Windows users.
 
-## New Features (v2.15)
+## New Features (v2.16)
 
 * Automatic properties in the C# source code generation;
 * C# source code documentation with XML comments.
 * Class diagram model generation from database using [DatabaseSchemaReader](https://github.com/martinjw/dbschemareader);
 	* Supports:
-		* Oracle ([ADO.NET provider](http://www.oracle.com/technetwork/database/windows/downloads/utilsoft-087491.html));
+		* Oracle (ODP.NET Managed Driver);
 		* SQL Server;
 		* SQL Server CE 4;
 		* DB2;
 		* MySQL;
 		* PostgreSQL;
-		* SQLite ([ADO.NET provider](https://system.data.sqlite.org/downloads/1.0.106.0/sqlite-netFx45-setup-bundle-x86-2012-1.0.106.0.exe));
+		* SQLite;
 * Generation NHibernate mapping files;
 	* Types of Mapping:
 		* NHibernate XML (.hbm.xml);
@@ -42,8 +42,7 @@ Design your application with just a few clicks - the main goal is to provide a s
 
 ## Requirements
 
-* Microsoft .NET Framework 4.6;
-* ADO.NET provider of your choice database (supported databases above).
+* Microsoft .NET Framework 4.7.2;
 
 ## Installation
 
